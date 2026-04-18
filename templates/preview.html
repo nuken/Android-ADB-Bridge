@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Live Preview: {{ .Name }}</title>
+    <style>
+        body { background-color: #1a1a1a; color: white; font-family: sans-serif; text-align: center; padding: 20px; }
+        video { max-width: 100%; width: 800px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); background: black; }
+        .back-btn { display: inline-block; margin-bottom: 20px; padding: 10px 15px; background: #3b82f6; color: white; text-decoration: none; border-radius: 5px; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/mpegts.js@1.7.3/dist/mpegts.min.js"></script>
+</head>
+<body>
+    <a href="/status" class="back-btn">&larr; Back to Status</a>
+    <h2>Previewing: {{ .Name }}</h2>
+    
+    <video id="videoElement" controls autoplay muted></video>
+
+    <script>
+        if (mpegts.getFeatureList().mseLivePlayback) {
+            var videoElement = document.getElementById('videoElement');
+            var player = mpegts.createPlayer({
+                type: 'mse', 
+                isLive: true,
+                url: '/stream/{{ .ID }}'
+            });
+            player.attachMediaElement(videoElement);
+            player.load();
+            player.play();
+        } else {
+            alert("Your browser does not support MSE playback for this stream.");
+        }
+    </script>
+</body>
+</html>

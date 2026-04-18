@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Android ADB Bridge</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root { --bg-color: #2c2c2c; --surface-color: #3a3a3a; --primary-color: #7dd3fc; --text-color: #e0e0e0; --border-color: #4a4a4a; --success-color: #28a745; --error-color: #dc3545; --button-color: #007bff; --button-hover-color: #0056b3; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; background-color: var(--surface-color); border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+        h1, h2 { color: var(--primary-color); border-bottom: 2px solid var(--border-color); padding-bottom: 10px; }
+        .top-actions { display: flex; gap: 10px; margin-bottom: 20px; }
+        .table-wrapper { overflow-x: auto; border-radius: 8px; margin-top: 20px; }
+        table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background-color: var(--border-color); }
+        .button, .action-button { background-color: var(--button-color); color: white; padding: 10px 15px; border: none; border-radius: 8px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+        .button:hover { background-color: var(--button-hover-color); }
+        .action-button { padding: 6px 10px; font-size: 0.9em; }
+        .action-button.delete { background-color: var(--error-color); }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); }
+        .modal-content { background-color: var(--surface-color); margin: 5% auto; padding: 20px; border-radius: 12px; width: 90%; max-width: 500px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; }
+        .form-group input, .form-group select { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #555; background-color: #222; color: white; box-sizing: border-box; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fa-brands fa-android"></i> Android ADB Bridge <span style="font-size:0.5em; color:#888;">v{{ .global_settings.app_version }}</span></h1>
+        
+        <div class="top-actions">
+            <button class="button" onclick="fetchStatus()"><i class="fa-solid fa-sync"></i> Refresh Status</button>
+            <a href="/remote" class="button">Open Remote</a>
+            <button id="copy-m3u-btn" class="button" onclick="copyM3uLink()"><i class="fa-solid fa-copy"></i> Copy M3U Link</button>
+        </div>
+
+        <h2><i class="fa-solid fa-server"></i> Tuners (Devices)</h2>
+        <div class="table-wrapper">
+            <table id="tuners-table">
+                <thead><tr><th>Name</th><th>Device IP</th><th>Encoder URL</th><th>Actions</th></tr></thead>
+                <tbody id="tuners-table-body"></tbody>
+            </table>
+        </div>
+        <button class="button" onclick="openTunerModal()" style="margin-top: 10px;"><i class="fa-solid fa-plus"></i> Add Device</button>
+
+        <h2 style="margin-top: 30px;"><i class="fa-solid fa-satellite-dish"></i> Providers</h2>
+        <div class="table-wrapper">
+            <table id="providers-table">
+                <thead><tr><th>Name</th><th>Provider ID</th><th>Actions</th></tr></thead>
+                <tbody id="providers-table-body"></tbody>
+            </table>
+        </div>
+        <button class="button" onclick="openProviderModal()" style="margin-top: 10px;"><i class="fa-solid fa-plus"></i> Add Provider</button>
+
+        <h2 style="margin-top: 30px;"><i class="fa-solid fa-tv"></i> Channels</h2>
+        <div class="table-wrapper">
+            <table id="channels-table">
+                <thead><tr><th>Name</th><th>Channel ID</th><th>Provider</th><th>Deep Link ID</th><th>Actions</th></tr></thead>
+                <tbody id="channels-table-body"></tbody>
+            </table>
+        </div>
+        <button class="button" onclick="openChannelModal()" style="margin-top: 10px;"><i class="fa-solid fa-plus"></i> Add Channel</button>
+
+        <h2 style="margin-top: 30px;"><i class="fa-solid fa-floppy-disk"></i> Config</h2>
+        <div style="display:flex; gap:10px;">
+            <button class="button" style="background-color: var(--success-color); width: 100%; font-weight: bold; justify-content: center;" onclick="saveConfigToServer()"><i class="fa-solid fa-save"></i> Save Changes to Disk</button>
+        </div>
+    </div>
+
+    <div id="tuner-modal" class="modal">
+        <div class="modal-content">
+            <h3>Edit Tuner</h3>
+            <form id="tuner-form">
+                <input type="hidden" id="tuner-index">
+                <div class="form-group"><label>Name</label><input type="text" id="tuner-name" required></div>
+                <div class="form-group"><label>Device IP</label><input type="text" id="tuner-ip" required></div>
+                <div class="form-group"><label>Encoder URL</label><input type="text" id="tuner-url" required></div>
+                <div class="form-group"><label>Priority</label><input type="number" id="tuner-priority" value="99" required></div>
+                <button type="submit" class="button">Save</button>
+                <button type="button" class="button" style="background:#666" onclick="closeModal('tuner-modal')">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="provider-modal" class="modal">
+        <div class="modal-content">
+            <h3>Edit Provider</h3>
+            <form id="provider-form">
+                <input type="hidden" id="provider-index">
+                <div class="form-group"><label>Provider Name (e.g. YouTube TV)</label><input type="text" id="prov-name" required></div>
+                <div class="form-group"><label>Internal ID (e.g. yt_tv)</label><input type="text" id="prov-id" required></div>
+                <div class="form-group"><label>App Intent</label><input type="text" id="prov-intent" required></div>
+                <div class="form-group"><label>URL Template (use {id} for target)</label><input type="text" id="prov-url" required></div>
+                <button type="submit" class="button">Save</button>
+                <button type="button" class="button" style="background:#666" onclick="closeModal('provider-modal')">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="channel-modal" class="modal">
+        <div class="modal-content">
+            <h3>Edit Channel</h3>
+            <form id="channel-form">
+                <input type="hidden" id="channel-index">
+                <div class="form-group"><label>Channel Name</label><input type="text" id="ch-name" required></div>
+                <div class="form-group"><label>Unique ID</label><input type="text" id="ch-id" required></div>
+                <div class="form-group">
+                    <label>Provider</label>
+                    <select id="ch-provider" required></select>
+                </div>
+                <div class="form-group"><label>Deep Link ID</label><input type="text" id="ch-deeplink" required></div>
+                <div class="form-group"><label>Guide Station ID (Optional)</label><input type="text" id="ch-stationid"></div>
+                <button type="submit" class="button">Save</button>
+                <button type="button" class="button" style="background:#666" onclick="closeModal('channel-modal')">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let config = { tuners: [], providers: [], channels: [] };
+
+        async function loadConfig() {
+            const res = await fetch('/api/config');
+            config = await res.json();
+            config.tuners = config.tuners || [];
+            config.providers = config.providers || [];
+            config.channels = config.channels || [];
+            
+            renderTables();
+            loadTunerStatuses(); // Trigger the connection ping after the table draws
+        }
+
+        function fetchStatus() { loadConfig(); }
+
+        function renderTables() {
+            // Render Tuners (Updated with Status Icons)
+            document.getElementById('tuners-table-body').innerHTML = config.tuners.map((t, i) => {
+                // Create a safe ID string by replacing dots in the IP address with dashes
+                const safeIp = t.device_ip.replace(/\./g, '-');
+                return `
+                <tr>
+                    <td>${t.name} <span style="font-size: 0.8em; color: #aaa;">(Pri: ${t.priority || 99})</span></td>
+                    <td>
+                        <span id="adb-icon-${safeIp}"><i class="fa-solid fa-spinner fa-spin" style="color:#888" title="Checking ADB..."></i></span> 
+                        ${t.device_ip}
+                    </td>
+                    <td>
+                        <span id="enc-icon-${safeIp}"><i class="fa-solid fa-spinner fa-spin" style="color:#888" title="Checking Encoder..."></i></span> 
+                        ${t.encoder_url}
+                    </td>
+                    <td>
+                        <button class="action-button" onclick="editTuner(${i})"><i class="fa-solid fa-pencil"></i></button>
+                        <button class="action-button delete" onclick="delTuner(${i})"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
+            `}).join('');
+
+            // Render Providers
+            document.getElementById('providers-table-body').innerHTML = config.providers.map((p, i) => `
+                <tr>
+                    <td>${p.name}</td>
+                    <td>${p.id}</td>
+                    <td>
+                        <button class="action-button" onclick="editProvider(${i})"><i class="fa-solid fa-pencil"></i></button>
+                        <button class="action-button delete" onclick="delProvider(${i})"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Render Channels (Now with Drag & Drop and Preview Buttons!)
+            document.getElementById('channels-table-body').innerHTML = config.channels.map((c, i) => `
+                <tr draggable="true" ondragstart="dragStart(event, ${i})" ondragover="dragOver(event)" ondrop="drop(event, ${i})" ondragend="dragEnd(event)">
+                    <td style="cursor: grab;" title="Drag to reorder">
+                        <i class="fa-solid fa-grip-vertical" style="color: #666; margin-right: 10px;"></i>${c.name}
+                    </td>
+                    <td>${c.id}</td>
+                    <td>${c.provider_id}</td>
+                    <td>${c.deep_link_content_id}</td>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 4px;">
+                            <button class="action-button" title="Move Up" style="background-color: #4b5563;" onclick="moveChannel(${i}, -1)" ${i === 0 ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : ''}><i class="fa-solid fa-arrow-up"></i></button>
+                            <button class="action-button" title="Move Down" style="background-color: #4b5563;" onclick="moveChannel(${i}, 1)" ${i === config.channels.length - 1 ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : ''}><i class="fa-solid fa-arrow-down"></i></button>
+                            <a href="/preview/${c.id}" class="action-button" title="Preview Stream" style="background-color: #8b5cf6; text-decoration: none; display: inline-flex; justify-content: center;"><i class="fa-solid fa-play"></i></a>
+                            <button class="action-button" onclick="editChannel(${i})"><i class="fa-solid fa-pencil"></i></button>
+                            <button class="action-button delete" onclick="delChannel(${i})"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+		
+		async function loadTunerStatuses() {
+            try {
+                const res = await fetch('/api/check_tuners');
+                const statuses = await res.json();
+                
+                statuses.forEach(s => {
+                    const safeIp = s.device_ip.replace(/\./g, '-');
+                    const adbEl = document.getElementById(`adb-icon-${safeIp}`);
+                    const encEl = document.getElementById(`enc-icon-${safeIp}`);
+                    
+                    if (adbEl) {
+                        adbEl.innerHTML = s.adb_online 
+                            ? '<i class="fa-solid fa-circle-check" style="color: var(--success-color);" title="ADB Connected"></i> '
+                            : '<i class="fa-solid fa-circle-xmark" style="color: var(--error-color);" title="ADB Offline"></i> ';
+                    }
+                    if (encEl) {
+                        encEl.innerHTML = s.encoder_online 
+                            ? '<i class="fa-solid fa-circle-check" style="color: var(--success-color);" title="Encoder Online"></i> '
+                            : '<i class="fa-solid fa-circle-xmark" style="color: var(--error-color);" title="Encoder Offline"></i> ';
+                    }
+                });
+            } catch (err) {
+                console.error("Failed to fetch tuner statuses", err);
+            }
+        }
+
+        // === Drag and Drop & Sorting Logic ===
+        function moveChannel(idx, direction) {
+            if (idx + direction < 0 || idx + direction >= config.channels.length) return;
+            const temp = config.channels[idx];
+            config.channels[idx] = config.channels[idx + direction];
+            config.channels[idx + direction] = temp;
+            renderTables();
+        }
+
+        let draggedIdx = null;
+        function dragStart(e, idx) {
+            draggedIdx = idx;
+            e.dataTransfer.effectAllowed = 'move';
+            setTimeout(() => e.target.style.opacity = '0.4', 0);
+        }
+        function dragOver(e) { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; }
+        function drop(e, targetIdx) {
+            e.preventDefault();
+            if (draggedIdx === null || draggedIdx === targetIdx) return;
+            const movedItem = config.channels.splice(draggedIdx, 1)[0];
+            config.channels.splice(targetIdx, 0, movedItem);
+            renderTables();
+        }
+        function dragEnd(e) {
+            e.target.style.opacity = '1';
+            draggedIdx = null;
+        }
+
+        // === Standard CRUD Logic ===
+        function openTunerModal() { document.getElementById('tuner-form').reset(); document.getElementById('tuner-index').value = '-1'; document.getElementById('tuner-modal').style.display='block'; }
+        function editTuner(i) {
+            const t = config.tuners[i];
+            document.getElementById('tuner-name').value = t.name;
+            document.getElementById('tuner-ip').value = t.device_ip;
+            document.getElementById('tuner-url').value = t.encoder_url;
+            document.getElementById('tuner-priority').value = t.priority || 99;
+            document.getElementById('tuner-index').value = i;
+            document.getElementById('tuner-modal').style.display='block';
+        }
+        document.getElementById('tuner-form').onsubmit = e => {
+            e.preventDefault();
+            const i = parseInt(document.getElementById('tuner-index').value);
+            const data = { name: document.getElementById('tuner-name').value, device_ip: document.getElementById('tuner-ip').value, encoder_url: document.getElementById('tuner-url').value, priority: parseInt(document.getElementById('tuner-priority').value) || 99 };
+            if(i === -1) config.tuners.push(data); else config.tuners[i] = data;
+            config.tuners.sort((a, b) => (a.priority || 99) - (b.priority || 99));
+            renderTables(); closeModal('tuner-modal');
+        };
+        function delTuner(i) { if(confirm('Delete this tuner?')) { config.tuners.splice(i, 1); renderTables(); } }
+
+        function openProviderModal() { document.getElementById('provider-form').reset(); document.getElementById('provider-index').value = '-1'; document.getElementById('provider-modal').style.display='block'; }
+        function editProvider(i) {
+            const p = config.providers[i];
+            document.getElementById('prov-name').value = p.name;
+            document.getElementById('prov-id').value = p.id;
+            document.getElementById('prov-intent').value = p.intent;
+            document.getElementById('prov-url').value = p.url_template;
+            document.getElementById('provider-index').value = i;
+            document.getElementById('provider-modal').style.display='block';
+        }
+        document.getElementById('provider-form').onsubmit = e => {
+            e.preventDefault();
+            const i = parseInt(document.getElementById('provider-index').value);
+            const data = { name: document.getElementById('prov-name').value, id: document.getElementById('prov-id').value, intent: document.getElementById('prov-intent').value, url_template: document.getElementById('prov-url').value };
+            if(i === -1) config.providers.push(data); else config.providers[i] = data;
+            renderTables(); closeModal('provider-modal');
+        };
+        function delProvider(i) {
+            if(config.channels.some(c => c.provider_id === config.providers[i].id)) { alert('Cannot delete provider. It is currently used by one or more channels.'); return; }
+            if(confirm('Delete this provider?')) { config.providers.splice(i, 1); renderTables(); }
+        }
+
+        function openChannelModal() { document.getElementById('channel-form').reset(); document.getElementById('channel-index').value = '-1'; populateProviderDropdown(); document.getElementById('channel-modal').style.display='block'; }
+        function editChannel(i) {
+            const c = config.channels[i];
+            document.getElementById('ch-name').value = c.name;
+            document.getElementById('ch-id').value = c.id;
+            document.getElementById('ch-deeplink').value = c.deep_link_content_id;
+            document.getElementById('ch-stationid').value = c.tvc_guide_stationid || '';
+            populateProviderDropdown(c.provider_id);
+            document.getElementById('channel-index').value = i;
+            document.getElementById('channel-modal').style.display='block';
+        }
+        function populateProviderDropdown(selectedId = '') {
+            document.getElementById('ch-provider').innerHTML = config.providers.map(p => `<option value="${p.id}" ${p.id === selectedId ? 'selected' : ''}>${p.name}</option>`).join('');
+        }
+        document.getElementById('channel-form').onsubmit = e => {
+            e.preventDefault();
+            const i = parseInt(document.getElementById('channel-index').value);
+            const data = { name: document.getElementById('ch-name').value, id: document.getElementById('ch-id').value, provider_id: document.getElementById('ch-provider').value, deep_link_content_id: document.getElementById('ch-deeplink').value, tvc_guide_stationid: document.getElementById('ch-stationid').value };
+            if(i === -1) config.channels.push(data); else config.channels[i] = data;
+            renderTables(); closeModal('channel-modal');
+        };
+        function delChannel(i) { if(confirm('Delete this channel?')) { config.channels.splice(i, 1); renderTables(); } }
+
+        function closeModal(id) { document.getElementById(id).style.display='none'; }
+        
+        async function saveConfigToServer() {
+            await fetch('/api/config', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(config) });
+            alert('Configuration Saved!');
+        }
+
+        // === Copy M3U Link Logic ===
+        async function copyM3uLink() {
+            const m3uUrl = window.location.origin + '/channels.m3u';
+            try {
+                if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(m3uUrl); } 
+                else {
+                    const textArea = document.createElement("textarea");
+                    textArea.value = m3uUrl;
+                    textArea.style.position = "fixed"; textArea.style.left = "-999999px"; textArea.style.top = "-999999px";
+                    document.body.appendChild(textArea);
+                    textArea.focus(); textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                }
+                const btn = document.getElementById('copy-m3u-btn');
+                const originalHtml = btn.innerHTML;
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+                btn.style.backgroundColor = 'var(--success-color)';
+                setTimeout(() => { btn.innerHTML = originalHtml; btn.style.backgroundColor = 'var(--button-color)'; }, 2000);
+            } catch (err) {
+                alert("Failed to copy link. Your browser is strictly blocking clipboard access.");
+            }
+        }
+
+        window.onload = loadConfig;
+    </script>
+</body>
+</html>
