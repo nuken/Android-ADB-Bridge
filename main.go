@@ -59,6 +59,28 @@ var AppVersion = "5.0.0-GO"
 var tunerLock sync.Mutex // Prevents race conditions when locking tuners
 
 // ==========================================
+// App Initialization
+// ==========================================
+func init() {
+	// Define a shared, system-wide path for ADB keys (C:\ProgramData\AndroidADBBridge\.android)
+	programData := os.Getenv("ProgramData")
+	if programData == "" {
+		programData = `C:\ProgramData`
+	}
+
+	sharedAdbPath := filepath.Join(programData, "AndroidADBBridge")
+
+	// Ensure the directory exists
+	os.MkdirAll(sharedAdbPath, os.ModePerm)
+
+	// Force ADB to use this shared directory for its keys instead of the user profile
+	os.Setenv("ANDROID_USER_HOME", sharedAdbPath)
+
+	// Fallback for older ADB versions
+	os.Setenv("ANDROID_SDK_HOME", sharedAdbPath)
+}
+
+// ==========================================
 // 2. Configuration Management
 // ==========================================
 func getConfigPath() string {
@@ -136,7 +158,7 @@ func getAdbPath() string {
 // adbCommand wraps os/exec to run ADB commands without flashing a cmd window
 func adbCommand(deviceIP string, args ...string) error {
 	adb := getAdbPath() // Get the exact path
-	
+
 	// Reconnect first to prevent offline errors
 	connectCmd := exec.Command(adb, "connect", deviceIP)
 	connectCmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
@@ -145,7 +167,7 @@ func adbCommand(deviceIP string, args ...string) error {
 	fullArgs := append([]string{"-s", deviceIP}, args...)
 	cmd := exec.Command(adb, fullArgs...)
 	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
-	
+
 	return cmd.Run()
 }
 
@@ -168,7 +190,7 @@ func releaseTuner(deviceIP string) {
 		if Config.Tuners[i].DeviceIP == deviceIP {
 			Config.Tuners[i].InUse = false
 			fmt.Printf("Released tuner %s. Sending Home command.\n", deviceIP)
-			
+
 			// Send the Home key in the background so it doesn't block the exit
 			go adbCommand(deviceIP, "shell", "input", "keyevent", "3")
 			break
@@ -215,7 +237,7 @@ func getLocalIP() string {
 			// Check if the address is an IPv4 and NOT a loopback (127.0.0.1)
 			if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() && ipnet.IP.To4() != nil {
 				ip := ipnet.IP.String()
-				
+
 				// Standard home routers almost always use 192.168.x.x
 				// We prioritize this to bypass virtual adapters from VPNs or VMware
 				if strings.HasPrefix(ip, "192.168.") {
@@ -259,7 +281,7 @@ func apiConfig(w http.ResponseWriter, r *http.Request) {
 func streamHandler(w http.ResponseWriter, r *http.Request) {
 	// Extract the channel ID from the URL path
 	channelID := strings.TrimPrefix(r.URL.Path, "/stream/")
-	
+
 	// Find the requested channel
 	var channel *Channel
 	for _, c := range Config.Channels {
@@ -268,7 +290,7 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 	}
-	
+
 	if channel == nil {
 		http.Error(w, "Channel not found", http.StatusNotFound)
 		return
@@ -286,7 +308,7 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Tune the Android device
 	executeTuning(tuner.DeviceIP, *channel)
-	
+
 	// Give the LinkPi a moment to start encoding the new stream
 	time.Sleep(2 * time.Second)
 
@@ -301,7 +323,7 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Set headers for raw TS streaming
 	w.Header().Set("Content-Type", "video/mp2t")
-	
+
 	// io.Copy seamlessly pipes the stream from the encoder directly to the client
 	io.Copy(w, resp.Body)
 }
@@ -309,7 +331,7 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 // generateM3U builds the playlist format required by IPTV clients
 func generateM3U(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "audio/x-mpegurl")
-	
+
 	fmt.Fprintf(w, "#EXTM3U x-tvh-max-streams=%d\n", len(Config.Tuners))
 
 	localIP := getLocalIP()
@@ -321,7 +343,7 @@ func generateM3U(w http.ResponseWriter, r *http.Request) {
 		}
 
 		fmt.Fprintf(w, "#EXTINF:-1 channel-id=\"%s\"%s,%s\n", ch.ID, stationData, ch.Name)
-		
+
 		// Lock the stream URL to the actual network IP instead of localhost
 		fmt.Fprintf(w, "http://%s:%d/stream/%s\n", localIP, Config.Port, ch.ID)
 	}
@@ -345,7 +367,7 @@ func remoteKeypress(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Invalid request", http.StatusBadRequest)
 		return
 	}
-	
+
 	deviceIP := parts[3]
 	key := parts[4]
 
@@ -365,7 +387,7 @@ func remoteKeypress(w http.ResponseWriter, r *http.Request) {
 
 	// Fire the key event in a background thread so the UI doesn't hang
 	go adbCommand(deviceIP, "shell", "input", "keyevent", adbKey)
-	
+
 	w.Header().Set("Content-Type", "application/json")
 	w.Write([]byte(`{"status": "success"}`))
 }
@@ -374,7 +396,7 @@ func remoteKeypress(w http.ResponseWriter, r *http.Request) {
 func previewPage(w http.ResponseWriter, r *http.Request) {
 	// Extract the channel ID from the URL path
 	channelID := strings.TrimPrefix(r.URL.Path, "/preview/")
-	
+
 	// Find the requested channel
 	var channel *Channel
 	for _, c := range Config.Channels {
@@ -383,7 +405,7 @@ func previewPage(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 	}
-	
+
 	if channel == nil {
 		http.Error(w, "Channel not found", http.StatusNotFound)
 		return
@@ -394,7 +416,7 @@ func previewPage(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Could not load preview template", http.StatusInternalServerError)
 		return
 	}
-	
+
 	// Pass the specific channel struct to the template
 	tmpl.Execute(w, channel)
 }
@@ -414,7 +436,7 @@ func checkTuners(w http.ResponseWriter, r *http.Request) {
 
 	for _, t := range Config.Tuners {
 		wg.Add(1)
-		
+
 		// Spin up a background goroutine for each tuner so they check simultaneously
 		go func(tuner Tuner) {
 			defer wg.Done()
@@ -427,7 +449,7 @@ func checkTuners(w http.ResponseWriter, r *http.Request) {
 				resp, err := client.Do(req)
 				if err == nil {
 					encoderOk = (resp.StatusCode == 200)
-					resp.Body.Close() 
+					resp.Body.Close()
 				}
 			}
 
@@ -473,14 +495,14 @@ func main() {
 	if *uiFlag {
 		localIP := getLocalIP()
 		targetURL := fmt.Sprintf("http://%s:%d/status", localIP, Config.Port)
-		
+
 		// Use the native Windows API to open the default web browser invisibly
 		cmd := exec.Command("rundll32", "url.dll,FileProtocolHandler", targetURL)
 		cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 		cmd.Start()
-		
+
 		// Exit this instance immediately so it doesn't try to start a second server
-		return 
+		return
 	}
 
 	// 3. Normal background server startup
