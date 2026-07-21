@@ -26,11 +26,14 @@ var embeddedFiles embed.FS
 // 1. Data Structures
 // ==========================================
 type Tuner struct {
-	Name       string `json:"name"`
-	DeviceIP   string `json:"device_ip"`
-	EncoderURL string `json:"encoder_url"`
-	Priority   int    `json:"priority"`
-	InUse      bool   `json:"-"`
+	Name          string `json:"name"`
+	DeviceIP      string `json:"device_ip"`
+	Type          string `json:"type"` // "network" or "local"
+	EncoderURL    string `json:"encoder_url,omitempty"`
+	VideoDeviceID string `json:"video_device_id,omitempty"`
+	AudioDeviceID string `json:"audio_device_id,omitempty"`
+	Priority      int    `json:"priority"`
+	InUse         bool   `json:"-"`
 }
 
 type Provider struct {
@@ -55,11 +58,21 @@ type AppConfig struct {
 	Channels  []Channel  `json:"channels"`
 }
 
-var Config AppConfig
-var AppVersion = "5.1.0-GO"
-var tunerLock sync.Mutex // Prevents race conditions when locking tuners
+// Structs for FFmpeg Device Discovery
+type DShowDevice struct {
+	Name string `json:"name"`
+	ID   string `json:"id"` // The "Alternative Name" hardware path
+}
 
-// Optimized HTTP Client specifically for long-lived MPEG-TS stream proxying
+type DeviceList struct {
+	Video []DShowDevice `json:"video"`
+	Audio []DShowDevice `json:"audio"`
+}
+
+var Config AppConfig
+var AppVersion = "5.0.3-GO"
+var tunerLock sync.Mutex
+
 var streamClient = &http.Client{
 	Transport: &http.Transport{
 		DialContext: (&net.Dialer{
@@ -67,9 +80,9 @@ var streamClient = &http.Client{
 			KeepAlive: 30 * time.Second,
 		}).DialContext,
 		ResponseHeaderTimeout: 10 * time.Second,
-		DisableCompression:    true, // MPEG-TS video is already compressed
+		DisableCompression:    true,
 	},
-	Timeout: 0, // Infinite timeout for live streaming
+	Timeout: 0,
 }
 
 // ==========================================
@@ -138,6 +151,13 @@ func loadConfig() {
 
 	fileData, _ := os.ReadFile(configPath)
 	json.Unmarshal(fileData, &Config)
+
+	// Migration: Ensure older configs default to network type
+	for i := range Config.Tuners {
+		if Config.Tuners[i].Type == "" {
+			Config.Tuners[i].Type = "network"
+		}
+	}
 }
 
 func saveConfig() {
@@ -146,18 +166,27 @@ func saveConfig() {
 }
 
 // ==========================================
-// 3. ADB & Tuning Logic
+// 3. Executable Path Helpers
 // ==========================================
-
-func getAdbPath() string {
+func getExeDir() string {
 	exePath, err := os.Executable()
 	if err != nil {
-		return "adb"
+		return "."
 	}
-	return filepath.Join(filepath.Dir(exePath), "adb.exe")
+	return filepath.Dir(exePath)
 }
 
-// ensureADBReady retries ADB server launch during system boot
+func getAdbPath() string {
+	return filepath.Join(getExeDir(), "adb.exe")
+}
+
+func getFFmpegPath() string {
+	return filepath.Join(getExeDir(), "ffmpeg.exe")
+}
+
+// ==========================================
+// 4. ADB & Tuning Logic
+// ==========================================
 func ensureADBReady() {
 	adb := getAdbPath()
 	log.Println("Verifying ADB daemon availability...")
@@ -231,18 +260,69 @@ func executeTuning(deviceIP string, ch Channel) {
 	targetURL := strings.ReplaceAll(provider.URLTemplate, "{id}", ch.DeepLinkContentID)
 	log.Printf("Tuning %s to %s via %s\n", deviceIP, ch.Name, provider.Name)
 
-	// Wake up device (KEYCODE_WAKEUP = 224)
 	adbCommand(deviceIP, "shell", "input", "keyevent", "224")
 	time.Sleep(1 * time.Second)
 
-	// Fire Deep Link Intent
 	adbCommand(deviceIP, "shell", "am", "start", "-a", "android.intent.action.VIEW", "-d", targetURL, "-n", provider.Intent)
 }
 
 // ==========================================
-// 4. Web Endpoints
+// 5. FFmpeg Hardware Discovery
 // ==========================================
+func apiDevices(w http.ResponseWriter, r *http.Request) {
+	ffmpeg := getFFmpegPath()
+	cmd := exec.Command(ffmpeg, "-list_devices", "true", "-f", "dshow", "-i", "dummy")
+	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 
+	// FFmpeg writes device lists to stderr, not stdout
+	out, _ := cmd.CombinedOutput()
+	lines := strings.Split(string(out), "\n")
+
+	devices := DeviceList{Video: []DShowDevice{}, Audio: []DShowDevice{}}
+	var currentType string
+	var lastDevice *DShowDevice
+
+	for _, line := range lines {
+		if strings.Contains(line, "DirectShow video devices") {
+			currentType = "video"
+			continue
+		}
+		if strings.Contains(line, "DirectShow audio devices") {
+			currentType = "audio"
+			continue
+		}
+
+		if strings.Contains(line, "\"") {
+			parts := strings.Split(line, "\"")
+			if len(parts) >= 3 {
+				val := parts[1]
+				if strings.Contains(line, "Alternative name") {
+					// Apply the hardware path ID to the last found device
+					if lastDevice != nil {
+						lastDevice.ID = val
+					}
+				} else {
+					// It's a new device name. We set ID to Name as a fallback.
+					newDev := DShowDevice{Name: val, ID: val}
+					if currentType == "video" {
+						devices.Video = append(devices.Video, newDev)
+						lastDevice = &devices.Video[len(devices.Video)-1]
+					} else if currentType == "audio" {
+						devices.Audio = append(devices.Audio, newDev)
+						lastDevice = &devices.Audio[len(devices.Audio)-1]
+					}
+				}
+			}
+		}
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(devices)
+}
+
+// ==========================================
+// 6. Web Endpoints & Routing
+// ==========================================
 func getLocalIP() string {
 	addrs, err := net.InterfaceAddrs()
 	if err == nil {
@@ -259,6 +339,19 @@ func getLocalIP() string {
 		}
 	}
 	return "127.0.0.1"
+}
+
+func apiActiveTuners(w http.ResponseWriter, r *http.Request) {
+	active := make(map[string]bool)
+	
+	tunerLock.Lock()
+	for _, t := range Config.Tuners {
+		active[t.DeviceIP] = t.InUse
+	}
+	tunerLock.Unlock()
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(active)
 }
 
 func healthCheck(w http.ResponseWriter, r *http.Request) {
@@ -290,7 +383,7 @@ func apiConfig(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// streamHandler proxies the video from the LinkPi encoder to Channels DVR
+// streamHandler branches based on Tuner Type (Local USB vs Network Encoder)
 func streamHandler(w http.ResponseWriter, r *http.Request) {
 	channelID := strings.TrimPrefix(r.URL.Path, "/stream/")
 
@@ -316,7 +409,63 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 
 	executeTuning(tuner.DeviceIP, *channel)
 
-	// Allow LinkPi encoder & Android app 2 seconds to establish output
+	// Common HTTP headers for MPEG-TS
+	w.Header().Set("Content-Type", "video/mp2t")
+	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+	w.Header().Set("Connection", "keep-alive")
+
+	// ==========================================
+	// BRANCH A: Local USB Capture (FFmpeg)
+	// ==========================================
+	if tuner.Type == "local" {
+		// Give the Android stick a moment to transition screens before capturing
+		time.Sleep(2 * time.Second)
+
+		ffmpeg := getFFmpegPath()
+		inputStr := fmt.Sprintf("video=%s:audio=%s", tuner.VideoDeviceID, tuner.AudioDeviceID)
+
+		// Command tells FFmpeg to ingest the specific DirectShow hardware ID, encode lightly via ultrafast preset, and output to standard pipe
+		args := []string{
+			"-hide_banner", "-loglevel", "error",
+			"-f", "dshow",
+			"-i", inputStr,
+			"-c:v", "libx264", "-preset", "ultrafast", "-pix_fmt", "yuv420p",
+			"-c:a", "aac", "-b:a", "192k", "-ar", "48000",
+			"-f", "mpegts",
+			"pipe:1",
+		}
+
+		cmd := exec.Command(ffmpeg, args...)
+		cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+
+		stdout, err := cmd.StdoutPipe()
+		if err != nil {
+			log.Println("FFmpeg stdout error:", err)
+			http.Error(w, "Capture card initialization failed", http.StatusInternalServerError)
+			return
+		}
+
+		if err := cmd.Start(); err != nil {
+			log.Println("FFmpeg start error:", err)
+			http.Error(w, "Failed to start FFmpeg", http.StatusInternalServerError)
+			return
+		}
+
+		w.WriteHeader(http.StatusOK)
+
+		// Pipe the FFmpeg stdout directly to the HTTP response
+		buf := make([]byte, 128*1024)
+		io.CopyBuffer(w, stdout, buf)
+
+		// Ensure FFmpeg dies immediately when Channels DVR disconnects
+		cmd.Process.Kill()
+		cmd.Wait()
+		return
+	}
+
+	// ==========================================
+	// BRANCH B: Network Encoder (LinkPi)
+	// ==========================================
 	time.Sleep(2 * time.Second)
 
 	req, err := http.NewRequestWithContext(r.Context(), "GET", tuner.EncoderURL, nil)
@@ -333,13 +482,8 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer resp.Body.Close()
 
-	// Stream headers to ensure Channels DVR treats it as a continuous TS feed
-	w.Header().Set("Content-Type", "video/mp2t")
-	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
-	w.Header().Set("Connection", "keep-alive")
 	w.WriteHeader(http.StatusOK)
 
-	// 128KB buffer eliminates micro-stutters during high-bitrate scenes
 	buf := make([]byte, 128*1024)
 	_, err = io.CopyBuffer(w, resp.Body, buf)
 	if err != nil {
@@ -349,7 +493,6 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 
 func generateM3U(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "audio/x-mpegurl")
-
 	fmt.Fprintf(w, "#EXTM3U x-tvh-max-streams=%d\n", len(Config.Tuners))
 
 	localIP := getLocalIP()
@@ -446,13 +589,22 @@ func checkTuners(w http.ResponseWriter, r *http.Request) {
 			defer wg.Done()
 
 			encoderOk := false
-			req, err := http.NewRequest("GET", tuner.EncoderURL, nil)
-			if err == nil {
-				client := http.Client{Timeout: 2 * time.Second}
-				resp, err := client.Do(req)
+
+			// Differentiate health checks based on the hardware type
+			if tuner.Type == "local" {
+				// For local USB dongles, verify FFmpeg is present
+				_, err := os.Stat(getFFmpegPath())
+				encoderOk = (err == nil)
+			} else {
+				// For network encoders, execute HTTP ping
+				req, err := http.NewRequest("GET", tuner.EncoderURL, nil)
 				if err == nil {
-					encoderOk = (resp.StatusCode == 200)
-					resp.Body.Close()
+					client := http.Client{Timeout: 2 * time.Second}
+					resp, err := client.Do(req)
+					if err == nil {
+						encoderOk = (resp.StatusCode == 200)
+						resp.Body.Close()
+					}
 				}
 			}
 
@@ -480,7 +632,7 @@ func checkTuners(w http.ResponseWriter, r *http.Request) {
 }
 
 // ==========================================
-// 5. Main Initialization
+// 7. Main Initialization
 // ==========================================
 func main() {
 	uiFlag := flag.Bool("ui", false, "Open the web dashboard in the default browser")
@@ -498,13 +650,14 @@ func main() {
 		return
 	}
 
-	// Verify ADB daemon readiness on startup
 	ensureADBReady()
 
 	http.HandleFunc("/", statusPage)
 	http.HandleFunc("/status", statusPage)
 	http.HandleFunc("/health", healthCheck)
 	http.HandleFunc("/api/config", apiConfig)
+	http.HandleFunc("/api/devices", apiDevices)
+	http.HandleFunc("/api/active_tuners", apiActiveTuners)
 	http.HandleFunc("/stream/", streamHandler)
 	http.HandleFunc("/channels.m3u", generateM3U)
 	http.HandleFunc("/remote", remotePage)
