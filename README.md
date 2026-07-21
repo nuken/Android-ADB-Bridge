@@ -59,7 +59,7 @@ Click **Add Provider** to tell the system which app you are watching:
 * **Provider Name:** e.g., YouTube TV
 * **Internal ID:** e.g., `yt_tv`
 * **App Intent:** The technical name of the app (e.g., `com.google.android.youtube.tvunplugged/...`)
-* **URL Template:** `[https://tv.youtube.com/watch/](https://tv.youtube.com/watch/){id}`
+* **URL Template:** [https://tv.youtube.com/watch/](`https://tv.youtube.com/watch/`){id}
 
 ### Step 3: Add Channels
 
