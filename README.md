@@ -1,4 +1,4 @@
-# Android ADB Bridge v5.0
+# Android ADB Bridge v5.0.2
 
 A lightweight, native Windows background service that controls Android TV devices via ADB to tune channels and stream live video for IPTV/Channels DVR integration.
 
@@ -75,3 +75,13 @@ To import your Android TV streams into a DVR or player like Channels DVR or VLC:
 ## 5. Built-in Remote & Live Preview
 * **Remote:** Click the "Open Remote" button to send standard D-pad and media playback commands directly to your Android devices from your PC or phone.
 * **Live Preview:** Click the purple "Play" icon next to any channel in your list to verify the stream is working directly in your browser.
+
+## 6. LinkPi Encoder Optimization Settings
+
+Access your LinkPi web dashboard and verify the primary stream settings:
+
+* **Bitrate Control:** Set to **CBR (Constant Bitrate)** rather than VBR. VBR causes sudden bitrate dips during static screens (like studio news backgrounds), which Channels DVR interprets as a frozen or dropped stream.
+* **Bitrate:** **8,000–12,000 Kbps** for 1080p60.
+* **Keyframe Interval (GOP):** Set this equal to **1x or 2x your frame rate** (e.g., if streaming at 60fps, set GOP to `60` or `120`). A keyframe interval longer than 2 seconds causes slow tune times and playback buffering in Channels DVR.
+* **Audio Format:** **AAC-LC**, 48 kHz, 192 Kbps. Ensure the audio sampling rate matches 48kHz, as 44.1kHz can drift over long recordings and cause micro-stutters.
+
