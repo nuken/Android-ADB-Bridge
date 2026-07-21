@@ -1,6 +1,6 @@
 # Android ADB Bridge v5.0.2
 
-A lightweight, native Windows background service that controls Android TV devices via ADB to tune channels and stream live video for IPTV/Channels DVR integration.
+A lightweight, native Windows background service that controls Android TV devices via ADB to tune channels and stream live video for Channels DVR integration.
 
 ---
 
@@ -31,7 +31,7 @@ Before the bridge can automatically control your Android TV (e.g., Chromecast wi
 
 ## 2. Installation and Launch
 
-1. Run the `AndroidBridge_Setup_v5.0.0.exe` installer.
+1. Run the `AndroidBridge_Setup_v5.0.2.exe` installer.
 2. The installer will automatically add the necessary Windows Firewall rules and set the app to start silently when Windows boots.
 3. Once installed, double-click the **Android ADB Bridge** shortcut on your Desktop or Start Menu. 
 4. This will automatically open your default web browser to the dashboard (e.g., `http://192.168.1.X:8888/status`).
@@ -69,7 +69,7 @@ Click **Add Channel** to map specific broadcasts.
 
 To import your Android TV streams into a DVR or player like Channels DVR or VLC:
 1. Click the **Copy M3U Link** button at the top of the Status page.
-2. Paste this URL into your IPTV software's Custom Channel / M3U source.
+2. Paste this URL into your Custom Channel / M3U source.
 3. The Bridge will automatically handle the tuning, concurrency locking, and video stream proxying natively!
 
 ## 5. Built-in Remote & Live Preview
