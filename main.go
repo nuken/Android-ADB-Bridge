@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"html/template"
 	"io"
+	"log"
 	"net"
 	"net/http"
 	"os"
@@ -55,28 +56,35 @@ type AppConfig struct {
 }
 
 var Config AppConfig
-var AppVersion = "5.0.0-GO"
+var AppVersion = "5.1.0-GO"
 var tunerLock sync.Mutex // Prevents race conditions when locking tuners
+
+// Optimized HTTP Client specifically for long-lived MPEG-TS stream proxying
+var streamClient = &http.Client{
+	Transport: &http.Transport{
+		DialContext: (&net.Dialer{
+			Timeout:   5 * time.Second,
+			KeepAlive: 30 * time.Second,
+		}).DialContext,
+		ResponseHeaderTimeout: 10 * time.Second,
+		DisableCompression:    true, // MPEG-TS video is already compressed
+	},
+	Timeout: 0, // Infinite timeout for live streaming
+}
 
 // ==========================================
 // App Initialization
 // ==========================================
 func init() {
-	// Define a shared, system-wide path for ADB keys (C:\ProgramData\AndroidADBBridge\.android)
 	programData := os.Getenv("ProgramData")
 	if programData == "" {
 		programData = `C:\ProgramData`
 	}
 
 	sharedAdbPath := filepath.Join(programData, "AndroidADBBridge")
-
-	// Ensure the directory exists
 	os.MkdirAll(sharedAdbPath, os.ModePerm)
 
-	// Force ADB to use this shared directory for its keys instead of the user profile
 	os.Setenv("ANDROID_USER_HOME", sharedAdbPath)
-
-	// Fallback for older ADB versions
 	os.Setenv("ANDROID_SDK_HOME", sharedAdbPath)
 }
 
@@ -91,18 +99,14 @@ func getConfigPath() string {
 	return filepath.Join(appData, "AndroidADBBridge", "android_channels.json")
 }
 
-// getAvailablePort finds the next open network port starting from a given number
 func getAvailablePort(startPort int) int {
 	port := startPort
 	for {
-		// Attempt to open the port
 		ln, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
 		if err == nil {
-			// Port is available! Close our test connection and return the number
 			ln.Close()
 			return port
 		}
-		// Port is in use, increment and try the next one
 		port++
 	}
 }
@@ -113,7 +117,6 @@ func loadConfig() {
 	os.MkdirAll(configDir, os.ModePerm)
 
 	if _, err := os.Stat(configPath); os.IsNotExist(err) {
-		// Automatically find an open port starting at 8888
 		openPort := getAvailablePort(8888)
 
 		Config = AppConfig{
@@ -146,20 +149,35 @@ func saveConfig() {
 // 3. ADB & Tuning Logic
 // ==========================================
 
-// getAdbPath finds the bundled adb.exe sitting next to our app
 func getAdbPath() string {
 	exePath, err := os.Executable()
 	if err != nil {
-		return "adb" // Fallback to system path if error
+		return "adb"
 	}
 	return filepath.Join(filepath.Dir(exePath), "adb.exe")
 }
 
-// adbCommand wraps os/exec to run ADB commands without flashing a cmd window
-func adbCommand(deviceIP string, args ...string) error {
-	adb := getAdbPath() // Get the exact path
+// ensureADBReady retries ADB server launch during system boot
+func ensureADBReady() {
+	adb := getAdbPath()
+	log.Println("Verifying ADB daemon availability...")
 
-	// Reconnect first to prevent offline errors
+	for i := 1; i <= 10; i++ {
+		cmd := exec.Command(adb, "start-server")
+		cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+		if err := cmd.Run(); err == nil {
+			log.Println("ADB server initialized successfully.")
+			return
+		}
+		log.Printf("Waiting for ADB daemon to start (attempt %d/10)...\n", i)
+		time.Sleep(2 * time.Second)
+	}
+	log.Println("Warning: ADB server did not respond during startup. Will attempt auto-connects on request.")
+}
+
+func adbCommand(deviceIP string, args ...string) error {
+	adb := getAdbPath()
+
 	connectCmd := exec.Command(adb, "connect", deviceIP)
 	connectCmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 	connectCmd.Run()
@@ -189,9 +207,7 @@ func releaseTuner(deviceIP string) {
 	for i := range Config.Tuners {
 		if Config.Tuners[i].DeviceIP == deviceIP {
 			Config.Tuners[i].InUse = false
-			fmt.Printf("Released tuner %s. Sending Home command.\n", deviceIP)
-
-			// Send the Home key in the background so it doesn't block the exit
+			log.Printf("Released tuner %s. Sending Home command.\n", deviceIP)
 			go adbCommand(deviceIP, "shell", "input", "keyevent", "3")
 			break
 		}
@@ -199,7 +215,6 @@ func releaseTuner(deviceIP string) {
 }
 
 func executeTuning(deviceIP string, ch Channel) {
-	// 1. Locate the correct provider
 	var provider *Provider
 	for _, p := range Config.Providers {
 		if p.ID == ch.ProviderID {
@@ -209,19 +224,18 @@ func executeTuning(deviceIP string, ch Channel) {
 	}
 
 	if provider == nil {
-		fmt.Printf("Error: Provider '%s' not found for channel '%s'\n", ch.ProviderID, ch.Name)
+		log.Printf("Error: Provider '%s' not found for channel '%s'\n", ch.ProviderID, ch.Name)
 		return
 	}
 
-	// 2. Build the exact URL dynamically
 	targetURL := strings.ReplaceAll(provider.URLTemplate, "{id}", ch.DeepLinkContentID)
-	fmt.Printf("Tuning %s to %s via %s\n", deviceIP, ch.Name, provider.Name)
+	log.Printf("Tuning %s to %s via %s\n", deviceIP, ch.Name, provider.Name)
 
-	// 3. Wake the device
+	// Wake up device (KEYCODE_WAKEUP = 224)
 	adbCommand(deviceIP, "shell", "input", "keyevent", "224")
 	time.Sleep(1 * time.Second)
 
-	// 4. Fire the Deep Link Intent
+	// Fire Deep Link Intent
 	adbCommand(deviceIP, "shell", "am", "start", "-a", "android.intent.action.VIEW", "-d", targetURL, "-n", provider.Intent)
 }
 
@@ -229,34 +243,33 @@ func executeTuning(deviceIP string, ch Channel) {
 // 4. Web Endpoints
 // ==========================================
 
-// getLocalIP safely finds the home network IP, ignoring VPNs and Loopbacks
 func getLocalIP() string {
 	addrs, err := net.InterfaceAddrs()
 	if err == nil {
 		for _, address := range addrs {
-			// Check if the address is an IPv4 and NOT a loopback (127.0.0.1)
 			if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() && ipnet.IP.To4() != nil {
 				ip := ipnet.IP.String()
-
-				// Standard home routers almost always use 192.168.x.x
-				// We prioritize this to bypass virtual adapters from VPNs or VMware
 				if strings.HasPrefix(ip, "192.168.") {
 					return ip
 				}
-				// Secondary fallbacks for less common home networks (10.x.x.x or 172.16-31.x.x)
 				if strings.HasPrefix(ip, "10.") || strings.HasPrefix(ip, "172.") {
 					return ip
 				}
 			}
 		}
 	}
-	return "127.0.0.1" // Absolute fallback
+	return "127.0.0.1"
+}
+
+func healthCheck(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte(fmt.Sprintf(`{"status":"ok","version":"%s"}`, AppVersion)))
 }
 
 func statusPage(w http.ResponseWriter, r *http.Request) {
 	tmpl, err := template.ParseFS(embeddedFiles, "templates/status.html")
 	if err != nil {
-		fmt.Println("CRITICAL TEMPLATE ERROR:", err)
 		http.Error(w, "Could not load template", http.StatusInternalServerError)
 		return
 	}
@@ -277,12 +290,10 @@ func apiConfig(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// streamHandler proxies the video from the LinkPi to the client
+// streamHandler proxies the video from the LinkPi encoder to Channels DVR
 func streamHandler(w http.ResponseWriter, r *http.Request) {
-	// Extract the channel ID from the URL path
 	channelID := strings.TrimPrefix(r.URL.Path, "/stream/")
 
-	// Find the requested channel
 	var channel *Channel
 	for _, c := range Config.Channels {
 		if c.ID == channelID {
@@ -296,39 +307,46 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Attempt to lock an available tuner
 	tuner := lockTuner()
 	if tuner == nil {
 		http.Error(w, "All tuners are currently in use", http.StatusServiceUnavailable)
 		return
 	}
-
-	// Ensure the tuner is released to the Home screen when the connection drops
 	defer releaseTuner(tuner.DeviceIP)
 
-	// Tune the Android device
 	executeTuning(tuner.DeviceIP, *channel)
 
-	// Give the LinkPi a moment to start encoding the new stream
+	// Allow LinkPi encoder & Android app 2 seconds to establish output
 	time.Sleep(2 * time.Second)
 
-	// Connect to the raw TS stream
-	resp, err := http.Get(tuner.EncoderURL)
+	req, err := http.NewRequestWithContext(r.Context(), "GET", tuner.EncoderURL, nil)
 	if err != nil {
-		fmt.Println("Encoder connection error:", err)
+		http.Error(w, "Invalid encoder URL", http.StatusInternalServerError)
+		return
+	}
+
+	resp, err := streamClient.Do(req)
+	if err != nil {
+		log.Println("Encoder connection error:", err)
 		http.Error(w, "Failed to connect to encoder", http.StatusBadGateway)
 		return
 	}
 	defer resp.Body.Close()
 
-	// Set headers for raw TS streaming
+	// Stream headers to ensure Channels DVR treats it as a continuous TS feed
 	w.Header().Set("Content-Type", "video/mp2t")
+	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+	w.Header().Set("Connection", "keep-alive")
+	w.WriteHeader(http.StatusOK)
 
-	// io.Copy seamlessly pipes the stream from the encoder directly to the client
-	io.Copy(w, resp.Body)
+	// 128KB buffer eliminates micro-stutters during high-bitrate scenes
+	buf := make([]byte, 128*1024)
+	_, err = io.CopyBuffer(w, resp.Body, buf)
+	if err != nil {
+		log.Printf("Stream closed or client disconnected: %v\n", err)
+	}
 }
 
-// generateM3U builds the playlist format required by IPTV clients
 func generateM3U(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "audio/x-mpegurl")
 
@@ -343,13 +361,10 @@ func generateM3U(w http.ResponseWriter, r *http.Request) {
 		}
 
 		fmt.Fprintf(w, "#EXTINF:-1 channel-id=\"%s\"%s,%s\n", ch.ID, stationData, ch.Name)
-
-		// Lock the stream URL to the actual network IP instead of localhost
 		fmt.Fprintf(w, "http://%s:%d/stream/%s\n", localIP, Config.Port, ch.ID)
 	}
 }
 
-// remotePage serves the HTML for the remote control UI
 func remotePage(w http.ResponseWriter, r *http.Request) {
 	tmpl, err := template.ParseFS(embeddedFiles, "templates/remote.html")
 	if err != nil {
@@ -359,9 +374,7 @@ func remotePage(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, nil)
 }
 
-// remoteKeypress translates friendly key names into ADB keycodes
 func remoteKeypress(w http.ResponseWriter, r *http.Request) {
-	// Expected URL pattern: /remote/keypress/{device_ip}/{key}
 	parts := strings.Split(r.URL.Path, "/")
 	if len(parts) < 5 {
 		http.Error(w, "Invalid request", http.StatusBadRequest)
@@ -371,7 +384,6 @@ func remoteKeypress(w http.ResponseWriter, r *http.Request) {
 	deviceIP := parts[3]
 	key := parts[4]
 
-	// Map the friendly string names to Android KeyCodes
 	keyMap := map[string]string{
 		"Home": "3", "Back": "4", "Select": "66", "Enter": "66",
 		"Up": "19", "Down": "20", "Left": "21", "Right": "22",
@@ -385,19 +397,15 @@ func remoteKeypress(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Fire the key event in a background thread so the UI doesn't hang
 	go adbCommand(deviceIP, "shell", "input", "keyevent", adbKey)
 
 	w.Header().Set("Content-Type", "application/json")
 	w.Write([]byte(`{"status": "success"}`))
 }
 
-// previewPage serves the video player UI
 func previewPage(w http.ResponseWriter, r *http.Request) {
-	// Extract the channel ID from the URL path
 	channelID := strings.TrimPrefix(r.URL.Path, "/preview/")
 
-	// Find the requested channel
 	var channel *Channel
 	for _, c := range Config.Channels {
 		if c.ID == channelID {
@@ -417,31 +425,26 @@ func previewPage(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Pass the specific channel struct to the template
 	tmpl.Execute(w, channel)
 }
 
-// TunerStatus holds the real-time connection state
 type TunerStatus struct {
 	DeviceIP      string `json:"device_ip"`
 	AdbOnline     bool   `json:"adb_online"`
 	EncoderOnline bool   `json:"encoder_online"`
 }
 
-// checkTuners concurrently tests the ADB and Encoder connections
 func checkTuners(w http.ResponseWriter, r *http.Request) {
 	var statuses []TunerStatus
 	var wg sync.WaitGroup
-	var mu sync.Mutex // Protects the slice during concurrent appends
+	var mu sync.Mutex
 
 	for _, t := range Config.Tuners {
 		wg.Add(1)
 
-		// Spin up a background goroutine for each tuner so they check simultaneously
 		go func(tuner Tuner) {
 			defer wg.Done()
 
-			// 1. Check Encoder (Connect, get 200 OK, and immediately close to prevent stream download)
 			encoderOk := false
 			req, err := http.NewRequest("GET", tuner.EncoderURL, nil)
 			if err == nil {
@@ -453,16 +456,13 @@ func checkTuners(w http.ResponseWriter, r *http.Request) {
 				}
 			}
 
-			// 2. Check ADB (Attempt to connect and read output)
 			adb := getAdbPath()
 			cmd := exec.Command(adb, "connect", tuner.DeviceIP)
 			cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 			out, _ := cmd.Output()
 			outStr := strings.ToLower(string(out))
-			// ADB returns "connected to <ip>" or "already connected" if successful
 			adbOk := strings.Contains(outStr, "connected")
 
-			// Lock the slice, append the result, and unlock
 			mu.Lock()
 			statuses = append(statuses, TunerStatus{
 				DeviceIP:      tuner.DeviceIP,
@@ -473,7 +473,6 @@ func checkTuners(w http.ResponseWriter, r *http.Request) {
 		}(t)
 	}
 
-	// Wait for all concurrent checks to finish
 	wg.Wait()
 
 	w.Header().Set("Content-Type", "application/json")
@@ -484,30 +483,27 @@ func checkTuners(w http.ResponseWriter, r *http.Request) {
 // 5. Main Initialization
 // ==========================================
 func main() {
-	// 1. Define the -ui command line flag
 	uiFlag := flag.Bool("ui", false, "Open the web dashboard in the default browser")
 	flag.Parse()
 
-	// Load the config (which contains the active port)
 	loadConfig()
 
-	// 2. If launched via the Desktop Shortcut (which passes the -ui flag)
 	if *uiFlag {
 		localIP := getLocalIP()
 		targetURL := fmt.Sprintf("http://%s:%d/status", localIP, Config.Port)
 
-		// Use the native Windows API to open the default web browser invisibly
 		cmd := exec.Command("rundll32", "url.dll,FileProtocolHandler", targetURL)
 		cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 		cmd.Start()
-
-		// Exit this instance immediately so it doesn't try to start a second server
 		return
 	}
 
-	// 3. Normal background server startup
+	// Verify ADB daemon readiness on startup
+	ensureADBReady()
+
 	http.HandleFunc("/", statusPage)
 	http.HandleFunc("/status", statusPage)
+	http.HandleFunc("/health", healthCheck)
 	http.HandleFunc("/api/config", apiConfig)
 	http.HandleFunc("/stream/", streamHandler)
 	http.HandleFunc("/channels.m3u", generateM3U)
@@ -517,5 +513,8 @@ func main() {
 	http.HandleFunc("/api/check_tuners", checkTuners)
 
 	portString := fmt.Sprintf(":%d", Config.Port)
-	http.ListenAndServe(portString, nil)
+	log.Printf("ADB Bridge server listening on %s\n", portString)
+	if err := http.ListenAndServe(portString, nil); err != nil {
+		log.Fatalf("Server startup failed: %v\n", err)
+	}
 }
