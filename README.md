@@ -80,8 +80,9 @@ To import your Android TV streams into a DVR or player like Channels DVR or VLC:
 
 Access your LinkPi web dashboard and verify the primary stream settings:
 
+* **Video Codec & Profile:** Set the codec to **H.264** and select the **High** profile. This provides the highest compression efficiency and maximum visual fidelity for HD video, which modern playback hardware can decode flawlessly.
 * **Bitrate Control:** Set to **CBR (Constant Bitrate)** rather than VBR. VBR causes sudden bitrate dips during static screens (like studio news backgrounds), which Channels DVR interprets as a frozen or dropped stream.
 * **Bitrate:** **8,000–12,000 Kbps** for 1080p60.
-* **Keyframe Interval (GOP):** Set this equal to **1x or 2x your frame rate** (e.g., if streaming at 60fps, set GOP to `60` or `120`). A keyframe interval longer than 2 seconds causes slow tune times and playback buffering in Channels DVR.
+* **Keyframe Interval (GOP):** Set this to **`1`** or **`2`**. In the LinkPi dashboard, the GOP unit is measured in **seconds**, not frames. A keyframe interval longer than 2 seconds causes slow tune times and playback buffering in Channels DVR.
 * **Audio Format:** **AAC-LC**, 48 kHz, 192 Kbps. Ensure the audio sampling rate matches 48kHz, as 44.1kHz can drift over long recordings and cause micro-stutters.
 
