@@ -54,23 +54,21 @@ Before this tool can control your streaming stick, you need to turn on a built-i
 
 ## 3. Setting Up Your Channels and Devices
 
-### Step 1: Add a Tuner (Your TV Box & Video Encoder)
-*:link:[Common Intent List](docs/intent.md)*
-In the web page dashboard, click **Add Device** under the Tuners section:
-
 * **Name:** Give it a friendly name (e.g., Living Room Shield).
 * **Device IP:** Type in the TV IP address you wrote down earlier.
 * **Encoder URL:** The live video link coming out of your hardware video encoder box (like a LinkPi).
 
 ### Step 2: Add a Provider (Your Streaming App)
 
+*:link:[Common Intent List](docs/intent.md)*
+
 Click **Add Provider** to tell the system which app you are watching:
 
 * **Provider Name:** e.g., YouTube TV
 * **Internal ID:** e.g., `yt_tv`
-* **App Intent:** The technical name of the app (e.g., `com.google.android.youtube.tvunplugged/...`)
+* **Package Name:** The core system name of the app (e.g., `com.google.android.youtube.tvunplugged`)
+* **Component (Activity):** The specific launch command (e.g., `com.google.android.apps.youtube.tvunplugged.activity.MainActivity`)
 * **URL Template:** `https://tv.youtube.com/watch/{id}`
-
 ### Step 3: Add Channels
 
 Click **Add Channel** to map out your favorite networks:
