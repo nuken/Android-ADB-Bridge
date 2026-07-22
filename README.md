@@ -101,3 +101,28 @@ If you are using a LinkPi or similar hardware encoder box, log into its web sett
 * **Video Quality (Bitrate):** Set between **8,000 to 12,000 Kbps** for clear 1080p sports and shows.
 * **Keyframe Speed (GOP):** Set this to **`1`** or **`2`** seconds. (Note: Make sure it's set to seconds, not frames). This ensures the video pops up instantly on your screen when you change the channel without endless buffering.
 * **Audio Format:** Choose **AAC-LC**, **48 kHz**, at **192 Kbps** to keep the sound locked tightly in sync with the picture over long recordings.
+
+---
+
+## 7. Using a Local USB Capture Card (New!)
+
+If you don't want to buy or configure a network encoder (like a LinkPi), you can now use a standard, inexpensive USB HDMI capture dongle plugged directly into your PC! The Android Bridge will automatically find the capture card, grab the video, and send it straight to your DVR.
+
+**Step 1: The Hardware Setup**
+
+1. Plug your Android TV stick directly into the HDMI port of your USB capture card.
+2. Plug the USB capture card into an available USB port on your PC.
+3. Power the Android TV stick using its normal wall plug.
+
+**Step 2: Adding it to the Dashboard**
+
+1. Open the Android ADB Bridge web dashboard.
+2. Click **Add Device** under the Tuners section.
+3. Enter a friendly name and the IP address of your Android stick.
+4. Change the **Capture Type** dropdown to **Local USB Capture Card**.
+5. The app will automatically search your PC for connected hardware. Simply select your capture card from the **Video** and **Audio** dropdown menus (it will usually be named something like `USB3 Video`, `USB Video`, or `FHD Capture`).
+6. Click **Save**. The dashboard will display a green checkmark once the camera is ready to stream!
+
+> **Pro-Tip for Multiple Dongles:**
+> A single 1080p video stream uses a lot of USB bandwidth. If you are plugging **two** capture cards into the same PC, try to spread them out. Plug one into the back of your computer (directly into the motherboard) and plug the second one into the front panel of your PC case. This prevents the USB ports from getting overloaded and guarantees smooth playback.
+
