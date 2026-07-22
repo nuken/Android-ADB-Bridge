@@ -1,7 +1,17 @@
-
 # Android ADB Bridge v5.0.3
 
 A lightweight background tool for Windows that connects your PC to your streaming sticks (like Chromecast, Nvidia Shield, or Onn 4K boxes). It automatically changes channels on your streaming apps and sends the live video straight to your DVR software.
+
+---
+
+## Table of Contents
+- [1. Preparing Your Streaming Stick (Developer Connection)](#1-preparing-your-streaming-stick-developer-connection)
+- [2. Installation and Launch](#2-installation-and-launch)
+- [3. Setting Up Your Channels and Devices](#3-setting-up-your-channels-and-devices)
+- [4. Connecting to Your DVR](#4-connecting-to-your-dvr)
+- [5. Built-in Remote Control & Live Preview](#5-built-in-remote-control--live-preview)
+- [6. Hardware Video Encoder Tips (For Best Picture & Speed)](#6-hardware-video-encoder-tips-for-best-picture--speed)
+- [7. Using a Local USB Capture Card (New!)](#7-using-a-local-usb-capture-card-new)
 
 ---
 
@@ -38,7 +48,7 @@ Before this tool can control your streaming stick, you need to turn on a built-i
 1. Double-click the `AndroidBridge_Setup_v5.0.3.exe` file to run the installer.
 2. The installer automatically handles safety settings (like Windows Firewall) and sets the app to start up quietly in the background whenever you turn on your PC.
 3. Once installed, double-click the **Android ADB Bridge** shortcut on your Desktop or Start Menu.
-4. This will automatically open your web browser to the app's control panel (usually `[http://192.168.1.](http://192.168.1.)X:8888/status`).
+4. This will automatically open your web browser to the app's control panel (usually `http://192.168.1.X:8888/status`).
 
 ---
 
@@ -59,7 +69,7 @@ Click **Add Provider** to tell the system which app you are watching:
 * **Provider Name:** e.g., YouTube TV
 * **Internal ID:** e.g., `yt_tv`
 * **App Intent:** The technical name of the app (e.g., `com.google.android.youtube.tvunplugged/...`)
-* **URL Template:** [https://tv.youtube.com/watch/](`https://tv.youtube.com/watch/`){id}
+* **URL Template:** `https://tv.youtube.com/watch/{id}`
 
 ### Step 3: Add Channels
 
@@ -123,6 +133,5 @@ If you don't want to buy or configure a network encoder (like a LinkPi), you can
 5. The app will automatically search your PC for connected hardware. Simply select your capture card from the **Video** and **Audio** dropdown menus (it will usually be named something like `USB3 Video`, `USB Video`, or `FHD Capture`).
 6. Click **Save**. The dashboard will display a green checkmark once the camera is ready to stream!
 
-> **Pro-Tip for Multiple Dongles:**
+> **💡 Pro-Tip for Multiple Dongles:**
 > A single 1080p video stream uses a lot of USB bandwidth. If you are plugging **two** capture cards into the same PC, try to spread them out. Plug one into the back of your computer (directly into the motherboard) and plug the second one into the front panel of your PC case. This prevents the USB ports from getting overloaded and guarantees smooth playback.
-
