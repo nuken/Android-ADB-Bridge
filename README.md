@@ -1,4 +1,4 @@
-# Android ADB Bridge v5.0.4
+# Android ADB Bridge v5.0.4 Win-Go
 
 A lightweight background tool for Windows that connects your PC to your streaming sticks (like Chromecast, Nvidia Shield, or Onn 4K boxes). It automatically changes channels on your streaming apps and sends the live video straight to your DVR software.
 
