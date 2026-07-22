@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root { --bg-color: #2c2c2c; --surface-color: #3a3a3a; --primary-color: #7dd3fc; --text-color: #e0e0e0; --border-color: #4a4a4a; --success-color: #28a745; --error-color: #dc3545; --button-color: #007bff; --button-hover-color: #0056b3; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 20px; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 20px 20px 80px 20px; }
         .container { max-width: 900px; margin: 0 auto; background-color: var(--surface-color); border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
         h1, h2 { color: var(--primary-color); border-bottom: 2px solid var(--border-color); padding-bottom: 10px; }
         .top-actions { display: flex; gap: 10px; margin-bottom: 20px; }
@@ -15,7 +15,7 @@
         table { width: 100%; border-collapse: collapse; min-width: 600px; }
         th, td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); }
         th { background-color: var(--border-color); }
-        .button, .action-button { background-color: var(--button-color); color: white; padding: 10px 15px; border: none; border-radius: 8px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+        .button, .action-button { background-color: var(--button-color); color: white; padding: 10px 15px; border: none; border-radius: 8px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: background-color 0.2s; }
         .button:hover { background-color: var(--button-hover-color); }
         .action-button { padding: 6px 10px; font-size: 0.9em; }
         .action-button.delete { background-color: var(--error-color); }
@@ -24,6 +24,31 @@
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; margin-bottom: 5px; }
         .form-group input, .form-group select { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #555; background-color: #222; color: white; box-sizing: border-box; }
+        
+        /* New Floating Save Banner Styles */
+        .save-banner {
+            display: none;
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--surface-color);
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            z-index: 2000;
+            border: 2px solid var(--success-color);
+            align-items: center;
+            gap: 20px;
+        }
+        .save-banner.show {
+            display: flex;
+            animation: slideUp 0.3s ease-out;
+        }
+        @keyframes slideUp {
+            from { bottom: -100px; opacity: 0; }
+            to { bottom: 30px; opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -39,7 +64,7 @@
         <h2><i class="fa-solid fa-server"></i> Tuners (Devices)</h2>
         <div class="table-wrapper">
             <table id="tuners-table">
-                <thead><tr><th>Name</th><th>Device IP</th><th>Encoder URL</th><th>Actions</th></tr></thead>
+                <thead><tr><th>Name</th><th>Device IP</th><th>Capture Source / URL</th><th>Actions</th></tr></thead>
                 <tbody id="tuners-table-body"></tbody>
             </table>
         </div>
@@ -62,23 +87,48 @@
             </table>
         </div>
         <button class="button" onclick="openChannelModal()" style="margin-top: 10px;"><i class="fa-solid fa-plus"></i> Add Channel</button>
-
-        <h2 style="margin-top: 30px;"><i class="fa-solid fa-floppy-disk"></i> Config</h2>
-        <div style="display:flex; gap:10px;">
-            <button class="button" style="background-color: var(--success-color); width: 100%; font-weight: bold; justify-content: center;" onclick="saveConfigToServer()"><i class="fa-solid fa-save"></i> Save Changes to Disk</button>
-        </div>
     </div>
 
+    <!-- Floating Save Banner -->
+    <div id="save-banner" class="save-banner">
+        <span style="font-weight: bold; font-size: 1.1em;"><i class="fa-solid fa-triangle-exclamation" style="color: #f1c40f;"></i> You have unsaved changes!</span>
+        <button id="save-banner-btn" class="button" style="background-color: var(--success-color); font-weight: bold; font-size: 1.1em;" onclick="saveConfigToServer()"><i class="fa-solid fa-save"></i> Save Now</button>
+    </div>
+
+    <!-- Edit Tuner Modal -->
     <div id="tuner-modal" class="modal">
         <div class="modal-content">
             <h3>Edit Tuner</h3>
             <form id="tuner-form">
                 <input type="hidden" id="tuner-index">
                 <div class="form-group"><label>Name</label><input type="text" id="tuner-name" required></div>
-                <div class="form-group"><label>Device IP</label><input type="text" id="tuner-ip" required></div>
-                <div class="form-group"><label>Encoder URL</label><input type="text" id="tuner-url" required></div>
+                <div class="form-group"><label>Device IP (ADB)</label><input type="text" id="tuner-ip" required></div>
+                
+                <div class="form-group">
+                    <label>Capture Type</label>
+                    <select id="tuner-type" onchange="toggleTunerTypeFields()">
+                        <option value="network">Network Encoder (LinkPi, HTTP)</option>
+                        <option value="local">Local USB Capture Card (FFmpeg DirectShow)</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="group-encoder-url">
+                    <label>Encoder URL</label>
+                    <input type="text" id="tuner-url">
+                </div>
+
+                <div class="form-group" id="group-local-video" style="display:none;">
+                    <label>Video Capture Device</label>
+                    <select id="tuner-video-dev"></select>
+                </div>
+
+                <div class="form-group" id="group-local-audio" style="display:none;">
+                    <label>Audio Capture Device</label>
+                    <select id="tuner-audio-dev"></select>
+                </div>
+
                 <div class="form-group"><label>Priority</label><input type="number" id="tuner-priority" value="99" required></div>
-                <button type="submit" class="button">Save</button>
+                <button type="submit" class="button">Apply</button>
                 <button type="button" class="button" style="background:#666" onclick="closeModal('tuner-modal')">Cancel</button>
             </form>
         </div>
@@ -91,9 +141,18 @@
                 <input type="hidden" id="provider-index">
                 <div class="form-group"><label>Provider Name (e.g. YouTube TV)</label><input type="text" id="prov-name" required></div>
                 <div class="form-group"><label>Internal ID (e.g. yt_tv)</label><input type="text" id="prov-id" required></div>
-                <div class="form-group"><label>App Intent</label><input type="text" id="prov-intent" required></div>
+                
+                <div class="form-group">
+                    <label>Package Name</label>
+                    <input type="text" id="prov-package" placeholder="e.g. com.google.android.youtube.tvunplugged" required>
+                </div>
+                <div class="form-group">
+                    <label>Component (Activity)</label>
+                    <input type="text" id="prov-component" placeholder="e.g. com.google.android.apps.youtube.tvunplugged.activity.MainActivity" required>
+                </div>
+                
                 <div class="form-group"><label>URL Template (use {id} for target)</label><input type="text" id="prov-url" required></div>
-                <button type="submit" class="button">Save</button>
+                <button type="submit" class="button">Apply</button>
                 <button type="button" class="button" style="background:#666" onclick="closeModal('provider-modal')">Cancel</button>
             </form>
         </div>
@@ -112,7 +171,7 @@
                 </div>
                 <div class="form-group"><label>Deep Link ID</label><input type="text" id="ch-deeplink" required></div>
                 <div class="form-group"><label>Guide Station ID (Optional)</label><input type="text" id="ch-stationid"></div>
-                <button type="submit" class="button">Save</button>
+                <button type="submit" class="button">Apply</button>
                 <button type="button" class="button" style="background:#666" onclick="closeModal('channel-modal')">Cancel</button>
             </form>
         </div>
@@ -120,6 +179,19 @@
 
     <script>
         let config = { tuners: [], providers: [], channels: [] };
+        let hardwareDevices = { video: [], audio: [] };
+        let activePoller = null; 
+
+        // State Tracking for the Save Banner
+        let hasUnsavedChanges = false;
+        function markUnsaved() {
+            hasUnsavedChanges = true;
+            document.getElementById('save-banner').classList.add('show');
+        }
+        function markSaved() {
+            hasUnsavedChanges = false;
+            document.getElementById('save-banner').classList.remove('show');
+        }
 
         async function loadConfig() {
             const res = await fetch('/api/config');
@@ -128,27 +200,42 @@
             config.providers = config.providers || [];
             config.channels = config.channels || [];
             
+            markSaved(); // Ensure banner is hidden on fresh load
             renderTables();
-            loadTunerStatuses(); // Trigger the connection ping after the table draws
+            
+            if (!activePoller) {
+                pollActiveTuners();
+                activePoller = setInterval(pollActiveTuners, 3000);
+            } else {
+                pollActiveTuners();
+            }
         }
 
         function fetchStatus() { loadConfig(); }
 
         function renderTables() {
-            // Render Tuners (Updated with Status Icons)
             document.getElementById('tuners-table-body').innerHTML = config.tuners.map((t, i) => {
-                // Create a safe ID string by replacing dots in the IP address with dashes
                 const safeIp = t.device_ip.replace(/\./g, '-');
+                const isLocal = t.type === 'local';
+                const sourceDisplay = isLocal 
+                    ? `<i class="fa-solid fa-plug" title="USB Capture Card"></i> [USB] ${t.video_device_id || 'Default Card'}` 
+                    : t.encoder_url;
+
                 return `
                 <tr>
-                    <td>${t.name} <span style="font-size: 0.8em; color: #aaa;">(Pri: ${t.priority || 99})</span></td>
+                    <td>
+                        ${t.name} <span style="font-size: 0.8em; color: #aaa;">(Pri: ${t.priority || 99})</span>
+                        <span id="usage-badge-${safeIp}" style="margin-left: 10px; padding: 2px 8px; border-radius: 12px; font-size: 0.75em; background: #555; color: white;">
+                            <i class="fa-solid fa-spinner fa-spin"></i>
+                        </span>
+                    </td>
                     <td>
                         <span id="adb-icon-${safeIp}"><i class="fa-solid fa-spinner fa-spin" style="color:#888" title="Checking ADB..."></i></span> 
                         ${t.device_ip}
                     </td>
                     <td>
                         <span id="enc-icon-${safeIp}"><i class="fa-solid fa-spinner fa-spin" style="color:#888" title="Checking Encoder..."></i></span> 
-                        ${t.encoder_url}
+                        ${sourceDisplay}
                     </td>
                     <td>
                         <button class="action-button" onclick="editTuner(${i})"><i class="fa-solid fa-pencil"></i></button>
@@ -156,8 +243,7 @@
                     </td>
                 </tr>
             `}).join('');
-
-            // Render Providers
+            
             document.getElementById('providers-table-body').innerHTML = config.providers.map((p, i) => `
                 <tr>
                     <td>${p.name}</td>
@@ -169,7 +255,6 @@
                 </tr>
             `).join('');
 
-            // Render Channels (Now with Drag & Drop and Preview Buttons!)
             document.getElementById('channels-table-body').innerHTML = config.channels.map((c, i) => `
                 <tr draggable="true" ondragstart="dragStart(event, ${i})" ondragover="dragOver(event)" ondrop="drop(event, ${i})" ondragend="dragEnd(event)">
                     <td style="cursor: grab;" title="Drag to reorder">
@@ -189,17 +274,25 @@
                     </td>
                 </tr>
             `).join('');
+
+            loadTunerStatuses(); 
         }
 		
-		async function loadTunerStatuses() {
+        async function loadTunerStatuses() {
             try {
-                const res = await fetch('/api/check_tuners');
-                const statuses = await res.json();
+                const [hwRes, activeRes] = await Promise.all([
+                    fetch('/api/check_tuners'),
+                    fetch('/api/active_tuners')
+                ]);
+                
+                const statuses = await hwRes.json();
+                const activeTuners = await activeRes.json();
                 
                 statuses.forEach(s => {
                     const safeIp = s.device_ip.replace(/\./g, '-');
                     const adbEl = document.getElementById(`adb-icon-${safeIp}`);
                     const encEl = document.getElementById(`enc-icon-${safeIp}`);
+                    const usageEl = document.getElementById(`usage-badge-${safeIp}`);
                     
                     if (adbEl) {
                         adbEl.innerHTML = s.adb_online 
@@ -208,21 +301,95 @@
                     }
                     if (encEl) {
                         encEl.innerHTML = s.encoder_online 
-                            ? '<i class="fa-solid fa-circle-check" style="color: var(--success-color);" title="Encoder Online"></i> '
-                            : '<i class="fa-solid fa-circle-xmark" style="color: var(--error-color);" title="Encoder Offline"></i> ';
+                            ? '<i class="fa-solid fa-circle-check" style="color: var(--success-color);" title="Encoder/FFmpeg Online"></i> '
+                            : '<i class="fa-solid fa-circle-xmark" style="color: var(--error-color);" title="Encoder/FFmpeg Offline"></i> ';
+                    }
+                    if (usageEl) {
+                        const inUse = activeTuners[s.device_ip];
+                        if (inUse) {
+                            usageEl.innerHTML = '<i class="fa-solid fa-play"></i> In Use';
+                            usageEl.style.backgroundColor = 'var(--error-color)'; 
+                        } else {
+                            usageEl.innerHTML = '<i class="fa-solid fa-bed"></i> Idle';
+                            usageEl.style.backgroundColor = 'var(--success-color)'; 
+                        }
                     }
                 });
             } catch (err) {
                 console.error("Failed to fetch tuner statuses", err);
             }
         }
+		
+        async function pollActiveTuners() {
+            try {
+                const res = await fetch('/api/active_tuners');
+                const active = await res.json();
+                
+                config.tuners.forEach(t => {
+                    const safeIp = t.device_ip.replace(/\./g, '-');
+                    const inUseEl = document.getElementById(`usage-badge-${safeIp}`);
+                    if (inUseEl) {
+                        const isRunning = active[t.device_ip];
+                        if (isRunning) {
+                            inUseEl.innerHTML = '<i class="fa-solid fa-play"></i> In Use';
+                            inUseEl.style.backgroundColor = 'var(--error-color)';
+                        } else {
+                            inUseEl.innerHTML = '<i class="fa-solid fa-bed"></i> Idle';
+                            inUseEl.style.backgroundColor = 'var(--success-color)';
+                        }
+                    }
+                });
+            } catch (err) {
+                console.error("Failed to fetch active tuners", err);
+            }
+        }
 
-        // === Drag and Drop & Sorting Logic ===
+        async function fetchDevices(selectedVideo = '', selectedAudio = '') {
+            try {
+                const res = await fetch('/api/devices');
+                hardwareDevices = await res.json();
+                
+                const videoSelect = document.getElementById('tuner-video-dev');
+                const audioSelect = document.getElementById('tuner-audio-dev');
+                
+                videoSelect.innerHTML = (hardwareDevices.video || []).map(d => 
+                    `<option value="${d.id}" ${d.id === selectedVideo ? 'selected' : ''}>${d.name}</option>`
+                ).join('') || '<option value="">No video devices found</option>';
+                
+                audioSelect.innerHTML = (hardwareDevices.audio || []).map(d => 
+                    `<option value="${d.id}" ${d.id === selectedAudio ? 'selected' : ''}>${d.name}</option>`
+                ).join('') || '<option value="">No audio devices found</option>';
+            } catch (err) {
+                console.error("Failed to fetch capture devices", err);
+            }
+        }
+
+        function toggleTunerTypeFields() {
+            const type = document.getElementById('tuner-type').value;
+            const urlGroup = document.getElementById('group-encoder-url');
+            const videoGroup = document.getElementById('group-local-video');
+            const audioGroup = document.getElementById('group-local-audio');
+
+            if (type === 'local') {
+                urlGroup.style.display = 'none';
+                videoGroup.style.display = 'block';
+                audioGroup.style.display = 'block';
+                document.getElementById('tuner-url').required = false;
+                fetchDevices();
+            } else {
+                urlGroup.style.display = 'block';
+                videoGroup.style.display = 'none';
+                audioGroup.style.display = 'none';
+                document.getElementById('tuner-url').required = true;
+            }
+        }
+
         function moveChannel(idx, direction) {
             if (idx + direction < 0 || idx + direction >= config.channels.length) return;
             const temp = config.channels[idx];
             config.channels[idx] = config.channels[idx + direction];
             config.channels[idx + direction] = temp;
+            markUnsaved(); // Trigger banner
             renderTables();
         }
 
@@ -238,6 +405,7 @@
             if (draggedIdx === null || draggedIdx === targetIdx) return;
             const movedItem = config.channels.splice(draggedIdx, 1)[0];
             config.channels.splice(targetIdx, 0, movedItem);
+            markUnsaved(); // Trigger banner
             renderTables();
         }
         function dragEnd(e) {
@@ -245,47 +413,94 @@
             draggedIdx = null;
         }
 
-        // === Standard CRUD Logic ===
-        function openTunerModal() { document.getElementById('tuner-form').reset(); document.getElementById('tuner-index').value = '-1'; document.getElementById('tuner-modal').style.display='block'; }
-        function editTuner(i) {
+        function openTunerModal() { 
+            document.getElementById('tuner-form').reset(); 
+            document.getElementById('tuner-index').value = '-1'; 
+            document.getElementById('tuner-type').value = 'network';
+            toggleTunerTypeFields();
+            document.getElementById('tuner-modal').style.display='block'; 
+        }
+
+        async function editTuner(i) {
             const t = config.tuners[i];
             document.getElementById('tuner-name').value = t.name;
             document.getElementById('tuner-ip').value = t.device_ip;
-            document.getElementById('tuner-url').value = t.encoder_url;
+            document.getElementById('tuner-type').value = t.type || 'network';
+            document.getElementById('tuner-url').value = t.encoder_url || '';
             document.getElementById('tuner-priority').value = t.priority || 99;
             document.getElementById('tuner-index').value = i;
+
+            toggleTunerTypeFields();
+            if ((t.type || 'network') === 'local') {
+                await fetchDevices(t.video_device_id, t.audio_device_id);
+            }
             document.getElementById('tuner-modal').style.display='block';
         }
+
         document.getElementById('tuner-form').onsubmit = e => {
             e.preventDefault();
             const i = parseInt(document.getElementById('tuner-index').value);
-            const data = { name: document.getElementById('tuner-name').value, device_ip: document.getElementById('tuner-ip').value, encoder_url: document.getElementById('tuner-url').value, priority: parseInt(document.getElementById('tuner-priority').value) || 99 };
-            if(i === -1) config.tuners.push(data); else config.tuners[i] = data;
+            const tunerType = document.getElementById('tuner-type').value;
+
+            const data = { 
+                name: document.getElementById('tuner-name').value, 
+                device_ip: document.getElementById('tuner-ip').value, 
+                type: tunerType,
+                encoder_url: tunerType === 'network' ? document.getElementById('tuner-url').value : '',
+                video_device_id: tunerType === 'local' ? document.getElementById('tuner-video-dev').value : '',
+                audio_device_id: tunerType === 'local' ? document.getElementById('tuner-audio-dev').value : '',
+                priority: parseInt(document.getElementById('tuner-priority').value) || 99 
+            };
+
+            if (i === -1) config.tuners.push(data); else config.tuners[i] = data;
             config.tuners.sort((a, b) => (a.priority || 99) - (b.priority || 99));
-            renderTables(); closeModal('tuner-modal');
+            markUnsaved(); // Trigger banner
+            renderTables(); 
+            closeModal('tuner-modal');
         };
-        function delTuner(i) { if(confirm('Delete this tuner?')) { config.tuners.splice(i, 1); renderTables(); } }
+
+        function delTuner(i) { 
+            if(confirm('Delete this tuner?')) { 
+                config.tuners.splice(i, 1); 
+                markUnsaved(); // Trigger banner
+                renderTables(); 
+            } 
+        }
 
         function openProviderModal() { document.getElementById('provider-form').reset(); document.getElementById('provider-index').value = '-1'; document.getElementById('provider-modal').style.display='block'; }
         function editProvider(i) {
             const p = config.providers[i];
             document.getElementById('prov-name').value = p.name;
             document.getElementById('prov-id').value = p.id;
-            document.getElementById('prov-intent').value = p.intent;
+            document.getElementById('prov-package').value = p.package_name || '';
+            document.getElementById('prov-component').value = p.component || '';
             document.getElementById('prov-url').value = p.url_template;
             document.getElementById('provider-index').value = i;
             document.getElementById('provider-modal').style.display='block';
         }
+
         document.getElementById('provider-form').onsubmit = e => {
             e.preventDefault();
             const i = parseInt(document.getElementById('provider-index').value);
-            const data = { name: document.getElementById('prov-name').value, id: document.getElementById('prov-id').value, intent: document.getElementById('prov-intent').value, url_template: document.getElementById('prov-url').value };
+            const data = { 
+                name: document.getElementById('prov-name').value, 
+                id: document.getElementById('prov-id').value, 
+                package_name: document.getElementById('prov-package').value, 
+                component: document.getElementById('prov-component').value, 
+                url_template: document.getElementById('prov-url').value 
+            };
             if(i === -1) config.providers.push(data); else config.providers[i] = data;
-            renderTables(); closeModal('provider-modal');
+            markUnsaved(); // Trigger banner
+            renderTables(); 
+            closeModal('provider-modal');
         };
         function delProvider(i) {
             if(config.channels.some(c => c.provider_id === config.providers[i].id)) { alert('Cannot delete provider. It is currently used by one or more channels.'); return; }
-            if(confirm('Delete this provider?')) { config.providers.splice(i, 1); renderTables(); }
+            if(confirm('Delete this provider?')) { 
+                config.providers.splice(i, 1); 
+                markUnsaved(); // Trigger banner
+                renderTables(); 
+            }
         }
 
         function openChannelModal() { document.getElementById('channel-form').reset(); document.getElementById('channel-index').value = '-1'; populateProviderDropdown(); document.getElementById('channel-modal').style.display='block'; }
@@ -307,15 +522,31 @@
             const i = parseInt(document.getElementById('channel-index').value);
             const data = { name: document.getElementById('ch-name').value, id: document.getElementById('ch-id').value, provider_id: document.getElementById('ch-provider').value, deep_link_content_id: document.getElementById('ch-deeplink').value, tvc_guide_stationid: document.getElementById('ch-stationid').value };
             if(i === -1) config.channels.push(data); else config.channels[i] = data;
-            renderTables(); closeModal('channel-modal');
+            markUnsaved(); // Trigger banner
+            renderTables(); 
+            closeModal('channel-modal');
         };
-        function delChannel(i) { if(confirm('Delete this channel?')) { config.channels.splice(i, 1); renderTables(); } }
+        function delChannel(i) { 
+            if(confirm('Delete this channel?')) { 
+                config.channels.splice(i, 1); 
+                markUnsaved(); // Trigger banner
+                renderTables(); 
+            } 
+        }
 
         function closeModal(id) { document.getElementById(id).style.display='none'; }
         
         async function saveConfigToServer() {
+            const saveBtn = document.getElementById('save-banner-btn');
+            saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+            
             await fetch('/api/config', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(config) });
-            alert('Configuration Saved!');
+            
+            saveBtn.innerHTML = '<i class="fa-solid fa-check"></i> Saved!';
+            setTimeout(() => {
+                markSaved(); // Hide banner after successful save
+                saveBtn.innerHTML = '<i class="fa-solid fa-save"></i> Save Now'; // Reset text for next time
+            }, 1000);
         }
 
         // === Copy M3U Link Logic ===

@@ -39,7 +39,9 @@ type Tuner struct {
 type Provider struct {
 	ID          string `json:"id"`
 	Name        string `json:"name"`
-	Intent      string `json:"intent"`
+	Intent      string `json:"intent,omitempty"` // Kept strictly for migrating old saves
+	PackageName string `json:"package_name"`
+	Component   string `json:"component"`
 	URLTemplate string `json:"url_template"`
 }
 
@@ -70,7 +72,7 @@ type DeviceList struct {
 }
 
 var Config AppConfig
-var AppVersion = "5.0.3-GO"
+var AppVersion = "5.0.4-GO"
 var tunerLock sync.Mutex
 
 var streamClient = &http.Client{
@@ -138,7 +140,8 @@ func loadConfig() {
 				{
 					ID:          "yt_tv",
 					Name:        "YouTube TV",
-					Intent:      "com.google.android.youtube.tvunplugged/com.google.android.apps.youtube.tvunplugged.activity.MainActivity",
+					PackageName: "com.google.android.youtube.tvunplugged",
+					Component:   "com.google.android.apps.youtube.tvunplugged.activity.MainActivity",
 					URLTemplate: "https://tv.youtube.com/watch/{id}",
 				},
 			},
@@ -152,10 +155,17 @@ func loadConfig() {
 	fileData, _ := os.ReadFile(configPath)
 	json.Unmarshal(fileData, &Config)
 
-	// Migration: Ensure older configs default to network type
-	for i := range Config.Tuners {
-		if Config.Tuners[i].Type == "" {
-			Config.Tuners[i].Type = "network"
+	// Migration: Split old Intent strings into PackageName and Component
+	for i := range Config.Providers {
+		if Config.Providers[i].Intent != "" && Config.Providers[i].PackageName == "" {
+			parts := strings.Split(Config.Providers[i].Intent, "/")
+			if len(parts) == 2 {
+				Config.Providers[i].PackageName = parts[0]
+				Config.Providers[i].Component = parts[1]
+			} else {
+				Config.Providers[i].PackageName = Config.Providers[i].Intent
+			}
+			Config.Providers[i].Intent = "" // Clear out old data
 		}
 	}
 }
@@ -218,6 +228,21 @@ func adbCommand(deviceIP string, args ...string) error {
 	return cmd.Run()
 }
 
+func checkADB(deviceIP string) bool {
+	adb := getAdbPath()
+	cmd := exec.Command(adb, "connect", deviceIP)
+	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+	
+	out, err := cmd.CombinedOutput()
+	if err != nil {
+		return false
+	}
+	
+	outStr := strings.ToLower(string(out))
+	// ADB returns either "connected to..." or "already connected to..."
+	return strings.Contains(outStr, "connected")
+}
+
 func lockTuner() *Tuner {
 	tunerLock.Lock()
 	defer tunerLock.Unlock()
@@ -263,7 +288,8 @@ func executeTuning(deviceIP string, ch Channel) {
 	adbCommand(deviceIP, "shell", "input", "keyevent", "224")
 	time.Sleep(1 * time.Second)
 
-	adbCommand(deviceIP, "shell", "am", "start", "-a", "android.intent.action.VIEW", "-d", targetURL, "-n", provider.Intent)
+	intentStr := fmt.Sprintf("%s/%s", provider.PackageName, provider.Component)
+	adbCommand(deviceIP, "shell", "am", "start", "-a", "android.intent.action.VIEW", "-d", targetURL, "-n", intentStr)
 }
 
 // ==========================================
@@ -274,15 +300,16 @@ func apiDevices(w http.ResponseWriter, r *http.Request) {
 	cmd := exec.Command(ffmpeg, "-list_devices", "true", "-f", "dshow", "-i", "dummy")
 	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 
-	// FFmpeg writes device lists to stderr, not stdout
 	out, _ := cmd.CombinedOutput()
 	lines := strings.Split(string(out), "\n")
 
 	devices := DeviceList{Video: []DShowDevice{}, Audio: []DShowDevice{}}
 	var currentType string
-	var lastDevice *DShowDevice
 
 	for _, line := range lines {
+		line = strings.TrimSpace(line)
+
+		// Legacy section header support
 		if strings.Contains(line, "DirectShow video devices") {
 			currentType = "video"
 			continue
@@ -293,24 +320,29 @@ func apiDevices(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if strings.Contains(line, "\"") {
+			// Skip "Alternative name" hardware PNP paths to keep names clean
+			if strings.Contains(line, "Alternative name") {
+				continue
+			}
+
 			parts := strings.Split(line, "\"")
-			if len(parts) >= 3 {
-				val := parts[1]
-				if strings.Contains(line, "Alternative name") {
-					// Apply the hardware path ID to the last found device
-					if lastDevice != nil {
-						lastDevice.ID = val
-					}
-				} else {
-					// It's a new device name. We set ID to Name as a fallback.
-					newDev := DShowDevice{Name: val, ID: val}
-					if currentType == "video" {
-						devices.Video = append(devices.Video, newDev)
-						lastDevice = &devices.Video[len(devices.Video)-1]
-					} else if currentType == "audio" {
-						devices.Audio = append(devices.Audio, newDev)
-						lastDevice = &devices.Audio[len(devices.Audio)-1]
-					}
+			if len(parts) >= 2 {
+				val := parts[1] // Friendly device name e.g. "USB3 Video"
+
+				devType := currentType
+				if strings.Contains(line, "(video)") {
+					devType = "video"
+				} else if strings.Contains(line, "(audio)") {
+					devType = "audio"
+				}
+
+				// Set both Name and ID to the clean human-readable string
+				newDev := DShowDevice{Name: val, ID: val}
+
+				if devType == "video" {
+					devices.Video = append(devices.Video, newDev)
+				} else if devType == "audio" {
+					devices.Audio = append(devices.Audio, newDev)
 				}
 			}
 		}
@@ -578,57 +610,59 @@ type TunerStatus struct {
 }
 
 func checkTuners(w http.ResponseWriter, r *http.Request) {
-	var statuses []TunerStatus
-	var wg sync.WaitGroup
+	type StatusResult struct {
+		DeviceIP      string `json:"device_ip"`
+		ADBOnline     bool   `json:"adb_online"`
+		EncoderOnline bool   `json:"encoder_online"`
+	}
+	var results []StatusResult
 	var mu sync.Mutex
+	var wg sync.WaitGroup
 
-	for _, t := range Config.Tuners {
+	tunerLock.Lock()
+	tuners := make([]Tuner, len(Config.Tuners))
+	copy(tuners, Config.Tuners)
+	tunerLock.Unlock()
+
+	for _, t := range tuners {
 		wg.Add(1)
-
+		
+		// Run every tuner check simultaneously in the background
 		go func(tuner Tuner) {
 			defer wg.Done()
 
-			encoderOk := false
+			res := StatusResult{DeviceIP: tuner.DeviceIP}
+			res.ADBOnline = checkADB(tuner.DeviceIP)
 
-			// Differentiate health checks based on the hardware type
 			if tuner.Type == "local" {
-				// For local USB dongles, verify FFmpeg is present
-				_, err := os.Stat(getFFmpegPath())
-				encoderOk = (err == nil)
-			} else {
-				// For network encoders, execute HTTP ping
-				req, err := http.NewRequest("GET", tuner.EncoderURL, nil)
+				if _, err := os.Stat(getFFmpegPath()); err == nil {
+					res.EncoderOnline = true
+				} else {
+					res.EncoderOnline = false
+				}
+			} else if tuner.EncoderURL != "" {
+				client := http.Client{Timeout: 2 * time.Second}
+				resp, err := client.Get(tuner.EncoderURL)
 				if err == nil {
-					client := http.Client{Timeout: 2 * time.Second}
-					resp, err := client.Do(req)
-					if err == nil {
-						encoderOk = (resp.StatusCode == 200)
-						resp.Body.Close()
-					}
+					resp.Body.Close()
+					res.EncoderOnline = resp.StatusCode < 500
+				} else {
+					res.EncoderOnline = false
 				}
 			}
 
-			adb := getAdbPath()
-			cmd := exec.Command(adb, "connect", tuner.DeviceIP)
-			cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
-			out, _ := cmd.Output()
-			outStr := strings.ToLower(string(out))
-			adbOk := strings.Contains(outStr, "connected")
-
+			// Safely lock the results array while this thread appends to it
 			mu.Lock()
-			statuses = append(statuses, TunerStatus{
-				DeviceIP:      tuner.DeviceIP,
-				AdbOnline:     adbOk,
-				EncoderOnline: encoderOk,
-			})
+			results = append(results, res)
 			mu.Unlock()
 		}(t)
 	}
 
+	// Wait for all the simultaneous checks to finish
 	wg.Wait()
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(statuses)
+	json.NewEncoder(w).Encode(results)
 }
 
 // ==========================================
@@ -642,6 +676,7 @@ func main() {
 
 	if *uiFlag {
 		localIP := getLocalIP()
+		// Uses the port saved in the config file, ensuring the browser opens the correct URL
 		targetURL := fmt.Sprintf("http://%s:%d/status", localIP, Config.Port)
 
 		cmd := exec.Command("rundll32", "url.dll,FileProtocolHandler", targetURL)
@@ -665,7 +700,10 @@ func main() {
 	http.HandleFunc("/preview/", previewPage)
 	http.HandleFunc("/api/check_tuners", checkTuners)
 
+	// Build the listen string dynamically from the config (e.g., ":8888" or ":4888")
+	// The colon with no IP in front of it allows local network access from other devices.
 	portString := fmt.Sprintf(":%d", Config.Port)
+	
 	log.Printf("ADB Bridge server listening on %s\n", portString)
 	if err := http.ListenAndServe(portString, nil); err != nil {
 		log.Fatalf("Server startup failed: %v\n", err)
