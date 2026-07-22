@@ -133,5 +133,5 @@ If you don't want to buy or configure a network encoder (like a LinkPi), you can
 5. The app will automatically search your PC for connected hardware. Simply select your capture card from the **Video** and **Audio** dropdown menus (it will usually be named something like `USB3 Video`, `USB Video`, or `FHD Capture`).
 6. Click **Save**. The dashboard will display a green checkmark once the camera is ready to stream!
 
-> **💡 Pro-Tip for Multiple Dongles:**
+> ** Pro-Tip for Multiple Dongles:**
 > A single 1080p video stream uses a lot of USB bandwidth. If you are plugging **two** capture cards into the same PC, try to spread them out. Plug one into the back of your computer (directly into the motherboard) and plug the second one into the front panel of your PC case. This prevents the USB ports from getting overloaded and guarantees smooth playback.
