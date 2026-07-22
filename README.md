@@ -55,7 +55,7 @@ Before this tool can control your streaming stick, you need to turn on a built-i
 ## 3. Setting Up Your Channels and Devices
 
 ### Step 1: Add a Tuner (Your TV Box & Video Encoder)
-
+*:link:[Common Intent List](docs/intent.md)*
 In the web page dashboard, click **Add Device** under the Tuners section:
 
 * **Name:** Give it a friendly name (e.g., Living Room Shield).
