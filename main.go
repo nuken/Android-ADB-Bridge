@@ -26,14 +26,16 @@ var embeddedFiles embed.FS
 // 1. Data Structures
 // ==========================================
 type Tuner struct {
-	Name          string `json:"name"`
-	DeviceIP      string `json:"device_ip"`
-	Type          string `json:"type"` // "network" or "local"
-	EncoderURL    string `json:"encoder_url,omitempty"`
-	VideoDeviceID string `json:"video_device_id,omitempty"`
-	AudioDeviceID string `json:"audio_device_id,omitempty"`
-	Priority      int    `json:"priority"`
-	InUse         bool   `json:"-"`
+	Name            string `json:"name"`
+	DeviceIP        string `json:"device_ip"`
+	Type            string `json:"type"` // "network" or "local"
+	EncoderURL      string `json:"encoder_url,omitempty"`
+	VideoDeviceID   string `json:"video_device_id,omitempty"`
+	AudioDeviceID   string `json:"audio_device_id,omitempty"`
+	AudioDelayMs    int    `json:"audio_delay_ms,omitempty"`
+	DeinterlaceMode string `json:"deinterlace_mode,omitempty"` // NEW
+	Priority        int    `json:"priority"`
+	InUse           bool   `json:"-"`
 }
 
 type Provider struct {
@@ -72,7 +74,7 @@ type DeviceList struct {
 }
 
 var Config AppConfig
-var AppVersion = "5.0.4-GO"
+var AppVersion = "5.0.7-GO"
 var tunerLock sync.Mutex
 
 var streamClient = &http.Client{
@@ -295,6 +297,31 @@ func executeTuning(deviceIP string, ch Channel) {
 // ==========================================
 // 5. FFmpeg Hardware Discovery
 // ==========================================
+func getEncoderArgs() []string {
+	// Query Windows for the installed GPU name
+	cmd := exec.Command("wmic", "path", "win32_VideoController", "get", "name")
+	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+	out, err := cmd.CombinedOutput()
+	
+	if err == nil {
+		outStr := strings.ToUpper(string(out))
+		
+		// Assign the correct hardware encoder based on the GPU brand
+		if strings.Contains(outStr, "NVIDIA") {
+			return []string{"-c:v", "h264_nvenc", "-preset", "p2", "-tune", "ll", "-pix_fmt", "yuv420p"}
+		}
+		if strings.Contains(outStr, "AMD") || strings.Contains(outStr, "RADEON") {
+			return []string{"-c:v", "h264_amf", "-usage", "lowlatency", "-pix_fmt", "yuv420p"}
+		}
+		if strings.Contains(outStr, "INTEL") {
+			return []string{"-c:v", "h264_qsv", "-preset", "veryfast", "-pix_fmt", "nv12"}
+		}
+	}
+	
+	// Fallback to CPU software encoding if hardware detection fails
+	return []string{"-c:v", "libx264", "-preset", "veryfast", "-pix_fmt", "yuv420p"}
+}
+
 func apiDevices(w http.ResponseWriter, r *http.Request) {
 	ffmpeg := getFFmpegPath()
 	cmd := exec.Command(ffmpeg, "-list_devices", "true", "-f", "dshow", "-i", "dummy")
@@ -355,6 +382,43 @@ func apiDevices(w http.ResponseWriter, r *http.Request) {
 // ==========================================
 // 6. Web Endpoints & Routing
 // ==========================================
+
+func apiReleaseTuner(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	deviceIP := strings.TrimPrefix(r.URL.Path, "/api/release/")
+	if deviceIP == "" {
+		http.Error(w, "Invalid device IP", http.StatusBadRequest)
+		return
+	}
+
+	tunerLock.Lock()
+	found := false
+	for i := range Config.Tuners {
+		if Config.Tuners[i].DeviceIP == deviceIP {
+			Config.Tuners[i].InUse = false
+			found = true
+			log.Printf("Manually force-released tuner %s via web dashboard.\n", deviceIP)
+			break
+		}
+	}
+	tunerLock.Unlock()
+
+	if !found {
+		http.Error(w, "Tuner not found", http.StatusNotFound)
+		return
+	}
+
+	// Send Home command to clear the screen on the physical stick
+	go adbCommand(deviceIP, "shell", "input", "keyevent", "3")
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write([]byte(`{"status": "success"}`))
+}
+
 func getLocalIP() string {
 	addrs, err := net.InterfaceAddrs()
 	if err == nil {
@@ -449,23 +513,53 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 	// ==========================================
 	// BRANCH A: Local USB Capture (FFmpeg)
 	// ==========================================
-	if tuner.Type == "local" {
-		// Give the Android stick a moment to transition screens before capturing
+if tuner.Type == "local" {
 		time.Sleep(2 * time.Second)
 
 		ffmpeg := getFFmpegPath()
 		inputStr := fmt.Sprintf("video=%s:audio=%s", tuner.VideoDeviceID, tuner.AudioDeviceID)
 
-		// Command tells FFmpeg to ingest the specific DirectShow hardware ID, encode lightly via ultrafast preset, and output to standard pipe
+		// Determine which filter to apply based on UI selection
+		vfArg := "fps=59.94" // Default for "off"
+		if tuner.DeinterlaceMode == "tff" {
+			vfArg = "bwdif=mode=1:parity=0,fps=59.94"
+		} else if tuner.DeinterlaceMode == "bff" {
+			vfArg = "bwdif=mode=1:parity=1,fps=59.94"
+		}
+
 		args := []string{
 			"-hide_banner", "-loglevel", "error",
+			"-rtbufsize", "256M", 
+            "-thread_queue_size", "1024", // NEW: Give the raw capture feed a deep queue
 			"-f", "dshow",
 			"-i", inputStr,
-			"-c:v", "libx264", "-preset", "ultrafast", "-pix_fmt", "yuv420p",
+			"-vf", vfArg, // Inject the dynamic filter here
+		}
+
+		// Append the dynamically detected hardware encoder arguments
+		args = append(args, getEncoderArgs()...)
+
+		// NEW: Force standard HD color space (Rec. 709) and TV/Limited color range
+		args = append(args, 
+			"-color_primaries", "bt709", 
+			"-color_trc", "bt709", 
+			"-colorspace", "bt709", 
+			"-color_range", "tv",
+		)
+
+		// Append the bitrate limits
+		args = append(args, "-maxrate", "6000k", "-bufsize", "12000k")
+
+		// Inject audio delay filter if set
+		if tuner.AudioDelayMs > 0 {
+			args = append(args, "-af", fmt.Sprintf("adelay=%d|%d", tuner.AudioDelayMs, tuner.AudioDelayMs))
+		}
+
+		args = append(args,
 			"-c:a", "aac", "-b:a", "192k", "-ar", "48000",
 			"-f", "mpegts",
 			"pipe:1",
-		}
+		)
 
 		cmd := exec.Command(ffmpeg, args...)
 		cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
@@ -485,11 +579,39 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 
 		w.WriteHeader(http.StatusOK)
 
-		// Pipe the FFmpeg stdout directly to the HTTP response
-		buf := make([]byte, 128*1024)
-		io.CopyBuffer(w, stdout, buf)
+		// NEW ASYNC BUFFER BLOCK
+		// Create a ~15MB memory buffer (500 chunks * 32KB)
+		// This acts as a shock absorber between FFmpeg and the network
+		streamChan := make(chan []byte, 500)
 
-		// Ensure FFmpeg dies immediately when Channels DVR disconnects
+		// 1. Background Goroutine: Constantly drain FFmpeg stdout as fast as possible
+		go func() {
+			defer close(streamChan)
+			for {
+				buf := make([]byte, 32*1024)
+				n, err := stdout.Read(buf)
+				if n > 0 {
+					// Copy the bytes so we can reuse the buffer safely
+					chunk := make([]byte, n)
+					copy(chunk, buf[:n])
+					
+					// Send to the channel (this will not block unless the 500-chunk buffer is totally full)
+					streamChan <- chunk
+				}
+				if err != nil {
+					break
+				}
+			}
+		}()
+
+		// 2. Foreground Thread: Send the buffered chunks to the HTTP client
+		for chunk := range streamChan {
+			if _, err := w.Write(chunk); err != nil {
+				// The client disconnected (e.g., they changed the channel or closed the app)
+				break
+			}
+		}
+
 		cmd.Process.Kill()
 		cmd.Wait()
 		return
@@ -699,6 +821,7 @@ func main() {
 	http.HandleFunc("/remote/keypress/", remoteKeypress)
 	http.HandleFunc("/preview/", previewPage)
 	http.HandleFunc("/api/check_tuners", checkTuners)
+	http.HandleFunc("/api/release/", apiReleaseTuner)
 
 	// Build the listen string dynamically from the config (e.g., ":8888" or ":4888")
 	// The colon with no IP in front of it allows local network access from other devices.

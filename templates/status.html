@@ -20,7 +20,16 @@
         .action-button { padding: 6px 10px; font-size: 0.9em; }
         .action-button.delete { background-color: var(--error-color); }
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); }
-        .modal-content { background-color: var(--surface-color); margin: 5% auto; padding: 20px; border-radius: 12px; width: 90%; max-width: 500px; }
+        .modal-content {
+            background-color: #1e1e1e; /* (Keep whatever background color you currently have) */
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 400px;
+            max-width: 90%;            
+            max-height: 85vh; 
+            overflow-y: auto; 
+        }
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; margin-bottom: 5px; }
         .form-group input, .form-group select { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #555; background-color: #222; color: white; box-sizing: border-box; }
@@ -127,6 +136,23 @@
                     <select id="tuner-audio-dev"></select>
                 </div>
 
+                <!-- New Audio Delay Field -->
+                <div class="form-group" id="group-local-delay" style="display:none;">
+                    <label>Audio Delay / Lip Sync (ms)</label>
+                    <input type="number" id="tuner-audio-delay" value="0" min="0" step="10" placeholder="e.g. 150">
+                    <span style="font-size: 0.75em; color: #aaa;">Increase if audio plays BEFORE mouth movements (typical for USB capture).</span>
+                </div>
+				
+				<!-- New Deinterlace Mode Field -->
+                <div class="form-group" id="group-local-deinterlace" style="display:none;">
+                    <label>Deinterlace Mode (Fix Camera Jiggle)</label>
+                    <select id="tuner-deinterlace">
+                        <option value="tff">Top-Field-First (Standard)</option>
+                        <option value="bff">Bottom-Field-First (Reverse)</option>
+                        <option value="off">Off (Progressive / No Filter)</option>
+                    </select>
+                </div>
+
                 <div class="form-group"><label>Priority</label><input type="number" id="tuner-priority" value="99" required></div>
                 <button type="submit" class="button">Apply</button>
                 <button type="button" class="button" style="background:#666" onclick="closeModal('tuner-modal')">Cancel</button>
@@ -210,6 +236,24 @@
                 pollActiveTuners();
             }
         }
+		
+		async function forceRelease(deviceIp) {
+            if (!confirm(`Are you sure you want to force release tuner ${deviceIp}? This will interrupt any active stream.`)) {
+                return;
+            }
+            try {
+                const res = await fetch(`/api/release/${deviceIp}`, { method: 'POST' });
+                if (res.ok) {
+                    // Instantly refresh status badges
+                    loadTunerStatuses();
+                } else {
+                    alert("Failed to release tuner.");
+                }
+            } catch (err) {
+                console.error("Error releasing tuner", err);
+                alert("Network error while trying to release tuner.");
+            }
+        }
 
         function fetchStatus() { loadConfig(); }
 
@@ -238,8 +282,9 @@
                         ${sourceDisplay}
                     </td>
                     <td>
-                        <button class="action-button" onclick="editTuner(${i})"><i class="fa-solid fa-pencil"></i></button>
-                        <button class="action-button delete" onclick="delTuner(${i})"><i class="fa-solid fa-trash"></i></button>
+                        <button class="action-button" onclick="editTuner(${i})"><i class="fa-solid fa-pencil" title="Edit Tuner"></i></button>
+                        <button class="action-button" style="background-color: #d97706;" onclick="forceRelease('${t.device_ip}')" title="Force Release Stuck Tuner"><i class="fa-solid fa-unlock"></i></button>
+                        <button class="action-button delete" onclick="delTuner(${i})"><i class="fa-solid fa-trash" title="Delete Tuner"></i></button>
                     </td>
                 </tr>
             `}).join('');
@@ -369,17 +414,23 @@
             const urlGroup = document.getElementById('group-encoder-url');
             const videoGroup = document.getElementById('group-local-video');
             const audioGroup = document.getElementById('group-local-audio');
+            const delayGroup = document.getElementById('group-local-delay');
+            const deinterlaceGroup = document.getElementById('group-local-deinterlace'); // NEW
 
             if (type === 'local') {
                 urlGroup.style.display = 'none';
                 videoGroup.style.display = 'block';
                 audioGroup.style.display = 'block';
+                delayGroup.style.display = 'block';
+                deinterlaceGroup.style.display = 'block'; // NEW
                 document.getElementById('tuner-url').required = false;
                 fetchDevices();
             } else {
                 urlGroup.style.display = 'block';
                 videoGroup.style.display = 'none';
                 audioGroup.style.display = 'none';
+                delayGroup.style.display = 'none';
+                deinterlaceGroup.style.display = 'none'; // NEW
                 document.getElementById('tuner-url').required = true;
             }
         }
@@ -417,6 +468,8 @@
             document.getElementById('tuner-form').reset(); 
             document.getElementById('tuner-index').value = '-1'; 
             document.getElementById('tuner-type').value = 'network';
+            document.getElementById('tuner-audio-delay').value = '0';
+            document.getElementById('tuner-deinterlace').value = 'off'; // NEW
             toggleTunerTypeFields();
             document.getElementById('tuner-modal').style.display='block'; 
         }
@@ -427,6 +480,8 @@
             document.getElementById('tuner-ip').value = t.device_ip;
             document.getElementById('tuner-type').value = t.type || 'network';
             document.getElementById('tuner-url').value = t.encoder_url || '';
+            document.getElementById('tuner-audio-delay').value = t.audio_delay_ms || 0;
+            document.getElementById('tuner-deinterlace').value = t.deinterlace_mode || 'off';
             document.getElementById('tuner-priority').value = t.priority || 99;
             document.getElementById('tuner-index').value = i;
 
@@ -449,12 +504,14 @@
                 encoder_url: tunerType === 'network' ? document.getElementById('tuner-url').value : '',
                 video_device_id: tunerType === 'local' ? document.getElementById('tuner-video-dev').value : '',
                 audio_device_id: tunerType === 'local' ? document.getElementById('tuner-audio-dev').value : '',
+                audio_delay_ms: tunerType === 'local' ? (parseInt(document.getElementById('tuner-audio-delay').value) || 0) : 0,
+                deinterlace_mode: tunerType === 'local' ? document.getElementById('tuner-deinterlace').value : 'off',
                 priority: parseInt(document.getElementById('tuner-priority').value) || 99 
             };
 
             if (i === -1) config.tuners.push(data); else config.tuners[i] = data;
             config.tuners.sort((a, b) => (a.priority || 99) - (b.priority || 99));
-            markUnsaved(); // Trigger banner
+            markUnsaved();
             renderTables(); 
             closeModal('tuner-modal');
         };
