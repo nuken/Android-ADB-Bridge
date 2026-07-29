@@ -15,7 +15,6 @@ import (
 	"path/filepath"
 	"strings"
 	"sync"
-	"syscall"
 	"time"
 )
 
@@ -33,7 +32,7 @@ type Tuner struct {
 	VideoDeviceID   string `json:"video_device_id,omitempty"`
 	AudioDeviceID   string `json:"audio_device_id,omitempty"`
 	AudioDelayMs    int    `json:"audio_delay_ms,omitempty"`
-	DeinterlaceMode string `json:"deinterlace_mode,omitempty"` // NEW
+	DeinterlaceMode string `json:"deinterlace_mode,omitempty"`
 	Priority        int    `json:"priority"`
 	InUse           bool   `json:"-"`
 }
@@ -41,7 +40,7 @@ type Tuner struct {
 type Provider struct {
 	ID          string `json:"id"`
 	Name        string `json:"name"`
-	Intent      string `json:"intent,omitempty"` // Kept strictly for migrating old saves
+	Intent      string `json:"intent,omitempty"`
 	PackageName string `json:"package_name"`
 	Component   string `json:"component"`
 	URLTemplate string `json:"url_template"`
@@ -62,10 +61,9 @@ type AppConfig struct {
 	Channels  []Channel  `json:"channels"`
 }
 
-// Structs for FFmpeg Device Discovery
 type DShowDevice struct {
 	Name string `json:"name"`
-	ID   string `json:"id"` // The "Alternative Name" hardware path
+	ID   string `json:"id"` 
 }
 
 type DeviceList struct {
@@ -74,7 +72,7 @@ type DeviceList struct {
 }
 
 var Config AppConfig
-var AppVersion = "5.0.7-GO"
+var AppVersion = "5.0.7-LINUX"
 var tunerLock sync.Mutex
 
 var streamClient = &http.Client{
@@ -90,30 +88,14 @@ var streamClient = &http.Client{
 }
 
 // ==========================================
-// App Initialization
-// ==========================================
-func init() {
-	programData := os.Getenv("ProgramData")
-	if programData == "" {
-		programData = `C:\ProgramData`
-	}
-
-	sharedAdbPath := filepath.Join(programData, "AndroidADBBridge")
-	os.MkdirAll(sharedAdbPath, os.ModePerm)
-
-	os.Setenv("ANDROID_USER_HOME", sharedAdbPath)
-	os.Setenv("ANDROID_SDK_HOME", sharedAdbPath)
-}
-
-// ==========================================
 // 2. Configuration Management
 // ==========================================
 func getConfigPath() string {
-	appData := os.Getenv("LOCALAPPDATA")
-	if appData == "" {
-		appData = "."
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		homeDir = "."
 	}
-	return filepath.Join(appData, "AndroidADBBridge", "android_channels.json")
+	return filepath.Join(homeDir, ".castor", "android_channels.json")
 }
 
 func getAvailablePort(startPort int) int {
@@ -157,7 +139,6 @@ func loadConfig() {
 	fileData, _ := os.ReadFile(configPath)
 	json.Unmarshal(fileData, &Config)
 
-	// Migration: Split old Intent strings into PackageName and Component
 	for i := range Config.Providers {
 		if Config.Providers[i].Intent != "" && Config.Providers[i].PackageName == "" {
 			parts := strings.Split(Config.Providers[i].Intent, "/")
@@ -167,7 +148,7 @@ func loadConfig() {
 			} else {
 				Config.Providers[i].PackageName = Config.Providers[i].Intent
 			}
-			Config.Providers[i].Intent = "" // Clear out old data
+			Config.Providers[i].Intent = ""
 		}
 	}
 }
@@ -180,20 +161,12 @@ func saveConfig() {
 // ==========================================
 // 3. Executable Path Helpers
 // ==========================================
-func getExeDir() string {
-	exePath, err := os.Executable()
-	if err != nil {
-		return "."
-	}
-	return filepath.Dir(exePath)
-}
-
 func getAdbPath() string {
-	return filepath.Join(getExeDir(), "adb.exe")
+	return "adb"
 }
 
 func getFFmpegPath() string {
-	return filepath.Join(getExeDir(), "ffmpeg.exe")
+	return "ffmpeg"
 }
 
 // ==========================================
@@ -205,7 +178,6 @@ func ensureADBReady() {
 
 	for i := 1; i <= 10; i++ {
 		cmd := exec.Command(adb, "start-server")
-		cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 		if err := cmd.Run(); err == nil {
 			log.Println("ADB server initialized successfully.")
 			return
@@ -220,12 +192,10 @@ func adbCommand(deviceIP string, args ...string) error {
 	adb := getAdbPath()
 
 	connectCmd := exec.Command(adb, "connect", deviceIP)
-	connectCmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 	connectCmd.Run()
 
 	fullArgs := append([]string{"-s", deviceIP}, args...)
 	cmd := exec.Command(adb, fullArgs...)
-	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 
 	return cmd.Run()
 }
@@ -233,7 +203,6 @@ func adbCommand(deviceIP string, args ...string) error {
 func checkADB(deviceIP string) bool {
 	adb := getAdbPath()
 	cmd := exec.Command(adb, "connect", deviceIP)
-	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 	
 	out, err := cmd.CombinedOutput()
 	if err != nil {
@@ -241,7 +210,6 @@ func checkADB(deviceIP string) bool {
 	}
 	
 	outStr := strings.ToLower(string(out))
-	// ADB returns either "connected to..." or "already connected to..."
 	return strings.Contains(outStr, "connected")
 }
 
@@ -295,82 +263,57 @@ func executeTuning(deviceIP string, ch Channel) {
 }
 
 // ==========================================
-// 5. FFmpeg Hardware Discovery
+// 5. FFmpeg Hardware Discovery (Linux)
 // ==========================================
 func getEncoderArgs() []string {
-	// Query Windows for the installed GPU name
-	cmd := exec.Command("wmic", "path", "win32_VideoController", "get", "name")
-	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
-	out, err := cmd.CombinedOutput()
-	
-	if err == nil {
-		outStr := strings.ToUpper(string(out))
-		
-		// Assign the correct hardware encoder based on the GPU brand
-		if strings.Contains(outStr, "NVIDIA") {
-			return []string{"-c:v", "h264_nvenc", "-preset", "p2", "-tune", "ll", "-pix_fmt", "yuv420p"}
-		}
-		if strings.Contains(outStr, "AMD") || strings.Contains(outStr, "RADEON") {
-			return []string{"-c:v", "h264_amf", "-usage", "lowlatency", "-pix_fmt", "yuv420p"}
-		}
-		if strings.Contains(outStr, "INTEL") {
-			return []string{"-c:v", "h264_qsv", "-preset", "veryfast", "-pix_fmt", "nv12"}
-		}
-	}
-	
-	// Fallback to CPU software encoding if hardware detection fails
-	return []string{"-c:v", "libx264", "-preset", "veryfast", "-pix_fmt", "yuv420p"}
+	// Using Intel QuickSync HEVC (H.265) as optimized for the i5-8500
+	return []string{"-c:v", "hevc_qsv", "-preset", "medium"}
 }
 
 func apiDevices(w http.ResponseWriter, r *http.Request) {
-	ffmpeg := getFFmpegPath()
-	cmd := exec.Command(ffmpeg, "-list_devices", "true", "-f", "dshow", "-i", "dummy")
-	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
-
-	out, _ := cmd.CombinedOutput()
-	lines := strings.Split(string(out), "\n")
-
 	devices := DeviceList{Video: []DShowDevice{}, Audio: []DShowDevice{}}
-	var currentType string
 
+	// 1. Get Video Devices via v4l2-ctl
+	cmdVid := exec.Command("v4l2-ctl", "--list-devices")
+	outVid, _ := cmdVid.CombinedOutput()
+	
+	lines := strings.Split(string(outVid), "\n")
+	var currentDeviceName string
 	for _, line := range lines {
-		line = strings.TrimSpace(line)
-
-		// Legacy section header support
-		if strings.Contains(line, "DirectShow video devices") {
-			currentType = "video"
-			continue
-		}
-		if strings.Contains(line, "DirectShow audio devices") {
-			currentType = "audio"
-			continue
-		}
-
-		if strings.Contains(line, "\"") {
-			// Skip "Alternative name" hardware PNP paths to keep names clean
-			if strings.Contains(line, "Alternative name") {
-				continue
+		if strings.HasSuffix(line, ":") {
+			currentDeviceName = strings.TrimSuffix(line, ":")
+		} else if strings.Contains(line, "/dev/video") && currentDeviceName != "" {
+			devPath := strings.TrimSpace(line)
+			// Only grab the first /dev/video path per device
+			alreadyAdded := false
+			for _, v := range devices.Video {
+				if v.Name == currentDeviceName {
+					alreadyAdded = true
+					break
+				}
 			}
+			if !alreadyAdded {
+				devices.Video = append(devices.Video, DShowDevice{Name: currentDeviceName, ID: devPath})
+			}
+		}
+	}
 
-			parts := strings.Split(line, "\"")
+	// 2. Get Audio Devices via ALSA
+	cmdAud := exec.Command("arecord", "-l")
+	outAud, _ := cmdAud.CombinedOutput()
+	
+	linesAud := strings.Split(string(outAud), "\n")
+	for _, line := range linesAud {
+		if strings.HasPrefix(line, "card ") {
+			parts := strings.Split(line, ":")
 			if len(parts) >= 2 {
-				val := parts[1] // Friendly device name e.g. "USB3 Video"
-
-				devType := currentType
-				if strings.Contains(line, "(video)") {
-					devType = "video"
-				} else if strings.Contains(line, "(audio)") {
-					devType = "audio"
-				}
-
-				// Set both Name and ID to the clean human-readable string
-				newDev := DShowDevice{Name: val, ID: val}
-
-				if devType == "video" {
-					devices.Video = append(devices.Video, newDev)
-				} else if devType == "audio" {
-					devices.Audio = append(devices.Audio, newDev)
-				}
+				cardNumStr := strings.TrimSpace(strings.Split(parts[0], " ")[1])
+				nameParts := strings.Split(parts[1], ",")
+				devName := strings.TrimSpace(nameParts[0])
+				
+				// ALSA format requires hw:CARD,DEVICE
+				hwPath := fmt.Sprintf("hw:%s,0", cardNumStr)
+				devices.Audio = append(devices.Audio, DShowDevice{Name: devName, ID: hwPath})
 			}
 		}
 	}
@@ -412,7 +355,6 @@ func apiReleaseTuner(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Send Home command to clear the screen on the physical stick
 	go adbCommand(deviceIP, "shell", "input", "keyevent", "3")
 
 	w.Header().Set("Content-Type", "application/json")
@@ -479,7 +421,6 @@ func apiConfig(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// streamHandler branches based on Tuner Type (Local USB vs Network Encoder)
 func streamHandler(w http.ResponseWriter, r *http.Request) {
 	channelID := strings.TrimPrefix(r.URL.Path, "/stream/")
 
@@ -505,41 +446,41 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 
 	executeTuning(tuner.DeviceIP, *channel)
 
-	// Common HTTP headers for MPEG-TS
 	w.Header().Set("Content-Type", "video/mp2t")
 	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
 	w.Header().Set("Connection", "keep-alive")
 
 	// ==========================================
-	// BRANCH A: Local USB Capture (FFmpeg)
+	// BRANCH A: Local USB Capture (Linux v4l2/alsa)
 	// ==========================================
-if tuner.Type == "local" {
+	if tuner.Type == "local" {
 		time.Sleep(2 * time.Second)
 
 		ffmpeg := getFFmpegPath()
-		inputStr := fmt.Sprintf("video=%s:audio=%s", tuner.VideoDeviceID, tuner.AudioDeviceID)
 
-		// Determine which filter to apply based on UI selection
-		vfArg := "fps=59.94" // Default for "off"
+		// Setting pixel format to NV12, which is optimal for Intel QuickSync
+		vfArg := "format=nv12,fps=59.94"
 		if tuner.DeinterlaceMode == "tff" {
-			vfArg = "bwdif=mode=1:parity=0,fps=59.94"
+			vfArg = "bwdif=mode=1:parity=0,format=nv12,fps=59.94"
 		} else if tuner.DeinterlaceMode == "bff" {
-			vfArg = "bwdif=mode=1:parity=1,fps=59.94"
+			vfArg = "bwdif=mode=1:parity=1,format=nv12,fps=59.94"
 		}
 
 		args := []string{
 			"-hide_banner", "-loglevel", "error",
+			"-init_hw_device", "qsv=hw",
+			"-filter_hw_device", "hw",
 			"-rtbufsize", "256M", 
-            "-thread_queue_size", "1024", // NEW: Give the raw capture feed a deep queue
-			"-f", "dshow",
-			"-i", inputStr,
-			"-vf", vfArg, // Inject the dynamic filter here
+			"-thread_queue_size", "1024",
+			"-f", "v4l2",
+			"-i", tuner.VideoDeviceID,
+			"-f", "alsa",
+			"-i", tuner.AudioDeviceID,
+			"-vf", vfArg,
 		}
 
-		// Append the dynamically detected hardware encoder arguments
 		args = append(args, getEncoderArgs()...)
 
-		// NEW: Force standard HD color space (Rec. 709) and TV/Limited color range
 		args = append(args, 
 			"-color_primaries", "bt709", 
 			"-color_trc", "bt709", 
@@ -547,22 +488,19 @@ if tuner.Type == "local" {
 			"-color_range", "tv",
 		)
 
-		// Append the bitrate limits
-		args = append(args, "-maxrate", "6000k", "-bufsize", "12000k")
+		args = append(args, "-maxrate", "2500k", "-bufsize", "5000k")
 
-		// Inject audio delay filter if set
 		if tuner.AudioDelayMs > 0 {
 			args = append(args, "-af", fmt.Sprintf("adelay=%d|%d", tuner.AudioDelayMs, tuner.AudioDelayMs))
 		}
 
 		args = append(args,
-			"-c:a", "aac", "-b:a", "192k", "-ar", "48000",
+			"-c:a", "aac", "-b:a", "128k", "-ar", "48000",
 			"-f", "mpegts",
 			"pipe:1",
 		)
 
 		cmd := exec.Command(ffmpeg, args...)
-		cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 
 		stdout, err := cmd.StdoutPipe()
 		if err != nil {
@@ -579,23 +517,16 @@ if tuner.Type == "local" {
 
 		w.WriteHeader(http.StatusOK)
 
-		// NEW ASYNC BUFFER BLOCK
-		// Create a ~15MB memory buffer (500 chunks * 32KB)
-		// This acts as a shock absorber between FFmpeg and the network
 		streamChan := make(chan []byte, 500)
 
-		// 1. Background Goroutine: Constantly drain FFmpeg stdout as fast as possible
 		go func() {
 			defer close(streamChan)
 			for {
 				buf := make([]byte, 32*1024)
 				n, err := stdout.Read(buf)
 				if n > 0 {
-					// Copy the bytes so we can reuse the buffer safely
 					chunk := make([]byte, n)
 					copy(chunk, buf[:n])
-					
-					// Send to the channel (this will not block unless the 500-chunk buffer is totally full)
 					streamChan <- chunk
 				}
 				if err != nil {
@@ -604,10 +535,8 @@ if tuner.Type == "local" {
 			}
 		}()
 
-		// 2. Foreground Thread: Send the buffered chunks to the HTTP client
 		for chunk := range streamChan {
 			if _, err := w.Write(chunk); err != nil {
-				// The client disconnected (e.g., they changed the channel or closed the app)
 				break
 			}
 		}
@@ -725,12 +654,6 @@ func previewPage(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, channel)
 }
 
-type TunerStatus struct {
-	DeviceIP      string `json:"device_ip"`
-	AdbOnline     bool   `json:"adb_online"`
-	EncoderOnline bool   `json:"encoder_online"`
-}
-
 func checkTuners(w http.ResponseWriter, r *http.Request) {
 	type StatusResult struct {
 		DeviceIP      string `json:"device_ip"`
@@ -749,7 +672,6 @@ func checkTuners(w http.ResponseWriter, r *http.Request) {
 	for _, t := range tuners {
 		wg.Add(1)
 		
-		// Run every tuner check simultaneously in the background
 		go func(tuner Tuner) {
 			defer wg.Done()
 
@@ -757,7 +679,8 @@ func checkTuners(w http.ResponseWriter, r *http.Request) {
 			res.ADBOnline = checkADB(tuner.DeviceIP)
 
 			if tuner.Type == "local" {
-				if _, err := os.Stat(getFFmpegPath()); err == nil {
+				// Simplified check for linux
+				if _, err := exec.LookPath(getFFmpegPath()); err == nil {
 					res.EncoderOnline = true
 				} else {
 					res.EncoderOnline = false
@@ -773,14 +696,12 @@ func checkTuners(w http.ResponseWriter, r *http.Request) {
 				}
 			}
 
-			// Safely lock the results array while this thread appends to it
 			mu.Lock()
 			results = append(results, res)
 			mu.Unlock()
 		}(t)
 	}
 
-	// Wait for all the simultaneous checks to finish
 	wg.Wait()
 
 	w.Header().Set("Content-Type", "application/json")
@@ -798,11 +719,10 @@ func main() {
 
 	if *uiFlag {
 		localIP := getLocalIP()
-		// Uses the port saved in the config file, ensuring the browser opens the correct URL
 		targetURL := fmt.Sprintf("http://%s:%d/status", localIP, Config.Port)
 
-		cmd := exec.Command("rundll32", "url.dll,FileProtocolHandler", targetURL)
-		cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+		// Changed to xdg-open for Linux
+		cmd := exec.Command("xdg-open", targetURL)
 		cmd.Start()
 		return
 	}
@@ -823,8 +743,6 @@ func main() {
 	http.HandleFunc("/api/check_tuners", checkTuners)
 	http.HandleFunc("/api/release/", apiReleaseTuner)
 
-	// Build the listen string dynamically from the config (e.g., ":8888" or ":4888")
-	// The colon with no IP in front of it allows local network access from other devices.
 	portString := fmt.Sprintf(":%d", Config.Port)
 	
 	log.Printf("ADB Bridge server listening on %s\n", portString)
