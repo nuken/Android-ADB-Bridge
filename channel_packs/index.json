@@ -1,0 +1,12 @@
+[
+  {
+    "name": "YouTube TV (East Coast)",
+    "channel_count": 85,
+    "url": "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/channel_packs/youtubetv_east.json"
+  },
+  {
+    "name": "DirecTV Stream (National)",
+    "channel_count": 120,
+    "url": "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/channel_packs/directv_national.json"
+  }
+]
