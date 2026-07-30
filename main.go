@@ -33,6 +33,10 @@ type Tuner struct {
 	AudioDeviceID   string `json:"audio_device_id,omitempty"`
 	AudioDelayMs    int    `json:"audio_delay_ms,omitempty"`
 	DeinterlaceMode string `json:"deinterlace_mode,omitempty"`
+	VideoCodec      string `json:"video_codec,omitempty"`
+	EncoderPreset   string `json:"encoder_preset,omitempty"`
+	VideoBitrate    int    `json:"video_bitrate,omitempty"`
+	AudioBitrate    int    `json:"audio_bitrate,omitempty"`
 	Priority        int    `json:"priority"`
 	InUse           bool   `json:"-"`
 }
@@ -265,11 +269,6 @@ func executeTuning(deviceIP string, ch Channel) {
 // ==========================================
 // 5. FFmpeg Hardware Discovery (Linux)
 // ==========================================
-func getEncoderArgs() []string {
-	// Using Intel QuickSync HEVC (H.265) as optimized for the i5-8500
-	return []string{"-c:v", "hevc_qsv", "-preset", "medium"}
-}
-
 func apiDevices(w http.ResponseWriter, r *http.Request) {
 	devices := DeviceList{Video: []DShowDevice{}, Audio: []DShowDevice{}}
 
@@ -421,6 +420,55 @@ func apiConfig(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func apiExportConfig(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Disposition", `attachment; filename="android_channels_backup.json"`)
+	json.NewEncoder(w).Encode(Config)
+}
+
+func apiImportConfig(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	// Parse the multipart form, 10 MB max memory
+	err := r.ParseMultipartForm(10 << 20)
+	if err != nil {
+		http.Error(w, "Error parsing form", http.StatusBadRequest)
+		return
+	}
+
+	file, _, err := r.FormFile("configFile")
+	if err != nil {
+		http.Error(w, "Error retrieving file", http.StatusBadRequest)
+		return
+	}
+	defer file.Close()
+
+	body, err := io.ReadAll(file)
+	if err != nil {
+		http.Error(w, "Error reading file", http.StatusInternalServerError)
+		return
+	}
+
+	// Validate JSON structure before applying
+	var tempConfig AppConfig
+	if err := json.Unmarshal(body, &tempConfig); err != nil {
+		http.Error(w, "Invalid JSON configuration", http.StatusBadRequest)
+		return
+	}
+
+	// Apply and save
+	tunerLock.Lock()
+	Config = tempConfig
+	saveConfig()
+	tunerLock.Unlock()
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write([]byte(`{"status": "success"}`))
+}
+
 func streamHandler(w http.ResponseWriter, r *http.Request) {
 	channelID := strings.TrimPrefix(r.URL.Path, "/stream/")
 
@@ -458,44 +506,73 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 
 		ffmpeg := getFFmpegPath()
 
-		// Setting pixel format to NV12, which is optimal for Intel QuickSync
-		vfArg := "format=nv12,fps=59.94"
-		if tuner.DeinterlaceMode == "tff" {
-			vfArg = "bwdif=mode=1:parity=0,format=nv12,fps=59.94"
-		} else if tuner.DeinterlaceMode == "bff" {
-			vfArg = "bwdif=mode=1:parity=1,format=nv12,fps=59.94"
+		vCodec := tuner.VideoCodec
+		if vCodec == "" {
+			vCodec = "hevc_qsv"
 		}
+		vPreset := tuner.EncoderPreset
+		if vPreset == "" {
+			vPreset = "medium"
+		}
+		vBitrate := tuner.VideoBitrate
+		if vBitrate == 0 {
+			vBitrate = 2500
+		}
+		aBitrate := tuner.AudioBitrate
+		if aBitrate == 0 {
+			aBitrate = 128
+		}
+
+		vfArg := "format=nv12"
+		if tuner.DeinterlaceMode == "tff" {
+			vfArg = "bwdif=mode=1:parity=0,format=nv12"
+		} else if tuner.DeinterlaceMode == "bff" {
+			vfArg = "bwdif=mode=1:parity=1,format=nv12"
+		}
+		
+		if strings.Contains(vCodec, "vaapi") {
+			vfArg += ",hwupload"
+		}
+		vfArg += ",fps=59.94"
 
 		args := []string{
 			"-hide_banner", "-loglevel", "error",
-			"-init_hw_device", "qsv=hw",
-			"-filter_hw_device", "hw",
-			"-rtbufsize", "256M", 
+		}
+
+		// Inject hardware acceleration initialization depending on the selected codec
+		if strings.Contains(vCodec, "qsv") {
+			args = append(args, "-init_hw_device", "qsv=hw", "-filter_hw_device", "hw")
+		} else if strings.Contains(vCodec, "vaapi") {
+			args = append(args, "-init_hw_device", "vaapi=hw:/dev/dri/renderD128", "-filter_hw_device", "hw")
+		}
+
+		args = append(args,
+			"-rtbufsize", "256M",
 			"-thread_queue_size", "1024",
 			"-f", "v4l2",
 			"-i", tuner.VideoDeviceID,
 			"-f", "alsa",
 			"-i", tuner.AudioDeviceID,
 			"-vf", vfArg,
-		}
+			"-c:v", vCodec,
+			"-preset", vPreset,
+		)
 
-		args = append(args, getEncoderArgs()...)
-
-		args = append(args, 
-			"-color_primaries", "bt709", 
-			"-color_trc", "bt709", 
-			"-colorspace", "bt709", 
+		args = append(args,
+			"-color_primaries", "bt709",
+			"-color_trc", "bt709",
+			"-colorspace", "bt709",
 			"-color_range", "tv",
 		)
 
-		args = append(args, "-maxrate", "2500k", "-bufsize", "5000k")
+		args = append(args, "-maxrate", fmt.Sprintf("%dk", vBitrate), "-bufsize", fmt.Sprintf("%dk", vBitrate*2))
 
 		if tuner.AudioDelayMs > 0 {
 			args = append(args, "-af", fmt.Sprintf("adelay=%d|%d", tuner.AudioDelayMs, tuner.AudioDelayMs))
 		}
 
 		args = append(args,
-			"-c:a", "aac", "-b:a", "128k", "-ar", "48000",
+			"-c:a", "aac", "-b:a", fmt.Sprintf("%dk", aBitrate), "-ar", "48000",
 			"-f", "mpegts",
 			"pipe:1",
 		)
@@ -721,10 +798,14 @@ func main() {
 		localIP := getLocalIP()
 		targetURL := fmt.Sprintf("http://%s:%d/status", localIP, Config.Port)
 
-		// Changed to xdg-open for Linux
-		cmd := exec.Command("xdg-open", targetURL)
-		cmd.Start()
-		return
+		// Run the browser launch in the background with a slight delay
+		// so the HTTP server has time to start listening first.
+		go func() {
+			time.Sleep(1 * time.Second)
+			cmd := exec.Command("xdg-open", targetURL)
+			cmd.Start()
+		}()
+		// REMOVED the 'return' statement so the app continues starting
 	}
 
 	ensureADBReady()
@@ -733,6 +814,8 @@ func main() {
 	http.HandleFunc("/status", statusPage)
 	http.HandleFunc("/health", healthCheck)
 	http.HandleFunc("/api/config", apiConfig)
+	http.HandleFunc("/api/export_config", apiExportConfig) // Added export endpoint
+	http.HandleFunc("/api/import_config", apiImportConfig) // Added import endpoint
 	http.HandleFunc("/api/devices", apiDevices)
 	http.HandleFunc("/api/active_tuners", apiActiveTuners)
 	http.HandleFunc("/stream/", streamHandler)

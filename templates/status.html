@@ -21,11 +21,11 @@
         .action-button.delete { background-color: var(--error-color); }
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); }
         .modal-content {
-            background-color: #1e1e1e; /* (Keep whatever background color you currently have) */
+            background-color: #1e1e1e;
             margin: 5% auto;
             padding: 20px;
             border-radius: 8px;
-            width: 400px;
+            width: 500px;
             max-width: 90%;            
             max-height: 85vh; 
             overflow-y: auto; 
@@ -68,6 +68,11 @@
             <button class="button" onclick="fetchStatus()"><i class="fa-solid fa-sync"></i> Refresh Status</button>
             <a href="/remote" class="button">Open Remote</a>
             <button id="copy-m3u-btn" class="button" onclick="copyM3uLink()"><i class="fa-solid fa-copy"></i> Copy M3U Link</button>
+            
+            <!-- Backup & Restore Buttons -->
+            <button class="button" onclick="exportConfig()" style="background-color: #10b981; margin-left: auto;"><i class="fa-solid fa-download"></i> Backup Config</button>
+            <button class="button" onclick="document.getElementById('import-file').click()" style="background-color: #f59e0b;"><i class="fa-solid fa-upload"></i> Restore Config</button>
+            <input type="file" id="import-file" style="display: none;" accept=".json" onchange="importConfig(event)">
         </div>
 
         <h2><i class="fa-solid fa-server"></i> Tuners (Devices)</h2>
@@ -136,14 +141,14 @@
                     <select id="tuner-audio-dev"></select>
                 </div>
 
-                <!-- New Audio Delay Field -->
+                <!-- Audio Delay Field -->
                 <div class="form-group" id="group-local-delay" style="display:none;">
                     <label>Audio Delay / Lip Sync (ms)</label>
                     <input type="number" id="tuner-audio-delay" value="0" min="0" step="10" placeholder="e.g. 150">
-                    <span style="font-size: 0.75em; color: #aaa;">Increase if audio plays BEFORE mouth movements (typical for USB capture).</span>
+                    <span style="font-size: 0.75em; color: #aaa;">Increase if audio plays BEFORE mouth movements.</span>
                 </div>
 				
-				<!-- New Deinterlace Mode Field -->
+				<!-- Deinterlace Mode Field -->
                 <div class="form-group" id="group-local-deinterlace" style="display:none;">
                     <label>Deinterlace Mode (Fix Camera Jiggle)</label>
                     <select id="tuner-deinterlace">
@@ -151,6 +156,40 @@
                         <option value="bff">Bottom-Field-First (Reverse)</option>
                         <option value="off">Off (Progressive / No Filter)</option>
                     </select>
+                </div>
+
+                <!-- Advanced Encoding Settings -->
+                <div id="group-local-advanced" style="display:none; margin-top: 15px; border-top: 1px solid var(--border-color); padding-top: 15px; margin-bottom: 15px;">
+                    <h4 style="margin-top: 0; margin-bottom: 10px; color: var(--primary-color);">Advanced Encoding</h4>
+                    <div class="form-group">
+                        <label>Video Codec</label>
+                        <select id="tuner-vcodec">
+                            <option value="hevc_qsv">Intel H.265 (hevc_qsv) - Recommended</option>
+                            <option value="h264_qsv">Intel H.264 (h264_qsv)</option>
+                            <option value="hevc_vaapi">AMD/Generic H.265 (hevc_vaapi)</option>
+                            <option value="h264_vaapi">AMD/Generic H.264 (h264_vaapi)</option>
+                            <option value="libx264">CPU Software (libx264)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Encoder Preset</label>
+                        <select id="tuner-preset">
+                            <option value="veryfast">Very Fast</option>
+                            <option value="fast">Fast</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="slow">Slow</option>
+                        </select>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <div class="form-group" style="flex: 1;">
+                            <label>Video Bitrate (kbps)</label>
+                            <input type="number" id="tuner-vbitrate" placeholder="2500" value="2500">
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <label>Audio Bitrate (kbps)</label>
+                            <input type="number" id="tuner-abitrate" placeholder="128" value="128">
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-group"><label>Priority</label><input type="number" id="tuner-priority" value="99" required></div>
@@ -256,6 +295,43 @@
         }
 
         function fetchStatus() { loadConfig(); }
+
+        // === Export/Import Config ===
+        function exportConfig() {
+            window.location.href = '/api/export_config';
+        }
+
+        async function importConfig(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            if (!confirm('Warning: This will overwrite your entire current configuration. Are you sure you want to proceed?')) {
+                event.target.value = ''; // Reset input
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('configFile', file);
+
+            try {
+                const res = await fetch('/api/import_config', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (res.ok) {
+                    alert('Configuration restored successfully!');
+                    loadConfig(); // Reload everything from the new config
+                } else {
+                    alert('Failed to restore configuration. Make sure it is a valid JSON file.');
+                }
+            } catch (err) {
+                console.error('Import error:', err);
+                alert('Network error during import.');
+            }
+            
+            event.target.value = ''; // Reset input so the same file can be selected again
+        }
 
         function renderTables() {
             document.getElementById('tuners-table-body').innerHTML = config.tuners.map((t, i) => {
@@ -416,6 +492,7 @@
             const audioGroup = document.getElementById('group-local-audio');
             const delayGroup = document.getElementById('group-local-delay');
             const deinterlaceGroup = document.getElementById('group-local-deinterlace'); // NEW
+            const advancedGroup = document.getElementById('group-local-advanced'); // NEW
 
             if (type === 'local') {
                 urlGroup.style.display = 'none';
@@ -423,6 +500,7 @@
                 audioGroup.style.display = 'block';
                 delayGroup.style.display = 'block';
                 deinterlaceGroup.style.display = 'block'; // NEW
+                advancedGroup.style.display = 'block'; // NEW
                 document.getElementById('tuner-url').required = false;
                 fetchDevices();
             } else {
@@ -431,6 +509,7 @@
                 audioGroup.style.display = 'none';
                 delayGroup.style.display = 'none';
                 deinterlaceGroup.style.display = 'none'; // NEW
+                advancedGroup.style.display = 'none'; // NEW
                 document.getElementById('tuner-url').required = true;
             }
         }
@@ -470,6 +549,13 @@
             document.getElementById('tuner-type').value = 'network';
             document.getElementById('tuner-audio-delay').value = '0';
             document.getElementById('tuner-deinterlace').value = 'off'; // NEW
+            
+            // Reset Advanced Encoding fields
+            document.getElementById('tuner-vcodec').value = 'hevc_qsv';
+            document.getElementById('tuner-preset').value = 'medium';
+            document.getElementById('tuner-vbitrate').value = '2500';
+            document.getElementById('tuner-abitrate').value = '128';
+
             toggleTunerTypeFields();
             document.getElementById('tuner-modal').style.display='block'; 
         }
@@ -482,6 +568,13 @@
             document.getElementById('tuner-url').value = t.encoder_url || '';
             document.getElementById('tuner-audio-delay').value = t.audio_delay_ms || 0;
             document.getElementById('tuner-deinterlace').value = t.deinterlace_mode || 'off';
+            
+            // Populate Advanced Encoding fields (with defaults if missing)
+            document.getElementById('tuner-vcodec').value = t.video_codec || 'hevc_qsv';
+            document.getElementById('tuner-preset').value = t.encoder_preset || 'medium';
+            document.getElementById('tuner-vbitrate').value = t.video_bitrate || 2500;
+            document.getElementById('tuner-abitrate').value = t.audio_bitrate || 128;
+
             document.getElementById('tuner-priority').value = t.priority || 99;
             document.getElementById('tuner-index').value = i;
 
@@ -506,6 +599,10 @@
                 audio_device_id: tunerType === 'local' ? document.getElementById('tuner-audio-dev').value : '',
                 audio_delay_ms: tunerType === 'local' ? (parseInt(document.getElementById('tuner-audio-delay').value) || 0) : 0,
                 deinterlace_mode: tunerType === 'local' ? document.getElementById('tuner-deinterlace').value : 'off',
+                video_codec: tunerType === 'local' ? document.getElementById('tuner-vcodec').value : '',
+                encoder_preset: tunerType === 'local' ? document.getElementById('tuner-preset').value : '',
+                video_bitrate: tunerType === 'local' ? (parseInt(document.getElementById('tuner-vbitrate').value) || 2500) : 0,
+                audio_bitrate: tunerType === 'local' ? (parseInt(document.getElementById('tuner-abitrate').value) || 128) : 0,
                 priority: parseInt(document.getElementById('tuner-priority').value) || 99 
             };
 
