@@ -1,0 +1,27 @@
+{
+  "providers": [
+    {
+      "id": "yt_tv",
+      "name": "YouTube TV",
+      "package_name": "com.google.android.youtube.tvunplugged",
+      "component": "com.google.android.apps.youtube.tvunplugged.activity.MainActivity",
+      "url_template": "https://tv.youtube.com/watch/{id}"
+    }
+  ],
+  "channels": [
+    {
+      "name": "ESPN",
+      "id": "yttv-espn",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "8U8x6v",
+      "tvc_guide_stationid": "32375"
+    },
+    {
+      "name": "CNN",
+      "id": "yttv-cnn",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "D9b_wA",
+      "tvc_guide_stationid": "16604"
+    }
+  ]
+}
