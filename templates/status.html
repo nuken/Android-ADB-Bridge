@@ -22,10 +22,10 @@
         .button.cloud { background-color: #8b5cf6; }
         .button.cloud:hover { background-color: #7c3aed; }
         
-        /* New Backup & Restore Colors */
-        .button.backup { background-color: #10b981; } /* Emerald Green */
+        /* Backup & Restore Colors */
+        .button.backup { background-color: #10b981; } 
         .button.backup:hover { background-color: #059669; }
-        .button.restore { background-color: #f59e0b; } /* Amber Orange */
+        .button.restore { background-color: #f59e0b; } 
         .button.restore:hover { background-color: #d97706; }
         
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); }
@@ -71,7 +71,6 @@
             <a href="/remote" class="button">Open Remote</a>
             <button id="copy-m3u-btn" class="button" onclick="copyM3uLink()"><i class="fa-solid fa-copy"></i> Copy M3U</button>
             
-            <!-- Colorful Backup Buttons -->
             <button class="button backup" onclick="exportConfig()"><i class="fa-solid fa-download"></i> Backup Config</button>
             <button class="button restore" onclick="document.getElementById('import-file').click()"><i class="fa-solid fa-upload"></i> Restore Backup</button>
             <input type="file" id="import-file" style="display:none" accept=".json" onchange="importConfig(event)">
@@ -84,9 +83,7 @@
         <div class="table-wrapper">
             <table id="tuners-table">
                 <thead><tr><th>Name</th><th>Device IP</th><th>Capture Source / URL</th><th>Actions</th></tr></thead>
-                <tbody id="tuners-table-body">
-                    <tr><td colspan="4" style="text-align:center; color:#888;">Go Backend not running in this preview</td></tr>
-                </tbody>
+                <tbody id="tuners-table-body"></tbody>
             </table>
         </div>
         <button class="button" onclick="openTunerModal()" style="margin-top: 10px;"><i class="fa-solid fa-plus"></i> Add Device</button>
@@ -96,9 +93,7 @@
         <div class="table-wrapper">
             <table id="providers-table">
                 <thead><tr><th>Name</th><th>Provider ID</th><th>Actions</th></tr></thead>
-                <tbody id="providers-table-body">
-                    <tr><td colspan="3" style="text-align:center; color:#888;">Go Backend not running in this preview</td></tr>
-                </tbody>
+                <tbody id="providers-table-body"></tbody>
             </table>
         </div>
         <button class="button" onclick="openProviderModal()" style="margin-top: 10px;"><i class="fa-solid fa-plus"></i> Add Provider</button>
@@ -108,9 +103,7 @@
         <div class="table-wrapper">
             <table id="channels-table">
                 <thead><tr><th>Name</th><th>Channel ID</th><th>Provider</th><th>Deep Link ID</th><th>Actions</th></tr></thead>
-                <tbody id="channels-table-body">
-                    <tr><td colspan="5" style="text-align:center; color:#888;">Go Backend not running in this preview</td></tr>
-                </tbody>
+                <tbody id="channels-table-body"></tbody>
             </table>
         </div>
         <button class="button" onclick="openChannelModal()" style="margin-top: 10px;"><i class="fa-solid fa-plus"></i> Add Channel</button>
@@ -136,8 +129,8 @@
                 </select>
             </div>
             <div style="display: flex; gap: 10px; margin-top: 25px;">
-                <button class="button cloud" style="flex: 1; justify-content: center;" onclick="applyCloudPack(false)"><i class="fa-solid fa-plus"></i> Append</button>
-                <button class="button" style="background: var(--error-color); flex: 1; justify-content: center;" onclick="applyCloudPack(true)"><i class="fa-solid fa-triangle-exclamation"></i> Replace</button>
+                <button class="button cloud" style="flex: 1; justify-content: center;" onclick="applyCloudPack('append')"><i class="fa-solid fa-plus"></i> Append</button>
+                <button class="button" style="background: var(--error-color); flex: 1; justify-content: center;" onclick="applyCloudPack('replace')"><i class="fa-solid fa-triangle-exclamation"></i> Replace All</button>
                 <button class="button" style="background:#666; flex: 1; justify-content: center;" onclick="closeModal('cloud-modal')">Cancel</button>
             </div>
         </div>
@@ -276,11 +269,325 @@
     </div>
 
     <script>
-        // Modified slightly for the Canvas Preview environment so it doesn't throw console errors
         const CLOUD_INDEX_URL = 'https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/linux/channel_packs/index.json';
 
-        function fetchStatus() { console.log("Refresh clicked"); }
+        // STATE VARIABLES
+        let config = { tuners: [], providers: [], channels: [] };
+        let hardwareDevices = { video: [], audio: [] };
+        let activePoller = null; 
+        let hasUnsavedChanges = false;
+
+        function markUnsaved() {
+            hasUnsavedChanges = true;
+            const banner = document.getElementById('save-banner');
+            if (banner) banner.classList.add('show');
+        }
         
+        function markSaved() {
+            hasUnsavedChanges = false;
+            const banner = document.getElementById('save-banner');
+            if (banner) banner.classList.remove('show');
+        }
+
+        async function loadConfig() {
+            const res = await fetch('/api/config');
+            config = await res.json();
+            config.tuners = config.tuners || [];
+            config.providers = config.providers || [];
+            config.channels = config.channels || [];
+            
+            markSaved();
+            renderTables();
+            
+            if (!activePoller) {
+                pollActiveTuners();
+                activePoller = setInterval(pollActiveTuners, 3000);
+            } else {
+                pollActiveTuners();
+            }
+        }
+        
+        async function forceRelease(deviceIp) {
+            if (!confirm(`Are you sure you want to force release tuner ${deviceIp}? This will interrupt any active stream.`)) return;
+            try {
+                const res = await fetch(`/api/release/${deviceIp}`, { method: 'POST' });
+                if (res.ok) loadTunerStatuses();
+                else alert("Failed to release tuner.");
+            } catch (err) {
+                alert("Network error while trying to release tuner.");
+            }
+        }
+
+        function fetchStatus() { loadConfig(); }
+
+        function renderTables() {
+            document.getElementById('tuners-table-body').innerHTML = config.tuners.map((t, i) => {
+                const safeIp = t.device_ip.replace(/\./g, '-');
+                const isLocal = t.type === 'local';
+                const sourceDisplay = isLocal ? `<i class="fa-solid fa-microchip" title="Hardware Encoded"></i> [${t.encoder_type || 'qsv'}] ${t.video_device_id || 'Default Card'}` : t.encoder_url;
+
+                return `
+                <tr>
+                    <td>
+                        ${t.name} <span style="font-size: 0.8em; color: #aaa;">(Pri: ${t.priority || 99})</span>
+                        <span id="usage-badge-${safeIp}" style="margin-left: 10px; padding: 2px 8px; border-radius: 12px; font-size: 0.75em; background: #555; color: white;"><i class="fa-solid fa-spinner fa-spin"></i></span>
+                    </td>
+                    <td><span id="adb-icon-${safeIp}"><i class="fa-solid fa-spinner fa-spin" style="color:#888"></i></span> ${t.device_ip}</td>
+                    <td><span id="enc-icon-${safeIp}"><i class="fa-solid fa-spinner fa-spin" style="color:#888"></i></span> ${sourceDisplay}</td>
+                    <td>
+                        <button class="action-button" onclick="editTuner(${i})"><i class="fa-solid fa-pencil"></i></button>
+                        <button class="action-button" style="background-color: #d97706;" onclick="forceRelease('${t.device_ip}')" title="Force Release"><i class="fa-solid fa-unlock"></i></button>
+                        <button class="action-button delete" onclick="delTuner(${i})"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>`}).join('');
+            
+            document.getElementById('providers-table-body').innerHTML = config.providers.map((p, i) => `
+                <tr>
+                    <td>${p.name}</td>
+                    <td>${p.id}</td>
+                    <td>
+                        <button class="action-button" onclick="editProvider(${i})"><i class="fa-solid fa-pencil"></i></button>
+                        <button class="action-button delete" onclick="delProvider(${i})"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>`).join('');
+
+            document.getElementById('channels-table-body').innerHTML = config.channels.map((c, i) => `
+                <tr draggable="true" ondragstart="dragStart(event, ${i})" ondragover="dragOver(event)" ondrop="drop(event, ${i})" ondragend="dragEnd(event)">
+                    <td style="cursor: grab;" title="Drag to reorder"><i class="fa-solid fa-grip-vertical" style="color: #666; margin-right: 10px;"></i>${c.name}</td>
+                    <td>${c.id}</td>
+                    <td>${c.provider_id}</td>
+                    <td>${c.deep_link_content_id}</td>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 4px;">
+                            <button class="action-button" style="background-color: #4b5563;" onclick="moveChannel(${i}, -1)" ${i === 0 ? 'disabled style="opacity: 0.5;"' : ''}><i class="fa-solid fa-arrow-up"></i></button>
+                            <button class="action-button" style="background-color: #4b5563;" onclick="moveChannel(${i}, 1)" ${i === config.channels.length - 1 ? 'disabled style="opacity: 0.5;"' : ''}><i class="fa-solid fa-arrow-down"></i></button>
+                            <a href="/preview/${c.id}" class="action-button" style="background-color: #8b5cf6;"><i class="fa-solid fa-play"></i></a>
+                            <button class="action-button" onclick="editChannel(${i})"><i class="fa-solid fa-pencil"></i></button>
+                            <button class="action-button delete" onclick="delChannel(${i})"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>`).join('');
+
+            loadTunerStatuses(); 
+        }
+
+        // ==========================================
+        // EXPORT / IMPORT CONFIGURATION LOGIC
+        // ==========================================
+        async function exportConfig() {
+            try {
+                const res = await fetch('/api/config');
+                const data = await res.json();
+                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'android_channels_backup.json';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            } catch (err) {
+                alert("Failed to export config.");
+            }
+        }
+
+        async function importConfig(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            if (!confirm("Are you sure? This will overwrite your entire configuration including tuners!")) {
+                event.target.value = ''; 
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                try {
+                    const importedConfig = JSON.parse(e.target.result);
+                    if (!importedConfig.tuners || !importedConfig.channels) throw new Error("Invalid format");
+                    
+                    const res = await fetch('/api/config', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(importedConfig)
+                    });
+                    
+                    if (res.ok) {
+                        alert("Configuration imported successfully!");
+                        window.location.reload();
+                    } else {
+                        alert("Failed to save imported configuration to server.");
+                    }
+                } catch (err) {
+                    console.error(err);
+                    alert("Invalid JSON file.");
+                }
+                event.target.value = ''; 
+            };
+            reader.readAsText(file);
+        }
+
+        // ==========================================
+        // CLOUD PACK IMPORT LOGIC
+        // ==========================================
+        async function openCloudModal() {
+            document.getElementById('cloud-modal').style.display = 'block';
+            const select = document.getElementById('cloud-pack-select');
+            select.innerHTML = '<option value="">Fetching packs from GitHub...</option>';
+            
+            try {
+                const res = await fetch(CLOUD_INDEX_URL + '?t=' + new Date().getTime()); 
+                if (!res.ok) throw new Error("HTTP " + res.status);
+                
+                const packs = await res.json();
+                if (packs.length === 0) {
+                    select.innerHTML = '<option value="">No packs currently available.</option>';
+                    return;
+                }
+                
+                select.innerHTML = '<option value="" disabled selected>-- Select a Channel Pack --</option>' + 
+                    packs.map(p => `<option value="${p.url}">${p.name} (${p.channel_count} channels)</option>`).join('');
+            } catch(err) {
+                console.error("Cloud Pack Load Error:", err);
+                select.innerHTML = '<option value="">Failed to load index.json from GitHub.</option>';
+            }
+        }
+
+        async function applyCloudPack(mode) {
+            const select = document.getElementById('cloud-pack-select');
+            const packUrl = select.value;
+
+            if (!packUrl) {
+                alert("Please select a channel pack first.");
+                return;
+            }
+
+            try {
+                const res = await fetch(packUrl + '?t=' + new Date().getTime());
+                if (!res.ok) throw new Error("HTTP Status: " + res.status);
+                
+                const packData = await res.json();
+                
+                if (mode === 'replace') {
+                    if (!confirm("Are you SURE? This will wipe your current Channels and Providers and replace them with the downloaded pack. Your Tuners will NOT be affected.")) return;
+                    config.providers = packData.providers || [];
+                    config.channels = packData.channels || [];
+                } else if (mode === 'append') {
+                    (packData.providers || []).forEach(newProv => {
+                        if (!config.providers.some(p => p.id === newProv.id)) {
+                            config.providers.push(newProv);
+                        }
+                    });
+                    (packData.channels || []).forEach(newChan => {
+                        if (!config.channels.some(c => c.id === newChan.id)) {
+                            config.channels.push(newChan);
+                        }
+                    });
+                }
+
+                markUnsaved(); 
+                renderTables(); 
+                closeModal('cloud-modal');
+                alert("Channel pack applied successfully! Don't forget to click Save Now.");
+
+            } catch (err) {
+                console.error("Cloud Pack Download Error:", err);
+                alert("Failed to download the channel pack. Check the browser console (F12) for details.");
+            }
+        }
+
+        // ==========================================
+        // STANDARD UI LOGIC (Tuners/Channels/Providers)
+        // ==========================================
+        async function loadTunerStatuses() {
+            try {
+                const [hwRes, activeRes] = await Promise.all([ fetch('/api/check_tuners'), fetch('/api/active_tuners') ]);
+                const statuses = await hwRes.json();
+                const activeTuners = await activeRes.json();
+                
+                statuses.forEach(s => {
+                    const safeIp = s.device_ip.replace(/\./g, '-');
+                    const adbEl = document.getElementById(`adb-icon-${safeIp}`);
+                    const encEl = document.getElementById(`enc-icon-${safeIp}`);
+                    const usageEl = document.getElementById(`usage-badge-${safeIp}`);
+                    
+                    if (adbEl) adbEl.innerHTML = s.adb_online ? '<i class="fa-solid fa-circle-check" style="color: var(--success-color);"></i> ' : '<i class="fa-solid fa-circle-xmark" style="color: var(--error-color);"></i> ';
+                    if (encEl) encEl.innerHTML = s.encoder_online ? '<i class="fa-solid fa-circle-check" style="color: var(--success-color);"></i> ' : '<i class="fa-solid fa-circle-xmark" style="color: var(--error-color);"></i> ';
+                    if (usageEl) {
+                        const inUse = activeTuners[s.device_ip];
+                        if (inUse) { usageEl.innerHTML = '<i class="fa-solid fa-play"></i> In Use'; usageEl.style.backgroundColor = 'var(--error-color)'; } 
+                        else { usageEl.innerHTML = '<i class="fa-solid fa-bed"></i> Idle'; usageEl.style.backgroundColor = 'var(--success-color)'; }
+                    }
+                });
+            } catch (err) {}
+        }
+        
+        async function pollActiveTuners() {
+            try {
+                const res = await fetch('/api/active_tuners');
+                const active = await res.json();
+                config.tuners.forEach(t => {
+                    const safeIp = t.device_ip.replace(/\./g, '-');
+                    const inUseEl = document.getElementById(`usage-badge-${safeIp}`);
+                    if (inUseEl) {
+                        if (active[t.device_ip]) { inUseEl.innerHTML = '<i class="fa-solid fa-play"></i> In Use'; inUseEl.style.backgroundColor = 'var(--error-color)'; } 
+                        else { inUseEl.innerHTML = '<i class="fa-solid fa-bed"></i> Idle'; inUseEl.style.backgroundColor = 'var(--success-color)'; }
+                    }
+                });
+            } catch (err) {}
+        }
+
+        async function fetchDevices(selectedVideo = '', selectedAudio = '') {
+            try {
+                const res = await fetch('/api/devices');
+                hardwareDevices = await res.json();
+                
+                const videoSelect = document.getElementById('tuner-video-dev');
+                const audioSelect = document.getElementById('tuner-audio-dev');
+                
+                videoSelect.innerHTML = (hardwareDevices.video || []).map(d => `<option value="${d.id}" ${d.id === selectedVideo ? 'selected' : ''}>${d.name}</option>`).join('') || '<option value="">No video devices found</option>';
+                audioSelect.innerHTML = (hardwareDevices.audio || []).map(d => `<option value="${d.id}" ${d.id === selectedAudio ? 'selected' : ''}>${d.name}</option>`).join('') || '<option value="">No audio devices found</option>';
+            } catch (err) {}
+        }
+
+        function toggleTunerTypeFields() {
+            const type = document.getElementById('tuner-type').value;
+            const urlGroup = document.getElementById('group-encoder-url');
+            const localGroup = document.getElementById('group-local-advanced');
+
+            if (type === 'local') {
+                urlGroup.style.display = 'none';
+                localGroup.style.display = 'block';
+                document.getElementById('tuner-url').required = false;
+                fetchDevices();
+            } else {
+                urlGroup.style.display = 'block';
+                localGroup.style.display = 'none';
+                document.getElementById('tuner-url').required = true;
+            }
+        }
+
+        function moveChannel(idx, direction) {
+            if (idx + direction < 0 || idx + direction >= config.channels.length) return;
+            const temp = config.channels[idx];
+            config.channels[idx] = config.channels[idx + direction];
+            config.channels[idx + direction] = temp;
+            markUnsaved(); renderTables();
+        }
+
+        let draggedIdx = null;
+        function dragStart(e, idx) { draggedIdx = idx; e.dataTransfer.effectAllowed = 'move'; setTimeout(() => e.target.style.opacity = '0.4', 0); }
+        function dragOver(e) { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; }
+        function drop(e, targetIdx) {
+            e.preventDefault();
+            if (draggedIdx === null || draggedIdx === targetIdx) return;
+            const movedItem = config.channels.splice(draggedIdx, 1)[0];
+            config.channels.splice(targetIdx, 0, movedItem);
+            markUnsaved(); renderTables();
+        }
+        function dragEnd(e) { e.target.style.opacity = '1'; draggedIdx = null; }
+
         function openTunerModal() { 
             document.getElementById('tuner-form').reset(); 
             document.getElementById('tuner-index').value = '-1'; 
@@ -295,101 +602,137 @@
             document.getElementById('tuner-modal').style.display='block'; 
         }
 
-        function toggleTunerTypeFields() {
-            const type = document.getElementById('tuner-type').value;
-            const urlGroup = document.getElementById('group-encoder-url');
-            const localGroup = document.getElementById('group-local-advanced');
+        async function editTuner(i) {
+            const t = config.tuners[i];
+            document.getElementById('tuner-name').value = t.name;
+            document.getElementById('tuner-ip').value = t.device_ip;
+            document.getElementById('tuner-type').value = t.type || 'network';
+            document.getElementById('tuner-url').value = t.encoder_url || '';
+            document.getElementById('tuner-encoder-type').value = t.encoder_type || 'qsv';
+            document.getElementById('tuner-video-bitrate').value = t.video_bitrate || '2500k';
+            document.getElementById('tuner-audio-bitrate').value = t.audio_bitrate || '128k';
+            document.getElementById('tuner-preset').value = t.preset || 'medium';
+            document.getElementById('tuner-audio-delay').value = t.audio_delay_ms || 0;
+            document.getElementById('tuner-deinterlace').value = t.deinterlace_mode || 'off';
+            document.getElementById('tuner-priority').value = t.priority || 99;
+            document.getElementById('tuner-index').value = i;
 
-            if (type === 'local') {
-                urlGroup.style.display = 'none';
-                localGroup.style.display = 'block';
-                document.getElementById('tuner-url').required = false;
-            } else {
-                urlGroup.style.display = 'block';
-                localGroup.style.display = 'none';
-                document.getElementById('tuner-url').required = true;
-            }
+            toggleTunerTypeFields();
+            if ((t.type || 'network') === 'local') await fetchDevices(t.video_device_id, t.audio_device_id);
+            document.getElementById('tuner-modal').style.display='block';
         }
+
+        document.getElementById('tuner-form').onsubmit = e => {
+            e.preventDefault();
+            const i = parseInt(document.getElementById('tuner-index').value);
+            const tunerType = document.getElementById('tuner-type').value;
+
+            const data = { 
+                name: document.getElementById('tuner-name').value, 
+                device_ip: document.getElementById('tuner-ip').value, 
+                type: tunerType,
+                encoder_url: tunerType === 'network' ? document.getElementById('tuner-url').value : '',
+                video_device_id: tunerType === 'local' ? document.getElementById('tuner-video-dev').value : '',
+                audio_device_id: tunerType === 'local' ? document.getElementById('tuner-audio-dev').value : '',
+                encoder_type: tunerType === 'local' ? document.getElementById('tuner-encoder-type').value : '',
+                video_bitrate: tunerType === 'local' ? document.getElementById('tuner-video-bitrate').value : '',
+                audio_bitrate: tunerType === 'local' ? document.getElementById('tuner-audio-bitrate').value : '',
+                preset: tunerType === 'local' ? document.getElementById('tuner-preset').value : '',
+                audio_delay_ms: tunerType === 'local' ? (parseInt(document.getElementById('tuner-audio-delay').value) || 0) : 0,
+                deinterlace_mode: tunerType === 'local' ? document.getElementById('tuner-deinterlace').value : 'off',
+                priority: parseInt(document.getElementById('tuner-priority').value) || 99 
+            };
+
+            if (i === -1) config.tuners.push(data); else config.tuners[i] = data;
+            config.tuners.sort((a, b) => (a.priority || 99) - (b.priority || 99));
+            markUnsaved(); renderTables(); closeModal('tuner-modal');
+        };
+
+        function delTuner(i) { if(confirm('Delete this tuner?')) { config.tuners.splice(i, 1); markUnsaved(); renderTables(); } }
 
         function openProviderModal() { document.getElementById('provider-form').reset(); document.getElementById('provider-index').value = '-1'; document.getElementById('provider-modal').style.display='block'; }
-        function openChannelModal() { document.getElementById('channel-form').reset(); document.getElementById('channel-index').value = '-1'; document.getElementById('channel-modal').style.display='block'; }
-        
+        function editProvider(i) {
+            const p = config.providers[i];
+            document.getElementById('prov-name').value = p.name;
+            document.getElementById('prov-id').value = p.id;
+            document.getElementById('prov-package').value = p.package_name || '';
+            document.getElementById('prov-component').value = p.component || '';
+            document.getElementById('prov-url').value = p.url_template;
+            document.getElementById('provider-index').value = i;
+            document.getElementById('provider-modal').style.display='block';
+        }
+
+        document.getElementById('provider-form').onsubmit = e => {
+            e.preventDefault();
+            const i = parseInt(document.getElementById('provider-index').value);
+            const data = { name: document.getElementById('prov-name').value, id: document.getElementById('prov-id').value, package_name: document.getElementById('prov-package').value, component: document.getElementById('prov-component').value, url_template: document.getElementById('prov-url').value };
+            if(i === -1) config.providers.push(data); else config.providers[i] = data;
+            markUnsaved(); renderTables(); closeModal('provider-modal');
+        };
+        function delProvider(i) {
+            if(config.channels.some(c => c.provider_id === config.providers[i].id)) { alert('Cannot delete provider. It is currently used by one or more channels.'); return; }
+            if(confirm('Delete this provider?')) { config.providers.splice(i, 1); markUnsaved(); renderTables(); }
+        }
+
+        function openChannelModal() { document.getElementById('channel-form').reset(); document.getElementById('channel-index').value = '-1'; populateProviderDropdown(); document.getElementById('channel-modal').style.display='block'; }
+        function editChannel(i) {
+            const c = config.channels[i];
+            document.getElementById('ch-name').value = c.name;
+            document.getElementById('ch-id').value = c.id;
+            document.getElementById('ch-deeplink').value = c.deep_link_content_id;
+            document.getElementById('ch-stationid').value = c.tvc_guide_stationid || '';
+            populateProviderDropdown(c.provider_id);
+            document.getElementById('channel-index').value = i;
+            document.getElementById('channel-modal').style.display='block';
+        }
+        function populateProviderDropdown(selectedId = '') {
+            document.getElementById('ch-provider').innerHTML = config.providers.map(p => `<option value="${p.id}" ${p.id === selectedId ? 'selected' : ''}>${p.name}</option>`).join('');
+        }
+        document.getElementById('channel-form').onsubmit = e => {
+            e.preventDefault();
+            const i = parseInt(document.getElementById('channel-index').value);
+            const data = { name: document.getElementById('ch-name').value, id: document.getElementById('ch-id').value, provider_id: document.getElementById('ch-provider').value, deep_link_content_id: document.getElementById('ch-deeplink').value, tvc_guide_stationid: document.getElementById('ch-stationid').value };
+            if(i === -1) config.channels.push(data); else config.channels[i] = data;
+            markUnsaved(); renderTables(); closeModal('channel-modal');
+        };
+        function delChannel(i) { if(confirm('Delete this channel?')) { config.channels.splice(i, 1); markUnsaved(); renderTables(); } }
+
         function closeModal(id) { document.getElementById(id).style.display='none'; }
         
-        async function openCloudModal() {
-            document.getElementById('cloud-modal').style.display = 'block';
-            const select = document.getElementById('cloud-pack-select');
+        async function saveConfigToServer() {
+            const saveBtn = document.getElementById('save-banner-btn');
+            saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
             
-            try {
-                // In a real environment this fetches from GitHub.
-                const res = await fetch(CLOUD_INDEX_URL + '?t=' + new Date().getTime()); 
-                if (!res.ok) throw new Error("HTTP " + res.status);
-                
-                const packs = await res.json();
-                if (packs.length === 0) {
-                    select.innerHTML = '<option value="">No packs currently available.</option>';
-                    return;
-                }
-                
-                select.innerHTML = '<option value="" disabled selected>-- Select a Channel Pack --</option>' + 
-                    packs.map(p => `<option value="${p.url}">${p.name} (${p.channel_count} channels)</option>`).join('');
-            } catch(err) {
-                console.error("Cloud Pack Load Error:", err);
-                select.innerHTML = '<option value="">(Simulated Error: File not found on GitHub yet)</option>';
-            }
+            await fetch('/api/config', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(config) });
+            
+            saveBtn.innerHTML = '<i class="fa-solid fa-check"></i> Saved!';
+            setTimeout(() => { markSaved(); saveBtn.innerHTML = '<i class="fa-solid fa-save"></i> Save Now'; }, 1000);
         }
-        
-        function exportConfig() { alert("Backup config button clicked! (Simulated)"); }
-        function importConfig(event) { if(event.target.files.length > 0) alert("Restore file selected! (Simulated)"); event.target.value = ''; }
-        function copyM3uLink() { alert("M3U Link Copied! (Simulated)"); }
-        function saveConfigToServer() { document.getElementById('save-banner').classList.remove('show'); }
-        
-        async function applyCloudPack(overwrite) {
-            const url = document.getElementById('cloud-pack-select').value;
-            if(!url) {
-                alert("Please select a pack from the dropdown.");
-                return;
-            }
-            
-            if(overwrite && !confirm("Are you SURE? This will wipe your current Channels and Providers and replace them with the downloaded pack.")) return;
-            
+
+        async function copyM3uLink() {
+            const m3uUrl = window.location.origin + '/channels.m3u';
             try {
-                // In a real environment, you would fetch from the 'url' variable.
-                // For this preview, we will simulate the pack data.
-                const packData = {
-                    providers: [{ id: "new_prov", name: "New Cloud Provider", package_name: "com.test", component: "com.test.Main", url_template: "http://{id}" }],
-                    channels: [{ name: "Cloud Channel 1", id: "cloud-1", provider_id: "new_prov", deep_link_content_id: "123", tvc_guide_stationid: "0000" }]
-                };
-                
-                if(packData.providers && packData.channels) {
-                    if (overwrite) {
-                        // Replace completely
-                        config.providers = packData.providers;
-                        config.channels = packData.channels;
-                    } else {
-                        // Append uniquely (prevent duplicates by ID)
-                        packData.providers.forEach(newProv => {
-                            if (!config.providers.some(p => p.id === newProv.id)) {
-                                config.providers.push(newProv);
-                            }
-                        });
-                        packData.channels.forEach(newChan => {
-                            if (!config.channels.some(c => c.id === newChan.id)) {
-                                config.channels.push(newChan);
-                            }
-                        });
-                    }
-                    
-                    markUnsaved();
-                    // If we are in the real app, we'd call renderTables() here.
-                    alert(`Successfully imported ${packData.channels.length} channels! Click 'Save Now' to apply.`);
-                    closeModal('cloud-modal');
+                if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(m3uUrl); } 
+                else {
+                    const textArea = document.createElement("textarea");
+                    textArea.value = m3uUrl;
+                    textArea.style.position = "fixed"; textArea.style.left = "-999999px"; textArea.style.top = "-999999px";
+                    document.body.appendChild(textArea);
+                    textArea.focus(); textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
                 }
-            } catch(err) {
-                console.error("Cloud Pack Download Error:", err);
-                alert("Failed to download the selected channel pack data.");
-            }
+                const btn = document.getElementById('copy-m3u-btn');
+                const originalHtml = btn.innerHTML;
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+                btn.style.backgroundColor = 'var(--success-color)';
+                setTimeout(() => { btn.innerHTML = originalHtml; btn.style.backgroundColor = 'var(--button-color)'; }, 2000);
+            } catch (err) { alert("Failed to copy link. Your browser is strictly blocking clipboard access."); }
         }
+
+        // Initialize the app when the page loads
+        window.onload = loadConfig;
     </script>
 </body>
 </html>
+```eof
