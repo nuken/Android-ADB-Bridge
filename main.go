@@ -497,6 +497,7 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "video/mp2t")
 	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
 	w.Header().Set("Connection", "keep-alive")
+	w.Header().Set("Transfer-Encoding", "chunked") // Added for VLC compatibility
 
 	// ==========================================
 	// BRANCH A: Local USB Capture (Linux v4l2/alsa)
@@ -579,6 +580,11 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 
 		cmd := exec.Command(ffmpeg, args...)
 
+		// ---- ADD THIS LINE ----
+		// Send FFmpeg errors directly to the terminal so we can see why it crashes!
+		cmd.Stderr = os.Stderr
+		// -----------------------
+
 		stdout, err := cmd.StdoutPipe()
 		if err != nil {
 			log.Println("FFmpeg stdout error:", err)
@@ -595,6 +601,7 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 
 		streamChan := make(chan []byte, 500)
+		flusher, canFlush := w.(http.Flusher)
 
 		go func() {
 			defer close(streamChan)
@@ -615,6 +622,9 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 		for chunk := range streamChan {
 			if _, err := w.Write(chunk); err != nil {
 				break
+			}
+			if canFlush {
+				flusher.Flush() // Force bytes to the client immediately
 			}
 		}
 
@@ -645,9 +655,26 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 
 	buf := make([]byte, 128*1024)
-	_, err = io.CopyBuffer(w, resp.Body, buf)
-	if err != nil {
-		log.Printf("Stream closed or client disconnected: %v\n", err)
+	flusher, canFlush := w.(http.Flusher)
+	
+	// Create an intermediate buffer copy loop to ensure we flush continuously
+	for {
+		n, err := resp.Body.Read(buf)
+		if n > 0 {
+			if _, wErr := w.Write(buf[:n]); wErr != nil {
+				log.Printf("Stream write error: %v\n", wErr)
+				break
+			}
+			if canFlush {
+				flusher.Flush()
+			}
+		}
+		if err != nil {
+			if err != io.EOF {
+				log.Printf("Stream read error: %v\n", err)
+			}
+			break
+		}
 	}
 }
 
@@ -790,9 +817,16 @@ func checkTuners(w http.ResponseWriter, r *http.Request) {
 // ==========================================
 func main() {
 	uiFlag := flag.Bool("ui", false, "Open the web dashboard in the default browser")
+	portFlag := flag.Int("port", 0, "Override the port the server listens on (e.g., 8080)")
 	flag.Parse()
 
 	loadConfig()
+
+	// If the user specified a custom port flag, override the config and save it
+	if *portFlag > 0 {
+		Config.Port = *portFlag
+		saveConfig()
+	}
 
 	if *uiFlag {
 		localIP := getLocalIP()
