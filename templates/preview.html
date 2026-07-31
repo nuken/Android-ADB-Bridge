@@ -2,33 +2,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Live Preview: {{ .Name }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview: {{.Name}}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Import mpegts.js to decode the live stream in the browser -->
+    <script src="https://cdn.jsdelivr.net/npm/mpegts.js@1.7.3/dist/mpegts.js"></script>
     <style>
-        body { background-color: #1a1a1a; color: white; font-family: sans-serif; text-align: center; padding: 20px; }
-        video { max-width: 100%; width: 800px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); background: black; }
-        .back-btn { display: inline-block; margin-bottom: 20px; padding: 10px 15px; background: #3b82f6; color: white; text-decoration: none; border-radius: 5px; }
+        body { font-family: -apple-system, sans-serif; background-color: #1a1a1a; color: white; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        .player-container { width: 100%; max-width: 900px; background: #000; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        video { width: 100%; display: block; aspect-ratio: 16/9; }
+        .header { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 900px; margin-bottom: 15px; }
+        .back-btn { color: #7dd3fc; text-decoration: none; display: flex; align-items: center; gap: 8px; font-weight: 500; }
+        .back-btn:hover { color: #38bdf8; }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/mpegts.js@1.7.3/dist/mpegts.min.js"></script>
 </head>
 <body>
-    <a href="/status" class="back-btn">&larr; Back to Status</a>
-    <h2>Previewing: {{ .Name }}</h2>
-    
-    <video id="videoElement" controls autoplay muted></video>
+
+    <div class="header">
+        <a href="/status" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Dashboard</a>
+        <h2 style="margin: 0; font-size: 1.2em;">Preview: {{.Name}}</h2>
+    </div>
+
+    <div class="player-container">
+        <video id="videoElement" controls autoplay muted></video>
+    </div>
 
     <script>
         if (mpegts.getFeatureList().mseLivePlayback) {
             var videoElement = document.getElementById('videoElement');
             var player = mpegts.createPlayer({
-                type: 'mse', 
+                type: 'mse',
                 isLive: true,
-                url: '/stream/{{ .ID }}'
+                url: '/stream/{{.ID}}' // Fetch the raw stream
             });
             player.attachMediaElement(videoElement);
             player.load();
             player.play();
         } else {
-            alert("Your browser does not support MSE playback for this stream.");
+            alert("Your browser does not support MSE live playback.");
         }
     </script>
 </body>
