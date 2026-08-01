@@ -1,0 +1,69 @@
+{
+  "providers": [
+    {
+      "id": "yt_tv",
+      "name": "YouTube TV",
+      "package_name": "com.google.android.youtube.tvunplugged",
+      "component": "com.google.android.apps.youtube.tvunplugged.activity.MainActivity",
+      "url_template": "https://tv.youtube.com/watch/{id}"
+    }
+  ],
+  "channels": [
+    {
+      "name": "WCNC",
+      "id": "nbc-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "ZiQl0pbVQEk",
+      "tvc_guide_stationid": "20374"
+    },
+    {
+      "name": "WSOC",
+      "id": "abc-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "cwLikITChV0",
+      "tvc_guide_stationid": "20494"
+    },
+    {
+      "name": "WJZY",
+      "id": "fox-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "cTqU7N8qmXI",
+      "tvc_guide_stationid": "11594"
+    },
+    {
+      "name": "WBTV",
+      "id": "cbs-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "AgwAcF7YPj8",
+      "tvc_guide_stationid": "19603"
+    },
+    {
+      "name": "WMYT",
+      "id": "cw-yt
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "CKAZtLTzbyo",
+      "tvc_guide_stationid": "31646"
+    },
+	{
+      "name": "WUNG",
+      "id": "pbsnc-yt
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "oGSfzmJxVsQ",
+      "tvc_guide_stationid": "29034"
+    },
+	{
+      "name": "WNSC",
+      "id": "pbsnc-yt
+      "provider_idsc": "yt_tv",
+      "deep_link_content_id": "MBbuh8iZqwc",
+      "tvc_guide_stationid": "44041"
+    },
+    {
+      "name": "WTVI",
+      "id": "pbsc-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "-7VgciUYXc8",
+      "tvc_guide_stationid": "30293"
+    }
+  ]
+}

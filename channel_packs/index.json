@@ -1,7 +1,12 @@
 [
   {
     "name": "YouTube TV (East Coast)",
-    "channel_count": 80,
+    "channel_count": 85,
     "url": "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/channel_packs/youtubetv_east.json"
+  },
+  {
+    "name": "YouTube TV (Charlotte, NC Locals)",
+    "channel_count": 8,
+    "url": "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/channel_packs/youtubetv_charlotte.json"
   }
 ]
