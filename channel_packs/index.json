@@ -1,7 +1,7 @@
 [
   {
     "name": "YouTube TV (East Coast)",
-    "channel_count": 80,
-    "url": "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/linux/channel_packs/youtubetv_east.json"
+    "channel_count": 85,
+    "url": "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/channel_packs/youtubetv_east.json"
   }
 ]
