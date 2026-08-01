@@ -5,7 +5,8 @@
       "name": "YouTube TV",
       "package_name": "com.google.android.youtube.tvunplugged",
       "component": "com.google.android.apps.youtube.tvunplugged.activity.MainActivity",
-      "url_template": "https://tv.youtube.com/watch/{id}"
+      "url_template": "https://tv.youtube.com/watch/{id}",
+      "splash_delay_ms": 3000
     }
   ],
   "channels": [
