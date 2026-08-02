@@ -1,0 +1,1162 @@
+{
+  "providers": [
+    {
+      "id": "philo",
+      "name": "Philo",
+      "package_name": "com.philo.philo.google",
+      "component": "com.philo.philo.tv.MainActivity",
+      "url_template": "https://www.philo.com/player/player/channel/{id}",
+      "splash_delay_ms": 3000
+    }
+  ],
+  "channels": [
+    {
+      "name": "A&E",
+      "id": "a-and-e-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzg1MjI",
+      "tvc_guide_stationid": "10035"
+    },
+    {
+      "name": "AccuWeather Network",
+      "id": "accuweather-network-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk2ODE",
+      "tvc_guide_stationid": "56193"
+    },
+    {
+      "name": "All Reality WE tv",
+      "id": "all-reality-we-tv-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3Mzc",
+      "tvc_guide_stationid": "188571"
+    },
+    {
+      "name": "All Weddings WE tv",
+      "id": "all-weddings-we-tv-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3NDE",
+      "tvc_guide_stationid": "117227"
+    },
+    {
+      "name": "AllBlk Gems",
+      "id": "allblk-gems-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3MzY",
+      "tvc_guide_stationid": "124177"
+    },
+    {
+      "name": "AMC",
+      "id": "amc-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk1MDg",
+      "tvc_guide_stationid": "59337"
+    },
+    {
+      "name": "AMC Thrillers",
+      "id": "amc-thrillers-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3NDI",
+      "tvc_guide_stationid": "115678"
+    },
+    {
+      "name": "AMC+",
+      "id": "amc+-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3ODc",
+      "tvc_guide_stationid": "114759"
+    },
+    {
+      "name": "American Heroes Channel",
+      "id": "american-heroes-channel-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk2MDI",
+      "tvc_guide_stationid": "18284"
+    },
+    {
+      "name": "Anger Management",
+      "id": "anger-management-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3NjE",
+      "tvc_guide_stationid": "125128"
+    },
+    {
+      "name": "Animal Planet",
+      "id": "animal-planet-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzg1NDY",
+      "tvc_guide_stationid": "97167"
+    },
+    {
+      "name": "ANIME x HIDIVE",
+      "id": "anime-x-hidive-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3NDA",
+      "tvc_guide_stationid": "132816"
+    },
+    {
+      "name": "Are We There Yet?",
+      "id": "are-we-there-yet-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3Njk",
+      "tvc_guide_stationid": "120237"
+    },
+    {
+      "name": "aspireTV",
+      "id": "aspiretv-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk2MjA",
+      "tvc_guide_stationid": "185992"
+    },
+    {
+      "name": "AXS TV",
+      "id": "axs-tv-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzg2MTc",
+      "tvc_guide_stationid": "28506"
+    },
+    {
+      "name": "BBC America",
+      "id": "bbc-america-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzg1MTg",
+      "tvc_guide_stationid": "185955"
+    },
+    {
+      "name": "BBC News",
+      "id": "bbc-news-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3ODg",
+      "tvc_guide_stationid": "19037"
+    },
+    {
+      "name": "beIN Sports XTRA",
+      "id": "bein-sports-xtra-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk2OTg",
+      "tvc_guide_stationid": "113143"
+    },
+    {
+      "name": "BET",
+      "id": "bet-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzg2MDM",
+      "tvc_guide_stationid": "63236"
+    },
+    {
+      "name": "BET Her",
+      "id": "bet-her-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk1Nzg",
+      "tvc_guide_stationid": "63220"
+    },
+    {
+      "name": "Catchy Comedy",
+      "id": "catchy-comedy-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk2OTU",
+      "tvc_guide_stationid": "91415"
+    },
+    {
+      "name": "Cheddar News",
+      "id": "cheddar-news-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk1MDM",
+      "tvc_guide_stationid": "109332"
+    },
+    {
+      "name": "Chicken Soup for the Soul",
+      "id": "chicken-soup-for-the-soul-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3NDU",
+      "tvc_guide_stationid": "121376"
+    },
+    {
+      "name": "CINEVAULT Westerns",
+      "id": "cinevault-westerns-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3MjU",
+      "tvc_guide_stationid": "122606"
+    },
+    {
+      "name": "CINEVAULT: Classics",
+      "id": "cinevault-classics-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3NDk",
+      "tvc_guide_stationid": "125046"
+    },
+    {
+      "name": "CLEO TV",
+      "id": "cleo-tv-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk2Mjg",
+      "tvc_guide_stationid": "110288"
+    },
+    {
+      "name": "CMT",
+      "id": "cmt-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzg1OTk",
+      "tvc_guide_stationid": "10138"
+    },
+    {
+      "name": "Cold Case Files",
+      "id": "cold-case-files-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3Njc",
+      "tvc_guide_stationid": "129137"
+    },
+    {
+      "name": "Comedy Central",
+      "id": "comedy-central-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzg0OTk",
+      "tvc_guide_stationid": "62420"
+    },
+    {
+      "name": "Comedy Dynamics",
+      "id": "comedy-dynamics-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3Mjk",
+      "tvc_guide_stationid": "115447"
+    },
+    {
+      "name": "Confess by Nosey",
+      "id": "confess-by-nosey-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3NTM",
+      "tvc_guide_stationid": "135516"
+    },
+    {
+      "name": "Cooking Channel",
+      "id": "cooking-channel-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzg0NzM",
+      "tvc_guide_stationid": "68065"
+    },
+    {
+      "name": "Cowboy Way",
+      "id": "cowboy-way-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3MjY",
+      "tvc_guide_stationid": "127279"
+    },
+    {
+      "name": "Crackle",
+      "id": "crackle-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk2NzY",
+      "tvc_guide_stationid": "121002"
+    },
+    {
+      "name": "Crime + Investigation",
+      "id": "crime-and-investigation-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk1Nzc",
+      "tvc_guide_stationid": "48543"
+    },
+    {
+      "name": "Crime 360",
+      "id": "crime-360-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3NzI",
+      "tvc_guide_stationid": "113780"
+    },
+    {
+      "name": "Crime Cults Killers by A&E",
+      "id": "crime-cults-killers-by-a-and-e-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3Nzk",
+      "tvc_guide_stationid": "123430"
+    },
+    {
+      "name": "Crime ThrillHer",
+      "id": "crime-thrillher-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3Nzg",
+      "tvc_guide_stationid": "123427"
+    },
+    {
+      "name": "Dabl",
+      "id": "dabl-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3OTc",
+      "tvc_guide_stationid": "112157"
+    },
+    {
+      "name": "Dance Moms",
+      "id": "dance-moms-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3NjA",
+      "tvc_guide_stationid": "126369"
+    },
+    {
+      "name": "Deal Zone",
+      "id": "deal-zone-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3NzY",
+      "tvc_guide_stationid": "123432"
+    },
+    {
+      "name": "Destination America",
+      "id": "destination-america-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk1NzY",
+      "tvc_guide_stationid": "60468"
+    },
+    {
+      "name": "Discovery Channel",
+      "id": "discovery-channel-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzg1NDA",
+      "tvc_guide_stationid": "56905"
+    },
+    {
+      "name": "Discovery Family",
+      "id": "discovery-family-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk1ODg",
+      "tvc_guide_stationid": "67749"
+    },
+    {
+      "name": "Discovery Life",
+      "id": "discovery-life-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk1MjI",
+      "tvc_guide_stationid": "120450"
+    },
+    {
+      "name": "Drag Race Universe",
+      "id": "drag-race-universe-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3Mjg",
+      "tvc_guide_stationid": "133972"
+    },
+    {
+      "name": "Duck Dynasty",
+      "id": "duck-dynasty-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3Njg",
+      "tvc_guide_stationid": "131429"
+    },
+    {
+      "name": "EarthX",
+      "id": "earthx-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3ODI",
+      "tvc_guide_stationid": "126128"
+    },
+    {
+      "name": "Ebony TV by Lionsgate",
+      "id": "ebony-tv-by-lionsgate-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3NjY",
+      "tvc_guide_stationid": "146144"
+    },
+    {
+      "name": "FailArmy",
+      "id": "failarmy-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3MjI",
+      "tvc_guide_stationid": "121204"
+    },
+    {
+      "name": "FETV",
+      "id": "fetv-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3MTc",
+      "tvc_guide_stationid": "73413"
+    },
+    {
+      "name": "FMC",
+      "id": "fmc-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3MjA",
+      "tvc_guide_stationid": "122068"
+    },
+    {
+      "name": "Food Network",
+      "id": "food-network-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzg0NzI",
+      "tvc_guide_stationid": "50747"
+    },
+    {
+      "name": "FYI",
+      "id": "fyi-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk1MjQ",
+      "tvc_guide_stationid": "58988"
+    },
+    {
+      "name": "Game Show Central",
+      "id": "game-show-central-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3NDg",
+      "tvc_guide_stationid": "116474"
+    },
+    {
+      "name": "Game Show Network",
+      "id": "game-show-network-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk1OTE",
+      "tvc_guide_stationid": "68827"
+    },
+    {
+      "name": "get",
+      "id": "get-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk2NzE",
+      "tvc_guide_stationid": "82563"
+    },
+    {
+      "name": "GET Comedy",
+      "id": "get-comedy-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3NTA",
+      "tvc_guide_stationid": "132158"
+    },
+    {
+      "name": "Great American Faith & Living",
+      "id": "great-american-faith-and-living-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk2OTM",
+      "tvc_guide_stationid": "90858"
+    },
+    {
+      "name": "Great American Family",
+      "id": "great-american-family-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk2Njc",
+      "tvc_guide_stationid": "82892"
+    },
+    {
+      "name": "Growing Up Hip Hop WE tv",
+      "id": "growing-up-hip-hop-we-tv-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3OTA",
+      "tvc_guide_stationid": "139576"
+    },
+    {
+      "name": "Gusto TV",
+      "id": "gusto-tv-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk2OTA",
+      "tvc_guide_stationid": "111140"
+    },
+    {
+      "name": "Hallmark Channel",
+      "id": "hallmark-channel-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk2MjY",
+      "tvc_guide_stationid": "66268"
+    },
+    {
+      "name": "Hallmark Family",
+      "id": "hallmark-family-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk2MjM",
+      "tvc_guide_stationid": "105723"
+    },
+    {
+      "name": "Hallmark Mystery",
+      "id": "hallmark-mystery-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk2Mjc",
+      "tvc_guide_stationid": "46710"
+    },
+    {
+      "name": "HDNet Movies",
+      "id": "hdnet-movies-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzg4NDk",
+      "tvc_guide_stationid": "33668"
+    },
+    {
+      "name": "Heroes & Icons",
+      "id": "heroes-and-icons-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3MDI",
+      "tvc_guide_stationid": "90401"
+    },
+    {
+      "name": "HerSphere",
+      "id": "hersphere-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3ODE",
+      "tvc_guide_stationid": "135378"
+    },
+    {
+      "name": "HGTV",
+      "id": "hgtv-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzg0Njc",
+      "tvc_guide_stationid": "49788"
+    },
+    {
+      "name": "HISTORY",
+      "id": "history-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzg1Mjg",
+      "tvc_guide_stationid": "14771"
+    },
+    {
+      "name": "Home.Made.Nation",
+      "id": "home-made-nation-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3NzA",
+      "tvc_guide_stationid": "113673"
+    },
+    {
+      "name": "HSN",
+      "id": "hsn-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk4NjM",
+      "tvc_guide_stationid": "62077"
+    },
+    {
+      "name": "Ice Road Truckers",
+      "id": "ice-road-truckers-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3NjU",
+      "tvc_guide_stationid": "123426"
+    },
+    {
+      "name": "IFC",
+      "id": "ifc-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk1MTE",
+      "tvc_guide_stationid": "59444"
+    },
+    {
+      "name": "IFC Films Picks",
+      "id": "ifc-films-picks-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3NDM",
+      "tvc_guide_stationid": "115677"
+    },
+    {
+      "name": "INFAST",
+      "id": "infast-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3MzM",
+      "tvc_guide_stationid": "129479"
+    },
+    {
+      "name": "INSP",
+      "id": "insp-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk2NzI",
+      "tvc_guide_stationid": "11066"
+    },
+    {
+      "name": "INTROUBLE",
+      "id": "introuble-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3MzI",
+      "tvc_guide_stationid": "112496"
+    },
+    {
+      "name": "Investigation Discovery",
+      "id": "investigation-discovery-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzg1NTM",
+      "tvc_guide_stationid": "62496"
+    },
+    {
+      "name": "INWONDER",
+      "id": "inwonder-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3MzQ",
+      "tvc_guide_stationid": "129477"
+    },
+    {
+      "name": "Law & Crime",
+      "id": "law-and-crime-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk2MjI",
+      "tvc_guide_stationid": "122963"
+    },
+    {
+      "name": "Lifetime",
+      "id": "lifetime-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk1MjU",
+      "tvc_guide_stationid": "60150"
+    },
+    {
+      "name": "LMN",
+      "id": "lmn-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk1MjY",
+      "tvc_guide_stationid": "55887"
+    },
+    {
+      "name": "Logo",
+      "id": "logo-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk1MzM",
+      "tvc_guide_stationid": "46762"
+    },
+    {
+      "name": "Magnolia Network",
+      "id": "magnolia-network-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzg0Njk",
+      "tvc_guide_stationid": "67375"
+    },
+    {
+      "name": "Matched, Married, Meet",
+      "id": "matched-married-meet-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3NTk",
+      "tvc_guide_stationid": "129047"
+    },
+    {
+      "name": "MeTV",
+      "id": "metv-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3MDE",
+      "tvc_guide_stationid": "122696"
+    },
+    {
+      "name": "MeTV Toons",
+      "id": "metv-toons-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk4MTQ",
+      "tvc_guide_stationid": "159817"
+    },
+    {
+      "name": "MeTV+",
+      "id": "metv+-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3NTY",
+      "tvc_guide_stationid": "119266"
+    },
+    {
+      "name": "MGM+",
+      "id": "mgm+-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk2NjE",
+      "tvc_guide_stationid": "65687"
+    },
+    {
+      "name": "MGM+ Hits",
+      "id": "mgm+-hits-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk2NjM",
+      "tvc_guide_stationid": "73075"
+    },
+    {
+      "name": "MGM+ Marquee",
+      "id": "mgm+-marquee-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk2NjQ",
+      "tvc_guide_stationid": "74073"
+    },
+    {
+      "name": "Military History Channel",
+      "id": "military-history-channel-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk1NzA",
+      "tvc_guide_stationid": "48999"
+    },
+    {
+      "name": "Modern Marvels",
+      "id": "modern-marvels-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3NjQ",
+      "tvc_guide_stationid": "123433"
+    },
+    {
+      "name": "MotorTrend",
+      "id": "motortrend-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzg1NDU",
+      "tvc_guide_stationid": "31046"
+    },
+    {
+      "name": "Movie Favorites by Lifetime",
+      "id": "movie-favorites-by-lifetime-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3NjM",
+      "tvc_guide_stationid": "121308"
+    },
+    {
+      "name": "MOVIES!",
+      "id": "movies!-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3NTQ",
+      "tvc_guide_stationid": "30284"
+    },
+    {
+      "name": "MovieSphere by Lionsgate",
+      "id": "moviesphere-by-lionsgate-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3NjI",
+      "tvc_guide_stationid": "141304"
+    },
+    {
+      "name": "MSG SportsZone",
+      "id": "msg-sportszone-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3ODU",
+      "tvc_guide_stationid": "132782"
+    },
+    {
+      "name": "MTV",
+      "id": "mtv-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzg2MDY",
+      "tvc_guide_stationid": "10986"
+    },
+    {
+      "name": "MTV Classic",
+      "id": "mtv-classic-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzg2MTM",
+      "tvc_guide_stationid": "22561"
+    },
+    {
+      "name": "MTV Live",
+      "id": "mtv-live-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzg4NTU",
+      "tvc_guide_stationid": "49141"
+    },
+    {
+      "name": "MTV2",
+      "id": "mtv2-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk1OTg",
+      "tvc_guide_stationid": "16361"
+    },
+    {
+      "name": "Mythical 24/7",
+      "id": "mythical-24-7-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3ODA",
+      "tvc_guide_stationid": "142109"
+    },
+    {
+      "name": "Nick Jr.",
+      "id": "nick-jr-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk2MDg",
+      "tvc_guide_stationid": "24025"
+    },
+    {
+      "name": "Nickelodeon",
+      "id": "nickelodeon-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzg1NzI",
+      "tvc_guide_stationid": "86939"
+    },
+    {
+      "name": "Nicktoons",
+      "id": "nicktoons-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk2MDk",
+      "tvc_guide_stationid": "31168"
+    },
+    {
+      "name": "Oprah Winfrey Network",
+      "id": "oprah-winfrey-network-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk1OTQ",
+      "tvc_guide_stationid": "70388"
+    },
+    {
+      "name": "OuterSphere by Lionsgate",
+      "id": "outersphere-by-lionsgate-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3Nzc",
+      "tvc_guide_stationid": "135167"
+    },
+    {
+      "name": "Outside",
+      "id": "outside-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3Mjc",
+      "tvc_guide_stationid": "114313"
+    },
+    {
+      "name": "Overtime",
+      "id": "overtime-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3OTE",
+      "tvc_guide_stationid": "131737"
+    },
+    {
+      "name": "Paramount",
+      "id": "paramount-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzg0ODQ",
+      "tvc_guide_stationid": "59186"
+    },
+    {
+      "name": "People Are Awesome",
+      "id": "people-are-awesome-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3MjE",
+      "tvc_guide_stationid": "133322"
+    },
+    {
+      "name": "PlayersTV",
+      "id": "playerstv-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk2Nzk",
+      "tvc_guide_stationid": "116748"
+    },
+    {
+      "name": "pocket.watch",
+      "id": "pocket-watch-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk2ODU",
+      "tvc_guide_stationid": "118464"
+    },
+    {
+      "name": "Pop TV",
+      "id": "pop-tv-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk2MTc",
+      "tvc_guide_stationid": "68796"
+    },
+    {
+      "name": "Portlandia",
+      "id": "portlandia-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3Mzk",
+      "tvc_guide_stationid": "122435"
+    },
+    {
+      "name": "QVC",
+      "id": "qvc-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk4NjI",
+      "tvc_guide_stationid": "60222"
+    },
+    {
+      "name": "REELZ",
+      "id": "reelz-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzg0ODA",
+      "tvc_guide_stationid": "52199"
+    },
+    {
+      "name": "RetroCrush",
+      "id": "retrocrush-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk2OTc",
+      "tvc_guide_stationid": "119355"
+    },
+    {
+      "name": "REVOLT",
+      "id": "revolt-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk2MTg",
+      "tvc_guide_stationid": "83097"
+    },
+    {
+      "name": "Revry",
+      "id": "revry-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk2Nzc",
+      "tvc_guide_stationid": "113603"
+    },
+    {
+      "name": "Ryan and Friends",
+      "id": "ryan-and-friends-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk2ODQ",
+      "tvc_guide_stationid": "118462"
+    },
+    {
+      "name": "Scares by Shudder",
+      "id": "scares-by-shudder-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3ODk",
+      "tvc_guide_stationid": "145846"
+    },
+    {
+      "name": "Science Channel",
+      "id": "science-channel-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzg1NTA",
+      "tvc_guide_stationid": "16616"
+    },
+    {
+      "name": "Screambox TV",
+      "id": "screambox-tv-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3MzE",
+      "tvc_guide_stationid": "116607"
+    },
+    {
+      "name": "Slightly Off IFC",
+      "id": "slightly-off-ifc-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3NDQ",
+      "tvc_guide_stationid": "116019"
+    },
+    {
+      "name": "Smithsonian Channel",
+      "id": "smithsonian-channel-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzg4NTM",
+      "tvc_guide_stationid": "53121"
+    },
+    {
+      "name": "Sony Movies",
+      "id": "sony-movies-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk2ODg",
+      "tvc_guide_stationid": "123608"
+    },
+    {
+      "name": "Start TV",
+      "id": "start-tv-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk2OTY",
+      "tvc_guide_stationid": "109454"
+    },
+    {
+      "name": "STARZ",
+      "id": "starz-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzg4MDY",
+      "tvc_guide_stationid": "12719"
+    },
+    {
+      "name": "STARZ Encore",
+      "id": "starz-encore-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk2MzE",
+      "tvc_guide_stationid": "10178"
+    },
+    {
+      "name": "STARZ Kids & Family",
+      "id": "starz-kids-and-family-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk2MzU",
+      "tvc_guide_stationid": "19635"
+    },
+    {
+      "name": "Stories by AMC",
+      "id": "stories-by-amc-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3Mzg",
+      "tvc_guide_stationid": "188539"
+    },
+    {
+      "name": "Story Television",
+      "id": "story-television-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3MDA",
+      "tvc_guide_stationid": "122968"
+    },
+    {
+      "name": "Sundance Now",
+      "id": "sundance-now-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk4MTA",
+      "tvc_guide_stationid": "146725"
+    },
+    {
+      "name": "Sundance TV",
+      "id": "sundance-tv-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk1MTA",
+      "tvc_guide_stationid": "71280"
+    },
+    {
+      "name": "Tastemade",
+      "id": "tastemade-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk2MTU",
+      "tvc_guide_stationid": "107076"
+    },
+    {
+      "name": "Tastemade Home",
+      "id": "tastemade-home-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3NDc",
+      "tvc_guide_stationid": "125187"
+    },
+    {
+      "name": "Tastemade Travel",
+      "id": "tastemade-travel-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3NDY",
+      "tvc_guide_stationid": "120351"
+    },
+    {
+      "name": "TeenNick",
+      "id": "teennick-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk1MzU",
+      "tvc_guide_stationid": "72294"
+    },
+    {
+      "name": "The Bob Ross Channel",
+      "id": "the-bob-ross-channel-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3MzA",
+      "tvc_guide_stationid": "114491"
+    },
+    {
+      "name": "The Pet Collective",
+      "id": "the-pet-collective-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3MjM",
+      "tvc_guide_stationid": "121165"
+    },
+    {
+      "name": "The Walking Dead Channel",
+      "id": "the-walking-dead-channel-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3ODY",
+      "tvc_guide_stationid": "115945"
+    },
+    {
+      "name": "The Walking Dead Universe",
+      "id": "the-walking-dead-universe-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3MzU",
+      "tvc_guide_stationid": "188538"
+    },
+    {
+      "name": "Tiny House Nation",
+      "id": "tiny-house-nation-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3NzQ",
+      "tvc_guide_stationid": "155125"
+    },
+    {
+      "name": "TLC",
+      "id": "tlc-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzg1NDM",
+      "tvc_guide_stationid": "57391"
+    },
+    {
+      "name": "Travel Channel",
+      "id": "travel-channel-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzg1Mzg",
+      "tvc_guide_stationid": "17453"
+    },
+    {
+      "name": "TV Land",
+      "id": "tv-land-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzg1Nzg",
+      "tvc_guide_stationid": "16123"
+    },
+    {
+      "name": "TV One",
+      "id": "tv-one-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk2NzM",
+      "tvc_guide_stationid": "35513"
+    },
+    {
+      "name": "TV One Crime & Justice",
+      "id": "tv-one-crime-and-justice-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3ODM",
+      "tvc_guide_stationid": "145680"
+    },
+    {
+      "name": "UnXplained Zone",
+      "id": "unxplained-zone-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3NzMn",
+      "tvc_guide_stationid": "123431"
+    },
+    {
+      "name": "UPtv",
+      "id": "uptv-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk2MjE",
+      "tvc_guide_stationid": "44940"
+    },
+    {
+      "name": "USA TODAY",
+      "id": "usa-today-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3MDM",
+      "tvc_guide_stationid": "122855"
+    },
+    {
+      "name": "Vevo '80s",
+      "id": "vevo-80s-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3MTE",
+      "tvc_guide_stationid": "121123"
+    },
+    {
+      "name": "Vevo '90s",
+      "id": "vevo-90s-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3MDg",
+      "tvc_guide_stationid": "121124"
+    },
+    {
+      "name": "Vevo Country",
+      "id": "vevo-country-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3MTM",
+      "tvc_guide_stationid": "120902"
+    },
+    {
+      "name": "Vevo Features",
+      "id": "vevo-features-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3NTU",
+      "tvc_guide_stationid": "101075"
+    },
+    {
+      "name": "Vevo Hip-Hop",
+      "id": "vevo-hip-hop-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3MTU",
+      "tvc_guide_stationid": "120900"
+    },
+    {
+      "name": "Vevo Pop",
+      "id": "vevo-pop-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3MDY",
+      "tvc_guide_stationid": "121401"
+    },
+    {
+      "name": "VH1",
+      "id": "vh1-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzg2MTI",
+      "tvc_guide_stationid": "60046"
+    },
+    {
+      "name": "Vice",
+      "id": "vice-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk1MjM",
+      "tvc_guide_stationid": "65732"
+    },
+    {
+      "name": "We TV",
+      "id": "we-tv-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk1MDk",
+      "tvc_guide_stationid": "59296"
+    },
+    {
+      "name": "4UV",
+      "id": "4uv-philo",
+      "provider_id": "philo",
+      "deep_link_content_id": "Q2hhbm5lbDo2MDg1NDg4OTk2NDg0Mzk3NzU",
+      "tvc_guide_stationid": "126373"
+    }
+  ]
+}
