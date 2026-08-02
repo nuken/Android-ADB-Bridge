@@ -141,6 +141,12 @@
             <h3>Edit Tuner</h3>
             <form id="tuner-form">
                 <input type="hidden" id="tuner-index">
+                
+                <!-- Hidden variables storing hardware probe results -->
+                <input type="hidden" id="tuner-capture-format">
+                <input type="hidden" id="tuner-capture-size">
+                <input type="hidden" id="tuner-capture-fps">
+
                 <div class="form-group"><label>Name</label><input type="text" id="tuner-name" required></div>
                 <div class="form-group"><label>Device IP (ADB)</label><input type="text" id="tuner-ip" required></div>
                 
@@ -160,47 +166,24 @@
                 <div id="group-local-advanced" style="display:none; background: #2a2a2a; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #444;">
                     <h4 style="margin-top: 0; color: var(--primary-color); border-bottom: 1px solid #444; padding-bottom: 5px;">Hardware Capture Settings</h4>
                     
-                    <div class="form-group">
-                        <label>Video Capture Device</label>
-                        <select id="tuner-video-dev"></select>
+                    <div class="form-group" style="display: flex; gap: 10px; align-items: flex-end;">
+                        <div style="flex: 1;">
+                            <label>Video Capture Device</label>
+                            <select id="tuner-video-dev"></select>
+                        </div>
+                        <button type="button" class="button" style="background-color: var(--success-color); height: 40px; border-radius: 8px;" onclick="autoDetectCard()">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> Auto-Detect
+                        </button>
+                    </div>
+                    
+                    <!-- Display block for the live FFmpeg Probe Results -->
+                    <div id="capture-settings-display" style="background: #1a1a1a; padding: 12px; border-radius: 8px; font-family: monospace; font-size: 0.9em; margin-bottom: 15px; border: 1px solid #555; color: #ccc;">
+                        Ready to probe hardware limits...
                     </div>
 
                     <div class="form-group">
                         <label>Audio Capture Device</label>
                         <select id="tuner-audio-dev"></select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Hardware Encoder</label>
-                        <select id="tuner-vcodec">
-                            <option value="hevc_qsv">Intel H.265 QuickSync (hevc_qsv)</option>
-                            <option value="h264_qsv">Intel H.264 QuickSync (h264_qsv)</option>
-                            <option value="hevc_nvenc">NVIDIA H.265 NVENC (hevc_nvenc)</option>
-                            <option value="h264_nvenc">NVIDIA H.264 NVENC (h264_nvenc)</option>
-                            <option value="hevc_amf">AMD H.265 AMF (hevc_amf)</option>
-                            <option value="h264_amf">AMD H.264 AMF (h264_amf)</option>
-                            <option value="libx264">Software (CPU Only - libx264)</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group" style="display: flex; gap: 10px;">
-                        <div style="flex: 1;">
-                            <label>Video Bitrate (kbps)</label>
-                            <input type="number" id="tuner-video-bitrate" value="2500" placeholder="e.g. 2500">
-                        </div>
-                        <div style="flex: 1;">
-                            <label>Audio Bitrate (kbps)</label>
-                            <input type="number" id="tuner-audio-bitrate" value="128" placeholder="e.g. 128">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Encoding Preset</label>
-                        <select id="tuner-preset">
-                            <option value="fast">Fast (Lower Quality / Less CPU)</option>
-                            <option value="medium" selected>Medium (Balanced)</option>
-                            <option value="slow">Slow (Best Quality / High CPU)</option>
-                        </select>
                     </div>
 
                     <div class="form-group">
@@ -246,7 +229,6 @@
                 
                 <div class="form-group"><label>URL Template (use {id} for target)</label><input type="text" id="prov-url" required></div>
                 
-                <!-- NEW: Splash Delay Input -->
                 <div class="form-group" style="background: #2a2a2a; padding: 15px; border-radius: 8px; margin-top: 15px; border: 1px solid #444;">
                     <label style="color: var(--primary-color);">Splash Screen / Tune Delay (ms)</label>
                     <input type="number" id="prov-splash-delay" value="3000" min="0" step="100" placeholder="e.g. 3000">
@@ -334,7 +316,8 @@
             document.getElementById('tuners-table-body').innerHTML = config.tuners.map((t, i) => {
                 const safeIp = t.device_ip.replace(/\./g, '-');
                 const isLocal = t.type === 'local';
-                const sourceDisplay = isLocal ? `<i class="fa-solid fa-microchip" title="Hardware Encoded"></i> [${t.video_codec || 'hevc_qsv'}] ${t.video_device_id || 'Default Card'}` : t.encoder_url;
+                const formatLabel = t.capture_format ? `[${t.capture_format}]` : `[Auto]`;
+                const sourceDisplay = isLocal ? `<i class="fa-solid fa-microchip" title="Hardware Encoded"></i> ${formatLabel} ${t.video_device_id || 'Default Card'}` : t.encoder_url;
 
                 return `
                 <tr>
@@ -563,6 +546,37 @@
                 document.getElementById('tuner-url').required = true;
             }
         }
+        
+        // Contacts the FFmpeg backend to dynamically set limits
+        async function autoDetectCard() {
+            const devSelect = document.getElementById('tuner-video-dev');
+            if (devSelect.selectedIndex === -1) return;
+            const devName = devSelect.options[devSelect.selectedIndex].text;
+            
+            const display = document.getElementById('capture-settings-display');
+            display.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Hardware probe initiated... Please wait.';
+            display.style.color = '#7dd3fc';
+            
+            try {
+                const res = await fetch('/api/probe_device?name=' + encodeURIComponent(devName));
+                if (!res.ok) throw new Error("Probe failed");
+                const data = await res.json();
+                
+                document.getElementById('tuner-capture-format').value = data.format;
+                document.getElementById('tuner-capture-size').value = data.size;
+                document.getElementById('tuner-capture-fps').value = data.fps;
+                
+                display.style.color = 'var(--success-color)';
+                display.innerHTML = `<i class="fa-solid fa-check"></i> Optimal settings captured!<br><span style="color:#ccc; margin-left:22px; font-size:0.9em;">Format: ${data.format} | Size: ${data.size} | Max FPS: ${data.fps}</span>`;
+            } catch (err) {
+                display.style.color = 'var(--error-color)';
+                display.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Probe failed. Defaulting to standard definitions.';
+                
+                document.getElementById('tuner-capture-format').value = 'mjpeg';
+                document.getElementById('tuner-capture-size').value = '1920x1080';
+                document.getElementById('tuner-capture-fps').value = '60';
+            }
+        }
 
         function moveChannel(idx, direction) {
             if (idx + direction < 0 || idx + direction >= config.channels.length) return;
@@ -588,10 +602,14 @@
             document.getElementById('tuner-form').reset(); 
             document.getElementById('tuner-index').value = '-1'; 
             document.getElementById('tuner-type').value = 'network';
-            document.getElementById('tuner-vcodec').value = 'hevc_qsv';
-            document.getElementById('tuner-video-bitrate').value = '2500';
-            document.getElementById('tuner-audio-bitrate').value = '128';
-            document.getElementById('tuner-preset').value = 'medium';
+            
+            // Clear invisible data blocks for fresh detection
+            document.getElementById('tuner-capture-format').value = '';
+            document.getElementById('tuner-capture-size').value = '';
+            document.getElementById('tuner-capture-fps').value = '';
+            document.getElementById('capture-settings-display').innerHTML = 'Ready to probe hardware limits...';
+            document.getElementById('capture-settings-display').style.color = '#ccc';
+
             document.getElementById('tuner-audio-delay').value = '0';
             document.getElementById('tuner-deinterlace').value = 'off';
             toggleTunerTypeFields();
@@ -604,17 +622,27 @@
             document.getElementById('tuner-ip').value = t.device_ip;
             document.getElementById('tuner-type').value = t.type || 'network';
             document.getElementById('tuner-url').value = t.encoder_url || '';
-            document.getElementById('tuner-vcodec').value = t.video_codec || 'hevc_qsv';
-            document.getElementById('tuner-video-bitrate').value = t.video_bitrate || '2500';
-            document.getElementById('tuner-audio-bitrate').value = t.audio_bitrate || '128';
-            document.getElementById('tuner-preset').value = t.encoder_preset || 'medium';
             document.getElementById('tuner-audio-delay').value = t.audio_delay_ms || 0;
             document.getElementById('tuner-deinterlace').value = t.deinterlace_mode || 'off';
             document.getElementById('tuner-priority').value = t.priority || 99;
             document.getElementById('tuner-index').value = i;
+            
+            // Retrieve previous capture constraints
+            const capFormat = t.capture_format || 'mjpeg';
+            const capSize = t.capture_size || '1920x1080';
+            const capFps = t.capture_fps || '60';
+            document.getElementById('tuner-capture-format').value = capFormat;
+            document.getElementById('tuner-capture-size').value = capSize;
+            document.getElementById('tuner-capture-fps').value = capFps;
 
             toggleTunerTypeFields();
-            if ((t.type || 'network') === 'local') await fetchDevices(t.video_device_id, t.audio_device_id);
+            
+            if ((t.type || 'network') === 'local') {
+                await fetchDevices(t.video_device_id, t.audio_device_id);
+                document.getElementById('capture-settings-display').style.color = '#ccc';
+                document.getElementById('capture-settings-display').innerHTML = `Currently assigned constraints:<br><span style="margin-left:22px; font-size:0.9em;">Format: ${capFormat} | Size: ${capSize} | Max FPS: ${capFps}</span>`;
+            }
+            
             document.getElementById('tuner-modal').style.display='block';
         }
 
@@ -630,10 +658,9 @@
                 encoder_url: tunerType === 'network' ? document.getElementById('tuner-url').value : '',
                 video_device_id: tunerType === 'local' ? document.getElementById('tuner-video-dev').value : '',
                 audio_device_id: tunerType === 'local' ? document.getElementById('tuner-audio-dev').value : '',
-                video_codec: tunerType === 'local' ? document.getElementById('tuner-vcodec').value : '',
-                video_bitrate: tunerType === 'local' ? (parseInt(document.getElementById('tuner-video-bitrate').value) || 2500) : 0,
-                audio_bitrate: tunerType === 'local' ? (parseInt(document.getElementById('tuner-audio-bitrate').value) || 128) : 0,
-                encoder_preset: tunerType === 'local' ? document.getElementById('tuner-preset').value : '',
+                capture_format: tunerType === 'local' ? document.getElementById('tuner-capture-format').value : '',
+                capture_size: tunerType === 'local' ? document.getElementById('tuner-capture-size').value : '',
+                capture_fps: tunerType === 'local' ? document.getElementById('tuner-capture-fps').value : '',
                 audio_delay_ms: tunerType === 'local' ? (parseInt(document.getElementById('tuner-audio-delay').value) || 0) : 0,
                 deinterlace_mode: tunerType === 'local' ? document.getElementById('tuner-deinterlace').value : 'off',
                 priority: parseInt(document.getElementById('tuner-priority').value) || 99 
@@ -649,7 +676,7 @@
         function openProviderModal() { 
             document.getElementById('provider-form').reset(); 
             document.getElementById('provider-index').value = '-1'; 
-            document.getElementById('prov-splash-delay').value = '3000'; // Default 3 seconds
+            document.getElementById('prov-splash-delay').value = '3000'; 
             document.getElementById('provider-modal').style.display='block'; 
         }
         
@@ -677,7 +704,7 @@
                 splash_delay_ms: parseInt(document.getElementById('prov-splash-delay').value) || 0
             };
             if(i === -1) config.providers.push(data); else config.providers[i] = data;
-            markUnsaved(); // Trigger banner
+            markUnsaved(); 
             renderTables(); 
             closeModal('provider-modal');
         };

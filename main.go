@@ -13,6 +13,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"sync"
 	"syscall"
@@ -28,16 +29,15 @@ var embeddedFiles embed.FS
 type Tuner struct {
 	Name            string `json:"name"`
 	DeviceIP        string `json:"device_ip"`
-	Type            string `json:"type"` // "network" or "local"
+	Type            string `json:"type"` 
 	EncoderURL      string `json:"encoder_url,omitempty"`
 	VideoDeviceID   string `json:"video_device_id,omitempty"`
 	AudioDeviceID   string `json:"audio_device_id,omitempty"`
 	AudioDelayMs    int    `json:"audio_delay_ms,omitempty"`
 	DeinterlaceMode string `json:"deinterlace_mode,omitempty"`
-	VideoCodec      string `json:"video_codec,omitempty"`
-	EncoderPreset   string `json:"encoder_preset,omitempty"`
-	VideoBitrate    int    `json:"video_bitrate,omitempty"`
-	AudioBitrate    int    `json:"audio_bitrate,omitempty"`
+	CaptureFormat   string `json:"capture_format,omitempty"` // Automatically determined via FFmpeg probe
+	CaptureSize     string `json:"capture_size,omitempty"`   // Automatically determined via FFmpeg probe
+	CaptureFPS      string `json:"capture_fps,omitempty"`    // Automatically determined via FFmpeg probe
 	Priority        int    `json:"priority"`
 	InUse           bool   `json:"-"`
 }
@@ -67,7 +67,6 @@ type AppConfig struct {
 	Channels  []Channel  `json:"channels"`
 }
 
-// Structs for FFmpeg Device Discovery
 type DShowDevice struct {
 	Name string `json:"name"`
 	ID   string `json:"id"`
@@ -78,8 +77,15 @@ type DeviceList struct {
 	Audio []DShowDevice `json:"audio"`
 }
 
+// Struct for the JSON response of the hardware probe
+type ProbeResult struct {
+	Format string `json:"format"`
+	Size   string `json:"size"`
+	FPS    string `json:"fps"`
+}
+
 var Config AppConfig
-var AppVersion = "5.0.8-WIN"
+var AppVersion = "5.0.9-WIN"
 var tunerLock sync.Mutex
 
 var streamClient = &http.Client{
@@ -162,7 +168,6 @@ func loadConfig() {
 	fileData, _ := os.ReadFile(configPath)
 	json.Unmarshal(fileData, &Config)
 
-	// Migration: Split old Intent strings into PackageName and Component
 	for i := range Config.Providers {
 		if Config.Providers[i].Intent != "" && Config.Providers[i].PackageName == "" {
 			parts := strings.Split(Config.Providers[i].Intent, "/")
@@ -299,8 +304,103 @@ func executeTuning(deviceIP string, ch Channel) {
 }
 
 // ==========================================
-// 5. FFmpeg Hardware Discovery (Windows DirectShow)
+// 5. Hardware Diagnostics & Auto-Detection
 // ==========================================
+
+// getEncoderArgs queries the Windows OS for the GPU brand to assign a strict H.264 hardware encoder
+func getEncoderArgs() []string {
+	cmd := exec.Command("wmic", "path", "win32_VideoController", "get", "name")
+	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+	out, err := cmd.CombinedOutput()
+	
+	if err == nil {
+		outStr := strings.ToUpper(string(out))
+		
+		if strings.Contains(outStr, "NVIDIA") {
+			return []string{"-c:v", "h264_nvenc", "-preset", "p2", "-tune", "ll", "-b:v", "8000k", "-bufsize", "16000k", "-pix_fmt", "yuv420p"}
+		}
+		if strings.Contains(outStr, "AMD") || strings.Contains(outStr, "RADEON") {
+			return []string{"-c:v", "h264_amf", "-usage", "lowlatency", "-b:v", "8000k", "-bufsize", "16000k", "-pix_fmt", "yuv420p"}
+		}
+		if strings.Contains(outStr, "INTEL") || strings.Contains(outStr, "UHD GRAPHICS") || strings.Contains(outStr, "HD GRAPHICS") {
+			// Uses Intel's LA_ICQ for optimal visual fidelity
+			return []string{"-c:v", "h264_qsv", "-look_ahead", "1", "-global_quality", "25"} 
+		}
+	}
+	
+	// Default to CPU fallback using standard Rec. 709 constraints for Channels DVR
+	return []string{"-c:v", "libx264", "-preset", "veryfast", "-b:v", "8000k", "-bufsize", "16000k", "-pix_fmt", "yuv420p"}
+}
+
+// apiProbeDevice commands FFmpeg to list device pins and determines the best stream properties
+func apiProbeDevice(w http.ResponseWriter, r *http.Request) {
+	devName := r.URL.Query().Get("name")
+	if devName == "" {
+		http.Error(w, "Missing device name", http.StatusBadRequest)
+		return
+	}
+
+	ffmpeg := getFFmpegPath()
+	cmd := exec.Command(ffmpeg, "-f", "dshow", "-list_options", "true", "-i", fmt.Sprintf("video=%s", devName))
+	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+	
+	// FFmpeg writes device lists directly to stderr and returns an error code
+	out, _ := cmd.CombinedOutput()
+
+	// Regex to capture "pixel_format=nv12 ... max s=1920x1080 fps=50" or "vcodec=mjpeg ... max s=1920x1080 fps=60"
+	re := regexp.MustCompile(`(?:pixel_format|vcodec)=([a-zA-Z0-9_]+).*?max s=([0-9]+x[0-9]+) fps=([0-9.]+)`)
+	
+	var bestOption ProbeResult
+	bestScore := -1
+
+	lines := strings.Split(string(out), "\n")
+	for _, line := range lines {
+		matches := re.FindStringSubmatch(line)
+		if len(matches) == 4 {
+			format := matches[1]
+			size := matches[2]
+			fps := matches[3]
+
+			score := 0
+			// 1080p outputs directly support Onn HD Stick rendering sizes natively
+			if size == "1920x1080" {
+				score += 100
+			}
+
+			// Prioritize compressed MJPEG first to sidestep USB 2.0 bandwidth drops
+			if format == "mjpeg" {
+				score += 50
+			// NV12 avoids colorspace conversions before hitting Intel QSV 
+			} else if format == "nv12" {
+				score += 40
+			} else if format == "yuyv422" || format == "yuy2" {
+				score += 30
+			}
+
+			if strings.HasPrefix(fps, "60") || strings.HasPrefix(fps, "59") {
+				score += 10
+			} else if strings.HasPrefix(fps, "50") {
+				score += 5
+			}
+
+			if score > bestScore {
+				bestScore = score
+				bestOption = ProbeResult{Format: format, Size: size, FPS: fps}
+			}
+		}
+	}
+
+	if bestOption.Size == "" {
+		bestOption = ProbeResult{Format: "mjpeg", Size: "1920x1080", FPS: "60"} 
+	}
+
+	// Remove fractional zeros to keep the UI clean
+	bestOption.FPS = strings.TrimSuffix(bestOption.FPS, ".000")
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(bestOption)
+}
+
 func apiDevices(w http.ResponseWriter, r *http.Request) {
 	devices := DeviceList{Video: []DShowDevice{}, Audio: []DShowDevice{}}
 
@@ -536,7 +636,6 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 	if tuner.Type == "local" {
 		time.Sleep(2 * time.Second)
 
-		// NEW: Look up the Provider to get its specific Splash Delay
 		var provider *Provider
 		for _, p := range Config.Providers {
 			if p.ID == channel.ProviderID {
@@ -551,21 +650,23 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 
 		ffmpeg := getFFmpegPath()
 
-		vCodec := tuner.VideoCodec
-		if vCodec == "" {
-			vCodec = "hevc_qsv"
+		// Retrieve dynamically assessed hardware limits
+		captureFormat := tuner.CaptureFormat
+		if captureFormat == "" {
+			captureFormat = "mjpeg" 
 		}
-		vPreset := tuner.EncoderPreset
-		if vPreset == "" {
-			vPreset = "medium"
+		captureSize := tuner.CaptureSize
+		if captureSize == "" {
+			captureSize = "1920x1080" 
 		}
-		vBitrate := tuner.VideoBitrate
-		if vBitrate == 0 {
-			vBitrate = 2500
+		captureFPS := tuner.CaptureFPS
+		if captureFPS == "" {
+			captureFPS = "60" 
 		}
-		aBitrate := tuner.AudioBitrate
-		if aBitrate == 0 {
-			aBitrate = 128
+
+		formatFlag := "-vcodec"
+		if captureFormat == "nv12" || captureFormat == "yuyv422" || captureFormat == "yuy2" {
+			formatFlag = "-pixel_format"
 		}
 
 		vfArg := "format=nv12"
@@ -575,7 +676,6 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 			vfArg = "bwdif=mode=1:parity=1,format=nv12"
 		}
 
-		// NEW: Apply Black Screen Splash Delay to Video
 		if splashDelayMs > 0 {
 			splashSecs := float64(splashDelayMs) / 1000.0
 			vfArg += fmt.Sprintf(",drawbox=x=0:y=0:w=iw:h=ih:color=black:t=fill:enable='between(t,0,%.2f)'", splashSecs)
@@ -585,24 +685,38 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 			"-hide_banner", "-loglevel", "error",
 		}
 
-		if strings.Contains(vCodec, "qsv") {
-			args = append(args, "-init_hw_device", "qsv=hw", "-filter_hw_device", "hw")
+		dshowInput := fmt.Sprintf("video=%s", tuner.VideoDeviceID)
+		if tuner.AudioDeviceID != "" {
+			dshowInput += fmt.Sprintf(":audio=%s", tuner.AudioDeviceID)
 		}
 
-		dshowInput := fmt.Sprintf("video=%s:audio=%s", tuner.VideoDeviceID, tuner.AudioDeviceID)
+		// Inject Intel Hardware setup strictly if the auto-detected encoder is QSV
+		encoderArgs := getEncoderArgs()
+		isQSV := false
+		for _, a := range encoderArgs {
+			if a == "h264_qsv" {
+				isQSV = true
+				break
+			}
+		}
+		
+		if isQSV {
+			args = append(args, "-init_hw_device", "qsv=hw", "-filter_hw_device", "hw")
+		}
 
 		args = append(args,
 			"-rtbufsize", "256M",
 			"-thread_queue_size", "1024",
 			"-f", "dshow",
-			"-video_size", "1920x1080",
-			"-framerate", "60",
-			"-vcodec", "mjpeg",
+			"-video_size", captureSize,
+			"-framerate", captureFPS,
+			formatFlag, captureFormat, 
 			"-i", dshowInput,
 			"-vf", vfArg,
-			"-c:v", vCodec,
-			"-preset", vPreset,
 		)
+		
+		// Apply strictly H.264 compatible hardware encoder limits determined during runtime WMI lookup
+		args = append(args, encoderArgs...)
 
 		args = append(args,
 			"-color_primaries", "bt709",
@@ -611,13 +725,9 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 			"-color_range", "tv",
 		)
 
-        args = append(args, "-maxrate", fmt.Sprintf("%dk", vBitrate), "-bufsize", fmt.Sprintf("%dk", vBitrate*2))
-
-		// NEW: Combine Mute Delay and Audio Sync Delay
 		afArg := ""
 		if splashDelayMs > 0 {
 			splashSecs := float64(splashDelayMs) / 1000.0
-			// Mute the audio entirely for the splash duration
 			afArg = fmt.Sprintf("volume=enable='between(t,0,%.2f)':volume=0", splashSecs)
 		}
 
@@ -633,14 +743,13 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		args = append(args,
-			"-c:a", "aac", "-b:a", fmt.Sprintf("%dk", aBitrate), "-ar", "48000",
+			"-c:a", "aac", "-b:a", "192k", "-ar", "48000",
 			"-f", "mpegts",
 			"pipe:1",
 		)
 
 		cmd := exec.CommandContext(r.Context(), ffmpeg, args...)
 		cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
-		cmd.Stderr = os.Stderr
 
 		stdout, err := cmd.StdoutPipe()
 		if err != nil {
@@ -890,7 +999,6 @@ func main() {
 		cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 		cmd.Start()
 		
-		// Immediately exit this instance so it doesn't crash against the background service
 		return 
 	}
 
@@ -903,6 +1011,7 @@ func main() {
 	http.HandleFunc("/api/export_config", apiExportConfig)
 	http.HandleFunc("/api/import_config", apiImportConfig)
 	http.HandleFunc("/api/devices", apiDevices)
+	http.HandleFunc("/api/probe_device", apiProbeDevice) // Added probe endpoint
 	http.HandleFunc("/api/active_tuners", apiActiveTuners)
 	http.HandleFunc("/stream/", streamHandler)
 	http.HandleFunc("/channels.m3u", generateM3U)

@@ -1,7 +1,7 @@
 [Setup]
 ; Basic App Info
 AppName=Android ADB Bridge
-AppVersion=5.0.8
+AppVersion=5.0.9
 AppPublisher=nuken
 DefaultDirName={autopf}\AndroidBridge
 DisableProgramGroupPage=yes
@@ -9,7 +9,7 @@ DisableProgramGroupPage=yes
 SetupIconFile=icon.ico
 ; Where the final setup.exe will be saved
 OutputDir=Output
-OutputBaseFilename=AndroidBridge_Setup_v5.0.8
+OutputBaseFilename=AndroidBridge_Setup_v5.0.9
 Compression=lzma
 SolidCompression=yes
 ; Require admin rights to add firewall rules
