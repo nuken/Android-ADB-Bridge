@@ -40,22 +40,22 @@
     },
     {
       "name": "WMYT",
-      "id": "cw-yt
+      "id": "cw-yt",
       "provider_id": "yt_tv",
       "deep_link_content_id": "CKAZtLTzbyo",
       "tvc_guide_stationid": "31646"
     },
-	{
+    {
       "name": "WUNG",
-      "id": "pbsnc-yt
+      "id": "pbsnc-yt",
       "provider_id": "yt_tv",
       "deep_link_content_id": "oGSfzmJxVsQ",
       "tvc_guide_stationid": "29034"
     },
-	{
+    {
       "name": "WNSC",
-      "id": "pbsnc-yt
-      "provider_idsc": "yt_tv",
+      "id": "pbsnc-yt",
+      "provider_id": "yt_tv",
       "deep_link_content_id": "MBbuh8iZqwc",
       "tvc_guide_stationid": "44041"
     },
