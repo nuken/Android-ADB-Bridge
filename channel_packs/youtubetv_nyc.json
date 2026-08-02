@@ -1,0 +1,959 @@
+{
+  "providers": [
+    {
+      "id": "yt_tv",
+      "name": "YouTube TV",
+      "package_name": "com.google.android.youtube.tvunplugged",
+      "component": "com.google.android.apps.youtube.tvunplugged.activity.MainActivity",
+      "url_template": "https://tv.youtube.com/watch/{id}",
+      "splash_delay_ms": 3000
+    }
+  ],
+  "channels": [
+    {
+      "name": "WCBS (CBS 2 New York)",
+      "id": "wcbs-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "1OFN-EAN5Ow",
+      "tvc_guide_stationid": "11331"
+    },
+    {
+      "name": "WNBC (NBC 4 New York)",
+      "id": "wnbc-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "-sCK4yr7ghE",
+      "tvc_guide_stationid": "11705"
+    },
+    {
+      "name": "WNYW (FOX 5 New York)",
+      "id": "wnyw-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "cY1R-vvSM9g",
+      "tvc_guide_stationid": "11746"
+    },
+    {
+      "name": "WABC (ABC 7 New York)",
+      "id": "wabc-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "x_8baM50Bss",
+      "tvc_guide_stationid": "20453"
+    },
+    {
+      "name": "WWOR (My9)",
+      "id": "wwor-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "BgQyxveaDjk",
+      "tvc_guide_stationid": "11760"
+    },
+    {
+      "name": "WLNY (TV 10/55)",
+      "id": "wlny-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "S9IMxXLSIp8",
+      "tvc_guide_stationid": "31225"
+    },
+    {
+      "name": "WPIX (CW 11)",
+      "id": "wpix-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "88Pb-oxUtiI",
+      "tvc_guide_stationid": "11779"
+    },
+    {
+      "name": "WNET (PBS 13)",
+      "id": "wnet-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "iJKH1gy92TQ",
+      "tvc_guide_stationid": "26182"
+    },
+    {
+      "name": "WNJU (Telemundo 47)",
+      "id": "wnju-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "jmH_csqWgZc",
+      "tvc_guide_stationid": "11726"
+    },
+    {
+      "name": "CPTV (Connecticut Public)",
+      "id": "cptv-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "BvqtkU-NY8w",
+      "tvc_guide_stationid": "34254"
+    },
+    {
+      "name": "NJ PBS",
+      "id": "nj-pbs-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "VmoKS5uSS34",
+      "tvc_guide_stationid": "34325"
+    },
+    {
+      "name": "ABC News HD",
+      "id": "abc-news-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "DvrZQH_tMuE",
+      "tvc_guide_stationid": "122004"
+    },
+    {
+      "name": "ACC",
+      "id": "acc-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "YaqNgmedD7U",
+      "tvc_guide_stationid": "111871"
+    },
+    {
+      "name": "AMC",
+      "id": "amc-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "FTuQnhIQcLc",
+      "tvc_guide_stationid": "59337"
+    },
+    {
+      "name": "AMC-THRILLERS",
+      "id": "amc-thrillers-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "C7aEvsgRo1M",
+      "tvc_guide_stationid": "115678"
+    },
+    {
+      "name": "ANIMAL-PLANET",
+      "id": "animal-planet-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "QY2JAQHPM-o",
+      "tvc_guide_stationid": "57394"
+    },
+    {
+      "name": "AWE",
+      "id": "awe-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "Lu6WqyeqaBk",
+      "tvc_guide_stationid": "44895"
+    },
+    {
+      "name": "BBC-AMERICA",
+      "id": "bbc-america-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "AzPPaJ64Z6o",
+      "tvc_guide_stationid": "64492"
+    },
+    {
+      "name": "BBC-NEWS",
+      "id": "bbc-news-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "OYmy-Nm9QYI",
+      "tvc_guide_stationid": "19037"
+    },
+    {
+      "name": "BETHD",
+      "id": "bethd-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "GIGXECNR47g",
+      "tvc_guide_stationid": "63236"
+    },
+    {
+      "name": "BETHERHD",
+      "id": "betherhd-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "B63DbzHwjoc",
+      "tvc_guide_stationid": "14897"
+    },
+    {
+      "name": "BIG10HD",
+      "id": "big10hd-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "4RDk-Lzangs",
+      "tvc_guide_stationid": "58321"
+    },
+    {
+      "name": "Bloomberg Originals",
+      "id": "bloomberg-originals-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "zg0fMvxYX8o",
+      "tvc_guide_stationid": "175656"
+    },
+    {
+      "name": "Bloomberg TV+",
+      "id": "bloomberg-tv-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "tI2zWquP-z8",
+      "tvc_guide_stationid": "71799"
+    },
+    {
+      "name": "BOUNCE",
+      "id": "bounce-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "3TBE1BPTgXw",
+      "tvc_guide_stationid": "73067"
+    },
+    {
+      "name": "BRAVO",
+      "id": "bravo-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "gL-xA27vFY0",
+      "tvc_guide_stationid": "10057"
+    },
+    {
+      "name": "CBSSPORTS",
+      "id": "cbssports-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "rdy7C3fJHGs",
+      "tvc_guide_stationid": "59250"
+    },
+    {
+      "name": "CC",
+      "id": "cc-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "qSFd8w23Tds",
+      "tvc_guide_stationid": "62420"
+    },
+    {
+      "name": "CHARGE",
+      "id": "charge-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "HBmf-CwO17M",
+      "tvc_guide_stationid": "102148"
+    },
+    {
+      "name": "CHEDDAR",
+      "id": "cheddar-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "ERxbJVrPmt0",
+      "tvc_guide_stationid": "112036"
+    },
+    {
+      "name": "CMDTVHD",
+      "id": "cmdtvhd-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "u2EFgvLtIBA",
+      "tvc_guide_stationid": "82470"
+    },
+    {
+      "name": "CMT",
+      "id": "cmt-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "4kwr3khk06k",
+      "tvc_guide_stationid": "10138"
+    },
+    {
+      "name": "CNBC",
+      "id": "cnbc-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "WPbqaCN6QP0",
+      "tvc_guide_stationid": "10139"
+    },
+    {
+      "name": "CNNHD",
+      "id": "cnnhd-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "f-jwiCiqjJs",
+      "tvc_guide_stationid": "58646"
+    },
+    {
+      "name": "COMET",
+      "id": "comet-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "MDaCmU9dLBQ",
+      "tvc_guide_stationid": "97051"
+    },
+    {
+      "name": "COURT",
+      "id": "court-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "kCuQzGUAymg",
+      "tvc_guide_stationid": "111043"
+    },
+    {
+      "name": "COZIHD",
+      "id": "cozihd-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "KrgYi-VZpHE",
+      "tvc_guide_stationid": "89994"
+    },
+    {
+      "name": "DABL",
+      "id": "dabl-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "u8kQMIf-PWQ",
+      "tvc_guide_stationid": "112157"
+    },
+    {
+      "name": "DISCOVERY",
+      "id": "discovery-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "92bFKDX3liU",
+      "tvc_guide_stationid": "56905"
+    },
+    {
+      "name": "DISNHD",
+      "id": "disnhd-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "fadDRUwoKDA",
+      "tvc_guide_stationid": "59684"
+    },
+    {
+      "name": "DJCHHD",
+      "id": "djchhd-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "NCqVbdoN4Ks",
+      "tvc_guide_stationid": "74885"
+    },
+    {
+      "name": "DXDHD",
+      "id": "dxdhd-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "PHJ3gSUh8sY",
+      "tvc_guide_stationid": "60006"
+    },
+    {
+      "name": "E!",
+      "id": "e-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "RyrS0s1rL1s",
+      "tvc_guide_stationid": "61812"
+    },
+    {
+      "name": "ESPN",
+      "id": "espn-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "pwrdbfRlE_E",
+      "tvc_guide_stationid": "32645"
+    },
+    {
+      "name": "ESPN2",
+      "id": "espn2-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "rV3_bg6VJHs",
+      "tvc_guide_stationid": "45507"
+    },
+    {
+      "name": "ESPNews",
+      "id": "espnews-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "Tpl7yazSYsE",
+      "tvc_guide_stationid": "59976"
+    },
+    {
+      "name": "ESPNU",
+      "id": "espnu-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "amH6spsQucw",
+      "tvc_guide_stationid": "60696"
+    },
+    {
+      "name": "FBNHD",
+      "id": "fbnhd-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "bZasdxFPKIE",
+      "tvc_guide_stationid": "58718"
+    },
+    {
+      "name": "FOODHD",
+      "id": "foodhd-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "4hekUOmdLVU",
+      "tvc_guide_stationid": "50747"
+    },
+    {
+      "name": "FOXNEWS",
+      "id": "foxnews-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "L3-5JT6o4XA",
+      "tvc_guide_stationid": "60179"
+    },
+    {
+      "name": "FOXSOUL",
+      "id": "foxsoul-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "RKjtNKK4C9M",
+      "tvc_guide_stationid": "119212"
+    },
+    {
+      "name": "FOXWEATHER",
+      "id": "foxweather-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "YqfjYn809YI",
+      "tvc_guide_stationid": "121307"
+    },
+    {
+      "name": "FREEFORM",
+      "id": "freeform-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "nPqKmsVOEAs",
+      "tvc_guide_stationid": "59615"
+    },
+    {
+      "name": "FS1",
+      "id": "fs1-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "m0OC9hRAVrc",
+      "tvc_guide_stationid": "82541"
+    },
+    {
+      "name": "FS2",
+      "id": "fs2-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "abuJNmQVRiI",
+      "tvc_guide_stationid": "33178"
+    },
+    {
+      "name": "FX",
+      "id": "fx-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "J2kK6xV2lnI",
+      "tvc_guide_stationid": "14321"
+    },
+    {
+      "name": "FXM",
+      "id": "fxm-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "NyyOdWuSRbA",
+      "tvc_guide_stationid": "14988"
+    },
+    {
+      "name": "FXX",
+      "id": "fxx-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "3sQhbB-xqeI",
+      "tvc_guide_stationid": "17927"
+    },
+    {
+      "name": "Galavision",
+      "id": "galavision-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "2ghGMvn-wE4",
+      "tvc_guide_stationid": "71021"
+    },
+    {
+      "name": "getTV",
+      "id": "gettv-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "FI-4nQBQr3A",
+      "tvc_guide_stationid": "82563"
+    },
+    {
+      "name": "GFAM",
+      "id": "gfam-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "YaxnIdoCBu4",
+      "tvc_guide_stationid": "82892"
+    },
+    {
+      "name": "GLIV",
+      "id": "gliv-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "BAGgmMHa7hA",
+      "tvc_guide_stationid": "90858"
+    },
+    {
+      "name": "GOLF",
+      "id": "golf-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "C8ZEwiBy6fI",
+      "tvc_guide_stationid": "14899"
+    },
+    {
+      "name": "GSN",
+      "id": "gsn-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "rpJpGoV5LWY",
+      "tvc_guide_stationid": "14909"
+    },
+    {
+      "name": "HALLDR",
+      "id": "halldr-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "wObdrKvs_8Y",
+      "tvc_guide_stationid": "105723"
+    },
+    {
+      "name": "HALLHD",
+      "id": "hallhd-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "utR-O-CS0RY",
+      "tvc_guide_stationid": "66268"
+    },
+    {
+      "name": "HGTVD",
+      "id": "hgtvd-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "OTlnIGqIqXU",
+      "tvc_guide_stationid": "49788"
+    },
+    {
+      "name": "HLNHD",
+      "id": "hlnhd-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "jCfWOlSvtCE",
+      "tvc_guide_stationid": "64549"
+    },
+    {
+      "name": "HMMHD",
+      "id": "hmmhd-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "06qhGwqCNTY",
+      "tvc_guide_stationid": "46710"
+    },
+    {
+      "name": "HSNHD",
+      "id": "hsnhd-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "2UuH6XfZ-5g",
+      "tvc_guide_stationid": "62077"
+    },
+    {
+      "name": "ID",
+      "id": "id-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "9LCLkNBxa9E",
+      "tvc_guide_stationid": "65342"
+    },
+    {
+      "name": "IFC",
+      "id": "ifc-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "FP5mqRZ15wI",
+      "tvc_guide_stationid": "59444"
+    },
+    {
+      "name": "ION",
+      "id": "ion-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "vph1Lx56ghE",
+      "tvc_guide_stationid": "62746"
+    },
+    {
+      "name": "JUST",
+      "id": "just-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "Z_1rJoXQnQo",
+      "tvc_guide_stationid": "78850"
+    },
+    {
+      "name": "LIVENOW",
+      "id": "livenow-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "AfNkz1anyB8",
+      "tvc_guide_stationid": "119219"
+    },
+    {
+      "name": "LOCNOW",
+      "id": "locnow-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "bBtIFVXd3XU",
+      "tvc_guide_stationid": "99988"
+    },
+    {
+      "name": "MAGN",
+      "id": "magn-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "toLh6iOl_Zk",
+      "tvc_guide_stationid": "18544"
+    },
+    {
+      "name": "MOTORTREND HD",
+      "id": "motortrend-hd-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "BlyWlY5-VZE",
+      "tvc_guide_stationid": "31046"
+    },
+    {
+      "name": "MSNBC",
+      "id": "msnbc-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "0dhG7xgTvMo",
+      "tvc_guide_stationid": "16300"
+    },
+    {
+      "name": "MTV",
+      "id": "mtv-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "KgSRD4ODpEs",
+      "tvc_guide_stationid": "10986"
+    },
+    {
+      "name": "MTV2",
+      "id": "mtv2-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "kSvFIkqC5Zg",
+      "tvc_guide_stationid": "16361"
+    },
+    {
+      "name": "MTVCLAS",
+      "id": "mtvclas-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "YPB9f0dageg",
+      "tvc_guide_stationid": "22561"
+    },
+    {
+      "name": "NBATV",
+      "id": "nbatv-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "T32UNaims9U",
+      "tvc_guide_stationid": "32281"
+    },
+    {
+      "name": "NBC True CRMZ",
+      "id": "nbc-true-crmz-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "RHXqeIEzhJ0",
+      "tvc_guide_stationid": "121250"
+    },
+    {
+      "name": "NBCNN",
+      "id": "nbcnn-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "lFTItAlSg5o",
+      "tvc_guide_stationid": "114174"
+    },
+    {
+      "name": "NBCSN",
+      "id": "nbcsn-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "VQXP9IVYS4g",
+      "tvc_guide_stationid": "194412"
+    },
+    {
+      "name": "NEWSMAX",
+      "id": "newsmax-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "b_Ds6K-XZ6s",
+      "tvc_guide_stationid": "97163"
+    },
+    {
+      "name": "NEWSNTN",
+      "id": "newsntn-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "HPzVmdFFxRs",
+      "tvc_guide_stationid": "91096"
+    },
+    {
+      "name": "NFLHD",
+      "id": "nflhd-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "EFrE_7E9BO4",
+      "tvc_guide_stationid": "45399"
+    },
+    {
+      "name": "NGCHD",
+      "id": "ngchd-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "JXAnBgqNhXw",
+      "tvc_guide_stationid": "49438"
+    },
+    {
+      "name": "NGWIHD",
+      "id": "ngwihd-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "IiD16hZmnEg",
+      "tvc_guide_stationid": "67331"
+    },
+    {
+      "name": "NICJRHD",
+      "id": "nicjrhd-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "ChXBu9nBr6s",
+      "tvc_guide_stationid": "82649"
+    },
+    {
+      "name": "NICKELODEON",
+      "id": "nickelodeon-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "vSwEO7GZXds",
+      "tvc_guide_stationid": "86939"
+    },
+    {
+      "name": "NIKTNHD",
+      "id": "niktnhd-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "DqQY3OGvXdU",
+      "tvc_guide_stationid": "82654"
+    },
+    {
+      "name": "One America News",
+      "id": "one-america-news-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "BsRAl8ySulY",
+      "tvc_guide_stationid": "83953"
+    },
+    {
+      "name": "OWN",
+      "id": "own-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "pzfLsXjXWhw",
+      "tvc_guide_stationid": "70387"
+    },
+    {
+      "name": "OXYGEN",
+      "id": "oxygen-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "O1QLD_mRgvI",
+      "tvc_guide_stationid": "21484"
+    },
+    {
+      "name": "PARAMOUNT",
+      "id": "paramount-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "X-UMiaawWS4",
+      "tvc_guide_stationid": "59186"
+    },
+    {
+      "name": "PBS-KIDS",
+      "id": "pbs-kids-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "hrbUcB_e5rQ",
+      "tvc_guide_stationid": "112893"
+    },
+    {
+      "name": "Pickleball TV",
+      "id": "pickleball-tv-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "7IgF2cV97nA",
+      "tvc_guide_stationid": "146769"
+    },
+    {
+      "name": "POP",
+      "id": "pop-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "tt0rL82gQmY",
+      "tvc_guide_stationid": "68796"
+    },
+    {
+      "name": "Portlandia",
+      "id": "portlandia-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "dxRXpLjk5o0",
+      "tvc_guide_stationid": "122435"
+    },
+    {
+      "name": "QVC",
+      "id": "qvc-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "pMwpQ7uxmLA",
+      "tvc_guide_stationid": "60222"
+    },
+    {
+      "name": "RECIPEH",
+      "id": "recipeh-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "JgvsCj3SKQY",
+      "tvc_guide_stationid": "81289"
+    },
+    {
+      "name": "SCNEWS",
+      "id": "scnews-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "xF7XgeebMDA",
+      "tvc_guide_stationid": "96827"
+    },
+    {
+      "name": "SECH",
+      "id": "sech-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "7WP3gsN-qmA",
+      "tvc_guide_stationid": "89714"
+    },
+    {
+      "name": "SMITH",
+      "id": "smith-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "Q-_pjdFQm6E",
+      "tvc_guide_stationid": "65799"
+    },
+    {
+      "name": "Stories by AMC",
+      "id": "stories-by-amc-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "dxFL-uSUzeQ",
+      "tvc_guide_stationid": "188539"
+    },
+    {
+      "name": "STRTD",
+      "id": "strtd-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "jzhoyDqsJ_8",
+      "tvc_guide_stationid": "122695"
+    },
+    {
+      "name": "SUNDANC",
+      "id": "sundanc-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "iR0PkOOl9lk",
+      "tvc_guide_stationid": "16108"
+    },
+    {
+      "name": "SYFY",
+      "id": "syfy-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "ANpMBET2cj8",
+      "tvc_guide_stationid": "11097"
+    },
+    {
+      "name": "T2",
+      "id": "t2-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "VeiS8kGkWo4",
+      "tvc_guide_stationid": "137752"
+    },
+    {
+      "name": "TASTE",
+      "id": "taste-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "bSmOT3tvVg8",
+      "tvc_guide_stationid": "107076"
+    },
+    {
+      "name": "TBD",
+      "id": "tbd-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "napdK-Yutlk",
+      "tvc_guide_stationid": "102116"
+    },
+    {
+      "name": "TBS",
+      "id": "tbs-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "WwICHVB99oE",
+      "tvc_guide_stationid": "58515"
+    },
+    {
+      "name": "TCMHD",
+      "id": "tcmhd-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "eaYLlFs86zM",
+      "tvc_guide_stationid": "64312"
+    },
+    {
+      "name": "the Nest",
+      "id": "the-nest-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "uzDYJr_gOzs",
+      "tvc_guide_stationid": "147367"
+    },
+    {
+      "name": "The Walking Dead Universe",
+      "id": "the-walking-dead-universe-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "ZNG6tRTdpWo",
+      "tvc_guide_stationid": "188538"
+    },
+    {
+      "name": "TLC",
+      "id": "tlc-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "M_F1-v0PxqI",
+      "tvc_guide_stationid": "57391"
+    },
+    {
+      "name": "TNCKHD",
+      "id": "tnckhd-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "f4VaxTolqu0",
+      "tvc_guide_stationid": "97047"
+    },
+    {
+      "name": "TNT",
+      "id": "tnt-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "eJenLQXJcVw",
+      "tvc_guide_stationid": "11164"
+    },
+    {
+      "name": "TOONHD",
+      "id": "toonhd-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "Taxh4HpCyVE",
+      "tvc_guide_stationid": "60048"
+    },
+    {
+      "name": "TRAVHD",
+      "id": "travhd-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "EYGYiAeqTB8",
+      "tvc_guide_stationid": "59303"
+    },
+    {
+      "name": "TRUTVHD",
+      "id": "trutvhd-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "FhKP3WYUe60",
+      "tvc_guide_stationid": "64490"
+    },
+    {
+      "name": "Tudn",
+      "id": "tudn-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "OPk-x33skS0",
+      "tvc_guide_stationid": "89113"
+    },
+    {
+      "name": "TVLAND",
+      "id": "tvland-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "zIrWxpGUBss",
+      "tvc_guide_stationid": "16123"
+    },
+    {
+      "name": "TWCHD",
+      "id": "twchd-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "8Pz___9RJns",
+      "tvc_guide_stationid": "11187"
+    },
+    {
+      "name": "TYT",
+      "id": "tyt-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "WkHiMSCKEA4",
+      "tvc_guide_stationid": "107478"
+    },
+    {
+      "name": "Unimas",
+      "id": "unimas-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "v86TvM3r2_g",
+      "tvc_guide_stationid": "73882"
+    },
+    {
+      "name": "Univision",
+      "id": "univision-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "b5EBWpMR0p0",
+      "tvc_guide_stationid": "11118"
+    },
+    {
+      "name": "USAHD",
+      "id": "usahd-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "8xN3o2PSL5s",
+      "tvc_guide_stationid": "58452"
+    },
+    {
+      "name": "VH1HD",
+      "id": "vh1hd-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "aBARhi2yDc8",
+      "tvc_guide_stationid": "60046"
+    },
+    {
+      "name": "WEHD",
+      "id": "wehd-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "gAYcqx9a-Ek",
+      "tvc_guide_stationid": "59296"
+    },
+    {
+      "name": "World at War",
+      "id": "world-at-war-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "gW51CnwZMfQ",
+      "tvc_guide_stationid": "165997"
+    },
+    {
+      "name": "YouTube TV Zen",
+      "id": "youtube-tv-zen-yt",
+      "provider_id": "yt_tv",
+      "deep_link_content_id": "LK29fqjCjFU",
+      "tvc_guide_stationid": "171005"
+    }
+  ]
+}

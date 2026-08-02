@@ -5,6 +5,11 @@
     "url": "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/channel_packs/youtubetv_east.json"
   },
   {
+    "name": "YouTube TV (NYC)",
+    "channel_count": 135,
+    "url": "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/channel_packs/youtubetv_nyc.json"
+  },
+  {
     "name": "YouTube TV (Charlotte, NC Locals)",
     "channel_count": 8,
     "url": "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/channel_packs/youtubetv_charlotte.json"
