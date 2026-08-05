@@ -1,0 +1,85 @@
+﻿{
+    "providers":  [
+                      {
+                          "id":  "app_hbomax",
+                          "name":  "HBOMAX",
+                          "package_name":  "com.wbd.stream",
+                          "fire_package_name":  "",
+                          "post_tune_macro":  "",
+                          "pre_tune_macro":  "",
+                          "splash_delay_ms":  3000
+                      }
+                  ],
+    "channels":  [
+                     {
+                         "provider_id":  "app_hbomax",
+                         "tuning_macro":  "",
+                         "name":  "HBO",
+                         "id":  "app_hbomax_3101",
+                         "tvc_guide_stationid":  "19548"
+                     },
+                     {
+                         "provider_id":  "app_hbomax",
+                         "tuning_macro":  "",
+                         "name":  "HBO Hits",
+                         "id":  "app_hbomax_3102",
+                         "tvc_guide_stationid":  "59368"
+                     },
+                     {
+                         "provider_id":  "app_hbomax",
+                         "tuning_macro":  "",
+                         "name":  "HBO Comedy",
+                         "id":  "app_hbomax_3103",
+                         "tvc_guide_stationid":  "59839"
+                     },
+                     {
+                         "provider_id":  "app_hbomax",
+                         "tuning_macro":  "",
+                         "name":  "HBO Movies",
+                         "id":  "app_hbomax_3104",
+                         "tvc_guide_stationid":  "59845"
+                     },
+                     {
+                         "provider_id":  "app_hbomax",
+                         "tuning_macro":  "",
+                         "name":  "HBO Drama",
+                         "id":  "app_hbomax_3105",
+                         "tvc_guide_stationid":  "59363"
+                     },
+                     {
+                         "provider_id":  "app_hbomax",
+                         "tuning_macro":  "",
+                         "name":  "HBO",
+                         "id":  "app_hbomax_3101",
+                         "tvc_guide_stationid":  "19548"
+                     },
+                     {
+                         "provider_id":  "app_hbomax",
+                         "tuning_macro":  "",
+                         "name":  "HBO Hits",
+                         "id":  "app_hbomax_3102",
+                         "tvc_guide_stationid":  "59368"
+                     },
+                     {
+                         "provider_id":  "app_hbomax",
+                         "tuning_macro":  "",
+                         "name":  "HBO Comedy",
+                         "id":  "app_hbomax_3103",
+                         "tvc_guide_stationid":  "59839"
+                     },
+                     {
+                         "provider_id":  "app_hbomax",
+                         "tuning_macro":  "",
+                         "name":  "HBO Movies",
+                         "id":  "app_hbomax_3104",
+                         "tvc_guide_stationid":  "59845"
+                     },
+                     {
+                         "provider_id":  "app_hbomax",
+                         "tuning_macro":  "",
+                         "name":  "HBO Drama",
+                         "id":  "app_hbomax_3105",
+                         "tvc_guide_stationid":  "59363"
+                     }
+                 ]
+}

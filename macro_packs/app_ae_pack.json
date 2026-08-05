@@ -1,0 +1,169 @@
+﻿{
+    "providers":  [
+                      {
+                          "id":  "app_ae",
+                          "name":  "AE",
+                          "package_name":  "com.aetn.aetv.watch.androidtv",
+                          "fire_package_name":  "",
+                          "post_tune_macro":  "PAUSE, PAUSE, HOME",
+                          "pre_tune_macro":  "PAUSE",
+                          "splash_delay_ms":  3000
+                      }
+                  ],
+    "channels":  [
+                     {
+                         "provider_id":  "app_ae",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, ENTER",
+                         "name":  "A\u0026E",
+                         "id":  "app_ae_1901",
+                         "tvc_guide_stationid":  "51529"
+                     },
+                     {
+                         "provider_id":  "app_ae",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "The First 48",
+                         "id":  "app_ae_1902",
+                         "tvc_guide_stationid":  "181303"
+                     },
+                     {
+                         "provider_id":  "app_ae",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Live PD Presents",
+                         "id":  "app_ae_1903",
+                         "tvc_guide_stationid":  ""
+                     },
+                     {
+                         "provider_id":  "app_ae",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Crime 360",
+                         "id":  "app_ae_1904",
+                         "tvc_guide_stationid":  "113780"
+                     },
+                     {
+                         "provider_id":  "app_ae",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Storage Wars",
+                         "id":  "app_ae_1905",
+                         "tvc_guide_stationid":  "172207"
+                     },
+                     {
+                         "provider_id":  "app_ae",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Chaos on Cam",
+                         "id":  "app_ae_1906",
+                         "tvc_guide_stationid":  ""
+                     },
+                     {
+                         "provider_id":  "app_ae",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Duck Dynasty",
+                         "id":  "app_ae_1907",
+                         "tvc_guide_stationid":  "131429"
+                     },
+                     {
+                         "provider_id":  "app_ae",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Crime Cults Killers",
+                         "id":  "app_ae_1908",
+                         "tvc_guide_stationid":  "123430"
+                     },
+                     {
+                         "provider_id":  "app_ae",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Cold Case Files",
+                         "id":  "app_ae_1909",
+                         "tvc_guide_stationid":  "129137"
+                     },
+                     {
+                         "provider_id":  "app_ae",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Home.Made.Nation",
+                         "id":  "app_ae_1910",
+                         "tvc_guide_stationid":  "113673"
+                     },
+                     {
+                         "provider_id":  "app_ae",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Tiny House Nation",
+                         "id":  "app_ae_1911",
+                         "tvc_guide_stationid":  "118456"
+                     },
+                     {
+                         "provider_id":  "app_ae",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, ENTER",
+                         "name":  "A\u0026E",
+                         "id":  "app_ae_1901",
+                         "tvc_guide_stationid":  "51529"
+                     },
+                     {
+                         "provider_id":  "app_ae",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "The First 48",
+                         "id":  "app_ae_1902",
+                         "tvc_guide_stationid":  "181303"
+                     },
+                     {
+                         "provider_id":  "app_ae",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Live PD Presents",
+                         "id":  "app_ae_1903",
+                         "tvc_guide_stationid":  ""
+                     },
+                     {
+                         "provider_id":  "app_ae",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Crime 360",
+                         "id":  "app_ae_1904",
+                         "tvc_guide_stationid":  "113780"
+                     },
+                     {
+                         "provider_id":  "app_ae",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Storage Wars",
+                         "id":  "app_ae_1905",
+                         "tvc_guide_stationid":  "172207"
+                     },
+                     {
+                         "provider_id":  "app_ae",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Chaos on Cam",
+                         "id":  "app_ae_1906",
+                         "tvc_guide_stationid":  ""
+                     },
+                     {
+                         "provider_id":  "app_ae",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Duck Dynasty",
+                         "id":  "app_ae_1907",
+                         "tvc_guide_stationid":  "131429"
+                     },
+                     {
+                         "provider_id":  "app_ae",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Crime Cults Killers",
+                         "id":  "app_ae_1908",
+                         "tvc_guide_stationid":  "123430"
+                     },
+                     {
+                         "provider_id":  "app_ae",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Cold Case Files",
+                         "id":  "app_ae_1909",
+                         "tvc_guide_stationid":  "129137"
+                     },
+                     {
+                         "provider_id":  "app_ae",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Home.Made.Nation",
+                         "id":  "app_ae_1910",
+                         "tvc_guide_stationid":  "113673"
+                     },
+                     {
+                         "provider_id":  "app_ae",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Tiny House Nation",
+                         "id":  "app_ae_1911",
+                         "tvc_guide_stationid":  "118456"
+                     }
+                 ]
+}

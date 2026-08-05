@@ -1,0 +1,99 @@
+﻿{
+    "providers":  [
+                      {
+                          "id":  "app_lifetime",
+                          "name":  "LIFETIME",
+                          "package_name":  "com.aetn.lifetime.watch.androidtv",
+                          "fire_package_name":  "",
+                          "post_tune_macro":  "PAUSE, PAUSE, HOME",
+                          "pre_tune_macro":  "PAUSE",
+                          "splash_delay_ms":  3000
+                      }
+                  ],
+    "channels":  [
+                     {
+                         "provider_id":  "app_lifetime",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Lifetime",
+                         "id":  "app_lifetime_1961",
+                         "tvc_guide_stationid":  "60150"
+                     },
+                     {
+                         "provider_id":  "app_lifetime",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Lifetime Movies Love \u0026 Drama",
+                         "id":  "app_lifetime_1962",
+                         "tvc_guide_stationid":  "177720"
+                     },
+                     {
+                         "provider_id":  "app_lifetime",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Lifetime Movies Favorites",
+                         "id":  "app_lifetime_1963",
+                         "tvc_guide_stationid":  "121308"
+                     },
+                     {
+                         "provider_id":  "app_lifetime",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Dance Moms",
+                         "id":  "app_lifetime_1964",
+                         "tvc_guide_stationid":  "126369"
+                     },
+                     {
+                         "provider_id":  "app_lifetime",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Matched Married Meet",
+                         "id":  "app_lifetime_1965",
+                         "tvc_guide_stationid":  "129047"
+                     },
+                     {
+                         "provider_id":  "app_lifetime",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Perform",
+                         "id":  "app_lifetime_1966",
+                         "tvc_guide_stationid":  "123424"
+                     },
+                     {
+                         "provider_id":  "app_lifetime",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Lifetime",
+                         "id":  "app_lifetime_1961",
+                         "tvc_guide_stationid":  "60150"
+                     },
+                     {
+                         "provider_id":  "app_lifetime",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Lifetime Movies Love \u0026 Drama",
+                         "id":  "app_lifetime_1962",
+                         "tvc_guide_stationid":  "177720"
+                     },
+                     {
+                         "provider_id":  "app_lifetime",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Lifetime Movies Favorites",
+                         "id":  "app_lifetime_1963",
+                         "tvc_guide_stationid":  "121308"
+                     },
+                     {
+                         "provider_id":  "app_lifetime",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Dance Moms",
+                         "id":  "app_lifetime_1964",
+                         "tvc_guide_stationid":  "126369"
+                     },
+                     {
+                         "provider_id":  "app_lifetime",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Matched Married Meet",
+                         "id":  "app_lifetime_1965",
+                         "tvc_guide_stationid":  "129047"
+                     },
+                     {
+                         "provider_id":  "app_lifetime",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Perform",
+                         "id":  "app_lifetime_1966",
+                         "tvc_guide_stationid":  "123424"
+                     }
+                 ]
+}

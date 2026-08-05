@@ -1,0 +1,29 @@
+﻿{
+    "providers":  [
+                      {
+                          "id":  "app_cnbc",
+                          "name":  "CNBC",
+                          "package_name":  "com.cnbc.client",
+                          "fire_package_name":  "",
+                          "post_tune_macro":  "PAUSE, PAUSE, HOME",
+                          "pre_tune_macro":  "PAUSE",
+                          "splash_delay_ms":  3000
+                      }
+                  ],
+    "channels":  [
+                     {
+                         "provider_id":  "app_cnbc",
+                         "tuning_macro":  "WAIT:10000, UP, WAIT:2000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "CNBC",
+                         "id":  "app_cnbc_1052",
+                         "tvc_guide_stationid":  "58780"
+                     },
+                     {
+                         "provider_id":  "app_cnbc",
+                         "tuning_macro":  "WAIT:10000, UP, WAIT:2000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "CNBC",
+                         "id":  "app_cnbc_1052",
+                         "tvc_guide_stationid":  "58780"
+                     }
+                 ]
+}

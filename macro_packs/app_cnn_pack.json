@@ -1,0 +1,57 @@
+﻿{
+    "providers":  [
+                      {
+                          "id":  "app_cnn",
+                          "name":  "CNN",
+                          "package_name":  "com.cnn.mobile.android.tv",
+                          "fire_package_name":  "",
+                          "post_tune_macro":  "PAUSE, PAUSE, HOME",
+                          "pre_tune_macro":  "PAUSE",
+                          "splash_delay_ms":  3000
+                      }
+                  ],
+    "channels":  [
+                     {
+                         "provider_id":  "app_cnn",
+                         "tuning_macro":  "WAIT:10000, ENTER",
+                         "name":  "CNN",
+                         "id":  "app_cnn_1801",
+                         "tvc_guide_stationid":  "58646"
+                     },
+                     {
+                         "provider_id":  "app_cnn",
+                         "tuning_macro":  "WAIT:10000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "CNN International",
+                         "id":  "app_cnn_1802",
+                         "tvc_guide_stationid":  "83110"
+                     },
+                     {
+                         "provider_id":  "app_cnn",
+                         "tuning_macro":  "WAIT:10000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "CNN Headline News (HLN)",
+                         "id":  "app_cnn_1803",
+                         "tvc_guide_stationid":  "64549"
+                     },
+                     {
+                         "provider_id":  "app_cnn",
+                         "tuning_macro":  "WAIT:10000, ENTER",
+                         "name":  "CNN",
+                         "id":  "app_cnn_1801",
+                         "tvc_guide_stationid":  "58646"
+                     },
+                     {
+                         "provider_id":  "app_cnn",
+                         "tuning_macro":  "WAIT:10000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "CNN International",
+                         "id":  "app_cnn_1802",
+                         "tvc_guide_stationid":  "83110"
+                     },
+                     {
+                         "provider_id":  "app_cnn",
+                         "tuning_macro":  "WAIT:10000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "CNN Headline News (HLN)",
+                         "id":  "app_cnn_1803",
+                         "tvc_guide_stationid":  "64549"
+                     }
+                 ]
+}

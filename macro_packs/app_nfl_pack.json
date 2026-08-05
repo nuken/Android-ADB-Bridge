@@ -1,0 +1,43 @@
+﻿{
+    "providers":  [
+                      {
+                          "id":  "app_nfl",
+                          "name":  "NFL",
+                          "package_name":  "com.gotv.nflgamecenter.us.lite",
+                          "fire_package_name":  "",
+                          "post_tune_macro":  "PAUSE, PAUSE, HOME",
+                          "pre_tune_macro":  "PAUSE",
+                          "splash_delay_ms":  3000
+                      }
+                  ],
+    "channels":  [
+                     {
+                         "provider_id":  "app_nfl",
+                         "tuning_macro":  "WAIT:20000, RIGHT, WAIT:5000, ENTER",
+                         "name":  "NFL Network",
+                         "id":  "app_nfl_1601",
+                         "tvc_guide_stationid":  "45399"
+                     },
+                     {
+                         "provider_id":  "app_nfl",
+                         "tuning_macro":  "WAIT:20000, ENTER",
+                         "name":  "NFL Channel",
+                         "id":  "app_nfl_1602",
+                         "tvc_guide_stationid":  "121705"
+                     },
+                     {
+                         "provider_id":  "app_nfl",
+                         "tuning_macro":  "WAIT:20000, RIGHT, WAIT:5000, ENTER",
+                         "name":  "NFL Network",
+                         "id":  "app_nfl_1601",
+                         "tvc_guide_stationid":  "45399"
+                     },
+                     {
+                         "provider_id":  "app_nfl",
+                         "tuning_macro":  "WAIT:20000, ENTER",
+                         "name":  "NFL Channel",
+                         "id":  "app_nfl_1602",
+                         "tvc_guide_stationid":  "121705"
+                     }
+                 ]
+}

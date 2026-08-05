@@ -1,0 +1,29 @@
+﻿{
+    "providers":  [
+                      {
+                          "id":  "app_cbssports",
+                          "name":  "CBSSPORTS",
+                          "package_name":  "com.handmark.sportscaster.androidtv",
+                          "fire_package_name":  "",
+                          "post_tune_macro":  "PAUSE, PAUSE, HOME",
+                          "pre_tune_macro":  "PAUSE",
+                          "splash_delay_ms":  3000
+                      }
+                  ],
+    "channels":  [
+                     {
+                         "provider_id":  "app_cbssports",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, RIGHT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "CBS Sports Network",
+                         "id":  "app_cbssports_1161",
+                         "tvc_guide_stationid":  "59250"
+                     },
+                     {
+                         "provider_id":  "app_cbssports",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, RIGHT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "CBS Sports Network",
+                         "id":  "app_cbssports_1161",
+                         "tvc_guide_stationid":  "59250"
+                     }
+                 ]
+}

@@ -1,0 +1,225 @@
+﻿{
+    "providers":  [
+                      {
+                          "id":  "app_hgtv",
+                          "name":  "HGTV",
+                          "package_name":  "com.hgtv.watcher",
+                          "fire_package_name":  "",
+                          "post_tune_macro":  "PAUSE, PAUSE, HOME",
+                          "pre_tune_macro":  "PAUSE",
+                          "splash_delay_ms":  3000
+                      }
+                  ],
+    "channels":  [
+                     {
+                         "provider_id":  "app_hgtv",
+                         "tuning_macro":  "WAIT:11000, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:3000, ENTER",
+                         "name":  "HGTV",
+                         "id":  "app_hgtv_1701",
+                         "tvc_guide_stationid":  "49788"
+                     },
+                     {
+                         "provider_id":  "app_hgtv",
+                         "tuning_macro":  "WAIT:11000, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:3000, UP, WAIT:1000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "Magnolia Network",
+                         "id":  "app_hgtv_1702",
+                         "tvc_guide_stationid":  "67375"
+                     },
+                     {
+                         "provider_id":  "app_hgtv",
+                         "tuning_macro":  "WAIT:11000, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:3000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "Food Network",
+                         "id":  "app_hgtv_1703",
+                         "tvc_guide_stationid":  "50747"
+                     },
+                     {
+                         "provider_id":  "app_hgtv",
+                         "tuning_macro":  "WAIT:11000, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:3000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "TLC",
+                         "id":  "app_hgtv_1704",
+                         "tvc_guide_stationid":  "57391"
+                     },
+                     {
+                         "provider_id":  "app_hgtv",
+                         "tuning_macro":  "WAIT:11000, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:3000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "Discovery",
+                         "id":  "app_hgtv_1705",
+                         "tvc_guide_stationid":  "56905"
+                     },
+                     {
+                         "provider_id":  "app_hgtv",
+                         "tuning_macro":  "WAIT:11000, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:3000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "Travel Channel",
+                         "id":  "app_hgtv_1706",
+                         "tvc_guide_stationid":  "59303"
+                     },
+                     {
+                         "provider_id":  "app_hgtv",
+                         "tuning_macro":  "WAIT:11000, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:3000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "Investigation Discovery",
+                         "id":  "app_hgtv_1707",
+                         "tvc_guide_stationid":  "65342"
+                     },
+                     {
+                         "provider_id":  "app_hgtv",
+                         "tuning_macro":  "WAIT:11000, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:3000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "Cooking Channel",
+                         "id":  "app_hgtv_1708",
+                         "tvc_guide_stationid":  "68065"
+                     },
+                     {
+                         "provider_id":  "app_hgtv",
+                         "tuning_macro":  "WAIT:11000, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:3000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "Animal Planet",
+                         "id":  "app_hgtv_1709",
+                         "tvc_guide_stationid":  "57394"
+                     },
+                     {
+                         "provider_id":  "app_hgtv",
+                         "tuning_macro":  "WAIT:11000, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:3000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "OWN",
+                         "id":  "app_hgtv_1710",
+                         "tvc_guide_stationid":  "70388"
+                     },
+                     {
+                         "provider_id":  "app_hgtv",
+                         "tuning_macro":  "WAIT:11000, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:3000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "Science Channel",
+                         "id":  "app_hgtv_1711",
+                         "tvc_guide_stationid":  "57390"
+                     },
+                     {
+                         "provider_id":  "app_hgtv",
+                         "tuning_macro":  "WAIT:11000, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:3000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "Discovery Life",
+                         "id":  "app_hgtv_1712",
+                         "tvc_guide_stationid":  "92204"
+                     },
+                     {
+                         "provider_id":  "app_hgtv",
+                         "tuning_macro":  "WAIT:11000, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:3000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "Destination America",
+                         "id":  "app_hgtv_1713",
+                         "tvc_guide_stationid":  "60468"
+                     },
+                     {
+                         "provider_id":  "app_hgtv",
+                         "tuning_macro":  "WAIT:11000, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:3000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "American Heroes",
+                         "id":  "app_hgtv_1714",
+                         "tvc_guide_stationid":  "78808"
+                     },
+                     {
+                         "provider_id":  "app_hgtv",
+                         "tuning_macro":  "WAIT:11000, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:3000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "Discovery Turbo",
+                         "id":  "app_hgtv_1715",
+                         "tvc_guide_stationid":  "31046"
+                     },
+                     {
+                         "provider_id":  "app_hgtv",
+                         "tuning_macro":  "WAIT:11000, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:3000, ENTER",
+                         "name":  "HGTV",
+                         "id":  "app_hgtv_1701",
+                         "tvc_guide_stationid":  "49788"
+                     },
+                     {
+                         "provider_id":  "app_hgtv",
+                         "tuning_macro":  "WAIT:11000, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:3000, UP, WAIT:1000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "Magnolia Network",
+                         "id":  "app_hgtv_1702",
+                         "tvc_guide_stationid":  "67375"
+                     },
+                     {
+                         "provider_id":  "app_hgtv",
+                         "tuning_macro":  "WAIT:11000, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:3000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "Food Network",
+                         "id":  "app_hgtv_1703",
+                         "tvc_guide_stationid":  "50747"
+                     },
+                     {
+                         "provider_id":  "app_hgtv",
+                         "tuning_macro":  "WAIT:11000, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:3000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "TLC",
+                         "id":  "app_hgtv_1704",
+                         "tvc_guide_stationid":  "57391"
+                     },
+                     {
+                         "provider_id":  "app_hgtv",
+                         "tuning_macro":  "WAIT:11000, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:3000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "Discovery",
+                         "id":  "app_hgtv_1705",
+                         "tvc_guide_stationid":  "56905"
+                     },
+                     {
+                         "provider_id":  "app_hgtv",
+                         "tuning_macro":  "WAIT:11000, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:3000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "Travel Channel",
+                         "id":  "app_hgtv_1706",
+                         "tvc_guide_stationid":  "59303"
+                     },
+                     {
+                         "provider_id":  "app_hgtv",
+                         "tuning_macro":  "WAIT:11000, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:3000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "Investigation Discovery",
+                         "id":  "app_hgtv_1707",
+                         "tvc_guide_stationid":  "65342"
+                     },
+                     {
+                         "provider_id":  "app_hgtv",
+                         "tuning_macro":  "WAIT:11000, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:3000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "Cooking Channel",
+                         "id":  "app_hgtv_1708",
+                         "tvc_guide_stationid":  "68065"
+                     },
+                     {
+                         "provider_id":  "app_hgtv",
+                         "tuning_macro":  "WAIT:11000, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:3000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "Animal Planet",
+                         "id":  "app_hgtv_1709",
+                         "tvc_guide_stationid":  "57394"
+                     },
+                     {
+                         "provider_id":  "app_hgtv",
+                         "tuning_macro":  "WAIT:11000, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:3000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "OWN",
+                         "id":  "app_hgtv_1710",
+                         "tvc_guide_stationid":  "70388"
+                     },
+                     {
+                         "provider_id":  "app_hgtv",
+                         "tuning_macro":  "WAIT:11000, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:3000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "Science Channel",
+                         "id":  "app_hgtv_1711",
+                         "tvc_guide_stationid":  "57390"
+                     },
+                     {
+                         "provider_id":  "app_hgtv",
+                         "tuning_macro":  "WAIT:11000, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:3000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "Discovery Life",
+                         "id":  "app_hgtv_1712",
+                         "tvc_guide_stationid":  "92204"
+                     },
+                     {
+                         "provider_id":  "app_hgtv",
+                         "tuning_macro":  "WAIT:11000, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:3000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "Destination America",
+                         "id":  "app_hgtv_1713",
+                         "tvc_guide_stationid":  "60468"
+                     },
+                     {
+                         "provider_id":  "app_hgtv",
+                         "tuning_macro":  "WAIT:11000, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:3000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "American Heroes",
+                         "id":  "app_hgtv_1714",
+                         "tvc_guide_stationid":  "78808"
+                     },
+                     {
+                         "provider_id":  "app_hgtv",
+                         "tuning_macro":  "WAIT:11000, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:3000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, UP, WAIT:1000, RIGHT, WAIT:1000, ENTER",
+                         "name":  "Discovery Turbo",
+                         "id":  "app_hgtv_1715",
+                         "tvc_guide_stationid":  "31046"
+                     }
+                 ]
+}

@@ -1,0 +1,43 @@
+﻿{
+    "providers":  [
+                      {
+                          "id":  "app_tbs",
+                          "name":  "TBS",
+                          "package_name":  "com.turner.tbs.android.networkapp",
+                          "fire_package_name":  "",
+                          "post_tune_macro":  "PAUSE, PAUSE, HOME",
+                          "pre_tune_macro":  "PAUSE",
+                          "splash_delay_ms":  3000
+                      }
+                  ],
+    "channels":  [
+                     {
+                         "provider_id":  "app_tbs",
+                         "tuning_macro":  "WAIT:18000, UP, UP, UP, UP, UP, UP, UP, UP, UP, UP, WAIT:2000, RIGHT, WAIT:2000, RIGHT, WAIT:2000, WAIT:15000",
+                         "name":  "TBS (East)",
+                         "id":  "app_tbs_1805",
+                         "tvc_guide_stationid":  "58515"
+                     },
+                     {
+                         "provider_id":  "app_tbs",
+                         "tuning_macro":  "WAIT:18000, UP, UP, UP, UP, UP, UP, UP, UP, UP, UP, WAIT:2000, RIGHT, WAIT:2000, RIGHT, WAIT:2000, WAIT:15000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000",
+                         "name":  "TBS (West)",
+                         "id":  "app_tbs_1806",
+                         "tvc_guide_stationid":  "67890"
+                     },
+                     {
+                         "provider_id":  "app_tbs",
+                         "tuning_macro":  "WAIT:18000, UP, UP, UP, UP, UP, UP, UP, UP, UP, UP, WAIT:2000, RIGHT, WAIT:2000, RIGHT, WAIT:2000, WAIT:15000",
+                         "name":  "TBS (East)",
+                         "id":  "app_tbs_1805",
+                         "tvc_guide_stationid":  "58515"
+                     },
+                     {
+                         "provider_id":  "app_tbs",
+                         "tuning_macro":  "WAIT:18000, UP, UP, UP, UP, UP, UP, UP, UP, UP, UP, WAIT:2000, RIGHT, WAIT:2000, RIGHT, WAIT:2000, WAIT:15000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000",
+                         "name":  "TBS (West)",
+                         "id":  "app_tbs_1806",
+                         "tvc_guide_stationid":  "67890"
+                     }
+                 ]
+}

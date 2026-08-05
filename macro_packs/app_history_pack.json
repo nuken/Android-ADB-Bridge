@@ -1,0 +1,155 @@
+﻿{
+    "providers":  [
+                      {
+                          "id":  "app_history",
+                          "name":  "HISTORY",
+                          "package_name":  "com.aetn.history.watch.androidtv",
+                          "fire_package_name":  "",
+                          "post_tune_macro":  "PAUSE, PAUSE, HOME",
+                          "pre_tune_macro":  "PAUSE",
+                          "splash_delay_ms":  3000
+                      }
+                  ],
+    "channels":  [
+                     {
+                         "provider_id":  "app_history",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, ENTER",
+                         "name":  "History",
+                         "id":  "app_history_1921",
+                         "tvc_guide_stationid":  "57708"
+                     },
+                     {
+                         "provider_id":  "app_history",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "UnXplained Zone",
+                         "id":  "app_history_1922",
+                         "tvc_guide_stationid":  "123431"
+                     },
+                     {
+                         "provider_id":  "app_history",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Deal Zone",
+                         "id":  "app_history_1923",
+                         "tvc_guide_stationid":  "123432"
+                     },
+                     {
+                         "provider_id":  "app_history",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Ax Men",
+                         "id":  "app_history_1924",
+                         "tvc_guide_stationid":  "123425"
+                     },
+                     {
+                         "provider_id":  "app_history",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Classic Car Auctions",
+                         "id":  "app_history_1925",
+                         "tvc_guide_stationid":  "158083"
+                     },
+                     {
+                         "provider_id":  "app_history",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Ice Road Truckers",
+                         "id":  "app_history_1926",
+                         "tvc_guide_stationid":  "123426"
+                     },
+                     {
+                         "provider_id":  "app_history",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Military Heroes",
+                         "id":  "app_history_1927",
+                         "tvc_guide_stationid":  "126439"
+                     },
+                     {
+                         "provider_id":  "app_history",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Modern Marvels",
+                         "id":  "app_history_1928",
+                         "tvc_guide_stationid":  "123433"
+                     },
+                     {
+                         "provider_id":  "app_history",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Torque",
+                         "id":  "app_history_1929",
+                         "tvc_guide_stationid":  "123423"
+                     },
+                     {
+                         "provider_id":  "app_history",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Xtreme Outdoor",
+                         "id":  "app_history_1930",
+                         "tvc_guide_stationid":  "120962"
+                     },
+                     {
+                         "provider_id":  "app_history",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, ENTER",
+                         "name":  "History",
+                         "id":  "app_history_1921",
+                         "tvc_guide_stationid":  "57708"
+                     },
+                     {
+                         "provider_id":  "app_history",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "UnXplained Zone",
+                         "id":  "app_history_1922",
+                         "tvc_guide_stationid":  "123431"
+                     },
+                     {
+                         "provider_id":  "app_history",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Deal Zone",
+                         "id":  "app_history_1923",
+                         "tvc_guide_stationid":  "123432"
+                     },
+                     {
+                         "provider_id":  "app_history",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Ax Men",
+                         "id":  "app_history_1924",
+                         "tvc_guide_stationid":  "123425"
+                     },
+                     {
+                         "provider_id":  "app_history",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Classic Car Auctions",
+                         "id":  "app_history_1925",
+                         "tvc_guide_stationid":  "158083"
+                     },
+                     {
+                         "provider_id":  "app_history",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Ice Road Truckers",
+                         "id":  "app_history_1926",
+                         "tvc_guide_stationid":  "123426"
+                     },
+                     {
+                         "provider_id":  "app_history",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Military Heroes",
+                         "id":  "app_history_1927",
+                         "tvc_guide_stationid":  "126439"
+                     },
+                     {
+                         "provider_id":  "app_history",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Modern Marvels",
+                         "id":  "app_history_1928",
+                         "tvc_guide_stationid":  "123433"
+                     },
+                     {
+                         "provider_id":  "app_history",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Torque",
+                         "id":  "app_history_1929",
+                         "tvc_guide_stationid":  "123423"
+                     },
+                     {
+                         "provider_id":  "app_history",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Xtreme Outdoor",
+                         "id":  "app_history_1930",
+                         "tvc_guide_stationid":  "120962"
+                     }
+                 ]
+}

@@ -1,0 +1,379 @@
+﻿{
+    "providers":  [
+                      {
+                          "id":  "app_cbs",
+                          "name":  "CBS",
+                          "package_name":  "com.cbs.tve",
+                          "fire_package_name":  "",
+                          "post_tune_macro":  "PAUSE, PAUSE, HOME",
+                          "pre_tune_macro":  "PAUSE",
+                          "splash_delay_ms":  3000
+                      }
+                  ],
+    "channels":  [
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, ENTER",
+                         "name":  "CBS Rhode Island (WPRI) TVE [12.1]",
+                         "id":  "app_cbs_1101",
+                         "tvc_guide_stationid":  "35455"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, ENTER",
+                         "name":  "CBS News 24/7",
+                         "id":  "app_cbs_1102",
+                         "tvc_guide_stationid":  "104846"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "CBS Sports HQ",
+                         "id":  "app_cbs_1103",
+                         "tvc_guide_stationid":  "108919"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "48 Hours",
+                         "id":  "app_cbs_1104",
+                         "tvc_guide_stationid":  "160400"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Judge Judy",
+                         "id":  "app_cbs_1105",
+                         "tvc_guide_stationid":  "201079"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Hot Bench",
+                         "id":  "app_cbs_1106",
+                         "tvc_guide_stationid":  "202596"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Golazo! Network",
+                         "id":  "app_cbs_1107",
+                         "tvc_guide_stationid":  "133691"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Inside Edition",
+                         "id":  "app_cbs_1108",
+                         "tvc_guide_stationid":  "130385"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "60 Minutes",
+                         "id":  "app_cbs_1109",
+                         "tvc_guide_stationid":  "161735"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Entertainment Tonight (ET)",
+                         "id":  "app_cbs_1110",
+                         "tvc_guide_stationid":  "110291"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "UEFA Champions League",
+                         "id":  "app_cbs_1111",
+                         "tvc_guide_stationid":  "156718"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Car Chase",
+                         "id":  "app_cbs_1112",
+                         "tvc_guide_stationid":  "148202"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "CBS News New York",
+                         "id":  "app_cbs_1113",
+                         "tvc_guide_stationid":  "123125"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "CBS News Los Angeles",
+                         "id":  "app_cbs_1114",
+                         "tvc_guide_stationid":  "123126"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "CBS News Baltimore",
+                         "id":  "app_cbs_1115",
+                         "tvc_guide_stationid":  "123127"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "CBS News Bay Area",
+                         "id":  "app_cbs_1116",
+                         "tvc_guide_stationid":  "123121"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "CBS News Boston",
+                         "id":  "app_cbs_1117",
+                         "tvc_guide_stationid":  "123130"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "CBS News Chicago",
+                         "id":  "app_cbs_1118",
+                         "tvc_guide_stationid":  "123122"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "CBS News Colorado",
+                         "id":  "app_cbs_1119",
+                         "tvc_guide_stationid":  "123120"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "CBS News Detroit",
+                         "id":  "app_cbs_1120",
+                         "tvc_guide_stationid":  "126738"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "CBS News Miami",
+                         "id":  "app_cbs_1121",
+                         "tvc_guide_stationid":  "123380"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "CBS News Minnesota",
+                         "id":  "app_cbs_1122",
+                         "tvc_guide_stationid":  "123119"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "CBS News Philadelphia",
+                         "id":  "app_cbs_1123",
+                         "tvc_guide_stationid":  "123128"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "CBS News Pittsburgh",
+                         "id":  "app_cbs_1124",
+                         "tvc_guide_stationid":  "123129"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "CBS News Sacramento",
+                         "id":  "app_cbs_1125",
+                         "tvc_guide_stationid":  "123124"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "CBS News Texas",
+                         "id":  "app_cbs_1126",
+                         "tvc_guide_stationid":  "123123"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, ENTER",
+                         "name":  "CBS Rhode Island (WPRI) TVE [12.1]",
+                         "id":  "app_cbs_1101",
+                         "tvc_guide_stationid":  "35455"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, ENTER",
+                         "name":  "CBS News 24/7",
+                         "id":  "app_cbs_1102",
+                         "tvc_guide_stationid":  "104846"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "CBS Sports HQ",
+                         "id":  "app_cbs_1103",
+                         "tvc_guide_stationid":  "108919"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "48 Hours",
+                         "id":  "app_cbs_1104",
+                         "tvc_guide_stationid":  "160400"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Judge Judy",
+                         "id":  "app_cbs_1105",
+                         "tvc_guide_stationid":  "201079"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Hot Bench",
+                         "id":  "app_cbs_1106",
+                         "tvc_guide_stationid":  "202596"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Golazo! Network",
+                         "id":  "app_cbs_1107",
+                         "tvc_guide_stationid":  "133691"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Inside Edition",
+                         "id":  "app_cbs_1108",
+                         "tvc_guide_stationid":  "130385"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "60 Minutes",
+                         "id":  "app_cbs_1109",
+                         "tvc_guide_stationid":  "161735"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Entertainment Tonight (ET)",
+                         "id":  "app_cbs_1110",
+                         "tvc_guide_stationid":  "110291"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "UEFA Champions League",
+                         "id":  "app_cbs_1111",
+                         "tvc_guide_stationid":  "156718"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "Car Chase",
+                         "id":  "app_cbs_1112",
+                         "tvc_guide_stationid":  "148202"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "CBS News New York",
+                         "id":  "app_cbs_1113",
+                         "tvc_guide_stationid":  "123125"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "CBS News Los Angeles",
+                         "id":  "app_cbs_1114",
+                         "tvc_guide_stationid":  "123126"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "CBS News Baltimore",
+                         "id":  "app_cbs_1115",
+                         "tvc_guide_stationid":  "123127"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "CBS News Bay Area",
+                         "id":  "app_cbs_1116",
+                         "tvc_guide_stationid":  "123121"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "CBS News Boston",
+                         "id":  "app_cbs_1117",
+                         "tvc_guide_stationid":  "123130"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "CBS News Chicago",
+                         "id":  "app_cbs_1118",
+                         "tvc_guide_stationid":  "123122"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "CBS News Colorado",
+                         "id":  "app_cbs_1119",
+                         "tvc_guide_stationid":  "123120"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "CBS News Detroit",
+                         "id":  "app_cbs_1120",
+                         "tvc_guide_stationid":  "126738"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "CBS News Miami",
+                         "id":  "app_cbs_1121",
+                         "tvc_guide_stationid":  "123380"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "CBS News Minnesota",
+                         "id":  "app_cbs_1122",
+                         "tvc_guide_stationid":  "123119"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "CBS News Philadelphia",
+                         "id":  "app_cbs_1123",
+                         "tvc_guide_stationid":  "123128"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "CBS News Pittsburgh",
+                         "id":  "app_cbs_1124",
+                         "tvc_guide_stationid":  "123129"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "CBS News Sacramento",
+                         "id":  "app_cbs_1125",
+                         "tvc_guide_stationid":  "123124"
+                     },
+                     {
+                         "provider_id":  "app_cbs",
+                         "tuning_macro":  "WAIT:12000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:7000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "name":  "CBS News Texas",
+                         "id":  "app_cbs_1126",
+                         "tvc_guide_stationid":  "123123"
+                     }
+                 ]
+}

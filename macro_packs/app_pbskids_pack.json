@@ -1,0 +1,29 @@
+﻿{
+    "providers":  [
+                      {
+                          "id":  "app_pbskids",
+                          "name":  "PBSKIDS",
+                          "package_name":  "org.pbskids.video",
+                          "fire_package_name":  "",
+                          "post_tune_macro":  "PAUSE, PAUSE, HOME",
+                          "pre_tune_macro":  "PAUSE",
+                          "splash_delay_ms":  3000
+                      }
+                  ],
+    "channels":  [
+                     {
+                         "provider_id":  "app_pbskids",
+                         "tuning_macro":  "WAIT:10000, DOWN, WAIT:1000, ENTER",
+                         "name":  "PBS Kids",
+                         "id":  "app_pbskids_1499",
+                         "tvc_guide_stationid":  "101364"
+                     },
+                     {
+                         "provider_id":  "app_pbskids",
+                         "tuning_macro":  "WAIT:10000, DOWN, WAIT:1000, ENTER",
+                         "name":  "PBS Kids",
+                         "id":  "app_pbskids_1499",
+                         "tvc_guide_stationid":  "101364"
+                     }
+                 ]
+}

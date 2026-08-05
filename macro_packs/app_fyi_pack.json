@@ -1,0 +1,29 @@
+﻿{
+    "providers":  [
+                      {
+                          "id":  "app_fyi",
+                          "name":  "FYI",
+                          "package_name":  "com.aetn.fyi.watch.androidtv",
+                          "fire_package_name":  "",
+                          "post_tune_macro":  "PAUSE, PAUSE, HOME",
+                          "pre_tune_macro":  "PAUSE",
+                          "splash_delay_ms":  3000
+                      }
+                  ],
+    "channels":  [
+                     {
+                         "provider_id":  "app_fyi",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, ENTER",
+                         "name":  "FYI",
+                         "id":  "app_fyi_1941",
+                         "tvc_guide_stationid":  "58988"
+                     },
+                     {
+                         "provider_id":  "app_fyi",
+                         "tuning_macro":  "WAIT:12000, UP, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, WAIT:5000, DOWN, WAIT:1000, ENTER",
+                         "name":  "FYI",
+                         "id":  "app_fyi_1941",
+                         "tvc_guide_stationid":  "58988"
+                     }
+                 ]
+}

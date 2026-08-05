@@ -1,0 +1,127 @@
+﻿{
+    "providers":  [
+                      {
+                          "id":  "app_espn",
+                          "name":  "ESPN",
+                          "package_name":  "com.espn.score_center",
+                          "fire_package_name":  "",
+                          "post_tune_macro":  "PAUSE, PAUSE, HOME",
+                          "pre_tune_macro":  "PAUSE",
+                          "splash_delay_ms":  3000
+                      }
+                  ],
+    "channels":  [
+                     {
+                         "provider_id":  "app_espn",
+                         "tuning_macro":  "WAIT:15000, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, WAIT:1000, ENTER, WAIT:5000, ENTER, WAIT:1000, ENTER",
+                         "name":  "ESPN",
+                         "id":  "app_espn_1501",
+                         "tvc_guide_stationid":  "32645"
+                     },
+                     {
+                         "provider_id":  "app_espn",
+                         "tuning_macro":  "WAIT:15000, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, ENTER, WAIT:1000, ENTER",
+                         "name":  "ESPN2",
+                         "id":  "app_espn_1502",
+                         "tvc_guide_stationid":  "45507"
+                     },
+                     {
+                         "provider_id":  "app_espn",
+                         "tuning_macro":  "WAIT:15000, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, ENTER, WAIT:1000, ENTER",
+                         "name":  "ESPNU",
+                         "id":  "app_espn_1503",
+                         "tvc_guide_stationid":  "60696"
+                     },
+                     {
+                         "provider_id":  "app_espn",
+                         "tuning_macro":  "WAIT:15000, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, ENTER, WAIT:1000, ENTER",
+                         "name":  "SEC Network",
+                         "id":  "app_espn_1504",
+                         "tvc_guide_stationid":  "89714"
+                     },
+                     {
+                         "provider_id":  "app_espn",
+                         "tuning_macro":  "WAIT:15000, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, ENTER, WAIT:1000, ENTER",
+                         "name":  "ACC Network",
+                         "id":  "app_espn_1505",
+                         "tvc_guide_stationid":  "111871"
+                     },
+                     {
+                         "provider_id":  "app_espn",
+                         "tuning_macro":  "WAIT:15000, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, ENTER, WAIT:1000, ENTER",
+                         "name":  "ESPNews",
+                         "id":  "app_espn_1506",
+                         "tvc_guide_stationid":  "59976"
+                     },
+                     {
+                         "provider_id":  "app_espn",
+                         "tuning_macro":  "WAIT:15000, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, ENTER, WAIT:1000, ENTER",
+                         "name":  "ESPN Deportes",
+                         "id":  "app_espn_1507",
+                         "tvc_guide_stationid":  "71914"
+                     },
+                     {
+                         "provider_id":  "app_espn",
+                         "tuning_macro":  "WAIT:15000, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, ENTER, WAIT:1000, ENTER",
+                         "name":  "NFL Network (ESPN+)",
+                         "id":  "app_espn_1508",
+                         "tvc_guide_stationid":  "45399"
+                     },
+                     {
+                         "provider_id":  "app_espn",
+                         "tuning_macro":  "WAIT:15000, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, WAIT:1000, ENTER, WAIT:5000, ENTER, WAIT:1000, ENTER",
+                         "name":  "ESPN",
+                         "id":  "app_espn_1501",
+                         "tvc_guide_stationid":  "32645"
+                     },
+                     {
+                         "provider_id":  "app_espn",
+                         "tuning_macro":  "WAIT:15000, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, ENTER, WAIT:1000, ENTER",
+                         "name":  "ESPN2",
+                         "id":  "app_espn_1502",
+                         "tvc_guide_stationid":  "45507"
+                     },
+                     {
+                         "provider_id":  "app_espn",
+                         "tuning_macro":  "WAIT:15000, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, ENTER, WAIT:1000, ENTER",
+                         "name":  "ESPNU",
+                         "id":  "app_espn_1503",
+                         "tvc_guide_stationid":  "60696"
+                     },
+                     {
+                         "provider_id":  "app_espn",
+                         "tuning_macro":  "WAIT:15000, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, ENTER, WAIT:1000, ENTER",
+                         "name":  "SEC Network",
+                         "id":  "app_espn_1504",
+                         "tvc_guide_stationid":  "89714"
+                     },
+                     {
+                         "provider_id":  "app_espn",
+                         "tuning_macro":  "WAIT:15000, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, ENTER, WAIT:1000, ENTER",
+                         "name":  "ACC Network",
+                         "id":  "app_espn_1505",
+                         "tvc_guide_stationid":  "111871"
+                     },
+                     {
+                         "provider_id":  "app_espn",
+                         "tuning_macro":  "WAIT:15000, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, ENTER, WAIT:1000, ENTER",
+                         "name":  "ESPNews",
+                         "id":  "app_espn_1506",
+                         "tvc_guide_stationid":  "59976"
+                     },
+                     {
+                         "provider_id":  "app_espn",
+                         "tuning_macro":  "WAIT:15000, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, ENTER, WAIT:1000, ENTER",
+                         "name":  "ESPN Deportes",
+                         "id":  "app_espn_1507",
+                         "tvc_guide_stationid":  "71914"
+                     },
+                     {
+                         "provider_id":  "app_espn",
+                         "tuning_macro":  "WAIT:15000, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, ENTER, WAIT:1000, ENTER",
+                         "name":  "NFL Network (ESPN+)",
+                         "id":  "app_espn_1508",
+                         "tvc_guide_stationid":  "45399"
+                     }
+                 ]
+}

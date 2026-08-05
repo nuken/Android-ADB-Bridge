@@ -1,0 +1,99 @@
+﻿{
+    "providers":  [
+                      {
+                          "id":  "app_disneyplus",
+                          "name":  "DISNEYPLUS",
+                          "package_name":  "com.disney.disneyplus",
+                          "fire_package_name":  "",
+                          "post_tune_macro":  "PAUSE, PAUSE, HOME",
+                          "pre_tune_macro":  "PAUSE",
+                          "splash_delay_ms":  3000
+                      }
+                  ],
+    "channels":  [
+                     {
+                         "provider_id":  "app_disneyplus",
+                         "tuning_macro":  "WAIT:15000, UP, WAIT:1000, ENTER, WAIT:10000, LEFT, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:5000, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, WAIT:1000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:1000, ENTER",
+                         "name":  "Disney Princesses",
+                         "id":  "app_disneyplus_3001",
+                         "tvc_guide_stationid":  ""
+                     },
+                     {
+                         "provider_id":  "app_disneyplus",
+                         "tuning_macro":  "WAIT:15000, UP, WAIT:1000, ENTER, WAIT:10000, LEFT, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:5000, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, WAIT:1000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:1000, ENTER",
+                         "name":  "Pixar",
+                         "id":  "app_disneyplus_3002",
+                         "tvc_guide_stationid":  ""
+                     },
+                     {
+                         "provider_id":  "app_disneyplus",
+                         "tuning_macro":  "WAIT:15000, UP, WAIT:1000, ENTER, WAIT:10000, LEFT, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:5000, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, WAIT:1000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:1000, ENTER",
+                         "name":  "Disney Throwbacks",
+                         "id":  "app_disneyplus_3003",
+                         "tvc_guide_stationid":  ""
+                     },
+                     {
+                         "provider_id":  "app_disneyplus",
+                         "tuning_macro":  "WAIT:15000, UP, WAIT:1000, ENTER, WAIT:10000, LEFT, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:5000, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, WAIT:1000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:1000, ENTER",
+                         "name":  "The Simpsons",
+                         "id":  "app_disneyplus_3004",
+                         "tvc_guide_stationid":  ""
+                     },
+                     {
+                         "provider_id":  "app_disneyplus",
+                         "tuning_macro":  "WAIT:15000, UP, WAIT:1000, ENTER, WAIT:10000, LEFT, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:5000, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, WAIT:1000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:1000, ENTER",
+                         "name":  "ABC News Live",
+                         "id":  "app_disneyplus_3005",
+                         "tvc_guide_stationid":  "113380"
+                     },
+                     {
+                         "provider_id":  "app_disneyplus",
+                         "tuning_macro":  "WAIT:15000, UP, WAIT:1000, ENTER, WAIT:10000, LEFT, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:5000, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, WAIT:1000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:1000, ENTER",
+                         "name":  "Disney Playtime",
+                         "id":  "app_disneyplus_3006",
+                         "tvc_guide_stationid":  ""
+                     },
+                     {
+                         "provider_id":  "app_disneyplus",
+                         "tuning_macro":  "WAIT:15000, UP, WAIT:1000, ENTER, WAIT:10000, LEFT, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:5000, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, WAIT:1000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:1000, ENTER",
+                         "name":  "Disney Princesses",
+                         "id":  "app_disneyplus_3001",
+                         "tvc_guide_stationid":  ""
+                     },
+                     {
+                         "provider_id":  "app_disneyplus",
+                         "tuning_macro":  "WAIT:15000, UP, WAIT:1000, ENTER, WAIT:10000, LEFT, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:5000, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, WAIT:1000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:1000, ENTER",
+                         "name":  "Pixar",
+                         "id":  "app_disneyplus_3002",
+                         "tvc_guide_stationid":  ""
+                     },
+                     {
+                         "provider_id":  "app_disneyplus",
+                         "tuning_macro":  "WAIT:15000, UP, WAIT:1000, ENTER, WAIT:10000, LEFT, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:5000, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, WAIT:1000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:1000, ENTER",
+                         "name":  "Disney Throwbacks",
+                         "id":  "app_disneyplus_3003",
+                         "tvc_guide_stationid":  ""
+                     },
+                     {
+                         "provider_id":  "app_disneyplus",
+                         "tuning_macro":  "WAIT:15000, UP, WAIT:1000, ENTER, WAIT:10000, LEFT, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:5000, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, WAIT:1000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:1000, ENTER",
+                         "name":  "The Simpsons",
+                         "id":  "app_disneyplus_3004",
+                         "tvc_guide_stationid":  ""
+                     },
+                     {
+                         "provider_id":  "app_disneyplus",
+                         "tuning_macro":  "WAIT:15000, UP, WAIT:1000, ENTER, WAIT:10000, LEFT, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:5000, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, WAIT:1000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:1000, ENTER",
+                         "name":  "ABC News Live",
+                         "id":  "app_disneyplus_3005",
+                         "tvc_guide_stationid":  "113380"
+                     },
+                     {
+                         "provider_id":  "app_disneyplus",
+                         "tuning_macro":  "WAIT:15000, UP, WAIT:1000, ENTER, WAIT:10000, LEFT, WAIT:1000, DOWN, WAIT:1000, ENTER, WAIT:5000, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, DOWN, WAIT:1000, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, LEFT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:1000, ENTER",
+                         "name":  "Disney Playtime",
+                         "id":  "app_disneyplus_3006",
+                         "tvc_guide_stationid":  ""
+                     }
+                 ]
+}
