@@ -5,8 +5,8 @@
                           "name":  "CBSSPORTS",
                           "package_name":  "com.handmark.sportscaster.androidtv",
                           "fire_package_name":  "",
-                          "post_tune_macro":  "PAUSE, PAUSE, HOME",
-                          "pre_tune_macro":  "PAUSE",
+                          "post_tune_macro":  "STOP, PAUSE, HOME",
+                          "pre_tune_macro":  "STOP",
                           "splash_delay_ms":  3000
                       }
                   ],
