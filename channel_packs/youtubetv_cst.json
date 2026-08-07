@@ -1,0 +1,550 @@
+{
+    "providers": [
+        {
+            "id": "yt_tv",
+            "name": "YOUTUBE TV",
+            "package_name": "com.google.android.youtube.tvunplugged",
+            "component": "com.google.android.apps.youtube.tvunplugged.activity.MainActivity",
+            "url_template": "https://tv.youtube.com/watch/{id}",
+            "splash_delay_ms": 3000
+        }
+    ],
+    "channels": [
+        {
+            "name": "AMC Thrillers",
+            "id": "amcthrillers",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "Q7yvOKwm7js",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "BET",
+            "id": "bet",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "qXZClenBtHw",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "Bravo",
+            "id": "bravo",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "kWuBmoGIxag",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "CMT",
+            "id": "cmt",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "GEl1vicZT0Y",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "CNBC",
+            "id": "cnbc",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "LXfrE81qMGA",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "Comedy Central",
+            "id": "comedycentral",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "GAVz-AqYit0",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "CW",
+            "id": "cw",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "uoNAROr1KZQ",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "Disney",
+            "id": "disney",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "0aslf9uYuzE",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "Disney Jr",
+            "id": "disneyjr",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "va3Tb6QrDqY",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "Disney XD",
+            "id": "disneyxd",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "dLDjvFyLeoU",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "Nickelodeon",
+            "id": "ylDA0THF8qE",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "ylDA0THF8qE",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "Nick Jr",
+            "id": "nicjrhd",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "yMT5ZQUhFaA",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "Nicktoons",
+            "id": "nikton",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "oUoCKwODo2s",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "E!",
+            "id": "e",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "9CrweyAWN9A",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "ESPN",
+            "id": "espn",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "UBsv3sM_DH4",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "ESPN2",
+            "id": "espn2",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "nCUTMe0icck",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "ACC Network",
+            "id": "espnacc",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "6dc2Z5OVjkc",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "ESPNews",
+            "id": "espnews",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "lCTPElEDFt4",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "SEC Network",
+            "id": "espnsec",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "kyy84brOVws",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "ESPNU",
+            "id": "espnu",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "KS2p4dNUF5w",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "NFL Network",
+            "id": "nflhd",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "NlWJjcysg3k",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "NBA TV",
+            "id": "nbatvhd",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "lmchYrC6la0",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "FX",
+            "id": "fx",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "EajPc5BZWCM",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "FXM",
+            "id": "fxm",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "Tzq_2JUmku0",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "FXX",
+            "id": "fxx",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "x7WBloln_Yo",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "Golf",
+            "id": "golf",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "ye5JPFbQ7XE",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "HLN",
+            "id": "hln",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "LLc4uRD8NnA",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "MS NOW",
+            "id": "msnow",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "FKRGbcbVW1I",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "National Geographic",
+            "id": "natgeo",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "z47h_gfnb_Q",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "Nat Geo Wild",
+            "id": "natgeowild",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "XAbFaPs0uYQ",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "NBC News Now",
+            "id": "nbcnews",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "CLHAYLRwioY",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "Oxygen",
+            "id": "oxygen",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "D0QysW6TO_0",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "PBS Milwaukee",
+            "id": "pbs",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "cfgXcRj4L-I",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "SyFy",
+            "id": "syfy",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "DV3lZ7eimkM",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "USA Network",
+            "id": "usa",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "S_riPMHiDJQ",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "VH1",
+            "id": "vh1",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "6ddZ4oZb_3k",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "The Weather Channel",
+            "id": "weather",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "MnR3GlweSok",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "Hallmark",
+            "id": "hallmark",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "s0vGZLnl1X4",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "Hallmark Family",
+            "id": "hallmarkdrama",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "0IoZ6gVgjCo",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "Hallmark Mystery",
+            "id": "hallmarkmm",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "joYIgidWcWU",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "Great American Family",
+            "id": "gfam",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "fgQTPoYUAmo",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "Paramount",
+            "id": "Paramount",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "NOAQVAaGhQA",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "Smithsonian Channel",
+            "id": "SMTHHD",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "X9zOw85v4_U",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "NEWSMAX",
+            "id": "newsmax",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "CCIZG3NimsA",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "HBO",
+            "id": "hbo",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "Xlym2ejbeQQ",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "HBO HITS",
+            "id": "hbohthd",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "HD6Xp4W6kXU",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "HBO Comedy",
+            "id": "hbochd",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "kcKxw4Z5zqw",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "HBO Drama",
+            "id": "hbodrma",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "8xWeCKLIcKA",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "HBO Movies",
+            "id": "hbomvhd",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "ZK49xHTPNjk",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "SHOWTIME",
+            "id": "parshow",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "uf0ZeGkMI9Y",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "SHOWTIME Extreme",
+            "id": "showxhd",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "i0HkyLBANq4",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "SHOWTIME 2",
+            "id": "sho2",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "WYg3B6YsTcw",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "SHOWTIME Next",
+            "id": "NEXTHD",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "qO9lf8pW3kM",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "SHOWTIME Showcase",
+            "id": "shocshd",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "pnsy-4BAv18",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "SHOWTIME Family Zone",
+            "id": "famzhd",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "345NnFngems",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "STARZ",
+            "id": "starz",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "Z0obMQAACPU",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "STARZ Encore",
+            "id": "STZENC",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "UuCqsGPN2kc",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "STARZ Encore Action",
+            "id": "STZENAC",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "jnANI3U7BeY",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "STARZ Encore Black",
+            "id": "STZENBK",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "eBLEhds2heg",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "STARZ Encore Classic",
+            "id": "STZENCL",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "9eZAkE-VXDU",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "STARZ Encore Suspense",
+            "id": "STZENSU",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "lq1-dJW61Wg",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "STARZ Kids & Family",
+            "id": "STZKHD",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "MYLUbbHBRts",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "STARZ Edge",
+            "id": "STZEHD",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "u9a7UyYxqY8",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "STARZ Comedy",
+            "id": "STZCHD",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "SgYNvTUY08k",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "STARZ Cinema",
+            "id": "STRZCIH",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "y5FrjHtDu84",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "STARZ Encore Family",
+            "id": "STZENFS",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "t77aHOyWyXw",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        },
+        {
+            "name": "STARZ Encore Westerns",
+            "id": "STZEWSS",
+            "provider_id": "yt_tv",
+            "deep_link_content_id": "GGBPnyHNVik",
+            "tuning_macro": "",
+            "tvc_guide_stationid": ""
+        }
+    ]
+}
