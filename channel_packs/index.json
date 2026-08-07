@@ -15,6 +15,11 @@
     "url": "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/channel_packs/youtubetv_charlotte.json"
   },
   {
+    "name": "YouTube TV (CST Milwaukee)",
+    "channel_count": 67,
+    "url": "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/channel_packs/youtubetv_cst.json"
+  },
+  {
     "name": "DirecTV Ultimate (NYC)",
     "channel_count": 339,
     "url": "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/channel_packs/directv_nyc.json"
