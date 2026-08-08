@@ -1117,9 +1117,30 @@
         };
 
         function delProvider(i) {
-            if(config.channels.some(c => c.provider_id === config.providers[i].id)) { alert('Cannot delete provider. It is currently used by one or more channels.'); return; }
-            if(confirm('Delete this provider?')) { config.providers.splice(i, 1); markUnsaved(); renderTables(); }
+    const provider = config.providers[i];
+    const assignedChannels = config.channels.filter(c => c.provider_id === provider.id);
+    
+    let confirmMsg = `Are you sure you want to delete the provider "${provider.name}"?`;
+    if (assignedChannels.length > 0) {
+        confirmMsg = `Deleting "${provider.name}" will also remove all ${assignedChannels.length} channel(s) assigned to it.\n\nDo you want to proceed?`;
+    }
+
+    if (confirm(confirmMsg)) {
+        // Remove all channels associated with this provider
+        config.channels = config.channels.filter(c => c.provider_id !== provider.id);
+        
+        // Remove the provider
+        config.providers.splice(i, 1);
+        
+        // Reset provider tab filter to 'all' if the active tab was deleted
+        if (currentProviderFilter === provider.id) {
+            currentProviderFilter = 'all';
         }
+        
+        markUnsaved();
+        renderTables();
+    }
+}
 
         function openChannelModal() { 
             document.getElementById('channel-form').reset(); 
