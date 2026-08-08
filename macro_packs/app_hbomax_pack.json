@@ -4,7 +4,6 @@
                           "id":  "app_hbomax",
                           "name":  "HBOMAX",
                           "package_name":  "com.wbd.stream",
-						  "component": "com.wbd.beam.BeamActivity",
                           "fire_package_name":  "",
                           "post_tune_macro":  "",
                           "pre_tune_macro":  "",

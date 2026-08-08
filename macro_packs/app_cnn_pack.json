@@ -2,9 +2,8 @@
     "providers":  [
                       {
                           "id":  "app_cnn",
-                           "name":  "CNN",
+                          "name":  "CNN",
                           "package_name":  "com.cnn.mobile.android.tv",
-						  "component": "com.cnn.ctv.MainActivity",
                           "fire_package_name":  "",
                           "post_tune_macro":  "STOP, PAUSE, HOME",
                           "pre_tune_macro":  "STOP",

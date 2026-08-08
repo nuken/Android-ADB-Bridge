@@ -4,7 +4,6 @@
                           "id":  "app_cbs",
                           "name":  "CBS",
                           "package_name":  "com.cbs.tve",
-						  "component": "com.cbs.app.tv.ui.activity.HomeActivity",
                           "fire_package_name":  "",
                           "post_tune_macro":  "STOP, PAUSE, HOME",
                           "pre_tune_macro":  "STOP",

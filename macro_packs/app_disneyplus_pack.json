@@ -4,7 +4,6 @@
                           "id":  "app_disneyplus",
                           "name":  "DISNEYPLUS",
                           "package_name":  "com.disney.disneyplus",
-						  "component": "com.bamtechmedia.dominguez.main.MainActivity",
                           "fire_package_name":  "",
                           "post_tune_macro":  "STOP, PAUSE, HOME",
                           "pre_tune_macro":  "STOP",

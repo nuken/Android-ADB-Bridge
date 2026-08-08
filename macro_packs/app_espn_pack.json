@@ -4,7 +4,6 @@
                           "id":  "app_espn",
                           "name":  "ESPN",
                           "package_name":  "com.espn.score_center",
-						  "component": "com.espn.androidtv.page.PageControllerActivity",
                           "fire_package_name":  "",
                           "post_tune_macro":  "STOP, PAUSE, HOME",
                           "pre_tune_macro":  "STOP",

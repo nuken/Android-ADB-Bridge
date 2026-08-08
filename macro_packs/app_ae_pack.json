@@ -4,7 +4,6 @@
                           "id":  "app_ae",
                           "name":  "AE",
                           "package_name":  "com.aetn.aetv.watch.androidtv",
-						  "component": "com.aetn.android.tveapps.app.MainActivity",
                           "fire_package_name":  "",
                           "post_tune_macro":  "STOP, PAUSE, HOME",
                           "pre_tune_macro":  "STOP",
