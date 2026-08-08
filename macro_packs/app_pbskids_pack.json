@@ -4,6 +4,7 @@
                           "id":  "app_pbskids",
                           "name":  "PBSKIDS",
                           "package_name":  "org.pbskids.video",
+						  "component": "org.pbskids.video.tv.ui.root.MainActivity",
                           "fire_package_name":  "",
                           "post_tune_macro":  "STOP, PAUSE, HOME",
                           "pre_tune_macro":  "STOP",

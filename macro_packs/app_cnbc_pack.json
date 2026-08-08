@@ -4,6 +4,7 @@
                           "id":  "app_cnbc",
                           "name":  "CNBC",
                           "package_name":  "com.cnbc.client",
+						  "component": "com.versant.androidottweb.main.MainActivity",
                           "fire_package_name":  "",
                           "post_tune_macro":  "STOP, PAUSE, HOME",
                           "pre_tune_macro":  "STOP",

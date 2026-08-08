@@ -4,6 +4,7 @@
                           "id":  "app_nbc",
                           "name":  "NBC",
                           "package_name":  "com.nbcuni.nbc.androidtv",
+						  "component": "com.nbc.nbctvapp.ui.main.view.MainActivity",
                           "fire_package_name":  "com.onemainstream.nbcunivers.android",
                           "post_tune_macro":  "STOP, PAUSE, HOME",
                           "pre_tune_macro":  "STOP",

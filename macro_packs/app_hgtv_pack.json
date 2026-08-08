@@ -4,6 +4,7 @@
                           "id":  "app_hgtv",
                           "name":  "HGTV",
                           "package_name":  "com.hgtv.watcher",
+						  "component": "com.discovery.luna.tv.presentation.LunaMainActivity",
                           "fire_package_name":  "",
                           "post_tune_macro":  "STOP, PAUSE, HOME",
                           "pre_tune_macro":  "STOP",
