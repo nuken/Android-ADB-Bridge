@@ -285,7 +285,11 @@ func adbCommand(deviceIP string, args ...string) error {
 	cmd := exec.Command(adb, fullArgs...)
 	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 
-	return cmd.Run()
+	out, err := cmd.CombinedOutput()
+	if err != nil {
+		log.Printf("[%s ADB Error] %v | Output: %s\n", deviceIP, err, strings.TrimSpace(string(out)))
+	}
+	return err
 }
 
 func checkADB(t Tuner) bool {
@@ -314,7 +318,7 @@ func checkADB(t Tuner) bool {
 	return strings.Contains(outStr, "connected")
 }
 
-func parseAndExecuteMacro(deviceIP string, macroStr string) {
+func parseAndExecuteMacro(deviceIP string, macroStr string, pkgName string) {
 	if strings.TrimSpace(macroStr) == "" {
 		return
 	}
@@ -331,6 +335,16 @@ func parseAndExecuteMacro(deviceIP string, macroStr string) {
 		param := ""
 		if len(parts) > 1 {
 			param = strings.TrimSpace(parts[1])
+		}
+
+		if action == "FORCE_STOP" || action == "KILL" {
+			if pkgName != "" {
+				log.Printf("[%s Macro] Force stopping package: %s\n", deviceIP, pkgName)
+				adbCommand(deviceIP, "shell", "am", "force-stop", pkgName)
+			} else {
+				log.Printf("[%s Macro] Warning: FORCE_STOP called but no package name provided.\n", deviceIP)
+			}
+			continue
 		}
 
 		if action == "WAIT" || action == "SLEEP" {
@@ -387,18 +401,18 @@ func lockTuner() *Tuner {
 func releaseTuner(deviceIP string) {
 	var activeProvID string
 
+	// 1. Grab the active provider, but DO NOT release the tuner yet!
 	tunerLock.Lock()
 	for i := range Config.Tuners {
 		if Config.Tuners[i].DeviceIP == deviceIP {
-			Config.Tuners[i].InUse = false
-			activeProvID = Config.Tuners[i].ActiveProvider // Grab the provider ID
-			Config.Tuners[i].ActiveProvider = ""           // Reset it
+			activeProvID = Config.Tuners[i].ActiveProvider 
+			Config.Tuners[i].ActiveProvider = ""           
 			break
 		}
 	}
 	tunerLock.Unlock()
 
-	// Run cleanup in the background so it doesn't block the server
+	// 2. Run cleanup in the background
 	go func() {
 		if activeProvID != "" {
 			var provider *Provider
@@ -409,17 +423,28 @@ func releaseTuner(deviceIP string) {
 				}
 			}
 
-			// 1. Execute custom teardown script while the app is still open
 			if provider != nil && provider.PostTuneMacro != "" {
 				log.Printf("[%s] Executing Cleanup (Post-Tune) Macro\n", deviceIP)
-				parseAndExecuteMacro(deviceIP, provider.PostTuneMacro)
-				// I removed the 'return' from here!
+				pkg := provider.PackageName
+				if provider.FirePackageName != "" {
+					pkg = provider.FirePackageName
+				}
+				parseAndExecuteMacro(deviceIP, provider.PostTuneMacro, pkg) 
 			}
 		}
 
-		// 2. ALWAYS send the Home command afterwards to exit the app
 		log.Printf("Released tuner %s. Sending default Home command.\n", deviceIP)
 		adbCommand(deviceIP, "shell", "input", "keyevent", "3")
+
+		// 3. NOW WE RELEASE THE TUNER (Only after all cleanup ADB commands are done)
+		tunerLock.Lock()
+		for i := range Config.Tuners {
+			if Config.Tuners[i].DeviceIP == deviceIP {
+				Config.Tuners[i].InUse = false
+				break
+			}
+		}
+		tunerLock.Unlock()
 	}()
 }
 
@@ -480,17 +505,34 @@ func executeTuning(deviceIP string, ch Channel) {
 	// 1. Pre-Tune Macro
 	if provider.PreTuneMacro != "" {
 		log.Printf("[%s] Executing Provider Pre-Tune Macro\n", deviceIP)
-		parseAndExecuteMacro(deviceIP, provider.PreTuneMacro)
+		parseAndExecuteMacro(deviceIP, provider.PreTuneMacro, pkg)
 	}
 
-	// 2. Launch Intent / Deep Link (if configured)
+	// 2. Launch Intent / Deep Link / Macro App
 	if provider.URLTemplate != "" && ch.DeepLinkContentID != "" {
+		// Deep Link Mode
 		targetURL := strings.ReplaceAll(provider.URLTemplate, "{id}", ch.DeepLinkContentID)
 		intentStr := fmt.Sprintf("%s/%s", pkg, cmp)
 		adbCommand(deviceIP, "shell", "am", "start", "-a", "android.intent.action.VIEW", "-d", targetURL, "-n", intentStr)
-	} else if pkg != "" && cmp != "" {
-		intentStr := fmt.Sprintf("%s/%s", pkg, cmp)
-		adbCommand(deviceIP, "shell", "am", "start", "-n", intentStr)
+	} else if pkg != "" {
+		launched := false
+
+		// If a component is specified, attempt an explicit leanback launch first
+		if cmp != "" {
+			intentStr := fmt.Sprintf("%s/%s", pkg, cmp)
+			err := adbCommand(deviceIP, "shell", "am", "start", "-a", "android.intent.action.MAIN", "-c", "android.intent.category.LEANBACK_LAUNCHER", "-n", intentStr)
+			if err == nil {
+				launched = true
+			} else {
+				log.Printf("[%s] Explicit component start blocked/failed for %s. Using fallback launcher...\n", deviceIP, cmp)
+			}
+		}
+
+		// Fallback: If no component was defined, or if the explicit start threw an exception, use monkey
+		if !launched {
+			log.Printf("[%s] Launching package %s via safe launcher fallback...\n", deviceIP, pkg)
+			adbCommand(deviceIP, "shell", "monkey", "-p", pkg, "-c", "android.intent.category.LAUNCHER", "1")
+		}
 	}
 
 	// 3. Splash Delay
@@ -501,7 +543,7 @@ func executeTuning(deviceIP string, ch Channel) {
 	// 4. Channel Tuning Macro
 	if ch.TuningMacro != "" {
 		log.Printf("[%s] Executing Channel Tuning Macro\n", deviceIP)
-		parseAndExecuteMacro(deviceIP, ch.TuningMacro)
+		parseAndExecuteMacro(deviceIP, ch.TuningMacro, pkg)
 	}
 	
 }
