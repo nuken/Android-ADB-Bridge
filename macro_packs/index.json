@@ -5,29 +5,9 @@
         "name":  "CNN Lineup"
     },
     {
-        "channel_count":  2,
+        "channel_count":  1,
         "url":  "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/macro_packs/app_cbssports_pack.json",
         "name":  "CBSSPORTS Lineup"
-    },
-    {
-        "channel_count":  4,
-        "url":  "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/macro_packs/app_tbs_pack.json",
-        "name":  "TBS Lineup"
-    },
-    {
-        "channel_count":  4,
-        "url":  "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/macro_packs/app_nfl_pack.json",
-        "name":  "NFL Lineup"
-    },
-    {
-        "channel_count":  2,
-        "url":  "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/macro_packs/app_fyi_pack.json",
-        "name":  "FYI Lineup"
-    },
-    {
-        "channel_count":  4,
-        "url":  "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/macro_packs/app_tnt_pack.json",
-        "name":  "TNT Lineup"
     },
     {
         "channel_count":  30,
@@ -35,57 +15,12 @@
         "name":  "HGTV Lineup"
     },
     {
-        "channel_count":  2,
-        "url":  "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/macro_packs/app_cnbc_pack.json",
-        "name":  "CNBC Lineup"
-    },
-    {
-        "channel_count":  20,
-        "url":  "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/macro_packs/app_history_pack.json",
-        "name":  "HISTORY Lineup"
-    },
-    {
         "channel_count":  24,
         "url":  "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/macro_packs/app_foxone_pack.json",
         "name":  "FOXONE Lineup"
     },
     {
-        "channel_count":  4,
-        "url":  "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/macro_packs/app_trutv_pack.json",
-        "name":  "TRUTV Lineup"
-    },
-    {
-        "channel_count":  22,
-        "url":  "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/macro_packs/app_ae_pack.json",
-        "name":  "AE Lineup"
-    },
-    {
-        "channel_count":  10,
-        "url":  "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/macro_packs/app_hbomax_pack.json",
-        "name":  "HBOMAX Lineup"
-    },
-    {
-        "channel_count":  16,
-        "url":  "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/macro_packs/app_espn_pack.json",
-        "name":  "ESPN Lineup"
-    },
-    {
-        "channel_count":  12,
-        "url":  "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/macro_packs/app_lifetime_pack.json",
-        "name":  "LIFETIME Lineup"
-    },
-    {
-        "channel_count":  52,
-        "url":  "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/macro_packs/app_cbs_pack.json",
-        "name":  "CBS Lineup"
-    },
-    {
         "channel_count":  2,
-        "url":  "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/macro_packs/app_msnow_pack.json",
-        "name":  "MSNOW Lineup"
-    },
-    {
-        "channel_count":  4,
         "url":  "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/macro_packs/app_pbs_pack.json",
         "name":  "PBS Lineup"
     },
@@ -95,18 +30,8 @@
         "name":  "NBC Lineup"
     },
     {
-        "channel_count":  2,
+        "channel_count":  1,
         "url":  "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/macro_packs/app_pbskids_pack.json",
         "name":  "PBSKIDS Lineup"
-    },
-    {
-        "channel_count":  2,
-        "url":  "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/macro_packs/app_amc_pack.json",
-        "name":  "AMC Lineup"
-    },
-    {
-        "channel_count":  12,
-        "url":  "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/macro_packs/app_disneyplus_pack.json",
-        "name":  "DISNEYPLUS Lineup"
     }
 ]

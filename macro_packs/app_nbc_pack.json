@@ -5,190 +5,189 @@
                           "name":  "NBC",
                           "package_name":  "com.nbcuni.nbc.androidtv",
                           "fire_package_name":  "com.onemainstream.nbcunivers.android",
-                          "post_tune_macro":  "STOP, PAUSE, HOME",
-                          "pre_tune_macro":  "STOP",
+                          "post_tune_macro":  "BACK, BACK, BACK, RIGHT, ENTER",
                           "splash_delay_ms":  3000
                       }
                   ],
     "channels":  [
                      {
                          "provider_id":  "app_nbc",
-                         "tuning_macro":  "WAIT:15000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
-                         "name":  "NBC Rhode Island (WJAR) TVE [10.1]",
+                         "tuning_macro": "WAIT:7000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER"
+                         "name":  "NBC Local",
                          "id":  "app_nbc_1001",
                          "tvc_guide_stationid":  "35936"
                      },
                      {
                          "provider_id":  "app_nbc",
-                         "tuning_macro":  "WAIT:15000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "tuning_macro":  "WAIT:7000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
                          "name":  "NBC News NOW",
                          "id":  "app_nbc_1002",
                          "tvc_guide_stationid":  "114174"
                      },
                      {
                          "provider_id":  "app_nbc",
-                         "tuning_macro":  "WAIT:15000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "tuning_macro":  "WAIT:7000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
                          "name":  "NBC Sports",
                          "id":  "app_nbc_1003",
                          "tvc_guide_stationid":  "114140"
                      },
                      {
                          "provider_id":  "app_nbc",
-                         "tuning_macro":  "WAIT:15000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "tuning_macro":  "WAIT:7000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
                          "name":  "Bravo (East)",
                          "id":  "app_nbc_1004",
                          "tvc_guide_stationid":  "58625"
                      },
                      {
                          "provider_id":  "app_nbc",
-                         "tuning_macro":  "WAIT:15000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "tuning_macro":  "WAIT:7000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
                          "name":  "Bravo (West)",
                          "id":  "app_nbc_1005",
                          "tvc_guide_stationid":  "73994"
                      },
                      {
                          "provider_id":  "app_nbc",
-                         "tuning_macro":  "WAIT:15000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "tuning_macro":  "WAIT:7000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
                          "name":  "Bravo Vault",
                          "id":  "app_nbc_1006",
                          "tvc_guide_stationid":  "138400"
                      },
                      {
                          "provider_id":  "app_nbc",
-                         "tuning_macro":  "WAIT:15000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "tuning_macro":  "WAIT:7000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
                          "name":  "Real Housewives Vault",
                          "id":  "app_nbc_1007",
                          "tvc_guide_stationid":  "138455"
                      },
                      {
                          "provider_id":  "app_nbc",
-                         "tuning_macro":  "WAIT:15000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "tuning_macro":  "WAIT:7000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
                          "name":  "Telemundo (WNEU)",
                          "id":  "app_nbc_1008",
                          "tvc_guide_stationid":  "34012"
                      },
                      {
                          "provider_id":  "app_nbc",
-                         "tuning_macro":  "WAIT:15000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "tuning_macro":  "WAIT:7000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
                          "name":  "Telemundo al Dia",
                          "id":  "app_nbc_1009",
                          "tvc_guide_stationid":  "138526"
                      },
                      {
                          "provider_id":  "app_nbc",
-                         "tuning_macro":  "WAIT:15000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "tuning_macro":  "WAIT:7000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
                          "name":  "Telemundo Deportes AHORA",
                          "id":  "app_nbc_1010",
                          "tvc_guide_stationid":  "185904"
                      },
                      {
                          "provider_id":  "app_nbc",
-                         "tuning_macro":  "WAIT:15000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "tuning_macro":  "WAIT:7000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
                          "name":  "Telemundo Noticias AHORA",
                          "id":  "app_nbc_1011",
                          "tvc_guide_stationid":  "138525"
                      },
                      {
                          "provider_id":  "app_nbc",
-                         "tuning_macro":  "WAIT:15000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "tuning_macro":  "WAIT:7000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
                          "name":  "Universo (East)",
                          "id":  "app_nbc_1012",
                          "tvc_guide_stationid":  "91588"
                      },
                      {
                          "provider_id":  "app_nbc",
-                         "tuning_macro":  "WAIT:15000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "tuning_macro":  "WAIT:7000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
                          "name":  "Universo (West)",
                          "id":  "app_nbc_1013",
                          "tvc_guide_stationid":  "91880"
                      },
                      {
                          "provider_id":  "app_nbc",
-                         "tuning_macro":  "WAIT:15000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "tuning_macro":  "WAIT:7000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
                          "name":  "NBC Rhode Island (WJAR) TVE [10.1]",
                          "id":  "app_nbc_1001",
                          "tvc_guide_stationid":  "35936"
                      },
                      {
                          "provider_id":  "app_nbc",
-                         "tuning_macro":  "WAIT:15000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "tuning_macro":  "WAIT:7000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
                          "name":  "NBC News NOW",
                          "id":  "app_nbc_1002",
                          "tvc_guide_stationid":  "114174"
                      },
                      {
                          "provider_id":  "app_nbc",
-                         "tuning_macro":  "WAIT:15000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "tuning_macro":  "WAIT:7000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
                          "name":  "NBC Sports",
                          "id":  "app_nbc_1003",
                          "tvc_guide_stationid":  "114140"
                      },
                      {
                          "provider_id":  "app_nbc",
-                         "tuning_macro":  "WAIT:15000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "tuning_macro":  "WAIT:7000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
                          "name":  "Bravo (East)",
                          "id":  "app_nbc_1004",
                          "tvc_guide_stationid":  "58625"
                      },
                      {
                          "provider_id":  "app_nbc",
-                         "tuning_macro":  "WAIT:15000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "tuning_macro":  "WAIT:7000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
                          "name":  "Bravo (West)",
                          "id":  "app_nbc_1005",
                          "tvc_guide_stationid":  "73994"
                      },
                      {
                          "provider_id":  "app_nbc",
-                         "tuning_macro":  "WAIT:15000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "tuning_macro":  "WAIT:7000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
                          "name":  "Bravo Vault",
                          "id":  "app_nbc_1006",
                          "tvc_guide_stationid":  "138400"
                      },
                      {
                          "provider_id":  "app_nbc",
-                         "tuning_macro":  "WAIT:15000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "tuning_macro":  "WAIT:7000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
                          "name":  "Real Housewives Vault",
                          "id":  "app_nbc_1007",
                          "tvc_guide_stationid":  "138455"
                      },
                      {
                          "provider_id":  "app_nbc",
-                         "tuning_macro":  "WAIT:15000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "tuning_macro":  "WAIT:7000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
                          "name":  "Telemundo (WNEU)",
                          "id":  "app_nbc_1008",
                          "tvc_guide_stationid":  "34012"
                      },
                      {
                          "provider_id":  "app_nbc",
-                         "tuning_macro":  "WAIT:15000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "tuning_macro":  "WAIT:7000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
                          "name":  "Telemundo al Dia",
                          "id":  "app_nbc_1009",
                          "tvc_guide_stationid":  "138526"
                      },
                      {
                          "provider_id":  "app_nbc",
-                         "tuning_macro":  "WAIT:15000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "tuning_macro":  "WAIT:7000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
                          "name":  "Telemundo Deportes AHORA",
                          "id":  "app_nbc_1010",
                          "tvc_guide_stationid":  "185904"
                      },
                      {
                          "provider_id":  "app_nbc",
-                         "tuning_macro":  "WAIT:15000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "tuning_macro":  "WAIT:7000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
                          "name":  "Telemundo Noticias AHORA",
                          "id":  "app_nbc_1011",
                          "tvc_guide_stationid":  "138525"
                      },
                      {
                          "provider_id":  "app_nbc",
-                         "tuning_macro":  "WAIT:15000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "tuning_macro":  "WAIT:7000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
                          "name":  "Universo (East)",
                          "id":  "app_nbc_1012",
                          "tvc_guide_stationid":  "91588"
                      },
                      {
                          "provider_id":  "app_nbc",
-                         "tuning_macro":  "WAIT:15000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
+                         "tuning_macro":  "WAIT:7000, UP, WAIT:2000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, RIGHT, WAIT:1000, ENTER, WAIT:5000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, DOWN, WAIT:1000, ENTER",
                          "name":  "Universo (West)",
                          "id":  "app_nbc_1013",
                          "tvc_guide_stationid":  "91880"

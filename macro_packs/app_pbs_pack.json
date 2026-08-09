@@ -4,40 +4,25 @@
                           "id":  "app_pbs",
                           "name":  "PBS",
                           "package_name":  "com.pbs.video",
-                          "fire_package_name":  "",
-                          "post_tune_macro":  "STOP, PAUSE, HOME",
-                          "pre_tune_macro":  "STOP",
+                          "component": "org.pbskids.video.tv.ui.root.MainActivity",
+                          "post_tune_macro":  "FORCE_STOP"
                           "splash_delay_ms":  3000
                       }
                   ],
     "channels":  [
                      {
                          "provider_id":  "app_pbs",
-                         "tuning_macro":  "WAIT:12000, LEFT, WAIT:2000, DOWN, WAIT:2000, ENTER, WAIT:5000, LEFT, WAIT:2000, ENTER",
-                         "name":  "PBS Rhode Island (WSBE) [36.1]",
+                         "tuning_macro":  "WAIT:7000, LEFT, DOWN, ENTER, WAIT:2000, ENTER"
+                         "name": "PBS NC",
                          "id":  "app_pbs_1401",
-                         "tvc_guide_stationid":  "52389"
+                         "tvc_guide_stationid":  "30649"
                      },
                      {
                          "provider_id":  "app_pbs",
-                         "tuning_macro":  "WAIT:12000, LEFT, WAIT:2000, DOWN, WAIT:2000, ENTER, WAIT:5000, LEFT, WAIT:2000, DOWN, WAIT:2000, ENTER",
-                         "name":  "NHK World",
+                         "tuning_macro":  "WAIT:7000, LEFT, DOWN, ENTER, WAIT:2000, DOWN, WAIT:1000, ENTER"
+                         "name":  "PBS NC Channel",
                          "id":  "app_pbs_1402",
-                         "tvc_guide_stationid":  "111994"
-                     },
-                     {
-                         "provider_id":  "app_pbs",
-                         "tuning_macro":  "WAIT:12000, LEFT, WAIT:2000, DOWN, WAIT:2000, ENTER, WAIT:5000, LEFT, WAIT:2000, ENTER",
-                         "name":  "PBS Rhode Island (WSBE) [36.1]",
-                         "id":  "app_pbs_1401",
-                         "tvc_guide_stationid":  "52389"
-                     },
-                     {
-                         "provider_id":  "app_pbs",
-                         "tuning_macro":  "WAIT:12000, LEFT, WAIT:2000, DOWN, WAIT:2000, ENTER, WAIT:5000, LEFT, WAIT:2000, DOWN, WAIT:2000, ENTER",
-                         "name":  "NHK World",
-                         "id":  "app_pbs_1402",
-                         "tvc_guide_stationid":  "111994"
+                         "tvc_guide_stationid":  "30293"
                      }
                  ]
 }
