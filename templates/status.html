@@ -217,7 +217,7 @@
                     <label>ADB Connection Route</label>
                     <select id="tuner-adb-route" onchange="toggleAdbRoute()">
                         <option value="network">Network (WiFi / LAN)</option>
-                        <option value="usb">Direct USB (OTG / Data Cable)</option>
+                        <option value="usb">Direct USB (Data Cable)</option>
                     </select>
                 </div>
                 <div class="form-group" id="group-adb-ip">
@@ -310,7 +310,7 @@
                 </div>
                 <div class="form-group">
                     <label>Component (Activity)</label>
-                    <input type="text" id="prov-component" placeholder="e.g. com.google.android.apps.youtube.tvunplugged.activity.MainActivity" required>
+                    <input type="text" id="prov-component" placeholder="e.g. com.google.android.apps.youtube.tvunplugged.activity.MainActivity">
                 </div>
                 <div class="form-group" style="background: #2a2a2a; padding: 12px; border-radius: 8px; border: 1px solid #444;">
                     <label style="color: #fcd34d; font-size: 0.9em; cursor: pointer;" onclick="document.getElementById('fire-os-overrides').style.display = document.getElementById('fire-os-overrides').style.display === 'none' ? 'block' : 'none';">
@@ -374,8 +374,12 @@
                         <button type="button" class="macro-btn" title="Home" onclick="insertMacroToken('prov-posttune', 'HOME')"><i class="fa-solid fa-house"></i></button>
                         <span style="border-right: 1px solid #666; margin: 0 4px; height: 20px;"></span>
                         <button type="button" class="macro-btn" title="Wait 1 Second" onclick="insertMacroToken('prov-posttune', 'WAIT:1000')"><i class="fa-solid fa-clock"></i> 1s</button>
+                        <span style="border-right: 1px solid #666; margin: 0 4px; height: 20px;"></span>
+                        
+                        <!-- ADDED FORCE STOP BUTTON HERE -->
+                        <button type="button" class="macro-btn" style="color: #ef4444; border-color: #ef4444;" title="Force Stop App" onclick="insertMacroToken('prov-posttune', 'FORCE_STOP')"><i class="fa-solid fa-power-off"></i> Force Stop</button>
                     </div>
-                    <input type="text" id="prov-posttune" placeholder="e.g. WAIT:2000, ENTER">
+                    <input type="text" id="prov-posttune" placeholder="e.g. WAIT:2000, FORCE_STOP">
                 </div>
 
                 <div class="form-group" style="background: #2a2a2a; padding: 15px; border-radius: 8px; margin-top: 15px; border: 1px solid #444;">

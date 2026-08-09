@@ -8,6 +8,7 @@ import (
 	"html/template"
 	"io"
 	"log"
+	"context"
 	"net"
 	"net/http"
 	"os"
@@ -100,9 +101,9 @@ var keycodeMap = map[string]string{
 	"DOWN":   "20",
 	"LEFT":   "21",
 	"RIGHT":  "22",
-	"ENTER":  "66",
-	"SELECT": "66",
-	"OK":     "66",
+	"ENTER":  "23",
+	"SELECT": "23",
+	"OK":     "23",
 	"BACK":   "4",
 	"HOME":   "3",
 	"PLAY":   "85",
@@ -318,13 +319,14 @@ func checkADB(t Tuner) bool {
 	return strings.Contains(outStr, "connected")
 }
 
-func parseAndExecuteMacro(deviceIP string, macroStr string, pkgName string) {
+func parseAndExecuteMacro(ctx context.Context, deviceIP string, macroStr string, pkgName string) {
 	if strings.TrimSpace(macroStr) == "" {
 		return
 	}
 
 	tokens := strings.Split(macroStr, ",")
 	for _, token := range tokens {
+
 		token = strings.TrimSpace(token)
 		if token == "" {
 			continue
@@ -352,7 +354,14 @@ func parseAndExecuteMacro(deviceIP string, macroStr string, pkgName string) {
 			fmt.Sscanf(param, "%d", &ms)
 			if ms > 0 {
 				log.Printf("[%s Macro] Waiting %d ms...\n", deviceIP, ms)
-				time.Sleep(time.Duration(ms) * time.Millisecond)
+				
+				// REPLACE time.Sleep with a context-aware wait
+				select {
+				case <-ctx.Done():
+					log.Printf("[%s Macro] Client disconnected mid-tune. Aborting WAIT.\n", deviceIP)
+					return
+				case <-time.After(time.Duration(ms) * time.Millisecond):
+				}
 			}
 			continue
 		}
@@ -377,14 +386,28 @@ func parseAndExecuteMacro(deviceIP string, macroStr string, pkgName string) {
 
 			log.Printf("[%s Macro] Sending %s (keycode %s) x%d\n", deviceIP, action, keycode, count)
 			for c := 0; c < count; c++ {
+				// Check for cancellation before pressing a key
+				select {
+				case <-ctx.Done():
+					log.Printf("[%s Macro] Client disconnected mid-tune. Aborting keypress sequence.\n", deviceIP)
+					return
+				default:
+				}
+
 				adbCommand(deviceIP, "shell", "input", "keyevent", keycode)
-				time.Sleep(400 * time.Millisecond) // Guaranteed pause after EVERY keypress
+				
+				// REPLACE the 400ms time.Sleep with a context-aware wait
+				select {
+				case <-ctx.Done():
+					return
+				case <-time.After(400 * time.Millisecond):
+				}
 			}
 		} else {
 			log.Printf("[%s Macro] Warning: Unknown macro action '%s'\n", deviceIP, action)
 		}
 	}
-}
+  }
 
 func lockTuner() *Tuner {
 	tunerLock.Lock()
@@ -405,14 +428,14 @@ func releaseTuner(deviceIP string) {
 	tunerLock.Lock()
 	for i := range Config.Tuners {
 		if Config.Tuners[i].DeviceIP == deviceIP {
-			activeProvID = Config.Tuners[i].ActiveProvider 
-			Config.Tuners[i].ActiveProvider = ""           
-			break
+			activeProvID = Config.Tuners[i].ActiveProvider // Grab the provider ID
+			Config.Tuners[i].ActiveProvider = ""           // Reset it
+			break // Leave InUse as true for now
 		}
 	}
 	tunerLock.Unlock()
 
-	// 2. Run cleanup in the background
+	// 2. Run cleanup in the background so it doesn't block the HTTP response
 	go func() {
 		if activeProvID != "" {
 			var provider *Provider
@@ -423,16 +446,19 @@ func releaseTuner(deviceIP string) {
 				}
 			}
 
+			// Execute custom teardown script
 			if provider != nil && provider.PostTuneMacro != "" {
 				log.Printf("[%s] Executing Cleanup (Post-Tune) Macro\n", deviceIP)
 				pkg := provider.PackageName
 				if provider.FirePackageName != "" {
 					pkg = provider.FirePackageName
 				}
-				parseAndExecuteMacro(deviceIP, provider.PostTuneMacro, pkg) 
+				
+				parseAndExecuteMacro(context.Background(), deviceIP, provider.PostTuneMacro, pkg)
 			}
 		}
 
+		// ALWAYS send the Home command afterwards to exit the app
 		log.Printf("Released tuner %s. Sending default Home command.\n", deviceIP)
 		adbCommand(deviceIP, "shell", "input", "keyevent", "3")
 
@@ -448,7 +474,7 @@ func releaseTuner(deviceIP string) {
 	}()
 }
 
-func executeTuning(deviceIP string, ch Channel) {
+func executeTuning(ctx context.Context, deviceIP string, ch Channel) {
 	var provider *Provider
 	for _, p := range Config.Providers {
 		if p.ID == ch.ProviderID {
@@ -505,7 +531,12 @@ func executeTuning(deviceIP string, ch Channel) {
 	// 1. Pre-Tune Macro
 	if provider.PreTuneMacro != "" {
 		log.Printf("[%s] Executing Provider Pre-Tune Macro\n", deviceIP)
-		parseAndExecuteMacro(deviceIP, provider.PreTuneMacro, pkg)
+		parseAndExecuteMacro(ctx, deviceIP, provider.PreTuneMacro, pkg)
+	}
+	select {
+	case <-ctx.Done():
+		return
+	default:
 	}
 
 	// 2. Launch Intent / Deep Link / Macro App
@@ -537,15 +568,18 @@ func executeTuning(deviceIP string, ch Channel) {
 
 	// 3. Splash Delay
 	if provider.SplashDelayMs > 0 {
-		time.Sleep(time.Duration(provider.SplashDelayMs) * time.Millisecond)
+		select {
+		case <-ctx.Done():
+			return
+		case <-time.After(time.Duration(provider.SplashDelayMs) * time.Millisecond):
+		}
 	}
 
 	// 4. Channel Tuning Macro
 	if ch.TuningMacro != "" {
 		log.Printf("[%s] Executing Channel Tuning Macro\n", deviceIP)
-		parseAndExecuteMacro(deviceIP, ch.TuningMacro, pkg)
+		parseAndExecuteMacro(ctx, deviceIP, ch.TuningMacro, pkg)
 	}
-	
 }
 
 // ==========================================
@@ -883,7 +917,7 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer releaseTuner(tuner.DeviceIP)
 
-	executeTuning(tuner.DeviceIP, *channel)
+	executeTuning(r.Context(), tuner.DeviceIP, *channel)
 
 	w.Header().Set("Content-Type", "video/mp2t")
 	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
@@ -1131,7 +1165,7 @@ func remoteKeypress(w http.ResponseWriter, r *http.Request) {
 	key := parts[4]
 
 	keyMap := map[string]string{
-		"Home": "3", "Back": "4", "Select": "66", "Enter": "66",
+		"Home": "3", "Back": "4", "Select": "23", "Enter": "23",
 		"Up": "19", "Down": "20", "Left": "21", "Right": "22",
 		"Play": "85", "Pause": "85", "Rev": "89", "Fwd": "90",
 		"Info": "82",
