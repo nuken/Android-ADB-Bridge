@@ -6,7 +6,7 @@
                           "package_name":  "com.nbcuni.nbc.androidtv",
                           "fire_package_name":  "com.onemainstream.nbcunivers.android",
                           "post_tune_macro":  "BACK, BACK, BACK, RIGHT, ENTER",
-                          "splash_delay_ms":  3000
+                          "splash_delay_ms":  11000
                       }
                   ],
     "channels":  [

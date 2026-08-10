@@ -6,7 +6,7 @@
                           "package_name":  "com.pbs.video",
                           "component": "org.pbskids.video.tv.ui.root.MainActivity",
                           "post_tune_macro":  "FORCE_STOP"
-                          "splash_delay_ms":  3000
+                          "splash_delay_ms":  11000
                       }
                   ],
     "channels":  [

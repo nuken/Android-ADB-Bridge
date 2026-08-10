@@ -8,7 +8,7 @@
                           "fire_package_name":  "",
                           "post_tune_macro":  "FORCE_STOP",
                           "pre_tune_macro":  "",
-                          "splash_delay_ms":  3000
+                          "splash_delay_ms":  11000
                       }
                   ],
     "channels":  [

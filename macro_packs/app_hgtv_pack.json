@@ -7,7 +7,7 @@
                           "component": "com.discovery.luna.tv.presentation.LunaMainActivity",
                           "post_tune_macro": "FORCE_STOP"
                           "pre_tune_macro":  "STOP",
-                          "splash_delay_ms":  3000
+                          "splash_delay_ms":  11000
                       }
                   ],
     "channels":  [

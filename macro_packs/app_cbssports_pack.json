@@ -5,7 +5,7 @@
                           "name":  "CBSSPORTS",
                           "package_name": "com.handmark.sportscaster.androidtv",
                           "component": "com.cbs.commonui.homepage.HomePageActivity",
-                          "splash_delay_ms": 3000,
+                          "splash_delay_ms": 11000,
                           "pre_tune_macro": "HOME",
                           "post_tune_macro": "FORCE_STOP"
 

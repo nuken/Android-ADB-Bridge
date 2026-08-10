@@ -6,7 +6,7 @@
                           "package_name":  "com.fox.foxone",
 						  "component": "com.fox.foxone.ui.activity.MainActivity",
                           "post_tune_macro": "FORCE_STOP",
-                          "splash_delay_ms":  3000
+                          "splash_delay_ms":  11000
                       }
                   ],
     "channels":  [
