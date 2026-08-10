@@ -446,11 +446,22 @@ func releaseTuner(deviceIP string) {
 				}
 			}
 
-			// Execute custom teardown script
 			if provider != nil && provider.PostTuneMacro != "" {
 				log.Printf("[%s] Executing Cleanup (Post-Tune) Macro\n", deviceIP)
+				
+				// Look up the specific Tuner's OS for cleanup
+				var tunerOS string
+				tunerLock.Lock()
+				for _, t := range Config.Tuners {
+					if t.DeviceIP == deviceIP {
+						tunerOS = t.DeviceOS
+						break
+					}
+				}
+				tunerLock.Unlock()
+
 				pkg := provider.PackageName
-				if provider.FirePackageName != "" {
+				if tunerOS == "fire_tv" && provider.FirePackageName != "" {
 					pkg = provider.FirePackageName
 				}
 				
@@ -1047,7 +1058,8 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 
 		stdout, err := cmd.StdoutPipe()
 		if err != nil {
-			log.Println("FFmpeg stdout error:", err)			
+			log.Println("FFmpeg stdout error:", err)
+			http.Error(w, "Capture card stdout error", http.StatusInternalServerError)
 			return
 		}
 
@@ -1099,6 +1111,7 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 	resp, err := streamClient.Do(req)
 	if err != nil {
 		log.Println("Encoder connection error:", err)
+		http.Error(w, "Failed to connect to network encoder", http.StatusBadGateway)
 		return
 	}
 	defer resp.Body.Close()

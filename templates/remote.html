@@ -55,7 +55,6 @@
     <script>
         async function loadDevices() {
             try {
-                // The new app.py exposes devices via /api/config or /api/status
                 const res = await fetch('/api/config');
                 const data = await res.json();
                 const sel = document.getElementById('device-select');
