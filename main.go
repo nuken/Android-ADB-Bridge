@@ -1088,15 +1088,25 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 			}
 		}()
 
-		for chunk := range streamChan {
-			if _, err := w.Write(chunk); err != nil {
-				break
-			}
-			if canFlush {
-				flusher.Flush()
+		streamLoop:
+		for {
+			select {
+			case <-r.Context().Done():
+				// Instantly break if the client disconnects
+				break streamLoop
+			case chunk, ok := <-streamChan:
+				if !ok {
+					// FFmpeg channel closed
+					break streamLoop
+				}
+				if _, err := w.Write(chunk); err != nil {
+					break streamLoop
+				}
+				if canFlush {
+					flusher.Flush()
+				}
 			}
 		}
-
 		cmd.Process.Kill()
 		cmd.Wait()
 		return
@@ -1120,6 +1130,11 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 	flusher, canFlush := w.(http.Flusher)
 
 	for {
+		// Instantly break if the client disconnects
+		if r.Context().Err() != nil {
+			break
+		}
+		
 		n, err := resp.Body.Read(buf)
 		if n > 0 {
 			if _, wErr := w.Write(buf[:n]); wErr != nil {
