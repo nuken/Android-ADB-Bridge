@@ -95,6 +95,7 @@ To bring your streaming channels into your favorite TV guide software (like Chan
 1. Click the **Copy M3U Link** button at the top of the Status page.
 2. Paste that link directly into your DVR software as a **Custom Channel / M3U Source**.
 3. The app will automatically handle changing the channels on your TV boxes whenever you hit play!
+4. Under **Stream Format**, select `MPEG-TS`.
 
 ---
 
