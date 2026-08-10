@@ -1,6 +1,6 @@
 ﻿[
     {
-        "channel_count":  6,
+        "channel_count":  3,
         "url":  "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/macro_packs/app_cnn_pack.json",
         "name":  "CNN Lineup"
     },
@@ -10,12 +10,12 @@
         "name":  "CBSSPORTS Lineup"
     },
     {
-        "channel_count":  30,
+        "channel_count":  15,
         "url":  "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/macro_packs/app_hgtv_pack.json",
         "name":  "HGTV Lineup"
     },
     {
-        "channel_count":  24,
+        "channel_count":  12,
         "url":  "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/macro_packs/app_foxone_pack.json",
         "name":  "FOXONE Lineup"
     },
@@ -25,7 +25,7 @@
         "name":  "PBS Lineup"
     },
     {
-        "channel_count":  26,
+        "channel_count":  13,
         "url":  "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/macro_packs/app_nbc_pack.json",
         "name":  "NBC Lineup"
     },
