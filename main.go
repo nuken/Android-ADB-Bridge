@@ -917,7 +917,11 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer releaseTuner(tuner.DeviceIP)
 
-	executeTuning(r.Context(), tuner.DeviceIP, *channel)
+	// 1. Launch tuning asynchronously so FFmpeg starts instantly
+	// This covers both macros and deep-link launches in the background
+	go func() {
+		executeTuning(r.Context(), tuner.DeviceIP, *channel)
+	}()
 
 	w.Header().Set("Content-Type", "video/mp2t")
 	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
@@ -925,7 +929,7 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Transfer-Encoding", "chunked")
 
 	if tuner.Type == "local" {
-		time.Sleep(2 * time.Second)
+		// 2. Removed time.Sleep(2 * time.Second) here
 
 		var provider *Provider
 		for _, p := range Config.Providers {
@@ -934,6 +938,7 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 				break
 			}
 		}
+		
 		splashDelayMs := 0
 		if provider != nil {
 			splashDelayMs = provider.SplashDelayMs
@@ -966,6 +971,7 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 			vfArg = "bwdif=mode=1:parity=1,format=nv12"
 		}
 
+		// 3. Apply the pure black drawbox overlay based on SplashDelayMs
 		if splashDelayMs > 0 {
 			splashSecs := float64(splashDelayMs) / 1000.0
 			vfArg += fmt.Sprintf(",drawbox=x=0:y=0:w=iw:h=ih:color=black:t=fill:enable='between(t,0,%.2f)'", splashSecs)
@@ -1041,8 +1047,7 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 
 		stdout, err := cmd.StdoutPipe()
 		if err != nil {
-			log.Println("FFmpeg stdout error:", err)
-			http.Error(w, "Capture card initialization failed", http.StatusInternalServerError)
+			log.Println("FFmpeg stdout error:", err)			
 			return
 		}
 
@@ -1051,8 +1056,6 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "Failed to start FFmpeg", http.StatusInternalServerError)
 			return
 		}
-
-		w.WriteHeader(http.StatusOK)
 
 		streamChan := make(chan []byte, 500)
 		flusher, canFlush := w.(http.Flusher)
@@ -1087,8 +1090,6 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	time.Sleep(2 * time.Second)
-
 	req, err := http.NewRequestWithContext(r.Context(), "GET", tuner.EncoderURL, nil)
 	if err != nil {
 		http.Error(w, "Invalid encoder URL", http.StatusInternalServerError)
@@ -1098,12 +1099,9 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 	resp, err := streamClient.Do(req)
 	if err != nil {
 		log.Println("Encoder connection error:", err)
-		http.Error(w, "Failed to connect to encoder", http.StatusBadGateway)
 		return
 	}
 	defer resp.Body.Close()
-
-	w.WriteHeader(http.StatusOK)
 
 	buf := make([]byte, 128*1024)
 	flusher, canFlush := w.(http.Flusher)
