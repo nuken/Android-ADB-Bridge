@@ -4,6 +4,32 @@ A lightweight background tool for Windows that connects your PC to your streamin
 
 ---
 
+### Important Notice: Windows SmartScreen & Security Exclusions
+
+If you are installing **Android ADB Bridge** on Windows, you will likely encounter a **Windows Defender SmartScreen** warning, and you should know that the installer automatically configures a security exclusion for the app.
+
+**Please be assured that the application is completely safe.** Here is exactly what is happening under the hood and why:
+
+#### 1. The Windows SmartScreen Popup
+
+When you launch the installer, you may see a blue screen stating *"Windows protected your PC"* due to an unrecognized app.
+
+* **Why this happens:** This is a standard warning for software that is not signed with a commercial Code Signing Certificate. Because this is a free, open-source community tool, it does not have the paid digital signature that Microsoft requires to automatically bypass this screen.
+* **What to do:** Simply click **More info**, and then click **Run anyway** to launch the installer.
+
+#### 2. Automated Windows Defender Exclusion
+
+During installation, the setup wizard will silently run a script to add the application's installation folder (typically `C:\Program Files (x86)\AndroidBridge`) to your Windows Defender exclusion list.
+
+* **Why this is necessary:** Android ADB Bridge is a powerful proxy server written in Go. To ensure your channel tuning is fast and seamless, the application constantly launches silent background tasks (like `adb.exe` and `ffmpeg.exe`) and listens on local network ports. Aggressive AI and "Machine Learning" antivirus heuristics frequently mistake this legitimate background automation for a false positive (often flagging it as a generic Trojan).
+* **What it does:** By automatically whitelisting the application's specific folder during setup, the installer ensures that your antivirus does not falsely quarantine the executable, allowing your video streams to run smoothly and uninterrupted. The installer will cleanly remove this exception if you ever uninstall the application.
+
+
+
+*If you ever want to verify exactly what the application or the installer is doing, the complete source code is fully open-source and available for review in this repository.*
+
+---
+
 ## Table of Contents
 - [1. Preparing Your Streaming Stick (Developer Connection)](#1-preparing-your-streaming-stick-developer-connection)
 - [2. Installation and Launch](#2-installation-and-launch)
@@ -95,7 +121,6 @@ To bring your streaming channels into your favorite TV guide software (like Chan
 1. Click the **Copy M3U Link** button at the top of the Status page.
 2. Paste that link directly into your DVR software as a **Custom Channel / M3U Source**.
 3. The app will automatically handle changing the channels on your TV boxes whenever you hit play!
-4. Under **Stream Format**, select `MPEG-TS`.
 
 ---
 

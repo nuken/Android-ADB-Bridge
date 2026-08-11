@@ -523,7 +523,6 @@ func executeTuning(ctx context.Context, deviceIP string, ch Channel) {
 		}
 	}
 
-	// NEW: Remember the active provider so we can clean it up later
 	tunerLock.Lock()
 	for i := range Config.Tuners {
 		if Config.Tuners[i].DeviceIP == deviceIP {

