@@ -21,7 +21,7 @@ When you launch the installer, you may see a blue screen stating *"Windows prote
 
 During installation, the setup wizard will silently run a script to add the application's installation folder (typically `C:\Program Files (x86)\AndroidBridge`) to your Windows Defender exclusion list.
 
-* **Why this is necessary:** Android ADB Bridge is a powerful proxy server written in Go. To ensure your channel tuning is fast and seamless, the application constantly launches silent background tasks (like `adb.exe` and `ffmpeg.exe`) and listens on local network ports. Aggressive AI and "Machine Learning" antivirus heuristics frequently mistake this legitimate background automation for a false positive (often flagging it as a generic Trojan).
+* **Why this is necessary:** Android ADB Bridge is a powerful proxy server written in Go. To ensure your channel tuning is fast and seamless, the application constantly launches silent background tasks (like `adb.exe` and `ffmpeg.exe`) and listens on local network ports. Aggressive AI and "Machine Learning" antivirus behavior-based scanning frequently mistake this legitimate background automation for a false positive (often flagging it as a generic Trojan).
 * **What it does:** By automatically whitelisting the application's specific folder during setup, the installer ensures that your antivirus does not falsely quarantine the executable, allowing your video streams to run smoothly and uninterrupted. The installer will cleanly remove this exception if you ever uninstall the application.
 
 
