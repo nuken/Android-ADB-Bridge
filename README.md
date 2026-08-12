@@ -4,6 +4,21 @@ A lightweight background tool for Windows that connects your PC to your streamin
 
 ---
 
+## Table of Contents
+- [1. Preparing Your Streaming Stick (Developer Connection)](#1-preparing-your-streaming-stick-developer-connection)
+- [2. Installation and Launch](#2-installation-and-launch)
+- [3. Setting Up Your Channels and Devices](#3-setting-up-your-channels-and-devices)
+- [4. Connecting to Your DVR](#4-connecting-to-your-dvr)
+- [5. Built-in Remote Control & Live Preview](#5-built-in-remote-control--live-preview)
+- [6. Hardware Video Encoder Tips (For Best Picture & Speed)](#6-hardware-video-encoder-tips-for-best-picture--speed)
+- [7. Using a Local USB Capture Card (New!)](#7-using-a-local-usb-capture-card-new)
+- [8. Simulated Keypress Tuning (Macros)](#8-simulated-keypress-tuning-macros)
+- [9. Fire OS / Fire TV Support](#9-fire-os--fire-tv-support)
+- [10. Cloud & Local Channel Packs](#10-cloud--local-channel-packs)
+- [11. Direct USB ADB Connections (Wired Mode)](#11-direct-usb-adb-connections-wired-mode)
+
+---
+
 ### Important Notice: Windows SmartScreen & Security Exclusions
 
 If you are installing **Android ADB Bridge** on Windows, you will likely encounter a **Windows Defender SmartScreen** warning, and you should know that the installer automatically configures a security exclusion for the app.
@@ -27,21 +42,6 @@ During installation, the setup wizard will silently run a script to add the appl
 
 
 *If you ever want to verify exactly what the application or the installer is doing, the complete source code is fully open-source and available for review in this repository.*
-
----
-
-## Table of Contents
-- [1. Preparing Your Streaming Stick (Developer Connection)](#1-preparing-your-streaming-stick-developer-connection)
-- [2. Installation and Launch](#2-installation-and-launch)
-- [3. Setting Up Your Channels and Devices](#3-setting-up-your-channels-and-devices)
-- [4. Connecting to Your DVR](#4-connecting-to-your-dvr)
-- [5. Built-in Remote Control & Live Preview](#5-built-in-remote-control--live-preview)
-- [6. Hardware Video Encoder Tips (For Best Picture & Speed)](#6-hardware-video-encoder-tips-for-best-picture--speed)
-- [7. Using a Local USB Capture Card (New!)](#7-using-a-local-usb-capture-card-new)
-- [8. Simulated Keypress Tuning (Macros)](#8-simulated-keypress-tuning-macros)
-- [9. Fire OS / Fire TV Support](#9-fire-os--fire-tv-support)
-- [10. Cloud & Local Channel Packs](#10-cloud--local-channel-packs)
-- [11. Direct USB ADB Connections (Wired Mode)](#11-direct-usb-adb-connections-wired-mode)
 
 ---
 
