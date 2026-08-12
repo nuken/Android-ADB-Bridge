@@ -658,7 +658,11 @@
                 const safeIp = t.device_ip.replace(/\./g, '-');
                 const isLocal = t.type === 'local';
                 const formatLabel = t.capture_format ? `[${t.capture_format}]` : `[Auto]`;
-                const sourceDisplay = isLocal ? `<i class="fa-solid fa-microchip" title="Hardware Encoded"></i> ${formatLabel} ${t.video_device_id || 'Default Card'}` : t.encoder_url;
+                let shortDevice = t.video_device_id || 'Default Card';
+				if (shortDevice.startsWith('@device_pnp_')) {
+				    shortDevice = 'USB Capture Device';
+				}
+				const sourceDisplay = isLocal ? `<i class="fa-solid fa-microchip"></i> ${formatLabel} <span title="${t.video_device_id}" style="cursor:help; border-bottom: 1px dotted #888;">${shortDevice}</span>` : t.encoder_url;			
 
                 return `
                 <tr>

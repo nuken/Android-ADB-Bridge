@@ -262,7 +262,7 @@ func ensureADBReady() {
 	log.Println("Warning: ADB server did not respond during startup. Will attempt auto-connects on request.")
 }
 
-func adbCommand(deviceIP string, args ...string) error {
+func adbCommand(deviceIP string, args ...string) (string, error) {
 	adb := getAdbPath()
 
 	isUSB := false
@@ -275,7 +275,6 @@ func adbCommand(deviceIP string, args ...string) error {
 	}
 	tunerLock.Unlock()
 
-	// Skip network connection attempt if routed via USB
 	if !isUSB {
 		connectCmd := exec.Command(adb, "connect", deviceIP)
 		connectCmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
@@ -287,10 +286,14 @@ func adbCommand(deviceIP string, args ...string) error {
 	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 
 	out, err := cmd.CombinedOutput()
+	outStr := strings.TrimSpace(string(out))
+	
 	if err != nil {
-		log.Printf("[%s ADB Error] %v | Output: %s\n", deviceIP, err, strings.TrimSpace(string(out)))
+		log.Printf("[%s ADB Error] %v | Output: %s\n", deviceIP, err, outStr)
 	}
-	return err
+	
+	// Return the string output so we can read Android's response
+	return outStr, err
 }
 
 func checkADB(t Tuner) bool {
@@ -412,13 +415,28 @@ func parseAndExecuteMacro(ctx context.Context, deviceIP string, macroStr string,
 func lockTuner() *Tuner {
 	tunerLock.Lock()
 	defer tunerLock.Unlock()
+
+	var selectedTuner *Tuner
+	selectedIndex := -1
+	bestPriority := 999999 // Start with an artificially high number
+
+	// Loop through all tuners and find the available one with the best (lowest) priority number
 	for i := range Config.Tuners {
 		if !Config.Tuners[i].InUse {
-			Config.Tuners[i].InUse = true
-			return &Config.Tuners[i]
+			if Config.Tuners[i].Priority < bestPriority {
+				bestPriority = Config.Tuners[i].Priority
+				selectedIndex = i
+			}
 		}
 	}
-	return nil
+
+	// If we found a match, lock it and return it
+	if selectedIndex != -1 {
+		Config.Tuners[selectedIndex].InUse = true
+		selectedTuner = &Config.Tuners[selectedIndex]
+	}
+
+	return selectedTuner
 }
 
 func releaseTuner(deviceIP string) {
@@ -554,25 +572,39 @@ func executeTuning(ctx context.Context, deviceIP string, ch Channel) {
 		// Deep Link Mode
 		targetURL := strings.ReplaceAll(provider.URLTemplate, "{id}", ch.DeepLinkContentID)
 		intentStr := fmt.Sprintf("%s/%s", pkg, cmp)
-		adbCommand(deviceIP, "shell", "am", "start", "-a", "android.intent.action.VIEW", "-d", targetURL, "-n", intentStr)
+		
+		out, _ := adbCommand(deviceIP, "shell", "am", "start", "-a", "android.intent.action.VIEW", "-d", targetURL, "-n", intentStr)
+		
+		// Piggyback Check: Did the deep link fail?
+		if strings.Contains(strings.ToLower(out), "error") {
+			log.Printf("[%s] ERROR: Deep link failed (App missing or crashed). Aborting macros.\n", deviceIP)
+			return // Stop execution immediately
+		}
+
 	} else if pkg != "" {
 		launched := false
 
-		// If a component is specified, attempt an explicit leanback launch first
 		if cmp != "" {
 			intentStr := fmt.Sprintf("%s/%s", pkg, cmp)
-			err := adbCommand(deviceIP, "shell", "am", "start", "-a", "android.intent.action.MAIN", "-c", "android.intent.category.LEANBACK_LAUNCHER", "-n", intentStr)
-			if err == nil {
+			out, err := adbCommand(deviceIP, "shell", "am", "start", "-a", "android.intent.action.MAIN", "-c", "android.intent.category.LEANBACK_LAUNCHER", "-n", intentStr)
+			
+			// Check if the explicit launch succeeded without an error output
+			if err == nil && !strings.Contains(strings.ToLower(out), "error") {
 				launched = true
 			} else {
 				log.Printf("[%s] Explicit component start blocked/failed for %s. Using fallback launcher...\n", deviceIP, cmp)
 			}
 		}
 
-		// Fallback: If no component was defined, or if the explicit start threw an exception, use monkey
 		if !launched {
 			log.Printf("[%s] Launching package %s via safe launcher fallback...\n", deviceIP, pkg)
-			adbCommand(deviceIP, "shell", "monkey", "-p", pkg, "-c", "android.intent.category.LAUNCHER", "1")
+			out, _ := adbCommand(deviceIP, "shell", "monkey", "-p", pkg, "-c", "android.intent.category.LAUNCHER", "1")
+			
+			// Piggyback Check: Did the Monkey command abort?
+			if strings.Contains(strings.ToLower(out), "aborted") || strings.Contains(strings.ToLower(out), "error") {
+				log.Printf("[%s] ERROR: Safe launcher failed to find app '%s'. Aborting macros.\n", deviceIP, pkg)
+				return // Stop execution immediately
+			}
 		}
 	}
 
@@ -729,27 +761,34 @@ func apiDevices(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if strings.Contains(line, "\"") {
-			if strings.Contains(line, "Alternative name") {
-				continue
-			}
-
 			parts := strings.Split(line, "\"")
 			if len(parts) >= 2 {
 				val := parts[1]
-				devType := currentType
 
-				if strings.Contains(line, "(video)") {
-					devType = "video"
-				} else if strings.Contains(line, "(audio)") {
-					devType = "audio"
-				}
+				if strings.Contains(line, "Alternative name") {
+					// Attach the unique hardware path to the last device we just added
+					if currentType == "video" && len(devices.Video) > 0 {
+						devices.Video[len(devices.Video)-1].ID = val
+					} else if currentType == "audio" && len(devices.Audio) > 0 {
+						devices.Audio[len(devices.Audio)-1].ID = val
+					}
+				} else {
+					// This is a new primary device name.
+					// We temporarily set ID to the friendly name, which acts as a backwards-compatible fallback 
+					// just in case FFmpeg doesn't output an Alternative Name for a specific device.
+					newDev := DShowDevice{Name: val, ID: val} 
 
-				newDev := DShowDevice{Name: val, ID: val}
+					if strings.Contains(line, "(video)") {
+						currentType = "video"
+					} else if strings.Contains(line, "(audio)") {
+						currentType = "audio"
+					}
 
-				if devType == "video" {
-					devices.Video = append(devices.Video, newDev)
-				} else if devType == "audio" {
-					devices.Audio = append(devices.Audio, newDev)
+					if currentType == "video" {
+						devices.Video = append(devices.Video, newDev)
+					} else if currentType == "audio" {
+						devices.Audio = append(devices.Audio, newDev)
+					}
 				}
 			}
 		}
