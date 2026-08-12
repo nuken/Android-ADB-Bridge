@@ -12,9 +12,9 @@ When a channel is tuned, the bridge executes commands in a strict, five-step seq
 
 1. **Pre-Tune Macro (Provider):** Wakes the device and runs cleanup commands (e.g., pressing `BACK` or `HOME` to exit a current stream and return to a known menu state).
 2. **App Launch (Intent):** The bridge brings the streaming app to the foreground.
-3. **Splash Delay (Provider):** The system pauses for `X` milliseconds to allow the application's splash screen to clear. Audio is muted during this phase.
+3. **Splash Delay (Provider):** The system displays a black screen for `X` milliseconds to allow the application's splash screen to clear. Audio is muted during this phase.
 4. **Channel Tuning Macro (Channel):** The sequence to actually select the requested channel (e.g., typing `1, 0, 4, ENTER` or navigating `DOWN:3, ENTER`).
-5. **Post-Tune Macro (Provider):** Final cleanup commands (e.g., pressing `ENTER` to dismiss a lingering overlay or guide).
+5. **Post-Tune Macro (Provider):** Final cleanup commands to bring you to the desired start point for next tune (e.g., pressing `ENTER` to dismiss a lingering overlay or guide).
 
 ---
 
@@ -29,7 +29,7 @@ Macros are written as a comma-separated list of commands. Spaces are ignored.
 | `DOWN` | 20 | D-Pad Down |
 | `LEFT` | 21 | D-Pad Left |
 | `RIGHT` | 22 | D-Pad Right |
-| `ENTER` / `OK` / `SELECT` | 66 | D-Pad Center / Select |
+| `ENTER` / `OK` / `SELECT` | 23 | D-Pad Center / Select |
 | `BACK` | 4 | Back / Exit Menu |
 | `HOME` | 3 | Device Home Screen |
 | `0` - `9` | 7 - 16 | Number pad keys |
