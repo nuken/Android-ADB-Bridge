@@ -17,11 +17,9 @@
     <video id="videoElement" controls autoplay muted></video>
 
     <script>
-        var player; // Declare globally so the unload event can access it
-
         if (mpegts.getFeatureList().mseLivePlayback) {
             var videoElement = document.getElementById('videoElement');
-            player = mpegts.createPlayer({
+            var player = mpegts.createPlayer({
                 type: 'mse', 
                 isLive: true,
                 url: '/stream/{{ .ID }}'
@@ -32,17 +30,6 @@
         } else {
             alert("Your browser does not support MSE playback for this stream.");
         }
-
-        // Actively destroy the connection when leaving the page or closing the tab
-        window.addEventListener('beforeunload', function() {
-            if (player) {
-                player.pause();
-                player.unload();
-                player.detachMediaElement();
-                player.destroy();
-                player = null;
-            }
-        });
     </script>
 </body>
 </html>

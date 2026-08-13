@@ -26,10 +26,6 @@
         .button.backup:hover { background-color: #059669; }
         .button.restore { background-color: #f59e0b; } 
         .button.restore:hover { background-color: #d97706; }
-
-        .macro-toolbar { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 6px; background: #1a1a1a; padding: 6px; border-radius: 6px; border: 1px solid #444; align-items: center; }
-        .macro-btn { background: #444; color: #fff; border: 1px solid #666; padding: 4px 10px; border-radius: 4px; font-size: 0.9em; cursor: pointer; font-weight: bold; transition: all 0.2s ease; }
-        .macro-btn:hover { background: var(--button-color); border-color: var(--primary-color); }
         
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); }
         .modal-content {
@@ -37,7 +33,7 @@
             margin: 5% auto;
             padding: 20px;
             border-radius: 8px;
-            width: 520px;
+            width: 450px;
             max-width: 90%;            
             max-height: 85vh; 
             overflow-y: auto; 
@@ -63,17 +59,6 @@
         }
         .save-banner.show { display: flex; animation: slideUp 0.3s ease-out; }
         @keyframes slideUp { from { bottom: -100px; opacity: 0; } to { bottom: 30px; opacity: 1; } }
-
-        .tuning-toggle { font-size: 0.9em; color: var(--primary-color); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; background: #2a2a2a; border-radius: 6px; border: 1px solid #444; transition: 0.2s; }
-        .tuning-toggle:hover { background: #333; border-color: var(--primary-color); }
-
-        .channels-scroll-box { max-height: 450px; overflow-y: auto; transition: max-height 0.3s ease; }
-        .channels-scroll-box.expanded { max-height: 5000px; }
-        
-        .provider-tabs { display: flex; gap: 8px; margin-top: 15px; margin-bottom: 10px; overflow-x: auto; padding-bottom: 5px; }
-        .tab-btn { background: #333; border: 1px solid #555; color: #ccc; padding: 6px 16px; border-radius: 20px; cursor: pointer; font-size: 0.9em; transition: 0.2s; white-space: nowrap; }
-        .tab-btn:hover { background: #444; }
-        .tab-btn.active { background: var(--primary-color); color: #000; font-weight: bold; border-color: var(--primary-color); }
     </style>
 </head>
 <body>
@@ -89,8 +74,7 @@
             <button class="button restore" onclick="document.getElementById('import-file').click()"><i class="fa-solid fa-upload"></i> Restore Backup</button>
             <input type="file" id="import-file" style="display:none" accept=".json" onchange="importConfig(event)">
             
-            <button class="button cloud" onclick="openPackModal('channel')"><i class="fa-solid fa-link"></i> Import Channel Pack</button>
-            <button class="button cloud" style="background-color: #ec4899;" onclick="openPackModal('macro')"><i class="fa-solid fa-keyboard"></i> Import Macro Pack</button>
+            <button class="button cloud" onclick="openCloudModal()"><i class="fa-solid fa-cloud-arrow-down"></i> Download Channel Pack</button>
         </div>
 
         <!-- TUNERS -->
@@ -114,26 +98,14 @@
         <button class="button" onclick="openProviderModal()" style="margin-top: 10px;"><i class="fa-solid fa-plus"></i> Add Provider</button>
 
         <!-- CHANNELS -->
-        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 30px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px;">
-            <h2 style="border-bottom: none; padding-bottom: 0; margin: 0;"><i class="fa-solid fa-tv"></i> Channels</h2>
-            <div style="display: flex; gap: 10px;">
-                <button class="button" id="expand-channels-btn" style="background-color: #4b5563;" onclick="toggleChannelsExpand()">
-                    <i class="fa-solid fa-chevron-down"></i> Show All
-                </button>
-                <button class="button" onclick="openChannelModal()"><i class="fa-solid fa-plus"></i> Add Channel</button>
-            </div>
-        </div>
-
-        <div id="provider-tabs" class="provider-tabs">
-            <!-- Tabs dynamically injected here -->
-        </div>
-
-        <div class="table-wrapper channels-scroll-box" id="channels-container">
+        <h2 style="margin-top: 30px;"><i class="fa-solid fa-tv"></i> Channels</h2>
+        <div class="table-wrapper">
             <table id="channels-table">
                 <thead><tr><th>Name</th><th>Channel ID</th><th>Provider</th><th>Deep Link ID</th><th>Actions</th></tr></thead>
                 <tbody id="channels-table-body"></tbody>
             </table>
         </div>
+        <button class="button" onclick="openChannelModal()" style="margin-top: 10px;"><i class="fa-solid fa-plus"></i> Add Channel</button>
     </div>
 
     <!-- Floating Save Banner -->
@@ -142,63 +114,24 @@
         <button id="save-banner-btn" class="button" style="background-color: var(--success-color); font-weight: bold; font-size: 1.1em;" onclick="saveConfigToServer()"><i class="fa-solid fa-save"></i> Save Now</button>
     </div>
 
-    <!-- Deep Link Channel Pack Modal -->
-    <div id="channel-pack-modal" class="modal">
+    <!-- Cloud Pack Modal -->
+    <div id="cloud-modal" class="modal">
         <div class="modal-content">
-            <h3 style="color: #8b5cf6;"><i class="fa-solid fa-link"></i> Import Channel Pack</h3>
-            <p style="font-size: 0.85em; color: #ccc; margin-bottom: 20px;">Load Deep Links and URL templates from the cloud or your PC.</p>
-            
-            <div style="background: #2a2a2a; padding: 15px; border-radius: 8px; border: 1px solid #444; margin-bottom: 15px;">
-                <label style="color: var(--primary-color); display: block; margin-bottom: 10px;"><i class="fa-solid fa-cloud"></i> From Cloud Repository</label>
-                <select id="channel-cloud-select" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #555; background-color: #222; color: white; margin-bottom: 10px;">
+            <h3 style="color: #8b5cf6;"><i class="fa-solid fa-cloud-arrow-down"></i> Import Channel Pack</h3>
+            <p style="font-size: 0.85em; color: #ccc; margin-bottom: 20px; line-height: 1.4;">
+                Select a pre-configured channel pack to instantly load Deep Links and Gracenote IDs.
+            </p>
+            <div class="form-group">
+                <label>Available Packs</label>
+                <select id="cloud-pack-select">
                     <option value="">Fetching packs from GitHub...</option>
                 </select>
-                <div style="display: flex; gap: 10px;">
-                    <button class="button cloud" style="flex: 1; justify-content: center;" onclick="applyCloudPack('channel-cloud-select', 'append')">Append</button>
-                    <button class="button" style="background: var(--error-color); flex: 1; justify-content: center;" onclick="applyCloudPack('channel-cloud-select', 'replace')">Replace All</button>
-                </div>
             </div>
-
-            <div style="background: #2a2a2a; padding: 15px; border-radius: 8px; border: 1px solid #444;">
-                <label style="color: var(--success-color); display: block; margin-bottom: 10px;"><i class="fa-solid fa-folder-open"></i> From Local PC File</label>
-                <input type="file" id="channel-local-file" accept=".json" style="width: 100%; margin-bottom: 10px; color: #ccc;">
-                <div style="display: flex; gap: 10px;">
-                    <button class="button backup" style="flex: 1; justify-content: center;" onclick="applyLocalPack('channel-local-file', 'append')">Append</button>
-                    <button class="button" style="background: var(--error-color); flex: 1; justify-content: center;" onclick="applyLocalPack('channel-local-file', 'replace')">Replace All</button>
-                </div>
+            <div style="display: flex; gap: 10px; margin-top: 25px;">
+                <button class="button cloud" style="flex: 1; justify-content: center;" onclick="applyCloudPack('append')"><i class="fa-solid fa-plus"></i> Append</button>
+                <button class="button" style="background: var(--error-color); flex: 1; justify-content: center;" onclick="applyCloudPack('replace')"><i class="fa-solid fa-triangle-exclamation"></i> Replace All</button>
+                <button class="button" style="background:#666; flex: 1; justify-content: center;" onclick="closeModal('cloud-modal')">Cancel</button>
             </div>
-
-            <button class="button" style="background:#666; width: 100%; justify-content: center; margin-top: 20px;" onclick="closeModal('channel-pack-modal')">Cancel</button>
-        </div>
-    </div>
-
-    <!-- Keystroke Macro Pack Modal -->
-    <div id="macro-pack-modal" class="modal">
-        <div class="modal-content">
-            <h3 style="color: #ec4899;"><i class="fa-solid fa-keyboard"></i> Import Macro Pack</h3>
-            <p style="font-size: 0.85em; color: #ccc; margin-bottom: 20px;">Load simulated keypress tuning sequences from the cloud or your PC.</p>
-            
-            <div style="background: #2a2a2a; padding: 15px; border-radius: 8px; border: 1px solid #444; margin-bottom: 15px;">
-                <label style="color: #ec4899; display: block; margin-bottom: 10px;"><i class="fa-solid fa-cloud"></i> From Cloud Repository</label>
-                <select id="macro-cloud-select" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #555; background-color: #222; color: white; margin-bottom: 10px;">
-                    <option value="">Fetching packs from GitHub...</option>
-                </select>
-                <div style="display: flex; gap: 10px;">
-                    <button class="button" style="background-color: #ec4899; flex: 1; justify-content: center;" onclick="applyCloudPack('macro-cloud-select', 'append')">Append</button>
-                    <button class="button" style="background: var(--error-color); flex: 1; justify-content: center;" onclick="applyCloudPack('macro-cloud-select', 'replace')">Replace All</button>
-                </div>
-            </div>
-
-            <div style="background: #2a2a2a; padding: 15px; border-radius: 8px; border: 1px solid #444;">
-                <label style="color: var(--success-color); display: block; margin-bottom: 10px;"><i class="fa-solid fa-folder-open"></i> From Local PC File</label>
-                <input type="file" id="macro-local-file" accept=".json" style="width: 100%; margin-bottom: 10px; color: #ccc;">
-                <div style="display: flex; gap: 10px;">
-                    <button class="button backup" style="flex: 1; justify-content: center;" onclick="applyLocalPack('macro-local-file', 'append')">Append</button>
-                    <button class="button" style="background: var(--error-color); flex: 1; justify-content: center;" onclick="applyLocalPack('macro-local-file', 'replace')">Replace All</button>
-                </div>
-            </div>
-
-            <button class="button" style="background:#666; width: 100%; justify-content: center; margin-top: 20px;" onclick="closeModal('macro-pack-modal')">Cancel</button>
         </div>
     </div>
 
@@ -208,35 +141,15 @@
             <h3>Edit Tuner</h3>
             <form id="tuner-form">
                 <input type="hidden" id="tuner-index">
+                
+                <!-- Hidden variables storing hardware probe results -->
                 <input type="hidden" id="tuner-capture-format">
                 <input type="hidden" id="tuner-capture-size">
                 <input type="hidden" id="tuner-capture-fps">
 
                 <div class="form-group"><label>Name</label><input type="text" id="tuner-name" required></div>
-                <div class="form-group">
-                    <label>ADB Connection Route</label>
-                    <select id="tuner-adb-route" onchange="toggleAdbRoute()">
-                        <option value="network">Network (WiFi / LAN)</option>
-                        <option value="usb">Direct USB (Data Cable)</option>
-                    </select>
-                </div>
-                <div class="form-group" id="group-adb-ip">
-                    <label id="label-tuner-ip" style="color: var(--primary-color);">Device IP</label>
-                    <div style="display: flex; gap: 10px;">
-                        <input type="text" id="tuner-ip" style="flex: 1;" required>
-                        <button type="button" id="btn-detect-usb" class="button" style="display: none; background-color: var(--success-color);" onclick="detectUsbDevices()">
-                            <i class="fa-solid fa-usb"></i> Auto-Detect
-                        </button>
-                    </div>
-                    <select id="tuner-usb-select" style="display: none; width: 100%; margin-top: 10px; padding: 10px; border-radius: 8px; border: 1px solid #555; background-color: #222; color: white;" onchange="document.getElementById('tuner-ip').value = this.value; this.style.display='none';"></select>
-                </div>
-                <div class="form-group">
-                    <label>Device Platform</label>
-                    <select id="tuner-os">
-                        <option value="android_tv">Android TV / Google TV</option>
-                        <option value="fire_tv">Amazon Fire TV / Fire OS</option>
-                    </select>
-                </div>
+                <div class="form-group"><label>Device IP (ADB)</label><input type="text" id="tuner-ip" required></div>
+                
                 <div class="form-group">
                     <label>Capture Type</label>
                     <select id="tuner-type" onchange="toggleTunerTypeFields()">
@@ -263,6 +176,7 @@
                         </button>
                     </div>
                     
+                    <!-- Display block for the live FFmpeg Probe Results -->
                     <div id="capture-settings-display" style="background: #1a1a1a; padding: 12px; border-radius: 8px; font-family: monospace; font-size: 0.9em; margin-bottom: 15px; border: 1px solid #555; color: #ccc;">
                         Ready to probe hardware limits...
                     </div>
@@ -310,82 +224,15 @@
                 </div>
                 <div class="form-group">
                     <label>Component (Activity)</label>
-                    <input type="text" id="prov-component" placeholder="e.g. com.google.android.apps.youtube.tvunplugged.activity.MainActivity">
+                    <input type="text" id="prov-component" placeholder="e.g. com.google.android.apps.youtube.tvunplugged.activity.MainActivity" required>
                 </div>
-                <div class="form-group" style="background: #2a2a2a; padding: 12px; border-radius: 8px; border: 1px solid #444;">
-                    <label style="color: #fcd34d; font-size: 0.9em; cursor: pointer;" onclick="document.getElementById('fire-os-overrides').style.display = document.getElementById('fire-os-overrides').style.display === 'none' ? 'block' : 'none';">
-                        <i class="fa-brands fa-amazon"></i> Fire TV Overrides (Click to expand)
-                    </label>
-                    <div id="fire-os-overrides" style="display: none; margin-top: 10px;">
-                        <input type="text" id="prov-fire-package" placeholder="Fire OS Package Name" style="margin-bottom: 10px;">
-                        <input type="text" id="prov-fire-component" placeholder="Fire OS Activity Component">
-                    </div>
-                </div>
-                <div class="form-group"><label>URL Template (use {id} for target)</label><input type="text" id="prov-url"></div>
                 
-                <!-- KEYPRESS NOTIFICATION BADGE -->
-                <div style="padding: 10px; background-color: rgba(245, 158, 11, 0.1); border-left: 4px solid #f59e0b; margin: 25px 0 15px 0; font-size: 0.85em; color: #fcd34d; border-radius: 0 4px 4px 0;">
-                    <i class="fa-solid fa-circle-info"></i> <strong>Note:</strong> Pre-Tune and Post-Tune sequences below are designed primarily for Keypress Tuning workflows.
-                </div>
-
-                <div class="form-group">
-                    <label>Pre-Tune Macro (Executed BEFORE app launch)</label>
-                    <div class="macro-toolbar">
-                        <button type="button" class="macro-btn" title="Up" onclick="insertMacroToken('prov-pretune', 'UP', true)"><i class="fa-solid fa-chevron-up"></i></button>
-                        <button type="button" class="macro-btn" title="Down" onclick="insertMacroToken('prov-pretune', 'DOWN', true)"><i class="fa-solid fa-chevron-down"></i></button>
-                        <button type="button" class="macro-btn" title="Left" onclick="insertMacroToken('prov-pretune', 'LEFT', true)"><i class="fa-solid fa-chevron-left"></i></button>
-                        <button type="button" class="macro-btn" title="Right" onclick="insertMacroToken('prov-pretune', 'RIGHT', true)"><i class="fa-solid fa-chevron-right"></i></button>
-                        
-                        <span style="border-right: 1px solid #666; margin: 0 4px; height: 20px;"></span>
-                        
-                        <label style="font-size: 0.85em; display: inline-flex; align-items: center; gap: 4px; color: var(--primary-color);">
-                            Repeat: <input type="number" id="prov-pretune-mult" value="1" min="1" max="99" style="width: 45px; padding: 4px; border-radius: 4px; border: 1px solid #666; background: #222; color: white;">
-                        </label>
-                        
-                        <span style="border-right: 1px solid #666; margin: 0 4px; height: 20px;"></span>
-                        
-                        <button type="button" class="macro-btn" title="Enter / Select" onclick="insertMacroToken('prov-pretune', 'ENTER')"><i class="fa-solid fa-check"></i> OK</button>
-                        <button type="button" class="macro-btn" title="Back" onclick="insertMacroToken('prov-pretune', 'BACK')"><i class="fa-solid fa-arrow-rotate-left"></i></button>
-                        <button type="button" class="macro-btn" title="Home" onclick="insertMacroToken('prov-pretune', 'HOME')"><i class="fa-solid fa-house"></i></button>
-                        <span style="border-right: 1px solid #666; margin: 0 4px; height: 20px;"></span>
-                        <button type="button" class="macro-btn" title="Wait 1 Second" onclick="insertMacroToken('prov-pretune', 'WAIT:1000')"><i class="fa-solid fa-clock"></i> 1s</button>
-                    </div>
-                    <input type="text" id="prov-pretune" placeholder="e.g. HOME, WAIT:1000">
-                </div>
-
-                <div class="form-group">
-                    <label>Cleanup Macro (Executed when stream stops and tuner is released)</label>
-                    <div class="macro-toolbar">
-                        <button type="button" class="macro-btn" title="Up" onclick="insertMacroToken('prov-posttune', 'UP', true)"><i class="fa-solid fa-chevron-up"></i></button>
-                        <button type="button" class="macro-btn" title="Down" onclick="insertMacroToken('prov-posttune', 'DOWN', true)"><i class="fa-solid fa-chevron-down"></i></button>
-                        <button type="button" class="macro-btn" title="Left" onclick="insertMacroToken('prov-posttune', 'LEFT', true)"><i class="fa-solid fa-chevron-left"></i></button>
-                        <button type="button" class="macro-btn" title="Right" onclick="insertMacroToken('prov-posttune', 'RIGHT', true)"><i class="fa-solid fa-chevron-right"></i></button>
-                        
-                        <span style="border-right: 1px solid #666; margin: 0 4px; height: 20px;"></span>
-                        
-                        <label style="font-size: 0.85em; display: inline-flex; align-items: center; gap: 4px; color: var(--primary-color);">
-                            Repeat: <input type="number" id="prov-posttune-mult" value="1" min="1" max="99" style="width: 45px; padding: 4px; border-radius: 4px; border: 1px solid #666; background: #222; color: white;">
-                        </label>
-                        
-                        <span style="border-right: 1px solid #666; margin: 0 4px; height: 20px;"></span>
-                        
-                        <button type="button" class="macro-btn" title="Enter / Select" onclick="insertMacroToken('prov-posttune', 'ENTER')"><i class="fa-solid fa-check"></i> OK</button>
-                        <button type="button" class="macro-btn" title="Back" onclick="insertMacroToken('prov-posttune', 'BACK')"><i class="fa-solid fa-arrow-rotate-left"></i></button>
-                        <button type="button" class="macro-btn" title="Home" onclick="insertMacroToken('prov-posttune', 'HOME')"><i class="fa-solid fa-house"></i></button>
-                        <span style="border-right: 1px solid #666; margin: 0 4px; height: 20px;"></span>
-                        <button type="button" class="macro-btn" title="Wait 1 Second" onclick="insertMacroToken('prov-posttune', 'WAIT:1000')"><i class="fa-solid fa-clock"></i> 1s</button>
-                        <span style="border-right: 1px solid #666; margin: 0 4px; height: 20px;"></span>
-                        
-                        <!-- ADDED FORCE STOP BUTTON HERE -->
-                        <button type="button" class="macro-btn" style="color: #ef4444; border-color: #ef4444;" title="Force Stop App" onclick="insertMacroToken('prov-posttune', 'FORCE_STOP')"><i class="fa-solid fa-power-off"></i> Force Stop</button>
-                    </div>
-                    <input type="text" id="prov-posttune" placeholder="e.g. WAIT:2000, FORCE_STOP">
-                </div>
-
+                <div class="form-group"><label>URL Template (use {id} for target)</label><input type="text" id="prov-url" required></div>
+                
                 <div class="form-group" style="background: #2a2a2a; padding: 15px; border-radius: 8px; margin-top: 15px; border: 1px solid #444;">
                     <label style="color: var(--primary-color);">Splash Screen / Tune Delay (ms)</label>
                     <input type="number" id="prov-splash-delay" value="3000" min="0" step="100" placeholder="e.g. 3000">
-                    <span style="font-size: 0.75em; color: #aaa;">Blacks out video and mutes audio while the app loads.</span>
+                    <span style="font-size: 0.75em; color: #aaa;">Blacks out the video and mutes audio while this specific app loads.</span>
                 </div>
 
                 <button type="submit" class="button">Apply</button>
@@ -400,67 +247,13 @@
             <h3>Edit Channel</h3>
             <form id="channel-form">
                 <input type="hidden" id="channel-index">
-                
-                <div style="display: flex; gap: 15px; margin-bottom: 15px;">
-                    <div class="form-group" style="flex: 1; margin-bottom: 0;">
-                        <label>Channel Name</label>
-                        <input type="text" id="ch-name" required>
-                    </div>
-                    <div class="form-group" style="flex: 1; margin-bottom: 0;">
-                        <label>Unique ID</label>
-                        <input type="text" id="ch-id" required>
-                    </div>
-                </div>
-                
+                <div class="form-group"><label>Channel Name</label><input type="text" id="ch-name" required></div>
+                <div class="form-group"><label>Unique ID</label><input type="text" id="ch-id" required></div>
                 <div class="form-group">
                     <label>Provider</label>
                     <select id="ch-provider" required></select>
                 </div>
-                
-                <!-- TUNING MODE TOGGLE -->
-                <div style="text-align: right; margin-bottom: 10px;">
-                    <a href="#" id="tuning-mode-toggle" class="tuning-toggle" onclick="toggleTuningMode(); return false;">
-                        <i class="fa-solid fa-keyboard"></i> Switch to Keypress Tuning
-                    </a>
-                </div>
-
-                <!-- DEEP LINK GROUP -->
-                <div class="form-group" id="group-deeplink" style="background: #2a2a2a; padding: 15px; border-radius: 8px; border: 1px solid #444;">
-                    <label style="color: var(--primary-color);"><i class="fa-solid fa-link"></i> Deep Link ID</label>
-                    <input type="text" id="ch-deeplink" placeholder="e.g. ZiQl0pbVQEk">
-                    <div style="font-size: 0.75em; color: #aaa; margin-top: 6px;">Used directly with the Provider URL Template to launch content.</div>
-                </div>
-                
-                <!-- KEYPRESS MACRO GROUP -->
-                <div class="form-group" id="group-macro" style="display: none; background: #2a2a2a; padding: 15px; border-radius: 8px; border: 1px solid #444;">
-                    <label style="color: var(--primary-color);"><i class="fa-solid fa-keyboard"></i> Keypress Tuning Sequence</label>
-                    <div class="macro-toolbar" style="margin-top: 10px;">
-                        <button type="button" class="macro-btn" title="Up" onclick="insertMacroToken('ch-macro', 'UP', true)"><i class="fa-solid fa-chevron-up"></i></button>
-                        <button type="button" class="macro-btn" title="Down" onclick="insertMacroToken('ch-macro', 'DOWN', true)"><i class="fa-solid fa-chevron-down"></i></button>
-                        <button type="button" class="macro-btn" title="Left" onclick="insertMacroToken('ch-macro', 'LEFT', true)"><i class="fa-solid fa-chevron-left"></i></button>
-                        <button type="button" class="macro-btn" title="Right" onclick="insertMacroToken('ch-macro', 'RIGHT', true)"><i class="fa-solid fa-chevron-right"></i></button>
-                        
-                        <span style="border-right: 1px solid #666; margin: 0 4px; height: 20px;"></span>
-                        
-                        <label style="font-size: 0.85em; display: inline-flex; align-items: center; gap: 4px; color: #fff;">
-                            Repeat: <input type="number" id="ch-macro-mult" value="1" min="1" max="99" style="width: 45px; padding: 4px; border-radius: 4px; border: 1px solid #666; background: #111; color: white;">
-                        </label>
-                        
-                        <span style="border-right: 1px solid #666; margin: 0 4px; height: 20px;"></span>
-                        
-                        <button type="button" class="macro-btn" title="Enter / Select" onclick="insertMacroToken('ch-macro', 'ENTER')"><i class="fa-solid fa-check"></i> OK</button>
-                        <button type="button" class="macro-btn" title="Back" onclick="insertMacroToken('ch-macro', 'BACK')"><i class="fa-solid fa-arrow-rotate-left"></i></button>
-                        <span style="border-right: 1px solid #666; margin: 0 4px; height: 20px;"></span>
-                        <button type="button" class="macro-btn" title="Wait 1 Second" onclick="insertMacroToken('ch-macro', 'WAIT:1000')"><i class="fa-solid fa-clock"></i> 1s</button>
-                        <span style="border-right: 1px solid #666; margin: 0 4px; height: 20px;"></span>
-                        
-                        <button type="button" class="macro-btn" style="color: var(--primary-color);" onclick="document.getElementById('numpad-modal').style.display='block'">
-                            <i class="fa-solid fa-calculator"></i> Numpad
-                        </button>
-                    </div>
-                    <input type="text" id="ch-macro" placeholder="e.g. DOWN:3, ENTER or 1, 0, 4, ENTER">
-                </div>
-
+                <div class="form-group"><label>Deep Link ID</label><input type="text" id="ch-deeplink" required></div>
                 <div class="form-group"><label>Guide Station ID (Optional)</label><input type="text" id="ch-stationid"></div>
                 <button type="submit" class="button">Apply</button>
                 <button type="button" class="button" style="background:#666" onclick="closeModal('channel-modal')">Cancel</button>
@@ -468,147 +261,28 @@
         </div>
     </div>
 
-    <!-- Popup Numpad Modal -->
-    <div id="numpad-modal" class="modal" style="z-index: 1100;">
-        <div class="modal-content" style="width: 260px; text-align: center; margin-top: 15%;">
-            <h3 style="margin-top: 0; color: var(--primary-color);"><i class="fa-solid fa-hashtag"></i> Number Pad</h3>
-            
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px;">
-                <button type="button" class="button" style="justify-content: center; font-size: 1.2em;" onclick="insertMacroToken('ch-macro', '1')">1</button>
-                <button type="button" class="button" style="justify-content: center; font-size: 1.2em;" onclick="insertMacroToken('ch-macro', '2')">2</button>
-                <button type="button" class="button" style="justify-content: center; font-size: 1.2em;" onclick="insertMacroToken('ch-macro', '3')">3</button>
-                
-                <button type="button" class="button" style="justify-content: center; font-size: 1.2em;" onclick="insertMacroToken('ch-macro', '4')">4</button>
-                <button type="button" class="button" style="justify-content: center; font-size: 1.2em;" onclick="insertMacroToken('ch-macro', '5')">5</button>
-                <button type="button" class="button" style="justify-content: center; font-size: 1.2em;" onclick="insertMacroToken('ch-macro', '6')">6</button>
-                
-                <button type="button" class="button" style="justify-content: center; font-size: 1.2em;" onclick="insertMacroToken('ch-macro', '7')">7</button>
-                <button type="button" class="button" style="justify-content: center; font-size: 1.2em;" onclick="insertMacroToken('ch-macro', '8')">8</button>
-                <button type="button" class="button" style="justify-content: center; font-size: 1.2em;" onclick="insertMacroToken('ch-macro', '9')">9</button>
-                
-                <div></div> <!-- Spacer -->
-                <button type="button" class="button" style="justify-content: center; font-size: 1.2em;" onclick="insertMacroToken('ch-macro', '0')">0</button>
-                <div></div> <!-- Spacer -->
-            </div>
-
-            <button type="button" class="button" style="background:#666; width: 100%; justify-content: center;" onclick="closeModal('numpad-modal')">Done</button>
-        </div>
-    </div>	
-
     <script>
-        const CHANNEL_INDEX_URL = 'https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/channel_packs/index.json';
-        const MACRO_INDEX_URL = 'https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/macro_packs/index.json';
+        // XSS Sanitizer Function
+        function escapeHTML(str) {
+            if (str === null || str === undefined) return '';
+            return String(str).replace(/[&<>'"]/g, function(tag) {
+                const charsToReplace = {
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    "'": '&#39;',
+                    '"': '&quot;'
+                };
+                return charsToReplace[tag] || tag;
+            });
+        }
+
+        const CLOUD_INDEX_URL = 'https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/channel_packs/index.json';
 
         let config = { tuners: [], providers: [], channels: [] };
         let hardwareDevices = { video: [], audio: [] };
         let activePoller = null; 
         let hasUnsavedChanges = false;
-        let currentTuningMode = 'deeplink'; 
-        let currentProviderFilter = 'all';
-
-        function setProviderFilter(providerId) {
-            currentProviderFilter = providerId;
-            renderTables();
-        }
-
-        function toggleChannelsExpand() {
-            const container = document.getElementById('channels-container');
-            const btn = document.getElementById('expand-channels-btn');
-            container.classList.toggle('expanded');
-            
-            if (container.classList.contains('expanded')) {
-                btn.innerHTML = '<i class="fa-solid fa-chevron-up"></i> Collapse';
-            } else {
-                btn.innerHTML = '<i class="fa-solid fa-chevron-down"></i> Show All';
-            }
-        }
-
-        function toggleTuningMode(forceMode = null) {
-            if (forceMode) {
-                currentTuningMode = forceMode;
-            } else {
-                currentTuningMode = currentTuningMode === 'deeplink' ? 'macro' : 'deeplink';
-            }
-
-            const dlGroup = document.getElementById('group-deeplink');
-            const macGroup = document.getElementById('group-macro');
-            const toggleLink = document.getElementById('tuning-mode-toggle');
-
-            if (currentTuningMode === 'macro') {
-                dlGroup.style.display = 'none';
-                macGroup.style.display = 'block';
-                toggleLink.innerHTML = '<i class="fa-solid fa-link"></i> Switch to Deep Link Tuning';
-            } else {
-                dlGroup.style.display = 'block';
-                macGroup.style.display = 'none';
-                toggleLink.innerHTML = '<i class="fa-solid fa-keyboard"></i> Switch to Keypress Tuning';
-            }
-        }
-
-        function insertMacroToken(fieldId, token, canMultiply = false) {
-            const input = document.getElementById(fieldId);
-            if (!input) return;
-
-            let finalToken = token;
-            
-            if (canMultiply) {
-                const multInput = document.getElementById(fieldId + '-mult');
-                if (multInput && parseInt(multInput.value) > 1) {
-                    finalToken = token + ':' + multInput.value;
-                    multInput.value = 1; 
-                }
-            }
-
-            let val = input.value.trim();
-            if (val === '') {
-                input.value = finalToken;
-            } else if (val.endsWith(',')) {
-                input.value = val + ' ' + finalToken;
-            } else {
-                input.value = val + ', ' + finalToken;
-            }
-            input.focus();
-        }
-		
-		function toggleAdbRoute() {
-            const route = document.getElementById('tuner-adb-route').value;
-            const label = document.getElementById('label-tuner-ip');
-            const btn = document.getElementById('btn-detect-usb');
-            const select = document.getElementById('tuner-usb-select');
-            
-            if (route === 'usb') {
-                label.innerHTML = '<i class="fa-brands fa-usb"></i> USB Device Serial';
-                btn.style.display = 'block';
-            } else {
-                label.innerHTML = 'Device IP (ADB)';
-                btn.style.display = 'none';
-                select.style.display = 'none';
-            }
-        }
-
-        async function detectUsbDevices() {
-            const select = document.getElementById('tuner-usb-select');
-            const btn = document.getElementById('btn-detect-usb');
-            
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Scanning...';
-            select.style.display = 'block';
-            select.innerHTML = '<option value="">Scanning USB ports...</option>';
-            
-            try {
-                const res = await fetch('/api/usb_devices');
-                const devices = await res.json();
-                
-                if (devices && devices.length > 0) {
-                    select.innerHTML = '<option value="" disabled selected>-- Select a connected USB device --</option>' + 
-                        devices.map(d => `<option value="${d}">${d}</option>`).join('');
-                } else {
-                    select.innerHTML = '<option value="">No authorized USB devices found.</option>';
-                }
-            } catch (err) {
-                select.innerHTML = '<option value="">Error scanning devices.</option>';
-            }
-            btn.innerHTML = '<i class="fa-brands fa-usb"></i> Auto-Detect';
-        }
 
         function markUnsaved() {
             hasUnsavedChanges = true;
@@ -658,16 +332,12 @@
                 const safeIp = t.device_ip.replace(/\./g, '-');
                 const isLocal = t.type === 'local';
                 const formatLabel = t.capture_format ? `[${t.capture_format}]` : `[Auto]`;
-                let shortDevice = t.video_device_id || 'Default Card';
-				if (shortDevice.startsWith('@device_pnp_')) {
-				    shortDevice = 'USB Capture Device';
-				}
-				const sourceDisplay = isLocal ? `<i class="fa-solid fa-microchip"></i> ${formatLabel} <span title="${t.video_device_id}" style="cursor:help; border-bottom: 1px dotted #888;">${shortDevice}</span>` : t.encoder_url;			
+                const sourceDisplay = isLocal ? `<i class="fa-solid fa-microchip" title="Hardware Encoded"></i> ${formatLabel} ${t.video_device_id || 'Default Card'}` : t.encoder_url;
 
                 return `
                 <tr>
                     <td>
-                        ${t.name} <span style="font-size: 0.8em; color: #aaa;">(Pri: ${t.priority || 99})</span>
+                        ${escapeHTML(t.name)} <span style="font-size: 0.8em; color: #aaa;">(Pri: ${t.priority || 99})</span>
                         <span id="usage-badge-${safeIp}" style="margin-left: 10px; padding: 2px 8px; border-radius: 12px; font-size: 0.75em; background: #555; color: white;"><i class="fa-solid fa-spinner fa-spin"></i></span>
                     </td>
                     <td><span id="adb-icon-${safeIp}"><i class="fa-solid fa-spinner fa-spin" style="color:#888"></i></span> ${t.device_ip}</td>
@@ -681,51 +351,30 @@
             
             document.getElementById('providers-table-body').innerHTML = config.providers.map((p, i) => `
                 <tr>
-                    <td>${p.name}</td>
-                    <td>${p.id}</td>
+                    <td>${escapeHTML(p.name)}</td>
+                    <td>${escapeHTML(p.id)}</td>
                     <td>
                         <button class="action-button" onclick="editProvider(${i})"><i class="fa-solid fa-pencil"></i></button>
                         <button class="action-button delete" onclick="delProvider(${i})"><i class="fa-solid fa-trash"></i></button>
                     </td>
                 </tr>`).join('');
 
-            // --- Generate Provider Tabs ---
-            const uniqueProviders = [...new Set(config.channels.map(c => c.provider_id))];
-            let tabsHtml = `<button class="tab-btn ${currentProviderFilter === 'all' ? 'active' : ''}" onclick="setProviderFilter('all')">All Channels</button>`;
-            uniqueProviders.forEach(pid => {
-                const provName = config.providers.find(p => p.id === pid)?.name || pid;
-                tabsHtml += `<button class="tab-btn ${currentProviderFilter === pid ? 'active' : ''}" onclick="setProviderFilter('${pid}')">${provName}</button>`;
-            });
-            document.getElementById('provider-tabs').innerHTML = tabsHtml;
-
-            // --- Render Filtered Channels ---
-            const isAll = currentProviderFilter === 'all';
-            document.getElementById('channels-table-body').innerHTML = config.channels.map((c, i) => {
-                if (!isAll && c.provider_id !== currentProviderFilter) return '';
-                
-                const tuningDisplay = c.tuning_macro ? '<span style="color:#fcd34d;"><i class="fa-solid fa-keyboard"></i> Keypress</span>' : (c.deep_link_content_id || '<span style="color:#777;">None</span>');
-                
-                const dragEvents = isAll ? `draggable="true" ondragstart="dragStart(event, ${i})" ondragover="dragOver(event)" ondrop="drop(event, ${i})" ondragend="dragEnd(event)"` : '';
-                const dragIconColor = isAll ? '#666' : '#222';
-                const dragCursor = isAll ? 'grab' : 'not-allowed';
-                const disableArrows = !isAll ? 'disabled style="opacity: 0.2;"' : '';
-
-                return `
-                <tr ${dragEvents}>
-                    <td style="cursor: ${dragCursor};" title="${isAll ? 'Drag to reorder' : 'Reordering disabled in filtered view'}"><i class="fa-solid fa-grip-vertical" style="color: ${dragIconColor}; margin-right: 10px;"></i>${c.name}</td>
-                    <td>${c.id}</td>
-                    <td>${c.provider_id}</td>
-                    <td>${tuningDisplay}</td>
+            document.getElementById('channels-table-body').innerHTML = config.channels.map((c, i) => `
+                <tr draggable="true" ondragstart="dragStart(event, ${i})" ondragover="dragOver(event)" ondrop="drop(event, ${i})" ondragend="dragEnd(event)">
+                    <td style="cursor: grab;" title="Drag to reorder"><i class="fa-solid fa-grip-vertical" style="color: #666; margin-right: 10px;"></i>${escapeHTML(c.name)}</td>
+                    <td>${escapeHTML(c.id)}</td>
+                    <td>${escapeHTML(c.provider_id)}</td>
+                    <td>${escapeHTML(c.deep_link_content_id)}</td>
                     <td>
                         <div style="display: flex; align-items: center; gap: 4px;">
-                            <button class="action-button" style="background-color: #4b5563;" onclick="moveChannel(${i}, -1)" ${disableArrows || (i === 0 ? 'disabled style="opacity: 0.5;"' : '')}><i class="fa-solid fa-arrow-up"></i></button>
-                            <button class="action-button" style="background-color: #4b5563;" onclick="moveChannel(${i}, 1)" ${disableArrows || (i === config.channels.length - 1 ? 'disabled style="opacity: 0.5;"' : '')}><i class="fa-solid fa-arrow-down"></i></button>
-                            <a href="/preview/${c.id}" class="action-button" style="background-color: #8b5cf6;"><i class="fa-solid fa-play"></i></a>
+                            <button class="action-button" style="background-color: #4b5563;" onclick="moveChannel(${i}, -1)" ${i === 0 ? 'disabled style="opacity: 0.5;"' : ''}><i class="fa-solid fa-arrow-up"></i></button>
+                            <button class="action-button" style="background-color: #4b5563;" onclick="moveChannel(${i}, 1)" ${i === config.channels.length - 1 ? 'disabled style="opacity: 0.5;"' : ''}><i class="fa-solid fa-arrow-down"></i></button>
+                            <a href="/preview/${escapeHTML(c.id)}" class="action-button" style="background-color: #8b5cf6;"><i class="fa-solid fa-play"></i></a>
                             <button class="action-button" onclick="editChannel(${i})"><i class="fa-solid fa-pencil"></i></button>
                             <button class="action-button delete" onclick="delChannel(${i})"><i class="fa-solid fa-trash"></i></button>
                         </div>
                     </td>
-                </tr>`}).join('');
+                </tr>`).join('');
 
             loadTunerStatuses(); 
         }
@@ -779,21 +428,13 @@
             event.target.value = ''; 
         }
 
-        async function openPackModal(type) {
-            const isMacro = type === 'macro';
-            const modalId = isMacro ? 'macro-pack-modal' : 'channel-pack-modal';
-            const selectId = isMacro ? 'macro-cloud-select' : 'channel-cloud-select';
-            const fetchUrl = isMacro ? MACRO_INDEX_URL : CHANNEL_INDEX_URL;
-            
-            document.getElementById(modalId).style.display = 'block';
-            const select = document.getElementById(selectId);
+        async function openCloudModal() {
+            document.getElementById('cloud-modal').style.display = 'block';
+            const select = document.getElementById('cloud-pack-select');
             select.innerHTML = '<option value="">Fetching packs from GitHub...</option>';
             
-            // Reset local file inputs
-            document.getElementById(isMacro ? 'macro-local-file' : 'channel-local-file').value = '';
-            
             try {
-                const res = await fetch(fetchUrl + '?t=' + new Date().getTime()); 
+                const res = await fetch(CLOUD_INDEX_URL + '?t=' + new Date().getTime()); 
                 if (!res.ok) throw new Error("HTTP " + res.status);
                 
                 const packs = await res.json();
@@ -802,85 +443,55 @@
                     return;
                 }
                 
-                select.innerHTML = '<option value="" disabled selected>-- Select a Cloud Pack --</option>' + 
-                    packs.map(p => `<option value="${p.url}">${p.name} (${p.channel_count} channels)</option>`).join('');
+                select.innerHTML = '<option value="" disabled selected>-- Select a Channel Pack --</option>' + 
+                    packs.map(p => `<option value="${p.url}">${escapeHTML(p.name)} (${p.channel_count} channels)</option>`).join('');
             } catch(err) {
                 console.error("Cloud Pack Load Error:", err);
                 select.innerHTML = '<option value="">Failed to load index.json from GitHub.</option>';
             }
         }
 
-        async function applyCloudPack(selectId, mode) {
-            const select = document.getElementById(selectId);
+        async function applyCloudPack(mode) {
+            const select = document.getElementById('cloud-pack-select');
             const packUrl = select.value;
 
-            if (!packUrl) { alert("Please select a cloud pack first."); return; }
+            if (!packUrl) {
+                alert("Please select a channel pack first.");
+                return;
+            }
 
             try {
                 const res = await fetch(packUrl + '?t=' + new Date().getTime());
                 if (!res.ok) throw new Error("HTTP Status: " + res.status);
                 
                 const packData = await res.json();
-                executePackMerge(packData, mode);
-                closeAllPackModals();
+                
+                if (mode === 'replace') {
+                    if (!confirm("Are you SURE? This will wipe your current Channels and Providers and replace them with the downloaded pack. Your Tuners will NOT be affected.")) return;
+                    config.providers = packData.providers || [];
+                    config.channels = packData.channels || [];
+                } else if (mode === 'append') {
+                    (packData.providers || []).forEach(newProv => {
+                        if (!config.providers.some(p => p.id === newProv.id)) {
+                            config.providers.push(newProv);
+                        }
+                    });
+                    (packData.channels || []).forEach(newChan => {
+                        if (!config.channels.some(c => c.id === newChan.id)) {
+                            config.channels.push(newChan);
+                        }
+                    });
+                }
+
+                markUnsaved(); 
+                renderTables(); 
+                closeModal('cloud-modal');
+                alert("Channel pack applied successfully! Don't forget to click Save Now.");
+
             } catch (err) {
                 console.error("Cloud Pack Download Error:", err);
-                alert("Failed to download the channel pack.");
+                alert("Failed to download the channel pack. Check the browser console (F12) for details.");
             }
-        }
-
-        async function applyLocalPack(inputId, mode) {
-            const input = document.getElementById(inputId);
-            const file = input.files[0];
-            
-            if (!file) { alert("Please choose a local JSON file first."); return; }
-
-            try {
-                const text = await file.text();
-                const packData = JSON.parse(text);
-                executePackMerge(packData, mode);
-                closeAllPackModals();
-            } catch (err) {
-                console.error("Local Pack Parse Error:", err);
-                alert("Failed to read the file. Ensure it is a valid JSON format.");
-            }
-        }
-
-        function executePackMerge(packData, mode) {
-            if (mode === 'replace') {
-                if (!confirm("Are you SURE? This will wipe your current Channels and Providers and replace them with the imported pack. Your Tuners will NOT be affected.")) return;
-                config.providers = packData.providers || [];
-                config.channels = packData.channels || [];
-            } else if (mode === 'append') {
-                // Update existing Providers or Append new ones
-                (packData.providers || []).forEach(newProv => {
-                    const idx = config.providers.findIndex(p => p.id === newProv.id);
-                    if (idx !== -1) {
-                        config.providers[idx] = newProv; // Overwrite/Update
-                    } else {
-                        config.providers.push(newProv); // Append new
-                    }
-                });
-
-                // Update existing Channels or Append new ones
-                (packData.channels || []).forEach(newChan => {
-                    const idx = config.channels.findIndex(c => c.id === newChan.id);
-                    if (idx !== -1) {
-                        config.channels[idx] = newChan; // Overwrite/Update
-                    } else {
-                        config.channels.push(newChan); // Append new
-                    }
-                });
-            }
-
-            markUnsaved(); 
-            renderTables(); 
-            alert("Pack imported successfully! Don't forget to click Save Now.");
-        }
-
-        function closeAllPackModals() {
-            document.getElementById('channel-pack-modal').style.display = 'none';
-            document.getElementById('macro-pack-modal').style.display = 'none';
         }
 
         async function loadTunerStatuses() {
@@ -929,8 +540,8 @@
                 const videoSelect = document.getElementById('tuner-video-dev');
                 const audioSelect = document.getElementById('tuner-audio-dev');
                 
-                videoSelect.innerHTML = (hardwareDevices.video || []).map(d => `<option value="${d.id}" ${d.id === selectedVideo ? 'selected' : ''}>${d.name}</option>`).join('') || '<option value="">No video devices found</option>';
-                audioSelect.innerHTML = (hardwareDevices.audio || []).map(d => `<option value="${d.id}" ${d.id === selectedAudio ? 'selected' : ''}>${d.name}</option>`).join('') || '<option value="">No audio devices found</option>';
+                videoSelect.innerHTML = (hardwareDevices.video || []).map(d => `<option value="${d.id}" ${d.id === selectedVideo ? 'selected' : ''}>${escapeHTML(d.name)}</option>`).join('') || '<option value="">No video devices found</option>';
+                audioSelect.innerHTML = (hardwareDevices.audio || []).map(d => `<option value="${d.id}" ${d.id === selectedAudio ? 'selected' : ''}>${escapeHTML(d.name)}</option>`).join('') || '<option value="">No audio devices found</option>';
             } catch (err) {}
         }
 
@@ -951,6 +562,7 @@
             }
         }
         
+        // Contacts the FFmpeg backend to dynamically set limits
         async function autoDetectCard() {
             const devSelect = document.getElementById('tuner-video-dev');
             if (devSelect.selectedIndex === -1) return;
@@ -970,7 +582,7 @@
                 document.getElementById('tuner-capture-fps').value = data.fps;
                 
                 display.style.color = 'var(--success-color)';
-                display.innerHTML = `<i class="fa-solid fa-check"></i> Optimal settings captured!<br><span style="color:#ccc; margin-left:22px; font-size:0.9em;">Format: ${data.format} | Size: ${data.size} | Max FPS: ${data.fps}</span>`;
+                display.innerHTML = `<i class="fa-solid fa-check"></i> Optimal settings captured!<br><span style="color:#ccc; margin-left:22px; font-size:0.9em;">Format: ${escapeHTML(data.format)} | Size: ${escapeHTML(data.size)} | Max FPS: ${escapeHTML(data.fps)}</span>`;
             } catch (err) {
                 display.style.color = 'var(--error-color)';
                 display.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Probe failed. Defaulting to standard definitions.';
@@ -1004,9 +616,9 @@
         function openTunerModal() { 
             document.getElementById('tuner-form').reset(); 
             document.getElementById('tuner-index').value = '-1'; 
-            document.getElementById('tuner-adb-route').value = 'network';
-			toggleAdbRoute();
+            document.getElementById('tuner-type').value = 'network';
             
+            // Clear invisible data blocks for fresh detection
             document.getElementById('tuner-capture-format').value = '';
             document.getElementById('tuner-capture-size').value = '';
             document.getElementById('tuner-capture-fps').value = '';
@@ -1023,9 +635,6 @@
             const t = config.tuners[i];
             document.getElementById('tuner-name').value = t.name;
             document.getElementById('tuner-ip').value = t.device_ip;
-			document.getElementById('tuner-adb-route').value = t.adb_route || 'network';
-			toggleAdbRoute();
-			document.getElementById('tuner-os').value = t.device_os || 'android_tv';
             document.getElementById('tuner-type').value = t.type || 'network';
             document.getElementById('tuner-url').value = t.encoder_url || '';
             document.getElementById('tuner-audio-delay').value = t.audio_delay_ms || 0;
@@ -1033,6 +642,7 @@
             document.getElementById('tuner-priority').value = t.priority || 99;
             document.getElementById('tuner-index').value = i;
             
+            // Retrieve previous capture constraints
             const capFormat = t.capture_format || 'mjpeg';
             const capSize = t.capture_size || '1920x1080';
             const capFps = t.capture_fps || '60';
@@ -1045,7 +655,7 @@
             if ((t.type || 'network') === 'local') {
                 await fetchDevices(t.video_device_id, t.audio_device_id);
                 document.getElementById('capture-settings-display').style.color = '#ccc';
-                document.getElementById('capture-settings-display').innerHTML = `Currently assigned constraints:<br><span style="margin-left:22px; font-size:0.9em;">Format: ${capFormat} | Size: ${capSize} | Max FPS: ${capFps}</span>`;
+                document.getElementById('capture-settings-display').innerHTML = `Currently assigned constraints:<br><span style="margin-left:22px; font-size:0.9em;">Format: ${escapeHTML(capFormat)} | Size: ${escapeHTML(capSize)} | Max FPS: ${escapeHTML(capFps)}</span>`;
             }
             
             document.getElementById('tuner-modal').style.display='block';
@@ -1059,8 +669,6 @@
             const data = { 
                 name: document.getElementById('tuner-name').value, 
                 device_ip: document.getElementById('tuner-ip').value, 
-				adb_route: document.getElementById('tuner-adb-route').value,
-				device_os: document.getElementById('tuner-os').value,
                 type: tunerType,
                 encoder_url: tunerType === 'network' ? document.getElementById('tuner-url').value : '',
                 video_device_id: tunerType === 'local' ? document.getElementById('tuner-video-dev').value : '',
@@ -1093,11 +701,7 @@
             document.getElementById('prov-id').value = p.id;
             document.getElementById('prov-package').value = p.package_name || '';
             document.getElementById('prov-component').value = p.component || '';
-			document.getElementById('prov-fire-package').value = p.fire_package_name || '';
-			document.getElementById('prov-fire-component').value = p.fire_component || '';
-            document.getElementById('prov-url').value = p.url_template || '';
-            document.getElementById('prov-pretune').value = p.pre_tune_macro || '';
-            document.getElementById('prov-posttune').value = p.post_tune_macro || '';
+            document.getElementById('prov-url').value = p.url_template;
             document.getElementById('prov-splash-delay').value = p.splash_delay_ms !== undefined ? p.splash_delay_ms : 3000;
             document.getElementById('provider-index').value = i;
             document.getElementById('provider-modal').style.display='block';
@@ -1111,11 +715,7 @@
                 id: document.getElementById('prov-id').value, 
                 package_name: document.getElementById('prov-package').value, 
                 component: document.getElementById('prov-component').value, 
-				fire_package_name: document.getElementById('prov-fire-package').value,
-				fire_component: document.getElementById('prov-fire-component').value,
                 url_template: document.getElementById('prov-url').value,
-                pre_tune_macro: document.getElementById('prov-pretune').value,
-                post_tune_macro: document.getElementById('prov-posttune').value,
                 splash_delay_ms: parseInt(document.getElementById('prov-splash-delay').value) || 0
             };
             if(i === -1) config.providers.push(data); else config.providers[i] = data;
@@ -1123,84 +723,32 @@
             renderTables(); 
             closeModal('provider-modal');
         };
-
         function delProvider(i) {
-    const provider = config.providers[i];
-    const assignedChannels = config.channels.filter(c => c.provider_id === provider.id);
-    
-    let confirmMsg = `Are you sure you want to delete the provider "${provider.name}"?`;
-    if (assignedChannels.length > 0) {
-        confirmMsg = `Deleting "${provider.name}" will also remove all ${assignedChannels.length} channel(s) assigned to it.\n\nDo you want to proceed?`;
-    }
-
-    if (confirm(confirmMsg)) {
-        // Remove all channels associated with this provider
-        config.channels = config.channels.filter(c => c.provider_id !== provider.id);
-        
-        // Remove the provider
-        config.providers.splice(i, 1);
-        
-        // Reset provider tab filter to 'all' if the active tab was deleted
-        if (currentProviderFilter === provider.id) {
-            currentProviderFilter = 'all';
+            if(config.channels.some(c => c.provider_id === config.providers[i].id)) { alert('Cannot delete provider. It is currently used by one or more channels.'); return; }
+            if(confirm('Delete this provider?')) { config.providers.splice(i, 1); markUnsaved(); renderTables(); }
         }
-        
-        markUnsaved();
-        renderTables();
-    }
-}
 
-        function openChannelModal() { 
-            document.getElementById('channel-form').reset(); 
-            document.getElementById('channel-index').value = '-1'; 
-            populateProviderDropdown(); 
-            toggleTuningMode('deeplink');
-            document.getElementById('channel-modal').style.display='block'; 
-        }
-        
+        function openChannelModal() { document.getElementById('channel-form').reset(); document.getElementById('channel-index').value = '-1'; populateProviderDropdown(); document.getElementById('channel-modal').style.display='block'; }
         function editChannel(i) {
             const c = config.channels[i];
             document.getElementById('ch-name').value = c.name;
             document.getElementById('ch-id').value = c.id;
-            document.getElementById('ch-deeplink').value = c.deep_link_content_id || '';
-            document.getElementById('ch-macro').value = c.tuning_macro || '';
+            document.getElementById('ch-deeplink').value = c.deep_link_content_id;
             document.getElementById('ch-stationid').value = c.tvc_guide_stationid || '';
             populateProviderDropdown(c.provider_id);
             document.getElementById('channel-index').value = i;
-            
-            if (c.tuning_macro && c.tuning_macro.trim() !== '') {
-                toggleTuningMode('macro');
-            } else {
-                toggleTuningMode('deeplink');
-            }
-            
             document.getElementById('channel-modal').style.display='block';
         }
-
         function populateProviderDropdown(selectedId = '') {
-            document.getElementById('ch-provider').innerHTML = config.providers.map(p => `<option value="${p.id}" ${p.id === selectedId ? 'selected' : ''}>${p.name}</option>`).join('');
+            document.getElementById('ch-provider').innerHTML = config.providers.map(p => `<option value="${p.id}" ${p.id === selectedId ? 'selected' : ''}>${escapeHTML(p.name)}</option>`).join('');
         }
-
         document.getElementById('channel-form').onsubmit = e => {
             e.preventDefault();
             const i = parseInt(document.getElementById('channel-index').value);
-            
-            let dlValue = document.getElementById('ch-deeplink').value;
-            let macroValue = document.getElementById('ch-macro').value;
-            
-            const data = { 
-                name: document.getElementById('ch-name').value, 
-                id: document.getElementById('ch-id').value, 
-                provider_id: document.getElementById('ch-provider').value, 
-                deep_link_content_id: dlValue, 
-                tuning_macro: macroValue,
-                tvc_guide_stationid: document.getElementById('ch-stationid').value 
-            };
-            
+            const data = { name: document.getElementById('ch-name').value, id: document.getElementById('ch-id').value, provider_id: document.getElementById('ch-provider').value, deep_link_content_id: document.getElementById('ch-deeplink').value, tvc_guide_stationid: document.getElementById('ch-stationid').value };
             if(i === -1) config.channels.push(data); else config.channels[i] = data;
             markUnsaved(); renderTables(); closeModal('channel-modal');
         };
-
         function delChannel(i) { if(confirm('Delete this channel?')) { config.channels.splice(i, 1); markUnsaved(); renderTables(); } }
 
         function closeModal(id) { document.getElementById(id).style.display='none'; }
