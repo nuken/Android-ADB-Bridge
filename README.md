@@ -1,21 +1,6 @@
-# Android ADB Bridge v5.1.0 Win-Go
+# Android ADB Bridge v5.1.1 Win-Go
 
 A lightweight background tool for Windows that connects your PC to your streaming sticks (like Chromecast, Nvidia Shield, or Onn 4K boxes). It automatically changes channels on your streaming apps and sends the live video straight to your DVR software.
-
----
-
-## Table of Contents
-- [1. Preparing Your Streaming Stick (Developer Connection)](#1-preparing-your-streaming-stick-developer-connection)
-- [2. Installation and Launch](#2-installation-and-launch)
-- [3. Setting Up Your Channels and Devices](#3-setting-up-your-channels-and-devices)
-- [4. Connecting to Your DVR](#4-connecting-to-your-dvr)
-- [5. Built-in Remote Control & Live Preview](#5-built-in-remote-control--live-preview)
-- [6. Hardware Video Encoder Tips (For Best Picture & Speed)](#6-hardware-video-encoder-tips-for-best-picture--speed)
-- [7. Using a Local USB Capture Card (New!)](#7-using-a-local-usb-capture-card-new)
-- [8. Simulated Keypress Tuning (Macros)](#8-simulated-keypress-tuning-macros)
-- [9. Fire OS / Fire TV Support](#9-fire-os--fire-tv-support)
-- [10. Cloud & Local Channel Packs](#10-cloud--local-channel-packs)
-- [11. Direct USB ADB Connections (Wired Mode)](#11-direct-usb-adb-connections-wired-mode)
 
 ---
 
@@ -36,12 +21,27 @@ When you launch the installer, you may see a blue screen stating *"Windows prote
 
 During installation, the setup wizard will silently run a script to add the application's installation folder (typically `C:\Program Files (x86)\AndroidBridge`) to your Windows Defender exclusion list.
 
-* **Why this is necessary:** Android ADB Bridge is a powerful proxy server written in Go. To ensure your channel tuning is fast and seamless, the application constantly launches silent background tasks (like `adb.exe` and `ffmpeg.exe`) and listens on local network ports. Aggressive AI and "Machine Learning" antivirus behavior-based scanning frequently mistake this legitimate background automation for a false positive (often flagging it as a generic Trojan).
+* **Why this is necessary:** Android ADB Bridge is a powerful proxy server written in Go. To ensure your channel tuning is fast and seamless, the application constantly launches silent background tasks (like `adb.exe` and `ffmpeg.exe`) and listens on local network ports. Aggressive AI and "Machine Learning" antivirus heuristics frequently mistake this legitimate background automation for a false positive (often flagging it as a generic Trojan).
 * **What it does:** By automatically whitelisting the application's specific folder during setup, the installer ensures that your antivirus does not falsely quarantine the executable, allowing your video streams to run smoothly and uninterrupted. The installer will cleanly remove this exception if you ever uninstall the application.
 
 
 
 *If you ever want to verify exactly what the application or the installer is doing, the complete source code is fully open-source and available for review in this repository.*
+
+---
+
+## Table of Contents
+- [1. Preparing Your Streaming Stick (Developer Connection)](#1-preparing-your-streaming-stick-developer-connection)
+- [2. Installation and Launch](#2-installation-and-launch)
+- [3. Setting Up Your Channels and Devices](#3-setting-up-your-channels-and-devices)
+- [4. Connecting to Your DVR](#4-connecting-to-your-dvr)
+- [5. Built-in Remote Control & Live Preview](#5-built-in-remote-control--live-preview)
+- [6. Hardware Video Encoder Tips (For Best Picture & Speed)](#6-hardware-video-encoder-tips-for-best-picture--speed)
+- [7. Using a Local USB Capture Card (New!)](#7-using-a-local-usb-capture-card-new)
+- [8. Simulated Keypress Tuning (Macros)](#8-simulated-keypress-tuning-macros)
+- [9. Fire OS / Fire TV Support](#9-fire-os--fire-tv-support)
+- [10. Cloud & Local Channel Packs](#10-cloud--local-channel-packs)
+- [11. Direct USB ADB Connections (Wired Mode)](#11-direct-usb-adb-connections-wired-mode)
 
 ---
 
@@ -75,7 +75,7 @@ Before this tool can control your streaming stick, you need to turn on a built-i
 
 ## 2. Installation and Launch
 
-1. Double-click the `AndroidBridge_Setup_v5.1.0.exe` file to run the installer.
+1. Double-click the `AndroidBridge_Setup_v5.1.1.exe` file to run the installer.
 2. The installer automatically handles safety settings (like Windows Firewall) and sets the app to start up quietly in the background whenever you turn on your PC.
 3. Once installed, double-click the **Android ADB Bridge** shortcut on your Desktop or Start Menu.
 4. This will automatically open your web browser to the app's control panel (usually `http://192.168.1.X:8888/status`).
@@ -205,7 +205,7 @@ When a tune is requested, the bridge automatically checks the hardware OS and se
 
 *:link:[Channel Packs Guide](docs/packs.md)*
 
-Setting up hundreds of channels manually can be tedious. Version 5.1.0 introduces a dual-import system to let you download entire channel lineups in seconds.
+Setting up hundreds of channels manually can be tedious. Version 5.1.1 introduces a dual-import system to let you download entire channel lineups in seconds.
 
 * **Import Channel Pack (Blue Button):** Loads packs designed for standard **Deep Link** URL tuning.
 * **Import Macro Pack (Pink Button):** Loads packs specifically mapped out for **Simulated Keypress** tuning sequences.

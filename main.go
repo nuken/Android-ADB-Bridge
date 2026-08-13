@@ -8,6 +8,7 @@ import (
 	"html/template"
 	"io"
 	"log"
+	"context"
 	"net"
 	"net/http"
 	"os"
@@ -29,35 +30,43 @@ var embeddedFiles embed.FS
 type Tuner struct {
 	Name            string `json:"name"`
 	DeviceIP        string `json:"device_ip"`
+	AdbRoute        string `json:"adb_route,omitempty"`
+	DeviceOS        string `json:"device_os,omitempty"` // Added: "android_tv" or "fire_tv"
 	Type            string `json:"type"` 
 	EncoderURL      string `json:"encoder_url,omitempty"`
 	VideoDeviceID   string `json:"video_device_id,omitempty"`
 	AudioDeviceID   string `json:"audio_device_id,omitempty"`
 	AudioDelayMs    int    `json:"audio_delay_ms,omitempty"`
 	DeinterlaceMode string `json:"deinterlace_mode,omitempty"`
-	CaptureFormat   string `json:"capture_format,omitempty"` // Automatically determined via FFmpeg probe
-	CaptureSize     string `json:"capture_size,omitempty"`   // Automatically determined via FFmpeg probe
-	CaptureFPS      string `json:"capture_fps,omitempty"`    // Automatically determined via FFmpeg probe
+	CaptureFormat   string `json:"capture_format,omitempty"` 
+	CaptureSize     string `json:"capture_size,omitempty"`   
+	CaptureFPS      string `json:"capture_fps,omitempty"`    
 	Priority        int    `json:"priority"`
 	InUse           bool   `json:"-"`
+	ActiveProvider  string `json:"-"`
 }
 
 type Provider struct {
-	ID            string `json:"id"`
-	Name          string `json:"name"`
-	Intent        string `json:"intent,omitempty"` 
-	PackageName   string `json:"package_name"`
-	Component     string `json:"component"`
-	URLTemplate   string `json:"url_template"`
-	SplashDelayMs int    `json:"splash_delay_ms,omitempty"`
+	ID              string `json:"id"`
+	Name            string `json:"name"`
+	Intent          string `json:"intent,omitempty"` 
+	PackageName     string `json:"package_name"`
+	Component       string `json:"component"`
+	FirePackageName string `json:"fire_package_name,omitempty"` // Added
+	FireComponent   string `json:"fire_component,omitempty"`   // Added
+	URLTemplate     string `json:"url_template,omitempty"`
+	SplashDelayMs   int    `json:"splash_delay_ms,omitempty"`
+	PreTuneMacro    string `json:"pre_tune_macro,omitempty"`
+	PostTuneMacro   string `json:"post_tune_macro,omitempty"`
 }
 
 type Channel struct {
 	Name              string `json:"name"`
 	ID                string `json:"id"`
 	ProviderID        string `json:"provider_id"`
-	DeepLinkContentID string `json:"deep_link_content_id"`
-	TvcGuideStationID string `json:"tvc_guide_stationid"`
+	DeepLinkContentID string `json:"deep_link_content_id,omitempty"`
+	TvcGuideStationID string `json:"tvc_guide_stationid,omitempty"`
+	TuningMacro       string `json:"tuning_macro,omitempty"`
 }
 
 type AppConfig struct {
@@ -77,7 +86,6 @@ type DeviceList struct {
 	Audio []DShowDevice `json:"audio"`
 }
 
-// Struct for the JSON response of the hardware probe
 type ProbeResult struct {
 	Format string `json:"format"`
 	Size   string `json:"size"`
@@ -85,8 +93,36 @@ type ProbeResult struct {
 }
 
 var Config AppConfig
-var AppVersion = "5.0.9-WIN"
+var AppVersion = "5.1.1-WIN"
 var tunerLock sync.Mutex
+
+var keycodeMap = map[string]string{
+	"UP":     "19",
+	"DOWN":   "20",
+	"LEFT":   "21",
+	"RIGHT":  "22",
+	"ENTER":  "23",
+	"SELECT": "23",
+	"OK":     "23",
+	"BACK":   "4",
+	"HOME":   "3",
+	"PLAY":   "85",
+	"PAUSE":  "85",
+	"STOP":   "86",
+	"REV":    "89",
+	"FWD":    "90",
+	"INFO":   "82",
+	"0":      "7",
+	"1":      "8",
+	"2":      "9",
+	"3":      "10",
+	"4":      "11",
+	"5":      "12",
+	"6":      "13",
+	"7":      "14",
+	"8":      "15",
+	"9":      "16",
+}
 
 var streamClient = &http.Client{
 	Transport: &http.Transport{
@@ -226,23 +262,55 @@ func ensureADBReady() {
 	log.Println("Warning: ADB server did not respond during startup. Will attempt auto-connects on request.")
 }
 
-func adbCommand(deviceIP string, args ...string) error {
+func adbCommand(deviceIP string, args ...string) (string, error) {
 	adb := getAdbPath()
 
-	connectCmd := exec.Command(adb, "connect", deviceIP)
-	connectCmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
-	connectCmd.Run()
+	isUSB := false
+	tunerLock.Lock()
+	for _, t := range Config.Tuners {
+		if t.DeviceIP == deviceIP && t.AdbRoute == "usb" {
+			isUSB = true
+			break
+		}
+	}
+	tunerLock.Unlock()
+
+	if !isUSB {
+		connectCmd := exec.Command(adb, "connect", deviceIP)
+		connectCmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+		connectCmd.Run()
+	}
 
 	fullArgs := append([]string{"-s", deviceIP}, args...)
 	cmd := exec.Command(adb, fullArgs...)
 	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 
-	return cmd.Run()
+	out, err := cmd.CombinedOutput()
+	outStr := strings.TrimSpace(string(out))
+	
+	if err != nil {
+		log.Printf("[%s ADB Error] %v | Output: %s\n", deviceIP, err, outStr)
+	}
+	
+	// Return the string output so we can read Android's response
+	return outStr, err
 }
 
-func checkADB(deviceIP string) bool {
+func checkADB(t Tuner) bool {
 	adb := getAdbPath()
-	cmd := exec.Command(adb, "connect", deviceIP)
+	
+	if t.AdbRoute == "usb" {
+		cmd := exec.Command(adb, "devices")
+		cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+		out, err := cmd.CombinedOutput()
+		if err != nil {
+			return false
+		}
+		// Look for the specific USB serial in the "device" state
+		return strings.Contains(string(out), t.DeviceIP+"\tdevice") || strings.Contains(string(out), t.DeviceIP+" device")
+	}
+
+	cmd := exec.Command(adb, "connect", t.DeviceIP)
 	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 
 	out, err := cmd.CombinedOutput()
@@ -254,32 +322,188 @@ func checkADB(deviceIP string) bool {
 	return strings.Contains(outStr, "connected")
 }
 
+func parseAndExecuteMacro(ctx context.Context, deviceIP string, macroStr string, pkgName string) {
+	if strings.TrimSpace(macroStr) == "" {
+		return
+	}
+
+	tokens := strings.Split(macroStr, ",")
+	for _, token := range tokens {
+
+		token = strings.TrimSpace(token)
+		if token == "" {
+			continue
+		}
+
+		parts := strings.SplitN(token, ":", 2)
+		action := strings.ToUpper(strings.TrimSpace(parts[0]))
+		param := ""
+		if len(parts) > 1 {
+			param = strings.TrimSpace(parts[1])
+		}
+
+		if action == "FORCE_STOP" || action == "KILL" {
+			if pkgName != "" {
+				log.Printf("[%s Macro] Force stopping package: %s\n", deviceIP, pkgName)
+				adbCommand(deviceIP, "shell", "am", "force-stop", pkgName)
+			} else {
+				log.Printf("[%s Macro] Warning: FORCE_STOP called but no package name provided.\n", deviceIP)
+			}
+			continue
+		}
+
+		if action == "WAIT" || action == "SLEEP" {
+			ms := 0
+			fmt.Sscanf(param, "%d", &ms)
+			if ms > 0 {
+				log.Printf("[%s Macro] Waiting %d ms...\n", deviceIP, ms)
+				
+				// REPLACE time.Sleep with a context-aware wait
+				select {
+				case <-ctx.Done():
+					log.Printf("[%s Macro] Client disconnected mid-tune. Aborting WAIT.\n", deviceIP)
+					return
+				case <-time.After(time.Duration(ms) * time.Millisecond):
+				}
+			}
+			continue
+		}
+
+		keycode, exists := keycodeMap[action]
+		if !exists {
+			var rawCode int
+			if _, err := fmt.Sscanf(action, "%d", &rawCode); err == nil {
+				keycode = fmt.Sprintf("%d", rawCode)
+				exists = true
+			}
+		}
+
+		if exists {
+			count := 1
+			if param != "" {
+				fmt.Sscanf(param, "%d", &count)
+			}
+			if count < 1 {
+				count = 1
+			}
+
+			log.Printf("[%s Macro] Sending %s (keycode %s) x%d\n", deviceIP, action, keycode, count)
+			for c := 0; c < count; c++ {
+				// Check for cancellation before pressing a key
+				select {
+				case <-ctx.Done():
+					log.Printf("[%s Macro] Client disconnected mid-tune. Aborting keypress sequence.\n", deviceIP)
+					return
+				default:
+				}
+
+				adbCommand(deviceIP, "shell", "input", "keyevent", keycode)
+				
+				// REPLACE the 400ms time.Sleep with a context-aware wait
+				select {
+				case <-ctx.Done():
+					return
+				case <-time.After(400 * time.Millisecond):
+				}
+			}
+		} else {
+			log.Printf("[%s Macro] Warning: Unknown macro action '%s'\n", deviceIP, action)
+		}
+	}
+  }
+
 func lockTuner() *Tuner {
 	tunerLock.Lock()
 	defer tunerLock.Unlock()
+
+	var selectedTuner *Tuner
+	selectedIndex := -1
+	bestPriority := 999999 // Start with an artificially high number
+
+	// Loop through all tuners and find the available one with the best (lowest) priority number
 	for i := range Config.Tuners {
 		if !Config.Tuners[i].InUse {
-			Config.Tuners[i].InUse = true
-			return &Config.Tuners[i]
+			if Config.Tuners[i].Priority < bestPriority {
+				bestPriority = Config.Tuners[i].Priority
+				selectedIndex = i
+			}
 		}
 	}
-	return nil
+
+	// If we found a match, lock it and return it
+	if selectedIndex != -1 {
+		Config.Tuners[selectedIndex].InUse = true
+		selectedTuner = &Config.Tuners[selectedIndex]
+	}
+
+	return selectedTuner
 }
 
 func releaseTuner(deviceIP string) {
+	var activeProvID string
+
+	// 1. Grab the active provider, but DO NOT release the tuner yet!
 	tunerLock.Lock()
-	defer tunerLock.Unlock()
 	for i := range Config.Tuners {
 		if Config.Tuners[i].DeviceIP == deviceIP {
-			Config.Tuners[i].InUse = false
-			log.Printf("Released tuner %s. Sending Home command.\n", deviceIP)
-			go adbCommand(deviceIP, "shell", "input", "keyevent", "3")
-			break
+			activeProvID = Config.Tuners[i].ActiveProvider // Grab the provider ID
+			Config.Tuners[i].ActiveProvider = ""           // Reset it
+			break // Leave InUse as true for now
 		}
 	}
+	tunerLock.Unlock()
+
+	// 2. Run cleanup in the background so it doesn't block the HTTP response
+	go func() {
+		if activeProvID != "" {
+			var provider *Provider
+			for _, p := range Config.Providers {
+				if p.ID == activeProvID {
+					provider = &p
+					break
+				}
+			}
+
+			if provider != nil && provider.PostTuneMacro != "" {
+				log.Printf("[%s] Executing Cleanup (Post-Tune) Macro\n", deviceIP)
+				
+				// Look up the specific Tuner's OS for cleanup
+				var tunerOS string
+				tunerLock.Lock()
+				for _, t := range Config.Tuners {
+					if t.DeviceIP == deviceIP {
+						tunerOS = t.DeviceOS
+						break
+					}
+				}
+				tunerLock.Unlock()
+
+				pkg := provider.PackageName
+				if tunerOS == "fire_tv" && provider.FirePackageName != "" {
+					pkg = provider.FirePackageName
+				}
+				
+				parseAndExecuteMacro(context.Background(), deviceIP, provider.PostTuneMacro, pkg)
+			}
+		}
+
+		// ALWAYS send the Home command afterwards to exit the app
+		log.Printf("Released tuner %s. Sending default Home command.\n", deviceIP)
+		adbCommand(deviceIP, "shell", "input", "keyevent", "3")
+
+		// 3. NOW WE RELEASE THE TUNER (Only after all cleanup ADB commands are done)
+		tunerLock.Lock()
+		for i := range Config.Tuners {
+			if Config.Tuners[i].DeviceIP == deviceIP {
+				Config.Tuners[i].InUse = false
+				break
+			}
+		}
+		tunerLock.Unlock()
+	}()
 }
 
-func executeTuning(deviceIP string, ch Channel) {
+func executeTuning(ctx context.Context, deviceIP string, ch Channel) {
 	var provider *Provider
 	for _, p := range Config.Providers {
 		if p.ID == ch.ProviderID {
@@ -293,21 +517,116 @@ func executeTuning(deviceIP string, ch Channel) {
 		return
 	}
 
-	targetURL := strings.ReplaceAll(provider.URLTemplate, "{id}", ch.DeepLinkContentID)
-	log.Printf("Tuning %s to %s via %s\n", deviceIP, ch.Name, provider.Name)
+	// Look up the specific Tuner's OS
+	var tunerOS string
+	tunerLock.Lock()
+	for _, t := range Config.Tuners {
+		if t.DeviceIP == deviceIP {
+			tunerOS = t.DeviceOS
+			break
+		}
+	}
+	tunerLock.Unlock()
 
+	// Resolve Package & Component based on Tuner OS
+	pkg := provider.PackageName
+	cmp := provider.Component
+
+	if tunerOS == "fire_tv" {
+		if provider.FirePackageName != "" {
+			pkg = provider.FirePackageName
+		}
+		if provider.FireComponent != "" {
+			cmp = provider.FireComponent
+		}
+	}
+
+	tunerLock.Lock()
+	for i := range Config.Tuners {
+		if Config.Tuners[i].DeviceIP == deviceIP {
+			Config.Tuners[i].ActiveProvider = provider.ID
+			break
+		}
+	}
+	tunerLock.Unlock()
+
+	log.Printf("Tuning %s to %s via %s (OS: %s | Pkg: %s)\n", deviceIP, ch.Name, provider.Name, tunerOS, pkg)
+
+	// Wake up device
 	adbCommand(deviceIP, "shell", "input", "keyevent", "224")
-	time.Sleep(1 * time.Second)
+	time.Sleep(500 * time.Millisecond)
 
-	intentStr := fmt.Sprintf("%s/%s", provider.PackageName, provider.Component)
-	adbCommand(deviceIP, "shell", "am", "start", "-a", "android.intent.action.VIEW", "-d", targetURL, "-n", intentStr)
+	// 1. Pre-Tune Macro
+	if provider.PreTuneMacro != "" {
+		log.Printf("[%s] Executing Provider Pre-Tune Macro\n", deviceIP)
+		parseAndExecuteMacro(ctx, deviceIP, provider.PreTuneMacro, pkg)
+	}
+	select {
+	case <-ctx.Done():
+		return
+	default:
+	}
+
+	// 2. Launch Intent / Deep Link / Macro App
+	if provider.URLTemplate != "" && ch.DeepLinkContentID != "" {
+		// Deep Link Mode
+		targetURL := strings.ReplaceAll(provider.URLTemplate, "{id}", ch.DeepLinkContentID)
+		intentStr := fmt.Sprintf("%s/%s", pkg, cmp)
+		
+		out, _ := adbCommand(deviceIP, "shell", "am", "start", "-a", "android.intent.action.VIEW", "-d", targetURL, "-n", intentStr)
+		
+		// Piggyback Check: Did the deep link fail?
+		if strings.Contains(strings.ToLower(out), "error") {
+			log.Printf("[%s] ERROR: Deep link failed (App missing or crashed). Aborting macros.\n", deviceIP)
+			return // Stop execution immediately
+		}
+
+	} else if pkg != "" {
+		launched := false
+
+		if cmp != "" {
+			intentStr := fmt.Sprintf("%s/%s", pkg, cmp)
+			out, err := adbCommand(deviceIP, "shell", "am", "start", "-a", "android.intent.action.MAIN", "-c", "android.intent.category.LEANBACK_LAUNCHER", "-n", intentStr)
+			
+			// Check if the explicit launch succeeded without an error output
+			if err == nil && !strings.Contains(strings.ToLower(out), "error") {
+				launched = true
+			} else {
+				log.Printf("[%s] Explicit component start blocked/failed for %s. Using fallback launcher...\n", deviceIP, cmp)
+			}
+		}
+
+		if !launched {
+			log.Printf("[%s] Launching package %s via safe launcher fallback...\n", deviceIP, pkg)
+			out, _ := adbCommand(deviceIP, "shell", "monkey", "-p", pkg, "-c", "android.intent.category.LAUNCHER", "1")
+			
+			// Piggyback Check: Did the Monkey command abort?
+			if strings.Contains(strings.ToLower(out), "aborted") || strings.Contains(strings.ToLower(out), "error") {
+				log.Printf("[%s] ERROR: Safe launcher failed to find app '%s'. Aborting macros.\n", deviceIP, pkg)
+				return // Stop execution immediately
+			}
+		}
+	}
+
+	// 3. Splash Delay
+	if provider.SplashDelayMs > 0 {
+		select {
+		case <-ctx.Done():
+			return
+		case <-time.After(time.Duration(provider.SplashDelayMs) * time.Millisecond):
+		}
+	}
+
+	// 4. Channel Tuning Macro
+	if ch.TuningMacro != "" {
+		log.Printf("[%s] Executing Channel Tuning Macro\n", deviceIP)
+		parseAndExecuteMacro(ctx, deviceIP, ch.TuningMacro, pkg)
+	}
 }
 
 // ==========================================
 // 5. Hardware Diagnostics & Auto-Detection
 // ==========================================
-
-// getEncoderArgs queries the Windows OS for the GPU brand to assign a strict H.264 hardware encoder
 func getEncoderArgs() []string {
 	cmd := exec.Command("wmic", "path", "win32_VideoController", "get", "name")
 	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
@@ -323,16 +642,13 @@ func getEncoderArgs() []string {
 			return []string{"-c:v", "h264_amf", "-usage", "lowlatency", "-b:v", "8000k", "-bufsize", "16000k", "-pix_fmt", "yuv420p"}
 		}
 		if strings.Contains(outStr, "INTEL") || strings.Contains(outStr, "UHD GRAPHICS") || strings.Contains(outStr, "HD GRAPHICS") {
-			// Uses Intel's LA_ICQ for optimal visual fidelity
 			return []string{"-c:v", "h264_qsv", "-look_ahead", "1", "-global_quality", "25"} 
 		}
 	}
 	
-	// Default to CPU fallback using standard Rec. 709 constraints for Channels DVR
 	return []string{"-c:v", "libx264", "-preset", "veryfast", "-b:v", "8000k", "-bufsize", "16000k", "-pix_fmt", "yuv420p"}
 }
 
-// apiProbeDevice commands FFmpeg to list device pins and determines the best stream properties
 func apiProbeDevice(w http.ResponseWriter, r *http.Request) {
 	devName := r.URL.Query().Get("name")
 	if devName == "" {
@@ -344,10 +660,8 @@ func apiProbeDevice(w http.ResponseWriter, r *http.Request) {
 	cmd := exec.Command(ffmpeg, "-f", "dshow", "-list_options", "true", "-i", fmt.Sprintf("video=%s", devName))
 	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 	
-	// FFmpeg writes device lists directly to stderr and returns an error code
 	out, _ := cmd.CombinedOutput()
 
-	// Regex to capture "pixel_format=nv12 ... max s=1920x1080 fps=50" or "vcodec=mjpeg ... max s=1920x1080 fps=60"
 	re := regexp.MustCompile(`(?:pixel_format|vcodec)=([a-zA-Z0-9_]+).*?max s=([0-9]+x[0-9]+) fps=([0-9.]+)`)
 	
 	var bestOption ProbeResult
@@ -362,15 +676,12 @@ func apiProbeDevice(w http.ResponseWriter, r *http.Request) {
 			fps := matches[3]
 
 			score := 0
-			// 1080p outputs directly support Onn HD Stick rendering sizes natively
 			if size == "1920x1080" {
 				score += 100
 			}
 
-			// Prioritize compressed MJPEG first to sidestep USB 2.0 bandwidth drops
 			if format == "mjpeg" {
 				score += 50
-			// NV12 avoids colorspace conversions before hitting Intel QSV 
 			} else if format == "nv12" {
 				score += 40
 			} else if format == "yuyv422" || format == "yuy2" {
@@ -394,11 +705,36 @@ func apiProbeDevice(w http.ResponseWriter, r *http.Request) {
 		bestOption = ProbeResult{Format: "mjpeg", Size: "1920x1080", FPS: "60"} 
 	}
 
-	// Remove fractional zeros to keep the UI clean
 	bestOption.FPS = strings.TrimSuffix(bestOption.FPS, ".000")
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(bestOption)
+}
+
+func apiUsbDevices(w http.ResponseWriter, r *http.Request) {
+	adb := getAdbPath()
+	cmd := exec.Command(adb, "devices")
+	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+	out, _ := cmd.CombinedOutput()
+
+	var devices []string
+	lines := strings.Split(string(out), "\n")
+	for _, line := range lines {
+		line = strings.TrimSpace(line)
+		if line == "" || strings.HasPrefix(line, "List of") {
+			continue
+		}
+		parts := strings.Fields(line)
+		// Look for standard USB devices (status "device") and skip IP addresses
+		if len(parts) == 2 && parts[1] == "device" {
+			if !strings.Contains(parts[0], ":") && !strings.Contains(parts[0], ".") {
+				devices = append(devices, parts[0])
+			}
+		}
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(devices)
 }
 
 func apiDevices(w http.ResponseWriter, r *http.Request) {
@@ -425,27 +761,34 @@ func apiDevices(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if strings.Contains(line, "\"") {
-			if strings.Contains(line, "Alternative name") {
-				continue
-			}
-
 			parts := strings.Split(line, "\"")
 			if len(parts) >= 2 {
 				val := parts[1]
-				devType := currentType
 
-				if strings.Contains(line, "(video)") {
-					devType = "video"
-				} else if strings.Contains(line, "(audio)") {
-					devType = "audio"
-				}
+				if strings.Contains(line, "Alternative name") {
+					// Attach the unique hardware path to the last device we just added
+					if currentType == "video" && len(devices.Video) > 0 {
+						devices.Video[len(devices.Video)-1].ID = val
+					} else if currentType == "audio" && len(devices.Audio) > 0 {
+						devices.Audio[len(devices.Audio)-1].ID = val
+					}
+				} else {
+					// This is a new primary device name.
+					// We temporarily set ID to the friendly name, which acts as a backwards-compatible fallback 
+					// just in case FFmpeg doesn't output an Alternative Name for a specific device.
+					newDev := DShowDevice{Name: val, ID: val} 
 
-				newDev := DShowDevice{Name: val, ID: val}
+					if strings.Contains(line, "(video)") {
+						currentType = "video"
+					} else if strings.Contains(line, "(audio)") {
+						currentType = "audio"
+					}
 
-				if devType == "video" {
-					devices.Video = append(devices.Video, newDev)
-				} else if devType == "audio" {
-					devices.Audio = append(devices.Audio, newDev)
+					if currentType == "video" {
+						devices.Video = append(devices.Video, newDev)
+					} else if currentType == "audio" {
+						devices.Audio = append(devices.Audio, newDev)
+					}
 				}
 			}
 		}
@@ -623,18 +966,19 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer releaseTuner(tuner.DeviceIP)
 
-	executeTuning(tuner.DeviceIP, *channel)
+	// 1. Launch tuning asynchronously so FFmpeg starts instantly
+	// This covers both macros and deep-link launches in the background
+	go func() {
+		executeTuning(r.Context(), tuner.DeviceIP, *channel)
+	}()
 
 	w.Header().Set("Content-Type", "video/mp2t")
 	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
 	w.Header().Set("Connection", "keep-alive")
 	w.Header().Set("Transfer-Encoding", "chunked")
 
-	// ==========================================
-	// BRANCH A: Local USB Capture (Windows DirectShow)
-	// ==========================================
 	if tuner.Type == "local" {
-		time.Sleep(2 * time.Second)
+		// 2. Removed time.Sleep(2 * time.Second) here
 
 		var provider *Provider
 		for _, p := range Config.Providers {
@@ -643,6 +987,7 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 				break
 			}
 		}
+		
 		splashDelayMs := 0
 		if provider != nil {
 			splashDelayMs = provider.SplashDelayMs
@@ -650,7 +995,6 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 
 		ffmpeg := getFFmpegPath()
 
-		// Retrieve dynamically assessed hardware limits
 		captureFormat := tuner.CaptureFormat
 		if captureFormat == "" {
 			captureFormat = "mjpeg" 
@@ -676,6 +1020,7 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 			vfArg = "bwdif=mode=1:parity=1,format=nv12"
 		}
 
+		// 3. Apply the pure black drawbox overlay based on SplashDelayMs
 		if splashDelayMs > 0 {
 			splashSecs := float64(splashDelayMs) / 1000.0
 			vfArg += fmt.Sprintf(",drawbox=x=0:y=0:w=iw:h=ih:color=black:t=fill:enable='between(t,0,%.2f)'", splashSecs)
@@ -690,7 +1035,6 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 			dshowInput += fmt.Sprintf(":audio=%s", tuner.AudioDeviceID)
 		}
 
-		// Inject Intel Hardware setup strictly if the auto-detected encoder is QSV
 		encoderArgs := getEncoderArgs()
 		isQSV := false
 		for _, a := range encoderArgs {
@@ -715,7 +1059,6 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 			"-vf", vfArg,
 		)
 		
-		// Apply strictly H.264 compatible hardware encoder limits determined during runtime WMI lookup
 		args = append(args, encoderArgs...)
 
 		args = append(args,
@@ -754,7 +1097,7 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 		stdout, err := cmd.StdoutPipe()
 		if err != nil {
 			log.Println("FFmpeg stdout error:", err)
-			http.Error(w, "Capture card initialization failed", http.StatusInternalServerError)
+			http.Error(w, "Capture card stdout error", http.StatusInternalServerError)
 			return
 		}
 
@@ -763,8 +1106,6 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "Failed to start FFmpeg", http.StatusInternalServerError)
 			return
 		}
-
-		w.WriteHeader(http.StatusOK)
 
 		streamChan := make(chan []byte, 500)
 		flusher, canFlush := w.(http.Flusher)
@@ -785,24 +1126,29 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 			}
 		}()
 
-		for chunk := range streamChan {
-			if _, err := w.Write(chunk); err != nil {
-				break
-			}
-			if canFlush {
-				flusher.Flush()
+		streamLoop:
+		for {
+			select {
+			case <-r.Context().Done():
+				// Instantly break if the client disconnects
+				break streamLoop
+			case chunk, ok := <-streamChan:
+				if !ok {
+					// FFmpeg channel closed
+					break streamLoop
+				}
+				if _, err := w.Write(chunk); err != nil {
+					break streamLoop
+				}
+				if canFlush {
+					flusher.Flush()
+				}
 			}
 		}
-
 		cmd.Process.Kill()
 		cmd.Wait()
 		return
 	}
-
-	// ==========================================
-	// BRANCH B: Network Encoder (LinkPi)
-	// ==========================================
-	time.Sleep(2 * time.Second)
 
 	req, err := http.NewRequestWithContext(r.Context(), "GET", tuner.EncoderURL, nil)
 	if err != nil {
@@ -813,17 +1159,20 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 	resp, err := streamClient.Do(req)
 	if err != nil {
 		log.Println("Encoder connection error:", err)
-		http.Error(w, "Failed to connect to encoder", http.StatusBadGateway)
+		http.Error(w, "Failed to connect to network encoder", http.StatusBadGateway)
 		return
 	}
 	defer resp.Body.Close()
-
-	w.WriteHeader(http.StatusOK)
 
 	buf := make([]byte, 128*1024)
 	flusher, canFlush := w.(http.Flusher)
 
 	for {
+		// Instantly break if the client disconnects
+		if r.Context().Err() != nil {
+			break
+		}
+		
 		n, err := resp.Body.Read(buf)
 		if n > 0 {
 			if _, wErr := w.Write(buf[:n]); wErr != nil {
@@ -880,7 +1229,7 @@ func remoteKeypress(w http.ResponseWriter, r *http.Request) {
 	key := parts[4]
 
 	keyMap := map[string]string{
-		"Home": "3", "Back": "4", "Select": "66", "Enter": "66",
+		"Home": "3", "Back": "4", "Select": "23", "Enter": "23",
 		"Up": "19", "Down": "20", "Left": "21", "Right": "22",
 		"Play": "85", "Pause": "85", "Rev": "89", "Fwd": "90",
 		"Info": "82",
@@ -945,7 +1294,7 @@ func checkTuners(w http.ResponseWriter, r *http.Request) {
 			defer wg.Done()
 
 			res := StatusResult{DeviceIP: tuner.DeviceIP}
-			res.ADBOnline = checkADB(tuner.DeviceIP)
+			res.ADBOnline = checkADB(tuner)
 
 			if tuner.Type == "local" {
 				if _, err := os.Stat(getFFmpegPath()); err == nil {
@@ -1011,7 +1360,7 @@ func main() {
 	http.HandleFunc("/api/export_config", apiExportConfig)
 	http.HandleFunc("/api/import_config", apiImportConfig)
 	http.HandleFunc("/api/devices", apiDevices)
-	http.HandleFunc("/api/probe_device", apiProbeDevice) // Added probe endpoint
+	http.HandleFunc("/api/probe_device", apiProbeDevice)
 	http.HandleFunc("/api/active_tuners", apiActiveTuners)
 	http.HandleFunc("/stream/", streamHandler)
 	http.HandleFunc("/channels.m3u", generateM3U)
@@ -1020,6 +1369,7 @@ func main() {
 	http.HandleFunc("/preview/", previewPage)
 	http.HandleFunc("/api/check_tuners", checkTuners)
 	http.HandleFunc("/api/release/", apiReleaseTuner)
+	http.HandleFunc("/api/usb_devices", apiUsbDevices)
 
 	portString := fmt.Sprintf(":%d", Config.Port)
 
