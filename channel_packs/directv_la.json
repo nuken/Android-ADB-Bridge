@@ -2,7 +2,7 @@
   "providers": [
     {
       "id": "directv",
-      "name": "DirecT Ultimate",
+      "name": "DirecTV Ultimate",
       "package_name": "com.att.tv",
       "component": "com.clientapp.MainActivity",
       "url_template": "dtvnow://deeplink.directvnow.com/play/channel/{id}",
