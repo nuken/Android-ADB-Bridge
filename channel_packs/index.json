@@ -20,6 +20,11 @@
     "url": "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/channel_packs/directv_nyc.json"
   },
   {
+    "name": "DirecTV Ultimate (Los Angeles)",
+    "channel_count": 388,
+    "url": "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/channel_packs/directv_la.json"
+  },
+  {
     "name": "DirecTV (West)",
     "channel_count": 138,
     "url": "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/channel_packs/directv_west.json"
