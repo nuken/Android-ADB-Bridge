@@ -1,0 +1,3979 @@
+{
+  "providers": [
+    {
+      "id": "directv",
+      "name": "DirecTV Ultimate (LA)",
+      "package_name": "com.att.tv",
+      "component": "com.clientapp.MainActivity",
+      "url_template": "dtvnow://deeplink.directvnow.com/play/channel/{id}",
+      "splash_delay_ms": 3000
+    }
+  ],
+  "channels": [
+    {
+      "name": "WINS",
+      "id": "wins-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "WINS/518012ba-c9b7-4f8a-943b-801aa7356210",
+      "tvc_guide_stationid": "91035"
+    },
+    {
+      "name": "Los Angeles 2 KCBS (CBS) HD",
+      "id": "los-angeles-2-kcbs-cbs-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KCBS/a6a20961-b5a2-44eb-a1b8-511721db7599",
+      "tvc_guide_stationid": "19567"
+    },
+    {
+      "name": "Los Angeles 2 KCBS (CBS)",
+      "id": "los-angeles-2-kcbs-cbs-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KCBS/dae12adc-b69e-4d1f-a1f2-97e852e394fc",
+      "tvc_guide_stationid": "10367"
+    },
+    {
+      "name": "Los Angeles 4 KNBC (NBC) HD",
+      "id": "los-angeles-4-knbc-nbc-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KNBC/834955b1-15b8-4374-9ddb-681ace20fd99",
+      "tvc_guide_stationid": "19568"
+    },
+    {
+      "name": "Los Angeles 4 KNBC (NBC)",
+      "id": "los-angeles-4-knbc-nbc-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KNBC/c82c23f3-e04e-42e3-8256-83fa635f2b9f",
+      "tvc_guide_stationid": "10590"
+    },
+    {
+      "name": "Los Angeles, CA KTLA CW 5 SD",
+      "id": "los-angeles-ca-ktla-cw-5-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KTLA/9f4a03fd-178a-4c49-86c9-d402cf586a02",
+      "tvc_guide_stationid": "10724"
+    },
+    {
+      "name": "Los Angeles, CA KTLA CW 5 A3 HD",
+      "id": "los-angeles-ca-ktla-cw-5-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KTLA/a944aaef-c8f0-458d-8a6b-bc2a662e53cb",
+      "tvc_guide_stationid": "19515"
+    },
+    {
+      "name": "Los Angeles 7 KABC (ABC) HD",
+      "id": "los-angeles-7-kabc-abc-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KABC/779bc6f0-75da-46c9-92f6-b35ed0be4dcb",
+      "tvc_guide_stationid": "19570"
+    },
+    {
+      "name": "Los Angeles 7 KABC (ABC)",
+      "id": "los-angeles-7-kabc-abc-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KABC/e7537ca6-dfbe-4b17-85e7-5ebf0d9b8410",
+      "tvc_guide_stationid": "10309"
+    },
+    {
+      "name": "Los Angeles, CA KCAL IND 9 A3 HD",
+      "id": "los-angeles-ca-kcal-ind-9-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KCAL/f3c092d3-cc7d-4376-b1da-e52ce02bd712",
+      "tvc_guide_stationid": "20364"
+    },
+    {
+      "name": "Los Angeles, CA KCAL IND 9 SD",
+      "id": "los-angeles-ca-kcal-ind-9-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KCAL/57073a2d-e5b8-477f-b663-529322de25da",
+      "tvc_guide_stationid": "10362"
+    },
+    {
+      "name": "Los Angeles 11 KTTV (FOX)",
+      "id": "los-angeles-11-kttv-fox-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KTTV/48f754ce-5427-426b-b5ac-c5e4931fce3b",
+      "tvc_guide_stationid": "10741"
+    },
+    {
+      "name": "Los Angeles 11 KTTV (FOX) HD",
+      "id": "los-angeles-11-kttv-fox-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KTTV/a8dff9f4-49a2-48c2-8310-a9126fc72b66",
+      "tvc_guide_stationid": "20450"
+    },
+    {
+      "name": "Los Angeles, CA KCOP MNT 13 A3 HD",
+      "id": "los-angeles-ca-kcop-mnt-13-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KCOP/db0a51f4-4a64-4627-865a-4665e3eebb60",
+      "tvc_guide_stationid": "19653"
+    },
+    {
+      "name": "Los Angeles, CA KCOP MNT 13 SD",
+      "id": "los-angeles-ca-kcop-mnt-13-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KCOP/f4e794ff-d957-43df-b9f1-e9129cd5cf64",
+      "tvc_guide_stationid": "10383"
+    },
+    {
+      "name": "Los Angeles, CA KSCI IND 18 A3 HD",
+      "id": "los-angeles-ca-ksci-ind-18-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KSCI/6e8fc37a-bead-4546-9697-775327a74759",
+      "tvc_guide_stationid": "115828"
+    },
+    {
+      "name": "Los Angeles, CA KSCI IND 18 SD",
+      "id": "los-angeles-ca-ksci-ind-18-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KSCI/e0a0a544-4f4b-4aba-bbba-6aeffd209767",
+      "tvc_guide_stationid": "10684"
+    },
+    {
+      "name": "Los Angeles, CA KVME IND 20 A3 HD",
+      "id": "los-angeles-ca-kvme-ind-20-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KVME/8570cb1a-4375-48af-ad35-a9d7c9030fe6",
+      "tvc_guide_stationid": "106924"
+    },
+    {
+      "name": "Los Angeles, CA KVME IND 20 SD",
+      "id": "los-angeles-ca-kvme-ind-20-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KVME/26fd1996-84ee-4d8c-8c68-72dbdd8020bf",
+      "tvc_guide_stationid": "106924"
+    },
+    {
+      "name": "Los Angeles, CA KSCN IND 22 A3 HD",
+      "id": "los-angeles-ca-kscn-ind-22-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KSCN/f7e3c2cd-0609-4c71-b621-f8bdc4ad45aa",
+      "tvc_guide_stationid": "24023"
+    },
+    {
+      "name": "Los Angeles, CA KSCN IND 22 SD",
+      "id": "los-angeles-ca-kscn-ind-22-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KSCN/5176a388-c510-43f4-9d16-4c23205dfd35",
+      "tvc_guide_stationid": "24023"
+    },
+    {
+      "name": "Los Angeles, CA KVCR PBS 24 A3 HD",
+      "id": "los-angeles-ca-kvcr-pbs-24-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KVCR/3e6418ce-c70c-4509-a954-f6ded643269c",
+      "tvc_guide_stationid": "44023"
+    },
+    {
+      "name": "Los Angeles, CA KVCR PBS 24 SD",
+      "id": "los-angeles-ca-kvcr-pbs-24-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KVCR/3cb6f1d6-aee1-41a2-b2a1-242088046fa9",
+      "tvc_guide_stationid": "10793"
+    },
+    {
+      "name": "Los Angeles, CA KCET PBS 28 A3 HD",
+      "id": "los-angeles-ca-kcet-pbs-28-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KCET/9559935a-f249-438e-9f8a-eb9bc4365899",
+      "tvc_guide_stationid": "24020"
+    },
+    {
+      "name": "Los Angeles, CA KCET PBS 28 SD",
+      "id": "los-angeles-ca-kcet-pbs-28-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KCET/fc011e65-9577-4c88-95e5-3395f6736e22",
+      "tvc_guide_stationid": "10373"
+    },
+    {
+      "name": "Los Angeles, CA KPXN ION 30 A3 HD",
+      "id": "los-angeles-ca-kpxn-ion-30-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KPXN/55d362a3-7dc5-451f-b88b-194a1da28133",
+      "tvc_guide_stationid": "49814"
+    },
+    {
+      "name": "Los Angeles, CA KVMD IND 31 SD",
+      "id": "los-angeles-ca-kvmd-ind-31-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KVMD/132478b0-192b-48a1-bc88-981677f854d5",
+      "tvc_guide_stationid": "34758"
+    },
+    {
+      "name": "Los Angeles, CA KVMD IND 31 A3 HD",
+      "id": "los-angeles-ca-kvmd-ind-31-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KVMD/6c3c0c2f-44f0-467c-bc05-c3938a04f12b",
+      "tvc_guide_stationid": "34758"
+    },
+    {
+      "name": "Los Angeles, CA KMEX UNI 34 SD",
+      "id": "los-angeles-ca-kmex-uni-34-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KMEX/ec3245a2-15fb-4c1a-ae07-a068193a8e1b",
+      "tvc_guide_stationid": "10566"
+    },
+    {
+      "name": "Los Angeles, CA KMEX UNI 34 A3 HD",
+      "id": "los-angeles-ca-kmex-uni-34-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KMEX/67ce260b-8cdd-4b95-9948-f6b2bd86aa8c",
+      "tvc_guide_stationid": "43048"
+    },
+    {
+      "name": "Los Angeles, CA KXLA IND 44 SD",
+      "id": "los-angeles-ca-kxla-ind-44-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KXLA/3cd8c1d1-bd18-43c2-b370-86950e39efba",
+      "tvc_guide_stationid": "29568"
+    },
+    {
+      "name": "Los Angeles, CA KXLA IND 44 A3 HD",
+      "id": "los-angeles-ca-kxla-ind-44-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KXLA/4daf0047-0c35-499b-8f35-9633b312d110",
+      "tvc_guide_stationid": "42829"
+    },
+    {
+      "name": "Los Angeles, CA KFTR UMas 46 A3 HD",
+      "id": "los-angeles-ca-kftr-umas-46-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KFTR/f59e0165-0f67-4ad6-af09-314cb898189d",
+      "tvc_guide_stationid": "53123"
+    },
+    {
+      "name": "Los Angeles, CA KFTR UMas 46 SD",
+      "id": "los-angeles-ca-kftr-umas-46-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KFTR/3eef349a-dbd0-482e-8dda-25df8a704e7d",
+      "tvc_guide_stationid": "10500"
+    },
+    {
+      "name": "Los Angeles, CA KOCE PBS 50 A3 HD",
+      "id": "los-angeles-ca-koce-pbs-50-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KOCE/3143f4fd-7101-4137-926b-a757096313e1",
+      "tvc_guide_stationid": "34544"
+    },
+    {
+      "name": "Los Angeles, CA KOCE PBS 50 SD",
+      "id": "los-angeles-ca-koce-pbs-50-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KOCE/a2af1faa-d0d5-4617-a4c9-3267d19ce845",
+      "tvc_guide_stationid": "10613"
+    },
+    {
+      "name": "Los Angeles, CA KVEA TMO 52 A3 HD",
+      "id": "los-angeles-ca-kvea-tmo-52-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KVEA/4cbb5529-52b3-4035-aeb3-5ee868af69f6",
+      "tvc_guide_stationid": "42678"
+    },
+    {
+      "name": "Los Angeles, CA KVEA TMO 52 SD",
+      "id": "los-angeles-ca-kvea-tmo-52-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KVEA/a9dc84fa-2b88-4bb0-a320-e76b21a5f795",
+      "tvc_guide_stationid": "10795"
+    },
+    {
+      "name": "Los Angeles, CA KAZA METV 54 SD",
+      "id": "los-angeles-ca-kaza-metv-54-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KAZA/6137b504-9f76-4ad4-96ee-ae97d42d86ed",
+      "tvc_guide_stationid": "26843"
+    },
+    {
+      "name": "Los Angeles, CA KAZA METV 54 A3 HD",
+      "id": "los-angeles-ca-kaza-metv-54-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KAZA/e0829f1d-52b6-497a-baf5-144227c60774",
+      "tvc_guide_stationid": "43286"
+    },
+    {
+      "name": "Los Angeles, CA KJLA IND 57 SD",
+      "id": "los-angeles-ca-kjla-ind-57-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KJLA/499db886-e685-4782-8d97-0192d009c36a",
+      "tvc_guide_stationid": "12476"
+    },
+    {
+      "name": "Los Angeles, CA KJLA IND 57 A3 HD",
+      "id": "los-angeles-ca-kjla-ind-57-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KJLA/a8ac9594-f856-429a-bc8d-3562160b70cb",
+      "tvc_guide_stationid": "50395"
+    },
+    {
+      "name": "Los Angeles, CA KLCS PBS 58 A3 HD",
+      "id": "los-angeles-ca-klcs-pbs-58-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KLCS/63aca059-0494-4967-8e8b-fc3a71534904",
+      "tvc_guide_stationid": "43777"
+    },
+    {
+      "name": "Los Angeles, CA KLCS PBS 58 SD",
+      "id": "los-angeles-ca-klcs-pbs-58-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KLCS/d96ead08-dd8c-49b4-b107-c76ebd57706c",
+      "tvc_guide_stationid": "10538"
+    },
+    {
+      "name": "Los Angeles, CA KRCA IND 62 A3 HD",
+      "id": "los-angeles-ca-krca-ind-62-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KRCA/e2b722a1-8268-41ec-b59e-66a423e774b9",
+      "tvc_guide_stationid": "35352"
+    },
+    {
+      "name": "Los Angeles, CA KRCA IND 62 SD",
+      "id": "los-angeles-ca-krca-ind-62-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KRCA/4f486c06-affb-4842-ab95-5df4e92e9e9b",
+      "tvc_guide_stationid": "12398"
+    },
+    {
+      "name": "Los Angeles, CA KWHY IND 63 SD",
+      "id": "los-angeles-ca-kwhy-ind-63-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KWHY/5976b7e9-7cfd-4328-b666-ac8f918e606d",
+      "tvc_guide_stationid": "10314"
+    },
+    {
+      "name": "Los Angeles, CA KWHY IND 63 A3 HD",
+      "id": "los-angeles-ca-kwhy-ind-63-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KWHY/a38e05a0-6cfe-40a8-9c65-d480cd35c3c9",
+      "tvc_guide_stationid": "44019"
+    },
+    {
+      "name": "Los Angeles, CA KILM IND 64 A3 HD",
+      "id": "los-angeles-ca-kilm-ind-64-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KILM/abb7c0ed-5b51-4fe6-98aa-fc1b6c5ec7f5",
+      "tvc_guide_stationid": "54495"
+    },
+    {
+      "name": "Los Angeles, CA KILM IND 64 SD",
+      "id": "los-angeles-ca-kilm-ind-64-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KILM/7ff4f154-382a-43bd-a044-f686cba02a6d",
+      "tvc_guide_stationid": "12421"
+    },
+    {
+      "name": "Home Shopping Network 70-1",
+      "id": "home-shopping-network-70-1-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "HSN/fcc9de26-d9bf-4dfc-8e8b-36bf341d6231",
+      "tvc_guide_stationid": "10269"
+    },
+    {
+      "name": "QVC HD (70)",
+      "id": "qvc-hd-70-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "QVCHD/b57ae0e3-b95d-4583-9d9a-41b78bd4f49a",
+      "tvc_guide_stationid": "60222"
+    },
+    {
+      "name": "QVC (70)",
+      "id": "qvc-70-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "QVC/433f0e4a-18f5-4b11-be5a-696bafca7bcd",
+      "tvc_guide_stationid": "11069"
+    },
+    {
+      "name": "Home Shopping Network 70-1 (HD)",
+      "id": "home-shopping-network-70-1-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "HSNHD/f7351b75-b3bb-4932-8e80-340afa957c41",
+      "tvc_guide_stationid": "62077"
+    },
+    {
+      "name": "News Mix 71",
+      "id": "news-mix-71-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NMX/31c8230c-3cb6-43ee-ac3d-9288ec1f0d74",
+      "tvc_guide_stationid": "6505"
+    },
+    {
+      "name": "Jewelry Television (72)",
+      "id": "jewelry-television-72-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "JTV/974e261e-f83c-4f7d-9c13-7fbedd8bd614",
+      "tvc_guide_stationid": "1977"
+    },
+    {
+      "name": "SALE Network.",
+      "id": "sale-network-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SALE/3c37755d-5b85-4ed1-adff-e940fe564876",
+      "tvc_guide_stationid": "66110"
+    },
+    {
+      "name": "Shop LC HD 75",
+      "id": "shop-lc-hd-75-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SHOPLC/f8e95634-bf63-429f-99fe-b4c229b03ce2",
+      "tvc_guide_stationid": "56032"
+    },
+    {
+      "name": "QVC2 (76)",
+      "id": "qvc2-76-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "QVC2/b14e8538-f332-425c-b7ad-684eb5467f7f",
+      "tvc_guide_stationid": "4328"
+    },
+    {
+      "name": "MeTV",
+      "id": "metv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "METV/038e34a5-d895-44cb-81da-f5d0b860fd06",
+      "tvc_guide_stationid": "108972"
+    },
+    {
+      "name": "NEW TV (77)",
+      "id": "new-tv-77-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NEW/bc3ead9b-b1ac-4612-bc33-f7dcf1a97935",
+      "tvc_guide_stationid": "61313"
+    },
+    {
+      "name": "COOL Network 78",
+      "id": "cool-network-78-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "COOL/2f5860df-d97c-499e-838f-027471ebb3bf",
+      "tvc_guide_stationid": "114483"
+    },
+    {
+      "name": "QVC2 (79)",
+      "id": "qvc2-79-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "QVC2/893b200c-1f5c-4d8f-82c8-9219fa0e5118",
+      "tvc_guide_stationid": "5239"
+    },
+    {
+      "name": "COZI TV",
+      "id": "cozi-tv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "COZI/c725c691-7980-4353-8580-c261fb6900b8",
+      "tvc_guide_stationid": "78851"
+    },
+    {
+      "name": "GRIT",
+      "id": "grit-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "GRIT/e70487a5-cc3f-479e-9271-882db3d66ae9",
+      "tvc_guide_stationid": "89922"
+    },
+    {
+      "name": "BounceTV",
+      "id": "bouncetv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "Bounce/82539a74-53de-49ba-bcb4-1a43775803f9",
+      "tvc_guide_stationid": "73067"
+    },
+    {
+      "name": "GREAT",
+      "id": "great-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "GREAT/f2826647-aa15-443d-9242-a05526e580aa",
+      "tvc_guide_stationid": "135626"
+    },
+    {
+      "name": "Start TV",
+      "id": "start-tv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "START/d833c43a-5f3c-45a1-9c4d-2861c71da177",
+      "tvc_guide_stationid": "109454"
+    },
+    {
+      "name": "True CRMZ",
+      "id": "true-crmz-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CRMES/9ee1bd46-2998-4f53-861d-9314a7584ff5",
+      "tvc_guide_stationid": "114278"
+    },
+    {
+      "name": "MovieSphere Gold",
+      "id": "moviesphere-gold-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "MVSGLD/76cdc7a8-0db8-45e5-956b-e6bc0032a912",
+      "tvc_guide_stationid": "185303"
+    },
+    {
+      "name": "ION Mystery",
+      "id": "ion-mystery-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "IMYS/d5efbdcb-868b-46e5-8f50-8903ea3e9d43",
+      "tvc_guide_stationid": "112568"
+    },
+    {
+      "name": "VISION TV Channel 89",
+      "id": "vision-tv-channel-89-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "VISION/834ce34a-0768-441c-b804-23f850db8dfb",
+      "tvc_guide_stationid": "86448"
+    },
+    {
+      "name": "VALU (91)",
+      "id": "valu-91-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "VALU/834b72c5-22ec-4cb6-b3af-3ecd9c6ccacc",
+      "tvc_guide_stationid": "75761"
+    },
+    {
+      "name": "CRAVE (92)",
+      "id": "crave-92-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CRAVE/42e2134f-53c3-41fa-9f6c-049de7e7cb76",
+      "tvc_guide_stationid": "113720"
+    },
+    {
+      "name": "Celebrity Shopping TV 95",
+      "id": "celebrity-shopping-tv-95-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CSHP/f531a84b-8e53-4f3e-8ccc-fa5d459cb3a4",
+      "tvc_guide_stationid": "70460"
+    },
+    {
+      "name": "SEEK (97)",
+      "id": "seek-97-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SEEK/ebd281b2-2cbb-4d59-9ad5-1292289932e1",
+      "tvc_guide_stationid": "96368"
+    },
+    {
+      "name": "DEALS",
+      "id": "deals-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "DEALS/0f3f4392-e832-4653-b202-e72ecec89995",
+      "tvc_guide_stationid": "62894"
+    },
+    {
+      "name": "Interactive Advertising Channel HD (98)",
+      "id": "interactive-advertising-channel-hd-98-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "IACHD/3b14bc0f-5154-45cf-b3d7-0dbd9f613a22",
+      "tvc_guide_stationid": "498"
+    },
+    {
+      "name": "BEST Channel 98-7",
+      "id": "best-channel-98-7-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "BEST/17c6d420-7a71-4d3b-a9df-25fa0032b7b5",
+      "tvc_guide_stationid": "57806"
+    },
+    {
+      "name": "Get IT Infomercial (98-5)",
+      "id": "get-it-infomercial-98-5-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "GETIT/52077ba9-daeb-433d-95f2-a64c5754734a",
+      "tvc_guide_stationid": "101697"
+    },
+    {
+      "name": "WOW TV 98-1",
+      "id": "wow-tv-98-1-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "WOW/a38b3bf1-3e07-4157-86aa-f9709eb3b592",
+      "tvc_guide_stationid": "62955"
+    },
+    {
+      "name": "Save",
+      "id": "save-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SAVE/ff08d2fe-7437-4946-9598-66bd23d34188",
+      "tvc_guide_stationid": "59534"
+    },
+    {
+      "name": "IDEA Channel",
+      "id": "idea-channel-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "IDEA/30735bd4-156f-47a3-8af0-fd52927949b1",
+      "tvc_guide_stationid": "63137"
+    },
+    {
+      "name": "America's Value Channel (98-4)",
+      "id": "americas-value-channel-98-4-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "AVC/273ee54c-95b7-4f29-b254-ddfac3139716",
+      "tvc_guide_stationid": "62058"
+    },
+    {
+      "name": "XTRA (99)",
+      "id": "xtra-99-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "XTRA/63c1506a-c95f-4a1d-932e-c722ef37ce3a",
+      "tvc_guide_stationid": "68502"
+    },
+    {
+      "name": "Seasonal Sport Offer Channel",
+      "id": "seasonal-sport-offer-channel-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "DTV/e014b20e-3de9-4647-9273-8e8db8491f4b",
+      "tvc_guide_stationid": "113"
+    },
+    {
+      "name": "Interactive Advertising Channel HD 111",
+      "id": "interactive-advertising-channel-hd-111-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "IACHD/364d8c51-278e-4d12-9233-9dff23a0a93a",
+      "tvc_guide_stationid": "111"
+    },
+    {
+      "name": "Seasonal Sports Offer Channel",
+      "id": "seasonal-sports-offer-channel-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "DTV/426cecf2-e6f5-4eb7-b071-c38f86226ebf",
+      "tvc_guide_stationid": "106"
+    },
+    {
+      "name": "News Mix",
+      "id": "news-mix-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NMX/024ce6d3-02a1-4bf8-af48-0b4544b3d187",
+      "tvc_guide_stationid": "436"
+    },
+    {
+      "name": "CNN",
+      "id": "cnn-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CNN/ed9bff75-8aad-433e-9b94-34d9f80aa777",
+      "tvc_guide_stationid": "10142"
+    },
+    {
+      "name": "CNN HD",
+      "id": "cnn-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CNNHD/519a0379-3e00-4a61-8581-56f5bf7488a2",
+      "tvc_guide_stationid": "8249"
+    },
+    {
+      "name": "COOL Network 203",
+      "id": "cool-network-203-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "COOL/5730892a-4401-48a3-a03e-d82880fd8795",
+      "tvc_guide_stationid": "114483"
+    },
+    {
+      "name": "HLN",
+      "id": "hln-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "HLN/d391259d-6f0f-4f00-85a3-cc91b13ac9b5",
+      "tvc_guide_stationid": "10145"
+    },
+    {
+      "name": "HLN HD",
+      "id": "hln-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "HLNHD/8d1c72f6-99db-4279-a5b2-183f92c53a61",
+      "tvc_guide_stationid": "6218"
+    },
+    {
+      "name": "SPORTS MIX HD (205)",
+      "id": "sports-mix-hd-205-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SMXHD/e7fea4c6-af18-43ff-bde6-06b4a23071ef",
+      "tvc_guide_stationid": "5205"
+    },
+    {
+      "name": "ESPN HD",
+      "id": "espn-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ESPNHD/d1f76753-8507-4df5-bdeb-77ce20690d9d",
+      "tvc_guide_stationid": "1964"
+    },
+    {
+      "name": "ESPN",
+      "id": "espn-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ESPN/2c66bc77-c723-46fb-a602-50730b111b39",
+      "tvc_guide_stationid": "206"
+    },
+    {
+      "name": "ESPNews HD",
+      "id": "espnews-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ESNHD/c7385ebe-0068-4c7a-8c84-2146862d2694",
+      "tvc_guide_stationid": "59976"
+    },
+    {
+      "name": "ESPNews",
+      "id": "espnews-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ESN/7eedc616-4a44-41c5-a42a-1270266bb9c4",
+      "tvc_guide_stationid": "16485"
+    },
+    {
+      "name": "ESPNU",
+      "id": "espnu-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ESPNU/d31f04b3-4d19-443d-8c23-bf3c2233937d",
+      "tvc_guide_stationid": "45654"
+    },
+    {
+      "name": "ESPNU HD",
+      "id": "espnu-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ESPNUHD/78a8f90a-df4f-4fcf-be56-df27539c5ac4",
+      "tvc_guide_stationid": "2355"
+    },
+    {
+      "name": "ESPN2 HD",
+      "id": "espn2-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ESPN2HD/fa09c7bf-b0bd-4976-9bab-c7e2c5021ade",
+      "tvc_guide_stationid": "1965"
+    },
+    {
+      "name": "ESPN2",
+      "id": "espn2-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ESPN2/5a24a595-c58b-4144-9a95-928f1c648d91",
+      "tvc_guide_stationid": "209"
+    },
+    {
+      "name": "ESPN+ 4",
+      "id": "espn-plus-4-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ESPNPlus/2a52c1df-ee7e-4525-a7a8-05eb32f748b6",
+      "tvc_guide_stationid": "883"
+    },
+    {
+      "name": "ESPN+ 1",
+      "id": "espn-plus-1-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ESPNPlus/3a81415c-9855-4c7d-866f-5852a636e8d5",
+      "tvc_guide_stationid": "880"
+    },
+    {
+      "name": "ESPN+ 2",
+      "id": "espn-plus-2-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ESPNPlus/20be2ce7-2069-47a6-9965-e45e302e142e",
+      "tvc_guide_stationid": "881"
+    },
+    {
+      "name": "ESPN+ 7",
+      "id": "espn-plus-7-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ESPNPlus/9327d69a-3362-49b4-b131-9aa12fe541f6",
+      "tvc_guide_stationid": "886"
+    },
+    {
+      "name": "ESPN+ 3",
+      "id": "espn-plus-3-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ESPNPlus/ae8449d2-f57d-436a-936d-414a232dbf5a",
+      "tvc_guide_stationid": "882"
+    },
+    {
+      "name": "ESPN+ 6",
+      "id": "espn-plus-6-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ESPNPlus/3cc8d07b-8366-4c4a-8839-3940e7bcafaf",
+      "tvc_guide_stationid": "885"
+    },
+    {
+      "name": "ESPN+ 5",
+      "id": "espn-plus-5-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ESPNPlus/e81e1c93-a8c5-4f40-8193-7795ab6a5cbb",
+      "tvc_guide_stationid": "884"
+    },
+    {
+      "name": "NFL Network HD",
+      "id": "nfl-network-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NFLHD/b9b1b688-8d78-4580-8913-e98fe3bd9b05",
+      "tvc_guide_stationid": "8225"
+    },
+    {
+      "name": "NFL Network",
+      "id": "nfl-network-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NFL/8c6223d2-9bf7-4449-8ee6-a9f1cc2cc880",
+      "tvc_guide_stationid": "212"
+    },
+    {
+      "name": "MLB Network",
+      "id": "mlb-network-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "MLBN/c7296581-8b43-4e1f-bbd6-484c5e1713a6",
+      "tvc_guide_stationid": "3227"
+    },
+    {
+      "name": "MLB Network Alt. 213-1 HD",
+      "id": "mlb-network-alt-213-1-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "MLBaHD/a43d5703-cd53-4572-91da-123bd04e1893",
+      "tvc_guide_stationid": "5214"
+    },
+    {
+      "name": "MLB Network HD",
+      "id": "mlb-network-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "MLBNHD/c8e2cc18-4320-4f21-8a59-68c2f33c0c05",
+      "tvc_guide_stationid": "3228"
+    },
+    {
+      "name": "MLB Network Alt. 213-1",
+      "id": "mlb-network-alt-213-1-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "MLB/7d10769c-d74a-4dfc-8e62-0da5504d07c7",
+      "tvc_guide_stationid": "214"
+    },
+    {
+      "name": "RACER Network",
+      "id": "racer-network-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "RACER/21e41317-1a4e-4302-b43e-b916fa1e7534",
+      "tvc_guide_stationid": "61036"
+    },
+    {
+      "name": "NHL Network",
+      "id": "nhl-network-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NHLN/08501d13-3285-41a4-80f8-729d20cb0348",
+      "tvc_guide_stationid": "58570"
+    },
+    {
+      "name": "NHL Network HD",
+      "id": "nhl-network-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NHLHD/028e8e6c-3ecd-4248-a436-1f3284a3f955",
+      "tvc_guide_stationid": "8230"
+    },
+    {
+      "name": "NBA TV HD",
+      "id": "nba-tv-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NBAHD/10627bc1-89a2-4c00-bf92-8851d96e1b98",
+      "tvc_guide_stationid": "8220"
+    },
+    {
+      "name": "NBA TV",
+      "id": "nba-tv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NBA/5cb6a6db-9440-40c2-8759-6f3475f9b6ea",
+      "tvc_guide_stationid": "601"
+    },
+    {
+      "name": "Tennis Channel",
+      "id": "tennis-channel-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TNNS/cebcc32e-32d6-495d-989b-99f1062b1624",
+      "tvc_guide_stationid": "33395"
+    },
+    {
+      "name": "Tennis Channel HD",
+      "id": "tennis-channel-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TNNSHD/d33d363d-4144-4aae-be5d-debebeef2b0d",
+      "tvc_guide_stationid": "60316"
+    },
+    {
+      "name": "Golf Channel",
+      "id": "golf-channel-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "Golf/198f2a0b-7546-4986-8444-fb1a8b029e82",
+      "tvc_guide_stationid": "605"
+    },
+    {
+      "name": "Golf Channel HD",
+      "id": "golf-channel-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "GolfHD/35621fc9-1d39-49c7-bdef-4c182d3d07fa",
+      "tvc_guide_stationid": "5605"
+    },
+    {
+      "name": "FOX Sports 1 HD",
+      "id": "fox-sports-1-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FS1HD/f86aec47-ea18-4de2-8f67-38384c91102a",
+      "tvc_guide_stationid": "8242"
+    },
+    {
+      "name": "FOX Sports 1",
+      "id": "fox-sports-1-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FS1/454a64a1-89a7-415b-a315-c3c3ac505198",
+      "tvc_guide_stationid": "607"
+    },
+    {
+      "name": "CBS Sports Network HD",
+      "id": "cbs-sports-network-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CBSSNHD/2945210e-6289-4402-be3a-6704b027ec50",
+      "tvc_guide_stationid": "5613"
+    },
+    {
+      "name": "CBS Sports Network",
+      "id": "cbs-sports-network-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CBS SN/bacabf02-88d4-489a-bd0a-a356730aeed0",
+      "tvc_guide_stationid": "2613"
+    },
+    {
+      "name": "Save 222 (Infomercial)",
+      "id": "save-222-infomercial-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SAVE/45c78eaa-f721-4490-87a6-9d8038d3b375",
+      "tvc_guide_stationid": "59534"
+    },
+    {
+      "name": "Celebrity Shopping TV",
+      "id": "celebrity-shopping-tv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CSHP/d76ced91-2313-4534-8784-d08a6d9bcb6d",
+      "tvc_guide_stationid": "70460"
+    },
+    {
+      "name": "Shepherd's Chapel",
+      "id": "shepherds-chapel-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SHEP/62ab9994-c0bb-41ee-9629-3220d474fad0",
+      "tvc_guide_stationid": "63039"
+    },
+    {
+      "name": "America's Value Channel",
+      "id": "americas-value-channel-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "AVC/dcc2ae44-f2a3-4293-9f0a-f2425a7bf63e",
+      "tvc_guide_stationid": "62058"
+    },
+    {
+      "name": "Shop LC HD",
+      "id": "shop-lc-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SHOPLC/2f0d7833-e695-43a7-8432-82812cdfc532",
+      "tvc_guide_stationid": "56032"
+    },
+    {
+      "name": "MALL",
+      "id": "mall-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "MALL/6febb6a7-44f0-4036-9c90-13c4310c0d9f",
+      "tvc_guide_stationid": "62055"
+    },
+    {
+      "name": "GEM Shopping Network",
+      "id": "gem-shopping-network-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "GEM/e499c4cf-6b9b-483f-b1fa-cbd0d79a81bf",
+      "tvc_guide_stationid": "26643"
+    },
+    {
+      "name": "HGTV",
+      "id": "hgtv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "HGTV/f740634f-0413-4404-bc74-f38b2cf73836",
+      "tvc_guide_stationid": "14902"
+    },
+    {
+      "name": "HGTV HD",
+      "id": "hgtv-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "HGTVHD/b7669e3c-2916-4b8c-b40d-6266e791ab57",
+      "tvc_guide_stationid": "8244"
+    },
+    {
+      "name": "Magnolia Network HD",
+      "id": "magnolia-network-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "MAGNHD/43847d39-8406-487a-b232-8ceea451186e",
+      "tvc_guide_stationid": "8086"
+    },
+    {
+      "name": "Magnolia Network",
+      "id": "magnolia-network-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "MAGN/1303fc1c-3394-4985-9bea-efa21366241a",
+      "tvc_guide_stationid": "18544"
+    },
+    {
+      "name": "Food Network",
+      "id": "food-network-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "Food/8ee8d3ba-e481-47d7-9651-21b39b1ca140",
+      "tvc_guide_stationid": "12574"
+    },
+    {
+      "name": "Food Network HD",
+      "id": "food-network-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "foodHD/b6258d16-2f69-4846-abc7-b3947eea6e2b",
+      "tvc_guide_stationid": "8278"
+    },
+    {
+      "name": "Cooking Channel HD",
+      "id": "cooking-channel-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "COOKHD/9d882605-20d3-4ff3-b6e1-03139d4f1e11",
+      "tvc_guide_stationid": "6216"
+    },
+    {
+      "name": "Cooking Channel",
+      "id": "cooking-channel-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "COOK/94cb65bc-f81e-4840-be7a-7e5af654678d",
+      "tvc_guide_stationid": "232"
+    },
+    {
+      "name": "Game Show Network HD",
+      "id": "game-show-network-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "GSNHD/11cc055c-6f49-4c2e-b391-f96b7ac8e7d7",
+      "tvc_guide_stationid": "8987"
+    },
+    {
+      "name": "Game Show Network",
+      "id": "game-show-network-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "GSN/d9507af3-62d5-4f24-b733-7fef236d6c59",
+      "tvc_guide_stationid": "14909"
+    },
+    {
+      "name": "WOW TV 234",
+      "id": "wow-tv-234-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "WOW/b0c58509-8e98-45bc-81ba-eade20af8d9f",
+      "tvc_guide_stationid": "62955"
+    },
+    {
+      "name": "Tastemade",
+      "id": "tastemade-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TASTE/ca0a1649-7452-498b-a1c6-647938cc0e3d",
+      "tvc_guide_stationid": "107076"
+    },
+    {
+      "name": "E!",
+      "id": "e-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "E!/1538b39f-3303-44d0-a98f-dbfb77ce13df",
+      "tvc_guide_stationid": "10989"
+    },
+    {
+      "name": "E! HD",
+      "id": "e-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "E!HD/b587c1f5-49ec-4006-b806-9073e5f53d50",
+      "tvc_guide_stationid": "8179"
+    },
+    {
+      "name": "Bravo",
+      "id": "bravo-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "BRVO/3f31ce5a-dac9-4ada-acb3-b9016c4c2bb5",
+      "tvc_guide_stationid": "273"
+    },
+    {
+      "name": "Bravo HD",
+      "id": "bravo-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "BRVOHD/83249ad9-5836-4d16-a5f7-9cc2a42032c9",
+      "tvc_guide_stationid": "8258"
+    },
+    {
+      "name": "ReelzChannel",
+      "id": "reelzchannel-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "REELZ/60a7043a-e7f9-4c08-9b6d-87dba36ff3e4",
+      "tvc_guide_stationid": "52199"
+    },
+    {
+      "name": "ReelzChannel HD",
+      "id": "reelzchannel-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "REELZHD/a5f102f9-b54d-4431-b702-053fd4c7616e",
+      "tvc_guide_stationid": "68385"
+    },
+    {
+      "name": "SundanceTV HD",
+      "id": "sundancetv-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SUNDHD/f56626d5-7461-4408-91f6-8d235b884be6",
+      "tvc_guide_stationid": "2057"
+    },
+    {
+      "name": "SundanceTV",
+      "id": "sundancetv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SUND/a26e1629-c5c5-4bd1-a44d-a911bde51139",
+      "tvc_guide_stationid": "16108"
+    },
+    {
+      "name": "Home Shopping Network HD",
+      "id": "home-shopping-network-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "HSNHD/a58a86bb-07f4-4c61-bdd0-eb61afa1d82b",
+      "tvc_guide_stationid": "62077"
+    },
+    {
+      "name": "Home Shopping Network",
+      "id": "home-shopping-network-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "HSN/b4163eb0-abb6-4753-b830-e95334a7c96c",
+      "tvc_guide_stationid": "10269"
+    },
+    {
+      "name": "Paramount Network",
+      "id": "paramount-network-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "Par/f7c51034-f830-4d00-a55e-e79981af9edd",
+      "tvc_guide_stationid": "11163"
+    },
+    {
+      "name": "Paramount Network HD",
+      "id": "paramount-network-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "PARHD/35132820-6521-4eb9-9ccf-1dd42de1a5c3",
+      "tvc_guide_stationid": "8245"
+    },
+    {
+      "name": "USA Network HD",
+      "id": "usa-network-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "USAHD/214a502e-c54a-4b61-8904-b4ce37c1e38a",
+      "tvc_guide_stationid": "8273"
+    },
+    {
+      "name": "USA Network",
+      "id": "usa-network-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "USA/00fe3c8a-dade-497c-ba7a-67b32bcddbfa",
+      "tvc_guide_stationid": "242"
+    },
+    {
+      "name": "XPLOR",
+      "id": "xplor-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "XPLOR/323df93e-266f-4ccd-8469-7a2c53ae0a15",
+      "tvc_guide_stationid": "113717"
+    },
+    {
+      "name": "SYFYHD",
+      "id": "syfyhd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SyfyHD/f859a25e-eb37-4fde-bc34-612d415b8bb2",
+      "tvc_guide_stationid": "8268"
+    },
+    {
+      "name": "SYFY",
+      "id": "syfy-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SYFY/7d83b2a7-c1d8-4052-82ea-5624a19667d9",
+      "tvc_guide_stationid": "11097"
+    },
+    {
+      "name": "TNT West HD",
+      "id": "tnt-west-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TNTWHD/fb089f4f-0b1a-481c-adb1-d624884f51f2",
+      "tvc_guide_stationid": "2602"
+    },
+    {
+      "name": "TNT",
+      "id": "tnt-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TNT/ca68b631-34c4-4e31-a4b3-ef0b031eace7",
+      "tvc_guide_stationid": "11164"
+    },
+    {
+      "name": "TNT HD",
+      "id": "tnt-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TNTHD/3c10db4e-98ac-40c0-a301-661504f60588",
+      "tvc_guide_stationid": "1966"
+    },
+    {
+      "name": "truTV HD",
+      "id": "trutv-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "truTVHD/1b10de5e-3e3b-488f-9740-bec197244114",
+      "tvc_guide_stationid": "1363"
+    },
+    {
+      "name": "truTV",
+      "id": "trutv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "truTV/237c0fe0-d6db-4084-81f2-56c44ca019aa",
+      "tvc_guide_stationid": "10153"
+    },
+    {
+      "name": "TBS HD",
+      "id": "tbs-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TBSHD/86528a42-ae4e-405c-8fae-c567c1ed70df",
+      "tvc_guide_stationid": "8254"
+    },
+    {
+      "name": "TBS West HD",
+      "id": "tbs-west-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TBSWHD/385801f7-606a-457d-8116-e1a73cf77484",
+      "tvc_guide_stationid": "2603"
+    },
+    {
+      "name": "TBS",
+      "id": "tbs-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TBS/6d38dc98-d69c-4449-8de3-f4c5a4216a93",
+      "tvc_guide_stationid": "11867"
+    },
+    {
+      "name": "FX HD",
+      "id": "fx-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FXHD/af2ab375-0902-4865-acb5-61df66acca5b",
+      "tvc_guide_stationid": "8208"
+    },
+    {
+      "name": "FX",
+      "id": "fx-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FX/d52ff6be-47ed-488b-bcf2-d483245671b0",
+      "tvc_guide_stationid": "248"
+    },
+    {
+      "name": "Comedy Central HD",
+      "id": "comedy-central-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "COMHD/5070bc2e-dd69-4dee-98b4-a4c5e3b1fd7b",
+      "tvc_guide_stationid": "3035"
+    },
+    {
+      "name": "Comedy Central",
+      "id": "comedy-central-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "COM/4b524e42-aee7-448b-968a-a05f83bebe49",
+      "tvc_guide_stationid": "10149"
+    },
+    {
+      "name": "Comedy Central West HD",
+      "id": "comedy-central-west-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "COMWHD/6aec9a4e-7824-4869-b75f-fb1c648d207e",
+      "tvc_guide_stationid": "64599"
+    },
+    {
+      "name": "SECRET TV (250)",
+      "id": "secret-tv-250-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SECRET/0fc617e9-ca44-4fc6-b524-c84b2a814cab",
+      "tvc_guide_stationid": "72611"
+    },
+    {
+      "name": "Oxygen True Crime HD",
+      "id": "oxygen-true-crime-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "OXGNHD/2b054eaf-3dd6-4178-9a91-5dd02f58791a",
+      "tvc_guide_stationid": "275"
+    },
+    {
+      "name": "Oxygen True Crime",
+      "id": "oxygen-true-crime-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "OXGN/ed5ec2b7-b51a-4bf0-92b0-965232c6c5e0",
+      "tvc_guide_stationid": "21484"
+    },
+    {
+      "name": "Lifetime HD",
+      "id": "lifetime-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "LIFEHD/d1dd879a-5790-454f-9104-39432f4859c6",
+      "tvc_guide_stationid": "3780"
+    },
+    {
+      "name": "Lifetime",
+      "id": "lifetime-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "LIFE/128de99f-f5e8-4eda-8c34-989e743b8c09",
+      "tvc_guide_stationid": "10918"
+    },
+    {
+      "name": "LMN HD",
+      "id": "lmn-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "LMNHD/7da4a06b-ca37-4123-8994-b3794b673df6",
+      "tvc_guide_stationid": "6217"
+    },
+    {
+      "name": "LMN",
+      "id": "lmn-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "LMN/0c8d3bdf-b53b-42d8-bbda-5c1f742e235b",
+      "tvc_guide_stationid": "18480"
+    },
+    {
+      "name": "AMC HD",
+      "id": "amc-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "AMCHD/b428862c-08fc-47d1-98f4-7cc8bdbf0c31",
+      "tvc_guide_stationid": "4217"
+    },
+    {
+      "name": "AMC",
+      "id": "amc-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "amc/4b1c3363-8495-4f3d-a319-b0a9e1ab0697",
+      "tvc_guide_stationid": "254"
+    },
+    {
+      "name": "XTRA Network",
+      "id": "xtra-network-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "XTRA/1892b902-6ef6-4b19-ba5d-241a250009af",
+      "tvc_guide_stationid": "68502"
+    },
+    {
+      "name": "TCM HD",
+      "id": "tcm-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TCMHD/6b20b8de-3094-48f4-ad7b-4eecc2f8d48a",
+      "tvc_guide_stationid": "4316"
+    },
+    {
+      "name": "TCM",
+      "id": "tcm-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TCM/ae82036e-3af0-4f54-8a86-bb9c433ba8f4",
+      "tvc_guide_stationid": "12852"
+    },
+    {
+      "name": "FX Movie",
+      "id": "fx-movie-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FXM/dbd1e961-c6de-41d6-8f65-485f34f28321",
+      "tvc_guide_stationid": "14988"
+    },
+    {
+      "name": "FX Movie Channel HD",
+      "id": "fx-movie-channel-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FXMHD/d7088b74-3db2-4672-825e-6c7cb8ff41ec",
+      "tvc_guide_stationid": "310"
+    },
+    {
+      "name": "FXX HD",
+      "id": "fxx-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FXXHD/d48f198b-6a0f-4d53-9749-222e38f8847b",
+      "tvc_guide_stationid": "8138"
+    },
+    {
+      "name": "FXX",
+      "id": "fxx-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FXX/ed015ad5-de85-4784-802e-79e812e5d5b4",
+      "tvc_guide_stationid": "17927"
+    },
+    {
+      "name": "WE tv HD",
+      "id": "we-tv-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "WeHD/d38f1910-a0af-4933-8a89-fd100277c0b0",
+      "tvc_guide_stationid": "2056"
+    },
+    {
+      "name": "WE tv",
+      "id": "we-tv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "We/02001ea9-bd8a-4185-b05d-82ea8fdc42d6",
+      "tvc_guide_stationid": "16409"
+    },
+    {
+      "name": "Discovery Life",
+      "id": "discovery-life-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "DLIF/5372d13d-fe7d-4b4f-b1e9-b28435f3a7c7",
+      "tvc_guide_stationid": "368"
+    },
+    {
+      "name": "XPLOR (262-1)",
+      "id": "xplor-262-1-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "XPLOR/976369aa-12ed-4378-82ef-d467b9349681",
+      "tvc_guide_stationid": "113717"
+    },
+    {
+      "name": "VISION TV Channel 262",
+      "id": "vision-tv-channel-262-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "VISION/f846cc88-c855-4ecb-ab2d-d2f98509eee6",
+      "tvc_guide_stationid": "86448"
+    },
+    {
+      "name": "Get It Infomercial",
+      "id": "get-it-infomercial-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "GETIT/af65f4b4-f0cc-4f11-b9b7-d372a4b9723e",
+      "tvc_guide_stationid": "101697"
+    },
+    {
+      "name": "BBC America",
+      "id": "bbc-america-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "BBCA/e6daa895-a3e0-4584-bcf5-a639ef703013",
+      "tvc_guide_stationid": "18332"
+    },
+    {
+      "name": "BBC America HD",
+      "id": "bbc-america-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "BBCAHD/f0651d6c-09c5-46a9-a168-cfc86e01cdc7",
+      "tvc_guide_stationid": "6053"
+    },
+    {
+      "name": "A&E HD",
+      "id": "a-and-e-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "A&EHD/6e1ae46f-40ab-44ee-b20e-d4508363a65e",
+      "tvc_guide_stationid": "8223"
+    },
+    {
+      "name": "A&E",
+      "id": "a-and-e-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "A&E/cd1d9255-2292-45eb-9700-bb6b338e8649",
+      "tvc_guide_stationid": "265"
+    },
+    {
+      "name": "FYI",
+      "id": "fyi-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FYI/09460ae7-c7de-4587-b0a9-f95d741cafe2",
+      "tvc_guide_stationid": "16834"
+    },
+    {
+      "name": "FYI HD",
+      "id": "fyi-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FYIHD/6d1cd9b3-d125-4e87-a37f-0309c1459f8a",
+      "tvc_guide_stationid": "8396"
+    },
+    {
+      "name": "EarthX",
+      "id": "earthx-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "EARTHX/a8ed3781-bab6-4379-b811-5c4a8182c7b5",
+      "tvc_guide_stationid": "126128"
+    },
+    {
+      "name": "BEST Channel 268",
+      "id": "best-channel-268-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "BEST/5b6a428b-4ebe-4b26-a83b-4568dd34dead",
+      "tvc_guide_stationid": "57806"
+    },
+    {
+      "name": "History",
+      "id": "history-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "HIST/46ffcf64-998d-4037-8741-5ed260b08303",
+      "tvc_guide_stationid": "14771"
+    },
+    {
+      "name": "History HD",
+      "id": "history-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "HISTHD/8dc85473-5c44-444f-8ee3-f3ad6da10329",
+      "tvc_guide_stationid": "8233"
+    },
+    {
+      "name": "IDEA Channel 270",
+      "id": "idea-channel-270-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "IDEA/38fde57a-aab6-447f-af12-7c9f40cab36a",
+      "tvc_guide_stationid": "63137"
+    },
+    {
+      "name": "VICE",
+      "id": "vice-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "VICE/01a62748-de51-4c3d-b4ad-1167e6983492",
+      "tvc_guide_stationid": "18822"
+    },
+    {
+      "name": "VICE HD",
+      "id": "vice-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "VICEHD/2e991d96-3ca5-41f6-8ec1-6db7bd9f4371",
+      "tvc_guide_stationid": "6215"
+    },
+    {
+      "name": "Logo",
+      "id": "logo-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "LOGO/14ec4f80-2045-4d80-8bf4-36a57123d642",
+      "tvc_guide_stationid": "46762"
+    },
+    {
+      "name": "POP HD",
+      "id": "pop-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "POPHD/2fb0e133-7cd4-4817-bbc3-9698566f491e",
+      "tvc_guide_stationid": "572"
+    },
+    {
+      "name": "Pop TV",
+      "id": "pop-tv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "POP/520ba247-660d-481d-97e5-b231d3256723",
+      "tvc_guide_stationid": "16715"
+    },
+    {
+      "name": "Ovation",
+      "id": "ovation-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "OVTV/b1b5893b-9eac-4c60-995a-b8106412a718",
+      "tvc_guide_stationid": "15807"
+    },
+    {
+      "name": "Ovation HD",
+      "id": "ovation-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "OVTVHD/9e44efca-a796-4d96-a15f-25c0e75f90ce",
+      "tvc_guide_stationid": "4638"
+    },
+    {
+      "name": "QVC HD",
+      "id": "qvc-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "QVCHD/352ed336-6f24-4801-8a2d-711bf8e86317",
+      "tvc_guide_stationid": "8033"
+    },
+    {
+      "name": "QVC",
+      "id": "qvc-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "QVC/f6b8efa2-124b-4238-b42f-970d3a854dda",
+      "tvc_guide_stationid": "11069"
+    },
+    {
+      "name": "National Geographic",
+      "id": "national-geographic-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NGC/47cdf02d-0661-4250-9b8e-c11b8902e1cb",
+      "tvc_guide_stationid": "24959"
+    },
+    {
+      "name": "National Geographic HD",
+      "id": "national-geographic-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NGCHD/cba2a67f-9cae-41e0-a27e-9444c979b689",
+      "tvc_guide_stationid": "8215"
+    },
+    {
+      "name": "Travel Channel",
+      "id": "travel-channel-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TRAV/810fc6fc-3c81-4537-ab56-facfe8980dd6",
+      "tvc_guide_stationid": "11180"
+    },
+    {
+      "name": "Travel Channel HD",
+      "id": "travel-channel-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TRAVHD/088ffb78-2fed-4ebb-bf13-bf009d0700d7",
+      "tvc_guide_stationid": "3529"
+    },
+    {
+      "name": "Discovery HD",
+      "id": "discovery-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "DSCHD/4d2c2d58-cb18-44fe-8f9b-96637b1aac60",
+      "tvc_guide_stationid": "8238"
+    },
+    {
+      "name": "Discovery",
+      "id": "discovery-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "DSC/935e3fe1-7db2-4757-9cd3-17250f1b01c9",
+      "tvc_guide_stationid": "11150"
+    },
+    {
+      "name": "OWN HD",
+      "id": "own-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "OWNHD/f1082500-8827-43bd-a782-583a56f5b2db",
+      "tvc_guide_stationid": "8851"
+    },
+    {
+      "name": "OWN West",
+      "id": "own-west-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "OWNW/535fb7d4-b50b-42b0-a465-96b1d7b06799",
+      "tvc_guide_stationid": "95746"
+    },
+    {
+      "name": "OWN",
+      "id": "own-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "OWN/58e441dc-f9fe-41a5-af33-aac1f03d3ed1",
+      "tvc_guide_stationid": "70387"
+    },
+    {
+      "name": "TLC",
+      "id": "tlc-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TLC/37a0a48a-3ca8-465f-8c4e-cbce36dd0ff3",
+      "tvc_guide_stationid": "11158"
+    },
+    {
+      "name": "TLC HD",
+      "id": "tlc-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TLCHD/be9b2996-ae6c-4161-b99b-6158e6d2b798",
+      "tvc_guide_stationid": "8262"
+    },
+    {
+      "name": "Discovery Turbo HD",
+      "id": "discovery-turbo-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "MTHD/32f60ebb-2e14-4265-b5bf-1c63f1d58f7c",
+      "tvc_guide_stationid": "3505"
+    },
+    {
+      "name": "Animal Planet",
+      "id": "animal-planet-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "APL/7a69165d-3a82-4674-9103-b2b30962e10e",
+      "tvc_guide_stationid": "16331"
+    },
+    {
+      "name": "Animal Planet HD",
+      "id": "animal-planet-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "APLHD/2022d13f-d2c5-44bd-9e92-041d33c18c49",
+      "tvc_guide_stationid": "8205"
+    },
+    {
+      "name": "Nat Geo Wild HD",
+      "id": "nat-geo-wild-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NGWHD/86732c76-8068-44b3-9c89-f39523208b9c",
+      "tvc_guide_stationid": "6054"
+    },
+    {
+      "name": "Nat Geo WILD",
+      "id": "nat-geo-wild-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NGW/9c05f5fd-529d-4e3a-8683-33003c243914",
+      "tvc_guide_stationid": "66804"
+    },
+    {
+      "name": "Science HD",
+      "id": "science-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SCIHD/96c2990a-a4f4-4009-8076-a62ee28ae061",
+      "tvc_guide_stationid": "8232"
+    },
+    {
+      "name": "Science",
+      "id": "science-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SCI/5bc45a0d-29b8-4cdc-a0b2-c694a29c51f2",
+      "tvc_guide_stationid": "16616"
+    },
+    {
+      "name": "Investigation Discovery HD",
+      "id": "investigation-discovery-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "IDHD/1dd9b3b8-12fe-4821-9cef-0f5adbd4b0e5",
+      "tvc_guide_stationid": "6212"
+    },
+    {
+      "name": "Investigation Discovery",
+      "id": "investigation-discovery-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ID/2d59507f-9a2f-442b-bc83-00938909250f",
+      "tvc_guide_stationid": "16615"
+    },
+    {
+      "name": "Destination America HD",
+      "id": "destination-america-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "DESTHD/6903683f-175f-4289-bec6-1de345090173",
+      "tvc_guide_stationid": "60468"
+    },
+    {
+      "name": "Destination America",
+      "id": "destination-america-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "DEST/617c60e0-eee2-4788-9865-3851ec6570db",
+      "tvc_guide_stationid": "16617"
+    },
+    {
+      "name": "American Heroes Channel",
+      "id": "american-heroes-channel-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "AHCH/a1cc44bc-a1d3-4cfc-9561-f79244ddd509",
+      "tvc_guide_stationid": "287"
+    },
+    {
+      "name": "American Heroes HD",
+      "id": "american-heroes-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "AHCHD/bca90090-7f85-4e55-ba11-ae184874a02d",
+      "tvc_guide_stationid": "78808"
+    },
+    {
+      "name": "PBS Kids",
+      "id": "pbs-kids-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "PBSK/46c15402-92e9-4aee-9b2d-e8512c33696a",
+      "tvc_guide_stationid": "101364"
+    },
+    {
+      "name": "Disney Junior",
+      "id": "disney-junior-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "DSJR/9e23d3ae-2671-4f37-bae2-476220f2db6c",
+      "tvc_guide_stationid": "74796"
+    },
+    {
+      "name": "Disney Junior HD",
+      "id": "disney-junior-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "DSJRHD/b49573ad-cf93-4c89-81dd-c06ce57822f2",
+      "tvc_guide_stationid": "6055"
+    },
+    {
+      "name": "Disney Channel (East)",
+      "id": "disney-channel-east-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "DISe/d2fa44ae-2225-45f7-bad8-25dce913ecf4",
+      "tvc_guide_stationid": "10171"
+    },
+    {
+      "name": "Disney Channel HD",
+      "id": "disney-channel-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "DISeHD/8ef7ede4-94b2-44c3-bced-ecf138fe1c9b",
+      "tvc_guide_stationid": "8398"
+    },
+    {
+      "name": "Disney Channel (West)",
+      "id": "disney-channel-west-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "DISw/e0811c53-5460-4731-a8dd-1e3e3543a4c1",
+      "tvc_guide_stationid": "12510"
+    },
+    {
+      "name": "Disney XD",
+      "id": "disney-xd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "DXD/c424f16f-aadd-414f-a9ba-c40e6a634977",
+      "tvc_guide_stationid": "18279"
+    },
+    {
+      "name": "Disney XD HD",
+      "id": "disney-xd-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "DXDHD/b7c1fb6b-0eb7-4fa9-b7e0-1005f699fbb6",
+      "tvc_guide_stationid": "8397"
+    },
+    {
+      "name": "BabyFirst",
+      "id": "babyfirst-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "BABY/dc38a660-5e22-4813-8495-72b44dabedb2",
+      "tvc_guide_stationid": "50338"
+    },
+    {
+      "name": "Discovery Family Channel HD",
+      "id": "discovery-family-channel-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "DFCHD/429ccc87-fcaf-4a61-8bff-fcb4299eef8d",
+      "tvc_guide_stationid": "294"
+    },
+    {
+      "name": "Discovery Family Channel",
+      "id": "discovery-family-channel-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "DFCH/300563d0-a917-4813-be4e-1a800bd5331d",
+      "tvc_guide_stationid": "16618"
+    },
+    {
+      "name": "MeTV Toons",
+      "id": "metv-toons-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "MeToons/c919b444-d041-4a55-aeff-44e681878ae4",
+      "tvc_guide_stationid": "159817"
+    },
+    {
+      "name": "Cartoon Network HD",
+      "id": "cartoon-network-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CNeHD/b58935e4-74c0-4d19-aa0c-d0557d716f2b",
+      "tvc_guide_stationid": "8255"
+    },
+    {
+      "name": "Cartoon Network",
+      "id": "cartoon-network-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CNe/544994e6-90f7-4d23-a475-7261ef9e0f03",
+      "tvc_guide_stationid": "296"
+    },
+    {
+      "name": "Cartoon Network West",
+      "id": "cartoon-network-west-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CNw/2c8f5f1d-ca3e-44a3-80ee-a30bf8060aa2",
+      "tvc_guide_stationid": "18151"
+    },
+    {
+      "name": "Boomerang",
+      "id": "boomerang-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "Boom/efabe7f5-d961-4434-b4a6-339d13b7c4e9",
+      "tvc_guide_stationid": "21883"
+    },
+    {
+      "name": "Nickelodeon East",
+      "id": "nickelodeon-east-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NIKe/3914ef4b-2eb7-48f5-99fb-8216ee8e37ad",
+      "tvc_guide_stationid": "11006"
+    },
+    {
+      "name": "Nickelodeon East HD",
+      "id": "nickelodeon-east-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NIKeHD/18ee6c13-d93a-4f79-bd02-21bd18b052a3",
+      "tvc_guide_stationid": "8274"
+    },
+    {
+      "name": "Nickelodeon West",
+      "id": "nickelodeon-west-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NIKw/63c40d47-aab6-4ba9-b1ad-de7a646e4ce9",
+      "tvc_guide_stationid": "11007"
+    },
+    {
+      "name": "Nick Jr.",
+      "id": "nick-jr-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NKJR/9bbe980e-451e-42f1-8ffa-c12f7f4ddabe",
+      "tvc_guide_stationid": "19211"
+    },
+    {
+      "name": "Nick Jr. HD",
+      "id": "nick-jr-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NKJRHD/0ae8d67d-2284-4e26-a2f9-4ba1b2819ff9",
+      "tvc_guide_stationid": "3621"
+    },
+    {
+      "name": "Nicktoons",
+      "id": "nicktoons-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NKTN/41a3b6f2-8fbd-416d-9c61-b150d4006711",
+      "tvc_guide_stationid": "30420"
+    },
+    {
+      "name": "TeenNick",
+      "id": "teennick-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TNCK/d920e05c-e03f-449c-962a-a16bea9fb5a3",
+      "tvc_guide_stationid": "59036"
+    },
+    {
+      "name": "TV Land HD",
+      "id": "tv-land-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TVLDHD/a22a1e02-fb9b-4d64-b9e8-2ce5eac89d6d",
+      "tvc_guide_stationid": "6213"
+    },
+    {
+      "name": "TV Land",
+      "id": "tv-land-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TVLD/bab6fd9e-72e5-4a8a-abca-99ecc45f1f6b",
+      "tvc_guide_stationid": "16123"
+    },
+    {
+      "name": "WNBA on ION 2",
+      "id": "wnba-on-ion-2-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "WNBAION2/18e5a4de-e3ed-43bf-9232-1d9be2af67f1",
+      "tvc_guide_stationid": "1187"
+    },
+    {
+      "name": "ION Television East HD",
+      "id": "ion-television-east-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "IONEHD/175bd340-10e5-49e4-ae44-c479e4784c38",
+      "tvc_guide_stationid": "76894"
+    },
+    {
+      "name": "WNBA on ION 3",
+      "id": "wnba-on-ion-3-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "WNBAION3/8f7c844a-e121-4ecf-87ca-6b1128e7a192",
+      "tvc_guide_stationid": "1188"
+    },
+    {
+      "name": "WNBA on ION 1",
+      "id": "wnba-on-ion-1-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "WNBAION1/93c1ddc2-93be-46eb-8032-9d4e45503e73",
+      "tvc_guide_stationid": "1185"
+    },
+    {
+      "name": "NewsNation HD",
+      "id": "newsnation-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NwsNnHD/5576b285-b115-44e1-9789-1803ab7091fd",
+      "tvc_guide_stationid": "3528"
+    },
+    {
+      "name": "NewsNation",
+      "id": "newsnation-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NwsNn/ad07532c-0e59-4fd0-9536-7f858b223b53",
+      "tvc_guide_stationid": "307"
+    },
+    {
+      "name": "LooLoo Kids",
+      "id": "looloo-kids-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "LOOLOO/2a20c19d-ae2c-4b15-8b6c-24223a4c4d40",
+      "tvc_guide_stationid": "172126"
+    },
+    {
+      "name": "SALE Network",
+      "id": "sale-network-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SALE/2bc1b471-ebfd-4593-83aa-06135dbce929",
+      "tvc_guide_stationid": "66110"
+    },
+    {
+      "name": "CRAVE",
+      "id": "crave-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CRAVE/4e1a55e5-c4ec-4f63-8981-0f6cd6a84ae2",
+      "tvc_guide_stationid": "113720"
+    },
+    {
+      "name": "HSN2",
+      "id": "hsn2-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "HSN2/173aa1c2-5e38-4ac4-b7b0-fbb749bf9f93",
+      "tvc_guide_stationid": "4069"
+    },
+    {
+      "name": "Freeform",
+      "id": "freeform-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FRFM/4cec7218-4a47-45b9-9f4a-64c050dd9479",
+      "tvc_guide_stationid": "311"
+    },
+    {
+      "name": "Freeform HD",
+      "id": "freeform-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FRFMHD/33ad289e-84cc-462f-bfee-26531b95d443",
+      "tvc_guide_stationid": "4211"
+    },
+    {
+      "name": "Hallmark Channel HD",
+      "id": "hallmark-channel-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "HALLHD/cb4259f1-c227-41e7-8542-1d08a47cf49d",
+      "tvc_guide_stationid": "3771"
+    },
+    {
+      "name": "Hallmark",
+      "id": "hallmark-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "HALL/af8acf8a-7195-4f03-8a19-6f59ba859129",
+      "tvc_guide_stationid": "11221"
+    },
+    {
+      "name": "Jewelry Television",
+      "id": "jewelry-television-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "JTV/e320dc82-26db-4e64-8548-f9180bd7f0c3",
+      "tvc_guide_stationid": "367"
+    },
+    {
+      "name": "Family Movie Classics",
+      "id": "family-movie-classics-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FMC/d4791ed5-5e7e-4596-bbe6-1884f80bf100",
+      "tvc_guide_stationid": "127501"
+    },
+    {
+      "name": "QVC2",
+      "id": "qvc2-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "QVC2/d1d47246-2807-4675-b3ce-ed179689fec5",
+      "tvc_guide_stationid": "4060"
+    },
+    {
+      "name": "QVC Channel 317",
+      "id": "qvc-channel-317-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "QVC/f05cf06e-cdeb-4b19-baec-cc2ae0d86742",
+      "tvc_guide_stationid": "11069"
+    },
+    {
+      "name": "QVC HD (317)",
+      "id": "qvc-hd-317-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "QVCHD/4d7c01e5-531f-41c3-96d6-ce67ea400cec",
+      "tvc_guide_stationid": "60222"
+    },
+    {
+      "name": "QVC3",
+      "id": "qvc3-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "QVC3/cdc92164-5416-44a1-a03a-3dc5713c0cd0",
+      "tvc_guide_stationid": "101260"
+    },
+    {
+      "name": "NEW TV (319)",
+      "id": "new-tv-319-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NEW/214d6f94-29b2-4e96-8864-57d25aa2903c",
+      "tvc_guide_stationid": "61313"
+    },
+    {
+      "name": "Scientology Network",
+      "id": "scientology-network-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SCNTV/336feaf4-0c3f-4b91-b903-81d2694ba296",
+      "tvc_guide_stationid": "102490"
+    },
+    {
+      "name": "NHK World News",
+      "id": "nhk-world-news-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NHKWJ/26025056-fcd3-4a31-b83f-2c069c1c73d4",
+      "tvc_guide_stationid": "517"
+    },
+    {
+      "name": "Family Entertainment Television",
+      "id": "family-entertainment-television-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FETVHD/927bdde6-1594-4fd6-9216-b62832020831",
+      "tvc_guide_stationid": "73413"
+    },
+    {
+      "name": "Go4IT",
+      "id": "go4it-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "GO4IT/26e16a66-c9ca-4248-9739-630412389d09",
+      "tvc_guide_stationid": "124383"
+    },
+    {
+      "name": "SECRET TV",
+      "id": "secret-tv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SECRET/6fba2e7f-b312-4c84-96e8-ab5c766cfefe",
+      "tvc_guide_stationid": "72611"
+    },
+    {
+      "name": "In Touch +",
+      "id": "in-touch-plus-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "INTOUCH/17915df7-392d-458c-a52d-f15761031840",
+      "tvc_guide_stationid": "202307"
+    },
+    {
+      "name": "VALU",
+      "id": "valu-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "VALU/b9fbebc1-62ff-4be5-bf0b-4b8bc1e761b1",
+      "tvc_guide_stationid": "75761"
+    },
+    {
+      "name": "Jewish Life TV",
+      "id": "jewish-life-tv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "JLTV/47d77232-55e0-44e5-bb00-f26d5b9e732c",
+      "tvc_guide_stationid": "60165"
+    },
+    {
+      "name": "Great American Family",
+      "id": "great-american-family-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "GFAM/f141d0e0-d2ae-4a99-8a95-1d01b4ba4f0c",
+      "tvc_guide_stationid": "16062"
+    },
+    {
+      "name": "Great American Family HD",
+      "id": "great-american-family-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "GFAMHD/7d74cbcf-0ae9-4981-b7ba-9dde99194efa",
+      "tvc_guide_stationid": "82892"
+    },
+    {
+      "name": "CMT",
+      "id": "cmt-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CMT/dcb531c5-fe52-426f-a160-f03068225351",
+      "tvc_guide_stationid": "10138"
+    },
+    {
+      "name": "CMT HD",
+      "id": "cmt-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CMTHD/c1a35106-2d20-4b58-bcfe-906cdb19197d",
+      "tvc_guide_stationid": "8395"
+    },
+    {
+      "name": "TV One HD",
+      "id": "tv-one-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TV1HD/8c312c97-15af-45d1-b754-9770c854f177",
+      "tvc_guide_stationid": "61960"
+    },
+    {
+      "name": "BET",
+      "id": "bet-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "BET/17e01f38-d5e2-4d4b-89c6-5f36d76224cf",
+      "tvc_guide_stationid": "329"
+    },
+    {
+      "name": "BET West HD",
+      "id": "bet-west-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "BETWHD/4acb50cc-b347-45c1-941c-50d65fb25271",
+      "tvc_guide_stationid": "64673"
+    },
+    {
+      "name": "BET HD",
+      "id": "bet-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "BETHD/89c5c432-4596-47ef-a801-1b0308ba6994",
+      "tvc_guide_stationid": "1917"
+    },
+    {
+      "name": "BET Her",
+      "id": "bet-her-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "BHER/a8a891ae-7b6c-4195-9863-fc261d5a0d77",
+      "tvc_guide_stationid": "14897"
+    },
+    {
+      "name": "MTV HD",
+      "id": "mtv-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "MTVHD/6bb1b774-c06c-44e1-a316-5d41c63229e0",
+      "tvc_guide_stationid": "8218"
+    },
+    {
+      "name": "MTV",
+      "id": "mtv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "MTV/91afef58-5b68-4a58-aa3e-e3383521621b",
+      "tvc_guide_stationid": "10986"
+    },
+    {
+      "name": "MTV West HD",
+      "id": "mtv-west-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "MTVWHD/e3190daa-5f8a-41e8-b8ff-0d9eae7bb347",
+      "tvc_guide_stationid": "64630"
+    },
+    {
+      "name": "MTV2 HD",
+      "id": "mtv2-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "MTV2HD/5fa9cee6-c5e0-4efd-8035-23dd470c2f3d",
+      "tvc_guide_stationid": "2455"
+    },
+    {
+      "name": "MTV2",
+      "id": "mtv2-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "MTV2/4ec976b6-089d-45b5-ab45-89a88778f27e",
+      "tvc_guide_stationid": "16361"
+    },
+    {
+      "name": "IFC HD",
+      "id": "ifc-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "IFCHD/9e89d8ee-9678-4378-988f-09665f91f1c2",
+      "tvc_guide_stationid": "6214"
+    },
+    {
+      "name": "IFC",
+      "id": "ifc-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "IFC/9e503771-1090-4748-8b67-b852c88103a1",
+      "tvc_guide_stationid": "14873"
+    },
+    {
+      "name": "Revolt HD",
+      "id": "revolt-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "RVLTHD/8fff1531-0549-4bf4-8bd0-8e52ce8545e3",
+      "tvc_guide_stationid": "83098"
+    },
+    {
+      "name": "VH1",
+      "id": "vh1-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "VH1/cc8b6744-9ba8-4a89-a90a-d4f6dc09a232",
+      "tvc_guide_stationid": "335"
+    },
+    {
+      "name": "VH1 HD",
+      "id": "vh1-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "VH1HD/3e229de3-9fb0-4f09-8a0c-4c88b4c61614",
+      "tvc_guide_stationid": "8279"
+    },
+    {
+      "name": "MTV Classic",
+      "id": "mtv-classic-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "MTVC/d1557f70-9718-4365-aca6-0fdc7b6c94c6",
+      "tvc_guide_stationid": "22561"
+    },
+    {
+      "name": "SEEK",
+      "id": "seek-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SEEK/b9609c18-e937-4f1e-a913-ae5dba4754f1",
+      "tvc_guide_stationid": "96368"
+    },
+    {
+      "name": "UPTV",
+      "id": "uptv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "UPTV/843f6a76-f055-46ad-9371-c70b15fd55c8",
+      "tvc_guide_stationid": "3511"
+    },
+    {
+      "name": "Fuse HD",
+      "id": "fuse-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "fuseHD/97c42c68-6aca-4e70-8368-381efcb10cbf",
+      "tvc_guide_stationid": "59116"
+    },
+    {
+      "name": "AXS TV HD",
+      "id": "axs-tv-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "AXSTV/44483b11-87ac-4da6-a420-538a462f45e0",
+      "tvc_guide_stationid": "4209"
+    },
+    {
+      "name": "Cleo TV",
+      "id": "cleo-tv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CLEOTV/d3349098-3608-45d6-8efb-24ebae2be28c",
+      "tvc_guide_stationid": "110289"
+    },
+    {
+      "name": "theGrio",
+      "id": "thegrio-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "GRIOTV/c546d353-7526-4d4d-9cf3-e7afefad7f44",
+      "tvc_guide_stationid": "132272"
+    },
+    {
+      "name": "i24 News",
+      "id": "i24-news-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "i24NEWS/8a5c075e-1969-453b-b5f9-9108243c7816",
+      "tvc_guide_stationid": "102309"
+    },
+    {
+      "name": "Son Life Broadcasting HD",
+      "id": "son-life-broadcasting-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SBNHD/dd9680df-bb6b-4499-8a05-5f95c586669b",
+      "tvc_guide_stationid": "91314"
+    },
+    {
+      "name": "RFD HD TV",
+      "id": "rfd-hd-tv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "RFDHD/33b33049-4d09-4ad9-8c25-b1862f8a7600",
+      "tvc_guide_stationid": "63717"
+    },
+    {
+      "name": "BBC News",
+      "id": "bbc-news-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "BBCN/38fa4074-8901-45d1-be15-2fcaf7e54f24",
+      "tvc_guide_stationid": "101449"
+    },
+    {
+      "name": "The First",
+      "id": "the-first-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TheFirst/80c25768-273c-4298-a307-a6255e60cf7f",
+      "tvc_guide_stationid": "114934"
+    },
+    {
+      "name": "Free Speech TV",
+      "id": "free-speech-tv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FSTV/6aeb8ae6-2f8b-48fb-a746-2f963ea8e86d",
+      "tvc_guide_stationid": "16220"
+    },
+    {
+      "name": "Newsmax TV",
+      "id": "newsmax-tv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NEWSMX/f8cccfab-d96c-40b0-9687-afe703819e99",
+      "tvc_guide_stationid": "87925"
+    },
+    {
+      "name": "Newsmax TV HD",
+      "id": "newsmax-tv-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NEWSMXH/dd85480a-4cf2-446c-ab67-3deb7ea00581",
+      "tvc_guide_stationid": "97163"
+    },
+    {
+      "name": "CSPAN",
+      "id": "cspan-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CSP1/6bb55705-16e0-416a-bdde-8617d4f91bc6",
+      "tvc_guide_stationid": "10161"
+    },
+    {
+      "name": "CSPAN 2",
+      "id": "cspan-2-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CSP2/fdb542e6-fbea-4c9d-875b-2252c1623023",
+      "tvc_guide_stationid": "10162"
+    },
+    {
+      "name": "Bloomberg TV HD",
+      "id": "bloomberg-tv-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "BTVHD/9d556827-6bb0-4e70-b843-1ae390321e74",
+      "tvc_guide_stationid": "8609"
+    },
+    {
+      "name": "Bloomberg TV",
+      "id": "bloomberg-tv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "BTV/e868d507-c1c5-4a98-8251-9638991a692d",
+      "tvc_guide_stationid": "14755"
+    },
+    {
+      "name": "Cheddar News",
+      "id": "cheddar-news-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CHDR/95622e62-7b62-4eea-bf32-691abc764c77",
+      "tvc_guide_stationid": "586"
+    },
+    {
+      "name": "CNBC",
+      "id": "cnbc-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CNBC/96d103cb-6037-4c2d-a4c0-821d1992b3d7",
+      "tvc_guide_stationid": "10139"
+    },
+    {
+      "name": "CNBC HD",
+      "id": "cnbc-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CNBCHD/c3cfa12b-f991-4ace-9438-62ace1ac535a",
+      "tvc_guide_stationid": "8277"
+    },
+    {
+      "name": "MS Now",
+      "id": "ms-now-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "MS NOW/84ab9eb1-aa33-4a2f-96f6-feba0ce713a4",
+      "tvc_guide_stationid": "356"
+    },
+    {
+      "name": "MS Now HD",
+      "id": "ms-now-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "MS NOW/7188780b-f344-4cb6-8ebc-7c7937a02004",
+      "tvc_guide_stationid": "3526"
+    },
+    {
+      "name": "CNBC World",
+      "id": "cnbc-world-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CNBW/cbc01bc2-bd52-4380-8b7e-f991a03b65f1",
+      "tvc_guide_stationid": "357"
+    },
+    {
+      "name": "CNNi",
+      "id": "cnni-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CNNi/7f7c3e96-628e-43df-bb90-7307f3878140",
+      "tvc_guide_stationid": "10146"
+    },
+    {
+      "name": "Fox Business Network",
+      "id": "fox-business-network-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FBN/84df7371-69e0-49be-a058-bf2f6e8bac84",
+      "tvc_guide_stationid": "58649"
+    },
+    {
+      "name": "Fox Business Network HD",
+      "id": "fox-business-network-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FBNHD/d6bf4706-2005-419a-a168-bb7bc464d20f",
+      "tvc_guide_stationid": "8394"
+    },
+    {
+      "name": "FOX News Channel",
+      "id": "fox-news-channel-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FNC/772f7eca-a5ff-4072-b3d8-6a082f4586fd",
+      "tvc_guide_stationid": "16374"
+    },
+    {
+      "name": "FOX News Channel HD",
+      "id": "fox-news-channel-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FNCHD/e286a88a-9068-45ff-a81d-929b9455b557",
+      "tvc_guide_stationid": "3474"
+    },
+    {
+      "name": "AccuWeather HD",
+      "id": "accuweather-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ACCUHD/a368c1d1-d258-4e80-9448-b9ef3a8271c7",
+      "tvc_guide_stationid": "6067"
+    },
+    {
+      "name": "The Weather Channel HD",
+      "id": "the-weather-channel-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "WEAHD/56f08371-563d-4910-8b4f-147e829104e5",
+      "tvc_guide_stationid": "8253"
+    },
+    {
+      "name": "The Weather Channel",
+      "id": "the-weather-channel-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "WEA/3aa82652-2a94-49db-a4a3-76d5f1c6d843",
+      "tvc_guide_stationid": "11187"
+    },
+    {
+      "name": "FOX Weather",
+      "id": "fox-weather-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FOXWX/3eb71a0d-48b1-459a-be81-c229062bb18c",
+      "tvc_guide_stationid": "93141"
+    },
+    {
+      "name": "INSP HD",
+      "id": "insp-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "INSPHD/3c6a1eea-d513-4ed7-b467-dcde66069d31",
+      "tvc_guide_stationid": "82773"
+    },
+    {
+      "name": "INSP",
+      "id": "insp-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "INSP/9fecfd4b-8efb-4466-90e4-dbb97388d621",
+      "tvc_guide_stationid": "11066"
+    },
+    {
+      "name": "GEB America",
+      "id": "geb-america-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "GEBA/215e5905-fa49-4ccc-9138-884f6947e05d",
+      "tvc_guide_stationid": "18999"
+    },
+    {
+      "name": "God TV",
+      "id": "god-tv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "GTV/54039c6f-c2b7-4a78-93d9-cef292f2e997",
+      "tvc_guide_stationid": "52697"
+    },
+    {
+      "name": "VICTORY",
+      "id": "victory-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "VICTORY/129d7c86-3a81-4bfe-afd7-b2f60dad9dda",
+      "tvc_guide_stationid": "60597"
+    },
+    {
+      "name": "World Harvest Television",
+      "id": "world-harvest-television-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "WHT/490f4723-11be-4917-97f2-0aa207be03ce",
+      "tvc_guide_stationid": "11514"
+    },
+    {
+      "name": "Hope Channel",
+      "id": "hope-channel-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "HOPE/c8173e6e-bf8f-492d-a992-c3b4baf8d799",
+      "tvc_guide_stationid": "49266"
+    },
+    {
+      "name": "Daystar HD",
+      "id": "daystar-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "DSTRHD/5972cb2f-63d7-47fb-bec3-e1f956f15ceb",
+      "tvc_guide_stationid": "87001"
+    },
+    {
+      "name": "EWTN",
+      "id": "ewtn-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "EWTN/c26f8f09-66fb-452a-ab90-86e90a69d599",
+      "tvc_guide_stationid": "10183"
+    },
+    {
+      "name": "TBN Inspire",
+      "id": "tbn-inspire-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "INSPIRE/f01823c4-547e-4af2-b678-740752628217",
+      "tvc_guide_stationid": "122276"
+    },
+    {
+      "name": "Trinity Broadcast Network HD",
+      "id": "trinity-broadcast-network-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TBNHD/d2f0861d-1db9-4d78-8213-d6f5676689ab",
+      "tvc_guide_stationid": "59539"
+    },
+    {
+      "name": "The WORD Network",
+      "id": "the-word-network-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "WORD/cfd4b615-c89c-47db-a561-5f582c3e23a2",
+      "tvc_guide_stationid": "373"
+    },
+    {
+      "name": "BYUtv",
+      "id": "byutv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "BYU/4bfae50c-9f91-4613-8847-02181340006f",
+      "tvc_guide_stationid": "21855"
+    },
+    {
+      "name": "Blossom",
+      "id": "blossom-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "BLSSM/bbd2a770-7534-44ff-b260-9a502d886ad1",
+      "tvc_guide_stationid": "151128"
+    },
+    {
+      "name": "Christian Television Net",
+      "id": "christian-television-net-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CTN/4e98afac-fd4c-4904-9e57-164118cb09e6",
+      "tvc_guide_stationid": "49128"
+    },
+    {
+      "name": "Positiv",
+      "id": "positiv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "POSITIV/da089b0b-d5bf-4aba-a0ae-9d79962ceb3f",
+      "tvc_guide_stationid": "34169"
+    },
+    {
+      "name": "TCT Network",
+      "id": "tct-network-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TCT/1c8226dd-f0c7-4b69-bbb4-142a6deff392",
+      "tvc_guide_stationid": "49486"
+    },
+    {
+      "name": "NRB",
+      "id": "nrb-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NRB/3c6bb192-dc04-48de-862b-71fb9e12cd1f",
+      "tvc_guide_stationid": "49097"
+    },
+    {
+      "name": "Living Faith Network",
+      "id": "living-faith-network-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FAITH/69f987e8-61d6-4bb8-999e-b6413c6c6708",
+      "tvc_guide_stationid": "6071"
+    },
+    {
+      "name": "IMPACT TV",
+      "id": "impact-tv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "IMPACT/2845f7ff-fdd9-4de7-80e2-884c39e7d7f3",
+      "tvc_guide_stationid": "71798"
+    },
+    {
+      "name": "ASPIRE (HD)",
+      "id": "aspire-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ASPHD/181271ae-0aa6-4974-83e2-c80759427ae3",
+      "tvc_guide_stationid": "76126"
+    },
+    {
+      "name": "Comedy TV HD",
+      "id": "comedy-tv-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "COMTVH/6bc2e297-8940-4561-9071-994328392946",
+      "tvc_guide_stationid": "82470"
+    },
+    {
+      "name": "Justice Central HD",
+      "id": "justice-central-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "JCHD/1d36c051-d7cd-42a5-8a79-5c9ceac2fca8",
+      "tvc_guide_stationid": "78850"
+    },
+    {
+      "name": "Heroes & Icons",
+      "id": "heroes-and-icons-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "H&I/6107dde2-4d9f-4c2e-9cb7-75e49ce72ea9",
+      "tvc_guide_stationid": "110477"
+    },
+    {
+      "name": "FM HD",
+      "id": "fm-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FM HD/3bc5e947-4d01-498c-a9d9-0e08bd42ab7f",
+      "tvc_guide_stationid": "72094"
+    },
+    {
+      "name": "Recipe TV",
+      "id": "recipe-tv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "RECIPE/4bd216f2-8d04-416d-92ed-ed9c394a227c",
+      "tvc_guide_stationid": "81289"
+    },
+    {
+      "name": "JBS",
+      "id": "jbs-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "JBS/00fded8f-378e-43de-8eab-08337b48d221",
+      "tvc_guide_stationid": "74978"
+    },
+    {
+      "name": "PBSNET",
+      "id": "pbsnet-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "PBS/92eb7112-07ed-48cf-aa1e-ac9bf75d3cbe",
+      "tvc_guide_stationid": "62612"
+    },
+    {
+      "name": "WCBS (New York) CBS East",
+      "id": "wcbs-new-york-cbs-east-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CBSe/aa7d150f-08da-423c-8fec-2f138d7d9da8",
+      "tvc_guide_stationid": "11331"
+    },
+    {
+      "name": "WCBS (New York) CBS HD East",
+      "id": "wcbs-new-york-cbs-hd-east-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CBSeHD/c1c37837-0e6e-4000-be5a-c2461e4a00c1",
+      "tvc_guide_stationid": "16689"
+    },
+    {
+      "name": "KCBS (Los Angeles) CBS West",
+      "id": "kcbs-los-angeles-cbs-west-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CBSw/91e8af46-f568-4d24-857c-746ee4061b85",
+      "tvc_guide_stationid": "10367"
+    },
+    {
+      "name": "KCBS (Los Angeles) CBS HD West",
+      "id": "kcbs-los-angeles-cbs-hd-west-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CBSwHD/b2ef58c3-fe74-4da6-a1f9-8da54760a310",
+      "tvc_guide_stationid": "19567"
+    },
+    {
+      "name": "WNBC (New York) NBC East",
+      "id": "wnbc-new-york-nbc-east-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NBCe/9cbb661f-5086-4c0f-94e3-9ca57a3b5642",
+      "tvc_guide_stationid": "382"
+    },
+    {
+      "name": "WNBC (New York) NBC HD East",
+      "id": "wnbc-new-york-nbc-hd-east-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NBCeHD/51220e77-5010-4812-bc7f-b22d99b455a1",
+      "tvc_guide_stationid": "4237"
+    },
+    {
+      "name": "KNBC (Los Angeles) NBC HD West",
+      "id": "knbc-los-angeles-nbc-hd-west-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NBCwHD/f51589d0-374c-423f-874c-eee8d9c44f87",
+      "tvc_guide_stationid": "19568"
+    },
+    {
+      "name": "KNBC (Los Angeles) NBC West",
+      "id": "knbc-los-angeles-nbc-west-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NBCw/516bf591-7d24-4851-8f25-1bb4fb3fba79",
+      "tvc_guide_stationid": "10590"
+    },
+    {
+      "name": "CW Plus",
+      "id": "cw-plus-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CW Plus/4f335f08-d319-4199-89ea-6a58a77ef803",
+      "tvc_guide_stationid": "99268"
+    },
+    {
+      "name": "KTLA CW West",
+      "id": "ktla-cw-west-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CWw/99ec43e9-7cbb-4cd7-86a1-0f8482da754b",
+      "tvc_guide_stationid": "10724"
+    },
+    {
+      "name": "WABC (New York) ABC East",
+      "id": "wabc-new-york-abc-east-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ABCe/c359fc4e-1bea-442b-972e-a55a6ce5aba6",
+      "tvc_guide_stationid": "11259"
+    },
+    {
+      "name": "WABC (New York) ABC HD East",
+      "id": "wabc-new-york-abc-hd-east-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ABCeHD/ec38798e-ed88-43b5-8e1b-182c280945b8",
+      "tvc_guide_stationid": "4239"
+    },
+    {
+      "name": "KABC (Los Angeles) ABC West",
+      "id": "kabc-los-angeles-abc-west-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ABCw/d9e97344-0295-49ad-8199-d439e39bc61c",
+      "tvc_guide_stationid": "10309"
+    },
+    {
+      "name": "KABC (Los Angeles) ABC HD West",
+      "id": "kabc-los-angeles-abc-hd-west-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ABCwHD/f7a30314-2f97-4fba-a293-db97cac8262a",
+      "tvc_guide_stationid": "19570"
+    },
+    {
+      "name": "WNYW (New York) FOX East",
+      "id": "wnyw-new-york-fox-east-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FOXe/697a34e7-d326-4dfd-9275-119b341be23b",
+      "tvc_guide_stationid": "388"
+    },
+    {
+      "name": "WNYW (New York) FOX HD East",
+      "id": "wnyw-new-york-fox-hd-east-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FOXeHD/29878ad9-e93b-4b30-9d3f-cf04ca853914",
+      "tvc_guide_stationid": "4238"
+    },
+    {
+      "name": "KTTV (Los Angeles) FOX HD West",
+      "id": "kttv-los-angeles-fox-hd-west-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FOXwHD/6e4cf914-7e73-4c69-8d10-54e7812423f7",
+      "tvc_guide_stationid": "20450"
+    },
+    {
+      "name": "KTTV (Los Angeles) FOX West",
+      "id": "kttv-los-angeles-fox-west-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FOXw/8b6a05d1-18a8-4f19-a1b1-5fb8fc2a9402",
+      "tvc_guide_stationid": "10741"
+    },
+    {
+      "name": "Aqui",
+      "id": "aqui-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "Aqui/0e0bedcf-e82f-4e4d-9127-920715d20616",
+      "tvc_guide_stationid": "62957"
+    },
+    {
+      "name": "Univision East",
+      "id": "univision-east-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "UNIe/5e034b4a-569e-4baf-bf87-8abaabc613b8",
+      "tvc_guide_stationid": "11118"
+    },
+    {
+      "name": "Univision East HD",
+      "id": "univision-east-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "UNIeHD/94f35e95-f0d6-4967-874e-234e4ceaae8c",
+      "tvc_guide_stationid": "3247"
+    },
+    {
+      "name": "Galavision",
+      "id": "galavision-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "GALA/187cc33f-28cc-404d-b2ab-c2b317a982f0",
+      "tvc_guide_stationid": "10222"
+    },
+    {
+      "name": "Galavision HD",
+      "id": "galavision-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "GALAHD/851e06c6-a83a-4d33-a19d-bb726a9a955f",
+      "tvc_guide_stationid": "8031"
+    },
+    {
+      "name": "Telemundo East",
+      "id": "telemundo-east-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TELe/81eb963b-d26c-4a45-a525-1bdcd7655dda",
+      "tvc_guide_stationid": "10239"
+    },
+    {
+      "name": "Telemundo West (103A)",
+      "id": "telemundo-west-103a-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TELw/b6319342-0343-4b72-82bf-54239c87f363",
+      "tvc_guide_stationid": "17983"
+    },
+    {
+      "name": "UniMas SD West (103A)",
+      "id": "unimas-sd-west-103a-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "UMas/b3ead28d-5ea7-4f87-8120-62a5bfc6cce0",
+      "tvc_guide_stationid": "31541"
+    },
+    {
+      "name": "UniMas West HD",
+      "id": "unimas-west-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "UMasHD/dad499f5-14e2-43f8-a98a-333022817223",
+      "tvc_guide_stationid": "8030"
+    },
+    {
+      "name": "Universo (103A)",
+      "id": "universo-103a-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "UVSO/4aac3d11-c961-4ec3-9e62-300a0b4ac1e9",
+      "tvc_guide_stationid": "14791"
+    },
+    {
+      "name": "Universo HD",
+      "id": "universo-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "UVSOHD/b0453ac3-7a84-462d-8ef0-c1d66810b72c",
+      "tvc_guide_stationid": "3841"
+    },
+    {
+      "name": "CNN en Espanol (103A)",
+      "id": "cnn-en-espanol-103a-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CNNE/a5c240be-3eea-4446-9aa9-7acfeb94d765",
+      "tvc_guide_stationid": "17054"
+    },
+    {
+      "name": "Canal Once",
+      "id": "canal-once-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ONCE/fdb4e801-b869-4c73-8bfa-2274323b14b7",
+      "tvc_guide_stationid": "36139"
+    },
+    {
+      "name": "Enlace",
+      "id": "enlace-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ENLC/1043de21-ff86-4496-907c-ae5d31595923",
+      "tvc_guide_stationid": "33527"
+    },
+    {
+      "name": "INFO Temp 7",
+      "id": "info-temp-7-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "GANGA/c4808883-e447-4c81-a65e-899843518f84",
+      "tvc_guide_stationid": "100858"
+    },
+    {
+      "name": "ESNE PIO",
+      "id": "esne-pio-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ESNE/1853c168-521f-424e-a070-49a60aae018c",
+      "tvc_guide_stationid": "46421"
+    },
+    {
+      "name": "HITN (103A)",
+      "id": "hitn-103a-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "HITN/6feed8e2-5530-440d-9ce7-314447b54f5f",
+      "tvc_guide_stationid": "17142"
+    },
+    {
+      "name": "Daystar Espanol",
+      "id": "daystar-espanol-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "DSTESP/5be62e9b-3bac-43a5-9115-85dd0dc929a4",
+      "tvc_guide_stationid": "132423"
+    },
+    {
+      "name": "TUDN HD",
+      "id": "tudn-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TUDNHD/94f6ccab-c0c4-4011-b060-5f7205dc8528",
+      "tvc_guide_stationid": "77033"
+    },
+    {
+      "name": "TUDN",
+      "id": "tudn-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TUDN/64d08230-b1b3-4261-b3ac-211a02f2d4e6",
+      "tvc_guide_stationid": "2021"
+    },
+    {
+      "name": "Zona TUDN",
+      "id": "zona-tudn-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ZTUDNFST/10e5fa2f-55a1-4fbf-8d77-3cf9d538f6b2",
+      "tvc_guide_stationid": "123928"
+    },
+    {
+      "name": "beIN SPORTS XTRA en Español",
+      "id": "bein-sports-xtra-en-español-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "BEIXE/86c7e26f-7e8a-4a79-a5e4-91c8e184e2d3",
+      "tvc_guide_stationid": "119661"
+    },
+    {
+      "name": "STARZ Encore",
+      "id": "starz-encore-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SENC/92f13716-7093-49a7-8f6a-335f0b30e9e4",
+      "tvc_guide_stationid": "10178"
+    },
+    {
+      "name": "STARZ Encore HD",
+      "id": "starz-encore-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SENCHD/676e4861-8f11-40d9-9285-a78455472b29",
+      "tvc_guide_stationid": "3777"
+    },
+    {
+      "name": "STARZ Encore West",
+      "id": "starz-encore-west-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SENw/3db92850-0314-4bd9-a517-7af91523d3ea",
+      "tvc_guide_stationid": "17125"
+    },
+    {
+      "name": "STARZ Encore Classic",
+      "id": "starz-encore-classic-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SECL/69429991-b95f-4bef-8d71-ff6ba44d1824",
+      "tvc_guide_stationid": "14764"
+    },
+    {
+      "name": "STARZ Encore Westerns",
+      "id": "starz-encore-westerns-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SEWS/c40a0cb8-8717-46e0-9920-c17cf6f5e124",
+      "tvc_guide_stationid": "529"
+    },
+    {
+      "name": "STARZ Encore Suspense",
+      "id": "starz-encore-suspense-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SESU/0e89f29b-17a7-4e9e-8edd-bbe2de49cb56",
+      "tvc_guide_stationid": "14766"
+    },
+    {
+      "name": "STARZ Encore Black",
+      "id": "starz-encore-black-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SEBK/ecf02663-f12d-4e5b-954e-fcc64ed4c295",
+      "tvc_guide_stationid": "14870"
+    },
+    {
+      "name": "STARZ Encore Action",
+      "id": "starz-encore-action-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SEAC/6f9320fa-1b8e-4319-9cb5-ca2ace386f55",
+      "tvc_guide_stationid": "14871"
+    },
+    {
+      "name": "STARZ Encore Action HD",
+      "id": "starz-encore-action-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SEACHD/42d7c5c9-84fb-4a90-b2b6-624e4cf46637",
+      "tvc_guide_stationid": "72015"
+    },
+    {
+      "name": "STARZ Encore Family",
+      "id": "starz-encore-family-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SEFM/f25513f5-3685-40aa-a172-c07265006b5b",
+      "tvc_guide_stationid": "533"
+    },
+    {
+      "name": "The Movie Channel East",
+      "id": "the-movie-channel-east-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TMCe/abe265fc-942d-4f2c-b03d-39eb96f02a4a",
+      "tvc_guide_stationid": "11160"
+    },
+    {
+      "name": "The Movie Channel East HD",
+      "id": "the-movie-channel-east-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TMCeHD/3078897a-8da3-4a0f-b5e1-19aac06a1c0d",
+      "tvc_guide_stationid": "8239"
+    },
+    {
+      "name": "The Movie Channel West",
+      "id": "the-movie-channel-west-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TMCw/8995127b-a5ba-469e-926a-4a2d8a6ce3cf",
+      "tvc_guide_stationid": "12509"
+    },
+    {
+      "name": "Lionsgate Collection (561)",
+      "id": "lionsgate-collection-561-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "LGCOLCT/3b704669-8a77-41a0-91ca-90048df493db",
+      "tvc_guide_stationid": "190287"
+    },
+    {
+      "name": "So Yummy",
+      "id": "so-yummy-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "YUM/0582fc73-558a-4294-afe6-4eb211b9594b",
+      "tvc_guide_stationid": "115674"
+    },
+    {
+      "name": "HDNET MOVIES",
+      "id": "hdnet-movies-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "HDNM/bb69566a-8bcb-46a4-badb-1e6705d4041b",
+      "tvc_guide_stationid": "4210"
+    },
+    {
+      "name": "Tribeca Festival+",
+      "id": "tribeca-festival-plus-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TRIFDTV/23f4235e-4486-4e4e-a73d-1164b9b54f55",
+      "tvc_guide_stationid": "183204"
+    },
+    {
+      "name": "Smithsonian Channel HD",
+      "id": "smithsonian-channel-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SMTHHD/b7dd0c3c-d22b-4a6b-b360-dcaf56deab7f",
+      "tvc_guide_stationid": "8391"
+    },
+    {
+      "name": "ShortsTV HD",
+      "id": "shortstv-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SHRTTV/9cf938f5-e2c1-4909-9536-918305eb4f23",
+      "tvc_guide_stationid": "3708"
+    },
+    {
+      "name": "SPORTS MIX HD (600)",
+      "id": "sports-mix-hd-600-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SMXHD/564a5fe1-e088-4e93-b4fe-67521aae1e29",
+      "tvc_guide_stationid": "5600"
+    },
+    {
+      "name": "FanDuel TV HD",
+      "id": "fanduel-tv-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FDTVHD/29f35d32-a695-40de-9fbb-56d5c0204822",
+      "tvc_guide_stationid": "21345"
+    },
+    {
+      "name": "Cowboy Channel",
+      "id": "cowboy-channel-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CWBY/8f4c4f53-92ad-4430-9d67-fe21808384af",
+      "tvc_guide_stationid": "630"
+    },
+    {
+      "name": "Pursuit Channel HD",
+      "id": "pursuit-channel-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "PRSTHD/8a176c5d-4164-4ccc-992b-072d6c8eb1fb",
+      "tvc_guide_stationid": "84542"
+    },
+    {
+      "name": "Pursuit Channel SD",
+      "id": "pursuit-channel-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "PRST/8ae13626-8c5f-49a5-abbb-dac48c4d2c65",
+      "tvc_guide_stationid": "60111"
+    },
+    {
+      "name": "Sportsman Channel",
+      "id": "sportsman-channel-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SPMN/35c1ba7e-1007-4171-a7a1-a04912e8149f",
+      "tvc_guide_stationid": "33930"
+    },
+    {
+      "name": "BTN HD",
+      "id": "btn-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "BTNHD/9a1380bd-3201-4fdd-a46e-c71a0453c87a",
+      "tvc_guide_stationid": "5610"
+    },
+    {
+      "name": "Big Ten Network Overflow 3",
+      "id": "big-ten-network-overflow-3-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "BTN3OF/31586baa-0f1e-482a-a6e6-b055cf02c106",
+      "tvc_guide_stationid": "71198"
+    },
+    {
+      "name": "Big Ten Network Overflow 2",
+      "id": "big-ten-network-overflow-2-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "BTN2OF/c62eb2bb-9bf9-4a14-a7c6-488c000257ff",
+      "tvc_guide_stationid": "61135"
+    },
+    {
+      "name": "Big Ten Network Overflow 4",
+      "id": "big-ten-network-overflow-4-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "BTN4OF/622d354a-dd46-4cb5-904d-f5d81bb4f2bc",
+      "tvc_guide_stationid": "71200"
+    },
+    {
+      "name": "BTN",
+      "id": "btn-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "BTN/dd2088cf-9555-45bc-914b-5ed4d4c7bb88",
+      "tvc_guide_stationid": "56783"
+    },
+    {
+      "name": "SEC Network",
+      "id": "sec-network-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SEC/0a89b977-d5e0-419d-aa75-5af7ab193dab",
+      "tvc_guide_stationid": "4003"
+    },
+    {
+      "name": "SEC Network HD",
+      "id": "sec-network-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SECHD/3c8abb32-1002-4118-a3b2-2201be88fe5a",
+      "tvc_guide_stationid": "3669"
+    },
+    {
+      "name": "ACC Network",
+      "id": "acc-network-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ACCN/d7ef9aa1-c645-4829-868d-0c2de357e8dc",
+      "tvc_guide_stationid": "111905"
+    },
+    {
+      "name": "ACC Network HD",
+      "id": "acc-network-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ACCNHD/4adb6040-f730-4e88-be8c-742a12943915",
+      "tvc_guide_stationid": "111871"
+    },
+    {
+      "name": "FOX Sports 2",
+      "id": "fox-sports-2-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FS2/bfc46e01-73b9-4571-8357-f8298d2b2ced",
+      "tvc_guide_stationid": "33178"
+    },
+    {
+      "name": "FOX Sports 2 HD",
+      "id": "fox-sports-2-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FS2HD/c710ec79-d8e0-4100-ae61-ab296cbb1fc0",
+      "tvc_guide_stationid": "5618"
+    },
+    {
+      "name": "Willow 2",
+      "id": "willow-2-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "WILLOW2/fda58531-ea33-45d3-a7cd-70b7cdc7ed91",
+      "tvc_guide_stationid": "100316"
+    },
+    {
+      "name": "MLB Minnesota Twins",
+      "id": "mlb-minnesota-twins-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TWINS/bffb8d79-2618-4770-be49-45af8c91332f",
+      "tvc_guide_stationid": "2307"
+    },
+    {
+      "name": "MLB Milwaukee Brewers SD",
+      "id": "mlb-milwaukee-brewers-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "BREWERS/aced41e2-c874-4dd0-9a81-383135a754a1",
+      "tvc_guide_stationid": "6009"
+    },
+    {
+      "name": "MLB Colorado Rockies SD",
+      "id": "mlb-colorado-rockies-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "COLROC/3b6e4fbc-b525-4def-84f0-a48acbd811be",
+      "tvc_guide_stationid": "2372"
+    },
+    {
+      "name": "Spectrum SportsNet LA",
+      "id": "spectrum-sportsnet-la-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SNLA/dcbda44e-b993-495f-b28d-5f9a1dddcb34",
+      "tvc_guide_stationid": "806"
+    },
+    {
+      "name": "Spectrum SportsNet LA HD",
+      "id": "spectrum-sportsnet-la-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SNLAHD/268359f2-6a3b-4625-979b-b099bdfcbba7",
+      "tvc_guide_stationid": "807"
+    },
+    {
+      "name": "Spectrum SportsNet (Alternate)",
+      "id": "spectrum-sportsnet-alternate-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SPSNa/feb4ace1-1fb3-41bb-85f7-873faa3eac19",
+      "tvc_guide_stationid": "6654"
+    },
+    {
+      "name": "Spectrum SportsNet HD",
+      "id": "spectrum-sportsnet-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SPSNHD/8c4620bb-bdd2-4917-b94a-b7e9484a8239",
+      "tvc_guide_stationid": "1104"
+    },
+    {
+      "name": "Spectrum SportsNet",
+      "id": "spectrum-sportsnet-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SPCSN/8daed9b5-1b79-4654-b395-d6be84e12ff4",
+      "tvc_guide_stationid": "1189"
+    },
+    {
+      "name": "Angels Broadcast Television",
+      "id": "angels-broadcast-television-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ABTV/dba7f476-f332-4669-bf65-3d7a2cc7568e",
+      "tvc_guide_stationid": "11054"
+    },
+    {
+      "name": "Angels Broadcast Television HD",
+      "id": "angels-broadcast-television-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ABTVHD/bee9bd3a-6782-47fc-9527-bdcc25b2d010",
+      "tvc_guide_stationid": "59627"
+    },
+    {
+      "name": "Angels Broadcast Television Extra HD",
+      "id": "angels-broadcast-television-extra-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ABTVHD/c9057d4e-7000-4b13-946e-775744d0a716",
+      "tvc_guide_stationid": "6803"
+    },
+    {
+      "name": "Angels Broadcast Television Extra",
+      "id": "angels-broadcast-television-extra-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ABTV/fa85727a-a231-422e-b11e-196b6f0c8a0f",
+      "tvc_guide_stationid": "6802"
+    },
+    {
+      "name": "FanDuel Sports Network SoCal HD",
+      "id": "fanduel-sports-network-socal-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FDSCHD/6e75b2f0-0211-47ff-8977-716a8bcfde07",
+      "tvc_guide_stationid": "11055"
+    },
+    {
+      "name": "FanDuel Sports Network SoCal",
+      "id": "fanduel-sports-network-socal-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FDSC/396ae17b-a534-45af-9168-ee53aee88397",
+      "tvc_guide_stationid": "11055"
+    },
+    {
+      "name": "NHL Center Ice 793",
+      "id": "nhl-center-ice-793-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NHL/95552de2-4665-4470-922a-b4769be575fa",
+      "tvc_guide_stationid": "1793"
+    },
+    {
+      "name": "iHeartRADIO",
+      "id": "iheartradio-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "IHT/a002b981-880a-4a43-ac4a-15add9d06b92",
+      "tvc_guide_stationid": "2156"
+    },
+    {
+      "name": "NHK World News 2049",
+      "id": "nhk-world-news-2049-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NHKWJ/46906881-e27c-472d-9beb-abd4e47b7ca1",
+      "tvc_guide_stationid": "546"
+    },
+    {
+      "name": "CGTN 2053 (99R)",
+      "id": "cgtn-2053-99r-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CGTN/a3dd9246-76b4-4ad4-92ea-e283e10867a5",
+      "tvc_guide_stationid": "29114"
+    },
+    {
+      "name": "OPM TV",
+      "id": "opm-tv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "OPMTV/99163796-fc80-4cba-ba9e-77afc20d90bc",
+      "tvc_guide_stationid": "116898"
+    },
+    {
+      "name": "Sari Sari Channel",
+      "id": "sari-sari-channel-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SariSari/47d2901e-b124-4fd5-aa38-7e98c238ba67",
+      "tvc_guide_stationid": "117009"
+    },
+    {
+      "name": "Arirang TV",
+      "id": "arirang-tv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ARANG/87e79461-6524-45b1-b0ef-9c01ac1e7f08",
+      "tvc_guide_stationid": "87649"
+    },
+    {
+      "name": "CGTN 2119",
+      "id": "cgtn-2119-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CGTN/32c1d8b7-80de-4c1a-9a57-46802a0e9ed6",
+      "tvc_guide_stationid": "29114"
+    },
+    {
+      "name": "NBC News Now",
+      "id": "nbc-news-now-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NBCNNW/13037afa-9397-4f2a-b015-069621319ced",
+      "tvc_guide_stationid": "114174"
+    },
+    {
+      "name": "Today All Day",
+      "id": "today-all-day-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TODAY/8f6ceea8-50d7-46b3-9c25-4b61598f94d9",
+      "tvc_guide_stationid": "114138"
+    },
+    {
+      "name": "ABC News Live",
+      "id": "abc-news-live-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ABCNL/ba49e669-31ec-499c-9ede-3c766016226e",
+      "tvc_guide_stationid": "113380"
+    },
+    {
+      "name": "ABC Localish",
+      "id": "abc-localish-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "LOCALSH/ad9ce34d-98c0-45a4-8368-d58549960c7c",
+      "tvc_guide_stationid": "118952"
+    },
+    {
+      "name": "Scripps News",
+      "id": "scripps-news-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SCNEWST/0efea3bb-d064-4de1-b4e0-9b374f028af5",
+      "tvc_guide_stationid": "120010"
+    },
+    {
+      "name": "20/20",
+      "id": "20-20-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "DIS2020/0ceb396e-86d0-417f-99a2-5de1f3366743",
+      "tvc_guide_stationid": "161600"
+    },
+    {
+      "name": "Yahoo Finance",
+      "id": "yahoo-finance-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "YAHOOF/f4fb0d15-77c9-4ef8-b86c-1500ae958250",
+      "tvc_guide_stationid": "113674"
+    },
+    {
+      "name": "ABC7 Los Angeles",
+      "id": "abc7-los-angeles-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KABCFAST/6fc2326b-125c-4a84-955e-65809df8f8ac",
+      "tvc_guide_stationid": "131577"
+    },
+    {
+      "name": "SportsGrid",
+      "id": "sportsgrid-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SPOGRID/28cb5863-af10-473d-9625-fb6fd2206fe6",
+      "tvc_guide_stationid": "120919"
+    },
+    {
+      "name": "DraftKings",
+      "id": "draftkings-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "DKN/d1a19b75-96ab-4546-8cf5-82abe21c553c",
+      "tvc_guide_stationid": "138277"
+    },
+    {
+      "name": "ESPN8: The Ocho",
+      "id": "espn8-the-ocho-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ESPN8/1376d7e8-791b-4e90-a8f9-2719d1933d6d",
+      "tvc_guide_stationid": "161567"
+    },
+    {
+      "name": "Fuel TV",
+      "id": "fuel-tv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FUELFUB/cff1891b-b09a-4b79-9d89-28754383976e",
+      "tvc_guide_stationid": "116115"
+    },
+    {
+      "name": "Fox Sports",
+      "id": "fox-sports-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FOXFAST/9f07c24a-045f-42b4-90a7-fee624e62356",
+      "tvc_guide_stationid": "141469"
+    },
+    {
+      "name": "The MLB Channel",
+      "id": "the-mlb-channel-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "MLBFAST/ab1de666-b3c5-45df-8f5d-4d2555683a89",
+      "tvc_guide_stationid": "182003"
+    },
+    {
+      "name": "NBA FAST Channel",
+      "id": "nba-fast-channel-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NBAFAST/522ea921-5c82-4044-a93d-99d4750c8c77",
+      "tvc_guide_stationid": "196933"
+    },
+    {
+      "name": "GolfPass",
+      "id": "golfpass-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "PK24 /27133a31-573d-4d7b-bb3c-fcf2d7e46360",
+      "tvc_guide_stationid": "114142"
+    },
+    {
+      "name": "Tennis Channel 2",
+      "id": "tennis-channel-2-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TNSCH2/2ad8b4d0-8c6f-4360-84e5-79f5f1874aee",
+      "tvc_guide_stationid": "137752"
+    },
+    {
+      "name": "Surf Cinema",
+      "id": "surf-cinema-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SURFER/01ea1d5d-dd94-4db1-9eef-4a1f5979251b",
+      "tvc_guide_stationid": "152976"
+    },
+    {
+      "name": "Red Bull TV",
+      "id": "red-bull-tv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "REDBLL/6fe20dc1-9103-4569-a42c-d887dddf14a3",
+      "tvc_guide_stationid": "142279"
+    },
+    {
+      "name": "beIN SPORTS XTRA",
+      "id": "bein-sports-xtra-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "BEINX/be076527-86af-4537-a165-56839e0eea0b",
+      "tvc_guide_stationid": "113143"
+    },
+    {
+      "name": "Willow Sports",
+      "id": "willow-sports-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "WILLOWSP/90a0ccfd-61b9-4904-999a-c97a9befe3cc",
+      "tvc_guide_stationid": "164602"
+    },
+    {
+      "name": "Women's Sports Network",
+      "id": "womens-sports-network-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "WSN/812f6dbf-9b5a-4f45-9af8-d1723d847dfe",
+      "tvc_guide_stationid": "124636"
+    },
+    {
+      "name": "All Women's Sports",
+      "id": "all-womens-sports-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "AWSN/af4124bc-4b69-4d70-9174-ef8e4d468e7c",
+      "tvc_guide_stationid": "167374"
+    },
+    {
+      "name": "Fight Network",
+      "id": "fight-network-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FIGHTNS/ea4a382a-356e-4693-9a4d-36782f1f2713",
+      "tvc_guide_stationid": "123170"
+    },
+    {
+      "name": "TNA",
+      "id": "tna-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "IMPACTW/b2dfe3d3-4fc3-4112-baa1-2c7ba0b3970d",
+      "tvc_guide_stationid": "121991"
+    },
+    {
+      "name": "Swerve Combat",
+      "id": "swerve-combat-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SWERVE/f90768ab-a273-4808-9460-30818f1839f9",
+      "tvc_guide_stationid": "122436"
+    },
+    {
+      "name": "DAZN Ringside",
+      "id": "dazn-ringside-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "DAZNR/ccc1eee8-8654-4e42-87a0-a8de1cee9fe3",
+      "tvc_guide_stationid": "144738"
+    },
+    {
+      "name": "PokerGo",
+      "id": "pokergo-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "PKGFAST/3d550255-c27b-4d12-b681-343bcbaa7fe5",
+      "tvc_guide_stationid": "124268"
+    },
+    {
+      "name": "Pickleball TV",
+      "id": "pickleball-tv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "PBTV/d351ef21-b01e-434f-acec-712e62b6d093",
+      "tvc_guide_stationid": "146769"
+    },
+    {
+      "name": "Billiard TV",
+      "id": "billiard-tv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "BILSTR/e6dd5b81-803d-4602-b8c9-90bb65a6f0af",
+      "tvc_guide_stationid": "120469"
+    },
+    {
+      "name": "Ryz Sports",
+      "id": "ryz-sports-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "RYZSPRT/d0e60163-66ce-449c-a34b-a0cd7c39be94",
+      "tvc_guide_stationid": "173352"
+    },
+    {
+      "name": "Stadium Stream",
+      "id": "stadium-stream-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "STADSTR/d21c2609-c765-4efd-a9d3-d739d4a42289",
+      "tvc_guide_stationid": "113991"
+    },
+    {
+      "name": "ACC Digital Network",
+      "id": "acc-digital-network-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ACCDN/8f5ed95b-f56d-4fa6-a231-4823486a971b",
+      "tvc_guide_stationid": "124806"
+    },
+    {
+      "name": "Big 12",
+      "id": "big-12-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "BIGXII/bcb689af-ff7b-48fa-bd72-3cadd3c89ad8",
+      "tvc_guide_stationid": "163942"
+    },
+    {
+      "name": "WIRED2fish TV",
+      "id": "wired2fish-tv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "W2FTV/98e9d25c-ff7e-49e4-b5ba-6bbce1476194",
+      "tvc_guide_stationid": "132644"
+    },
+    {
+      "name": "Pursuit UP",
+      "id": "pursuit-up-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "PRSTUP/54097e9b-de62-4618-be26-12f73cf6c484",
+      "tvc_guide_stationid": "112487"
+    },
+    {
+      "name": "Waypoint TV",
+      "id": "waypoint-tv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "WAYPNT/6ddbad2d-436e-4d64-8754-16d598c5edb0",
+      "tvc_guide_stationid": "121424"
+    },
+    {
+      "name": "NBC Sports Now",
+      "id": "nbc-sports-now-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NBCSPNW/b9a635df-c9a1-459a-b714-a6ca56d137a3",
+      "tvc_guide_stationid": "114140"
+    },
+    {
+      "name": "The Jim Rome Show",
+      "id": "the-jim-rome-show-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "JIMROME/d72fbe30-8ad9-48b4-8f51-90991572ae1e",
+      "tvc_guide_stationid": "162473"
+    },
+    {
+      "name": "Sports Illustrated",
+      "id": "sports-illustrated-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SITV/245d033a-2b77-410b-9428-ad59e3f8b104",
+      "tvc_guide_stationid": "132647"
+    },
+    {
+      "name": "Players TV",
+      "id": "players-tv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "PLAYERS/01aead45-ac59-49b6-9ee0-a513c60e373f",
+      "tvc_guide_stationid": "116748"
+    },
+    {
+      "name": "PowerNation",
+      "id": "powernation-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "PWRNTN/f1e6988c-8273-4356-9d41-23dd1eb7e667",
+      "tvc_guide_stationid": "123515"
+    },
+    {
+      "name": "Racing America",
+      "id": "racing-america-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "RA/d8e10041-feec-44fa-983f-dd8ae07323fe",
+      "tvc_guide_stationid": "124630"
+    },
+    {
+      "name": "Torque by History",
+      "id": "torque-by-history-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TORQUE/e8e77841-c3ec-4442-8458-d08231e89f73",
+      "tvc_guide_stationid": "123423"
+    },
+    {
+      "name": "Speedvision",
+      "id": "speedvision-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SPEEDV/d1351812-e633-4da7-8fbf-972d52d869b5",
+      "tvc_guide_stationid": "132889"
+    },
+    {
+      "name": "Lionsgate Collection",
+      "id": "lionsgate-collection-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "LGCOLCT/01d53c03-2779-480d-a5cc-635c8acede24",
+      "tvc_guide_stationid": "190287"
+    },
+    {
+      "name": "Lionsgate Collection",
+      "id": "lionsgate-collection-1-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "LGCOLCT/3d06753b-7a46-47cf-b120-fd1b01bee5b4",
+      "tvc_guide_stationid": "190287"
+    },
+    {
+      "name": "Primetime Soaps",
+      "id": "primetime-soaps-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "WBDPSO/bc3d689e-468f-4ca3-b6fa-2d4c486b0ddf",
+      "tvc_guide_stationid": "180080"
+    },
+    {
+      "name": "Acorn TV Mysteries",
+      "id": "acorn-tv-mysteries-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ACNMYST/ed793a11-6a85-44ce-a008-9f131d774ce1",
+      "tvc_guide_stationid": "180558"
+    },
+    {
+      "name": "HerSphere",
+      "id": "hersphere-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "HERSPHR/c0c3cea1-a0fc-4ea0-831c-11a9487cd38c",
+      "tvc_guide_stationid": "135378"
+    },
+    {
+      "name": "Three Stooges",
+      "id": "three-stooges-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "STOOGES/aa7407ef-0ee4-4141-89bb-8e22016507ac",
+      "tvc_guide_stationid": "170345"
+    },
+    {
+      "name": "Bob Ross Channel",
+      "id": "bob-ross-channel-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "BOBRS/bf1a99c3-b0cb-4eae-92a1-1714086a64f7",
+      "tvc_guide_stationid": "114491"
+    },
+    {
+      "name": "Horror by Alter",
+      "id": "horror-by-alter-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ALTR/8584c42f-762d-4a54-8912-f1166a61131c",
+      "tvc_guide_stationid": "124998"
+    },
+    {
+      "name": "The Walking Dead Universe",
+      "id": "the-walking-dead-universe-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TWDU/03c898d9-9054-4f99-a772-1470e1e9846b",
+      "tvc_guide_stationid": "115540"
+    },
+    {
+      "name": "50 Cent Action Channel",
+      "id": "50-cent-action-channel-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "50CENT/fc7ce5c3-e076-4ef7-ba8d-148abf978c18",
+      "tvc_guide_stationid": "178243"
+    },
+    {
+      "name": "El Rey Rebel",
+      "id": "el-rey-rebel-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ELREYST/1e160544-00bc-4b3c-88df-455fb4af26e2",
+      "tvc_guide_stationid": "124328"
+    },
+    {
+      "name": "Court TV",
+      "id": "court-tv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "COURTST/202c9e76-c1ca-40f0-ace1-89b626ae1ca2",
+      "tvc_guide_stationid": "123605"
+    },
+    {
+      "name": "Bravo Vault",
+      "id": "bravo-vault-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "BRVVLT/df40034e-34cf-48a3-afe2-53140915973b",
+      "tvc_guide_stationid": "138400"
+    },
+    {
+      "name": "Real Housewives Vault",
+      "id": "real-housewives-vault-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "RHLVT/c641c3d4-7d95-4f74-b0f5-703356eef6c2",
+      "tvc_guide_stationid": "138455"
+    },
+    {
+      "name": "E! Keeping Up",
+      "id": "e-keeping-up-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "EKEEPUP/1814ce60-55e6-4379-a7dc-01d0d669dcd4",
+      "tvc_guide_stationid": "138393"
+    },
+    {
+      "name": "All Reality WeTV",
+      "id": "all-reality-wetv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "WEREAL/a9969673-8fa5-4be6-8b38-1aab17e159e4",
+      "tvc_guide_stationid": "115679"
+    },
+    {
+      "name": "Confess by Nosey",
+      "id": "confess-by-nosey-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NSYCONF/15ef47e7-1b5e-4cf2-be5e-dedc55dfdaf8",
+      "tvc_guide_stationid": "151953"
+    },
+    {
+      "name": "Nosey",
+      "id": "nosey-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NOSEYP/171d9bb5-236b-4d9b-9c29-c9e5dc823d9b",
+      "tvc_guide_stationid": "133657"
+    },
+    {
+      "name": "Dance Moms by Lifetime",
+      "id": "dance-moms-by-lifetime-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "DANCM/34dfe608-a177-4151-9d6d-73e4b4e7d9f0",
+      "tvc_guide_stationid": "126369"
+    },
+    {
+      "name": "Say Yes To The Dress",
+      "id": "say-yes-to-the-dress-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "WBDSYTD/ebb2a922-67e6-4067-ad83-bba5a293a77c",
+      "tvc_guide_stationid": "149117"
+    },
+    {
+      "name": "The Repair Shop",
+      "id": "the-repair-shop-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "WBDRESHP/2a46766b-dc83-4565-8a02-fae9d0bcde2c",
+      "tvc_guide_stationid": "170357"
+    },
+    {
+      "name": "The Masked Singer",
+      "id": "the-masked-singer-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "MASKED/968a5a0c-8c2f-4f18-a0c0-3b9be518bbbe",
+      "tvc_guide_stationid": "191048"
+    },
+    {
+      "name": "America's Got Talent",
+      "id": "americas-got-talent-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "AGTFM/24a3f97c-f708-47b4-a285-44c9bd116913",
+      "tvc_guide_stationid": "189132"
+    },
+    {
+      "name": "Duck Dynasty",
+      "id": "duck-dynasty-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "DUCKDYN/45c79610-0f58-4ab3-a9b7-d1b2c2a54bc3",
+      "tvc_guide_stationid": "131429"
+    },
+    {
+      "name": "Ice Road Truckers",
+      "id": "ice-road-truckers-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ICEROAD/b6b9e4bb-503a-492c-88f5-4de71aedaae8",
+      "tvc_guide_stationid": "123426"
+    },
+    {
+      "name": "Ax Men",
+      "id": "ax-men-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "AXMEN/16853a87-5925-44a9-a45a-e780c3a6cc5c",
+      "tvc_guide_stationid": "123425"
+    },
+    {
+      "name": "Rig TV",
+      "id": "rig-tv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "RIGTV/48e1a675-8d4b-472e-bcde-159312ae7ce5",
+      "tvc_guide_stationid": "160864"
+    },
+    {
+      "name": "Danger TV",
+      "id": "danger-tv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "DANGER/bf9fb7ff-a761-44d6-8c7a-288f7fd928c4",
+      "tvc_guide_stationid": "120204"
+    },
+    {
+      "name": "Love After Lockup",
+      "id": "love-after-lockup-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "LALU/5b8593ee-d7b2-4e25-91f1-5c68cc7f71ba",
+      "tvc_guide_stationid": "185538"
+    },
+    {
+      "name": "The First 48",
+      "id": "the-first-48-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FIRST48/95809df8-ebf0-42c8-8c61-62b919fc3d8b",
+      "tvc_guide_stationid": "181303"
+    },
+    {
+      "name": "Cold Case Files",
+      "id": "cold-case-files-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "COLD/2c6c500b-89fe-4d0e-aaa8-71f181b8575c",
+      "tvc_guide_stationid": "129137"
+    },
+    {
+      "name": "Crime 360",
+      "id": "crime-360-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CRM360/56e7cb5d-eb7c-42a6-b584-099f8380bc09",
+      "tvc_guide_stationid": "113780"
+    },
+    {
+      "name": "True Crime Now",
+      "id": "true-crime-now-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TCNEST/63a853ea-605c-44bc-aecb-7d660282352e",
+      "tvc_guide_stationid": "135383"
+    },
+    {
+      "name": "Car Chase Channel",
+      "id": "car-chase-channel-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CARCHSE/525f0ba1-85aa-4e7b-9f72-bc3c5a842280",
+      "tvc_guide_stationid": "182036"
+    },
+    {
+      "name": "Crime Scenes",
+      "id": "crime-scenes-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "WBDCRSCN/7b4b945b-8877-4aa3-b194-e352c209f1c7",
+      "tvc_guide_stationid": "138028"
+    },
+    {
+      "name": "I (Almost) Got Away With It",
+      "id": "i-almost-got-away-with-it-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "WBDAWY/58dae6c5-d0e2-4069-9350-5fd26f538f93",
+      "tvc_guide_stationid": "154436"
+    },
+    {
+      "name": "Living With Evil",
+      "id": "living-with-evil-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "WBDLWE/cb6822da-03bc-42b4-bf41-d63b2ba29fa6",
+      "tvc_guide_stationid": "170382"
+    },
+    {
+      "name": "Love Kills",
+      "id": "love-kills-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "WBDLVKLS/61d1d108-cf06-420d-8cad-ed209b2fd756",
+      "tvc_guide_stationid": "170369"
+    },
+    {
+      "name": "Oxygen True Crime Archives",
+      "id": "oxygen-true-crime-archives-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "OXYTCA/9ebb3bd2-af94-436d-8123-4add71872f98",
+      "tvc_guide_stationid": "138585"
+    },
+    {
+      "name": "Dateline 24/7",
+      "id": "dateline-24-7-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "DAT247/0e77933e-f60b-4e10-b546-03aa4e2d5ef7",
+      "tvc_guide_stationid": "113957"
+    },
+    {
+      "name": "Fail Army",
+      "id": "fail-army-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FLARMY/5b2cc61c-32c8-42db-8c2e-ec527e55f1fa",
+      "tvc_guide_stationid": "121204"
+    },
+    {
+      "name": "Always Funny",
+      "id": "always-funny-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ALWFV/06963d58-2ceb-4d2a-b386-96eea710ce77",
+      "tvc_guide_stationid": "134109"
+    },
+    {
+      "name": "America's Funniest Home Videos",
+      "id": "americas-funniest-home-videos-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "AFHVDO/2fcdc200-1c9d-46dd-be94-fb38cc603d84",
+      "tvc_guide_stationid": "198929"
+    },
+    {
+      "name": "Comedy Dynamics",
+      "id": "comedy-dynamics-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CDYNCL/c0562eI'm having a hard time fulfilling your request. Can I help you with something else instead?
