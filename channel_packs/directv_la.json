@@ -3972,8 +3972,424 @@
       "deep_link_content_id": "AFHVDO/2fcdc200-1c9d-46dd-be94-fb38cc603d84",
       "tvc_guide_stationid": "198929"
     },
-    {
+   {
       "name": "Comedy Dynamics",
       "id": "comedy-dynamics-dtv",
       "provider_id": "directv",
-      "deep_link_content_id": "CDYNCL/c0562eI'm having a hard time fulfilling your request. Can I help you with something else instead?
+      "deep_link_content_id": "CDYNCL/c0562e14-c7b8-48a7-8cd8-b587629ccebc",
+      "tvc_guide_stationid": "115447"
+    },
+    {
+      "name": "SNL Vault",
+      "id": "snl-vault-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "PK3/1354ac42-cf21-4578-82df-9e35c0657718",
+      "tvc_guide_stationid": "113678"
+    },
+    {
+      "name": "Anger Management",
+      "id": "anger-management-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "AGRMGT/441ad820-0396-45b8-bc3f-1ea2be87bf6c",
+      "tvc_guide_stationid": "125128"
+    },
+    {
+      "name": "Are We There Yet",
+      "id": "are-we-there-yet-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "AWTYSTR/8a26be7e-df40-4be0-9a0c-50f2013c03a2",
+      "tvc_guide_stationid": "120377"
+    },
+    {
+      "name": "Portlandia",
+      "id": "portlandia-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "PRTLNDA/1db98d7f-4a0f-44e8-9ec3-08313505fb3e",
+      "tvc_guide_stationid": "122435"
+    },
+    {
+      "name": "Stories by AMC",
+      "id": "stories-by-amc-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "AMCDRM/ce82713c-0896-4d7a-a0f2-771ade24ec10",
+      "tvc_guide_stationid": "130687"
+    },
+    {
+      "name": "INFAST",
+      "id": "infast-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "INSUS/f662c708-ff11-4649-a1af-b43850b13c33",
+      "tvc_guide_stationid": "118699"
+    },
+    {
+      "name": "INWONDER",
+      "id": "inwonder-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "INWONUS/45c0b1b4-190f-4b09-beb8-e264ec62980a",
+      "tvc_guide_stationid": "129477"
+    },
+    {
+      "name": "Buzzr",
+      "id": "buzzr-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "BUZZRST/848b354b-681b-482b-a86b-bd4368b7c84e",
+      "tvc_guide_stationid": "113452"
+    },
+    {
+      "name": "Family Feud (Steve Harvey)",
+      "id": "family-feud-(steve-harvey)-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "XMVFMF/f4616bcd-507f-4083-8ed3-122a5dec2fcf",
+      "tvc_guide_stationid": "125192"
+    },
+    {
+      "name": "Let's Make a Deal",
+      "id": "lets-make-a-deal-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "LMADEAL/6037ae8a-1207-4e0a-8284-da0155266094",
+      "tvc_guide_stationid": "163434"
+    },
+    {
+      "name": "The Price is Right: Drew Carey",
+      "id": "the-price-is-right-drew-carey-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TPIRDC/6543ae89-5bf4-4bb8-83b9-916c55a8b59b",
+      "tvc_guide_stationid": "163435"
+    },
+    {
+      "name": "The Price is Right: The Barker Era",
+      "id": "the-price-is-right-the-barker-era-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TPIR/b13da9ab-076b-4009-a367-38a282ea78da",
+      "tvc_guide_stationid": "175935"
+    },
+    {
+      "name": "Deal Zone",
+      "id": "deal-zone-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "DEALZON/0bc3e62a-7fc8-41dc-97a3-09279d6c1a52",
+      "tvc_guide_stationid": "123432"
+    },
+    {
+      "name": "Supermarket Sweep",
+      "id": "supermarket-sweep-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SMSWEEP/aac0e9ef-e46b-4207-943f-75519c3d64d9",
+      "tvc_guide_stationid": "121598"
+    },
+    {
+      "name": "Dog Whisperer",
+      "id": "dog-whisperer-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "DOGWH/6b0c9b83-a93d-4516-bba9-02bf5d5c06b2",
+      "tvc_guide_stationid": "147688"
+    },
+    {
+      "name": "Million Dollar Listing Vault",
+      "id": "million-dollar-listing-vault-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "MDLV/6ab5f785-6071-4a16-80b0-03d0020a2d26",
+      "tvc_guide_stationid": "164081"
+    },
+    {
+      "name": "America's Test Kitchen",
+      "id": "americas-test-kitchen-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TSTKCHN/d2c29c81-ef23-4218-9098-942d46d2a209",
+      "tvc_guide_stationid": "115365"
+    },
+    {
+      "name": "Tastemade Travel",
+      "id": "tastemade-travel-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TMTRAVEL/08b29152-16a7-4cd4-bd22-f34eec8fea27",
+      "tvc_guide_stationid": "121718"
+    },
+    {
+      "name": "Tastemade Home",
+      "id": "tastemade-home-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TMHOME/91732881-6d5e-48c9-bde5-6ae4496e2598",
+      "tvc_guide_stationid": "125187"
+    },
+    {
+      "name": "Jamie Oliver",
+      "id": "jamie-oliver-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "JOLIVER/26cde0b9-26f2-4b0d-b505-ac7e75f89529",
+      "tvc_guide_stationid": "176039"
+    },
+    {
+      "name": "Tiny House Nation",
+      "id": "tiny-house-nation-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TINY/45f5b2a9-2318-41e2-a471-e2f2efcdcfa7",
+      "tvc_guide_stationid": "118456"
+    },
+    {
+      "name": "The Design Network",
+      "id": "the-design-network-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TDN/f6dbe792-f9fd-4cb7-a8f2-4e9cc342700e",
+      "tvc_guide_stationid": "118087"
+    },
+    {
+      "name": "RVTV",
+      "id": "rvtv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "RVTVSTR/822d6157-1ee8-4175-b749-270fdc0e4289",
+      "tvc_guide_stationid": "164367"
+    },
+    {
+      "name": "AT HOME with family handyman",
+      "id": "at-home-with-family-handyman-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "ATHFHM/3dab84d2-4086-4b4f-8cdc-e1b75a2820ba",
+      "tvc_guide_stationid": "127174"
+    },
+    {
+      "name": "Great American Romcoms",
+      "id": "great-american-romcoms-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "GARC/d4e0c914-4a66-4aa8-9c6b-26a6ba499dcf",
+      "tvc_guide_stationid": "129134"
+    },
+    {
+      "name": "MeatEater",
+      "id": "meateater-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "MEATR/77cf4af2-7b83-4838-a30a-c7be89f60fa2",
+      "tvc_guide_stationid": "170349"
+    },
+    {
+      "name": "Gusto TV",
+      "id": "gusto-tv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "GUSTOTV/ea82c4aa-5081-46b9-8328-f9a7501f8f7c",
+      "tvc_guide_stationid": "111140"
+    },
+    {
+      "name": "Sweet Escapes",
+      "id": "sweet-escapes-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "WBDSWE/9007fc14-113d-4e1e-bf32-abc1a8777d1d",
+      "tvc_guide_stationid": "138027"
+    },
+    {
+      "name": "Bizarre Foods with Andrew Zimmern",
+      "id": "bizarre-foods-with-andrew-zimmern-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "WBDBFAZ/72febb98-29b7-4254-b909-9521218e9be5",
+      "tvc_guide_stationid": "169593"
+    },
+    {
+      "name": "Beach Day",
+      "id": "beach-day-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "WBDBCD/a546b6ea-66b0-41c1-bdef-f85a070d5777",
+      "tvc_guide_stationid": "180082"
+    },
+    {
+      "name": "GoTraveler",
+      "id": "gotraveler-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "GOTRAV/700a3608-e13e-42f3-8c19-bf2fe96cc94d",
+      "tvc_guide_stationid": "124225"
+    },
+    {
+      "name": "FOX Soul",
+      "id": "fox-soul-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "FOXSOUL/6e4cfd3d-56dd-4463-8f48-9620c2e6ab5d",
+      "tvc_guide_stationid": "119212"
+    },
+    {
+      "name": "Ebony TV",
+      "id": "ebony-tv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "EBYTV/4ce170e6-9219-42f3-8b02-ad3a5b851e81",
+      "tvc_guide_stationid": "146144"
+    },
+    {
+      "name": "Dove TV",
+      "id": "dove-tv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "DOVXM/197dee36-1b7f-4796-8332-f6565aa389a3",
+      "tvc_guide_stationid": "110480"
+    },
+    {
+      "name": "Joel Osteen",
+      "id": "joel-osteen-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "JOEL/51b72650-121d-42fa-842c-3b87b040b05a",
+      "tvc_guide_stationid": "156961"
+    },
+    {
+      "name": "Pureflix TV",
+      "id": "pureflix-tv-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "PFTV/7e3cd866-061b-410c-86cf-5aa5fc6e6937",
+      "tvc_guide_stationid": "149039"
+    },
+    {
+      "name": "Yu-Gi-Oh!",
+      "id": "yu-gi-oh!-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "YUGIOH/76b0b447-3a1e-451b-a415-84cc8cfd41dd",
+      "tvc_guide_stationid": "155772"
+    },
+    {
+      "name": "Love Nature",
+      "id": "love-nature-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "LNUSP/22f9cdd5-fcae-4f86-af5e-ce4105209af6",
+      "tvc_guide_stationid": "157909"
+    },
+    {
+      "name": "Cosmic Frontiers",
+      "id": "cosmic-frontiers-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CSFRNT/539834dd-b156-4cde-bb2d-04152dc009f9",
+      "tvc_guide_stationid": "135380"
+    },
+    {
+      "name": "Mythbusters",
+      "id": "mythbusters-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "WBDMYTHB/46735643-b251-441d-bec8-c1daa2971135",
+      "tvc_guide_stationid": "180083"
+    },
+    {
+      "name": "Modern Marvels",
+      "id": "modern-marvels-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "MODMARV/3113dc10-422a-4139-b6d0-93fceb900d74",
+      "tvc_guide_stationid": "123433"
+    },
+    {
+      "name": "Curiosity Now",
+      "id": "curiosity-now-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CURINOW/5be021ad-db5c-4d09-945f-9f6852648dbe",
+      "tvc_guide_stationid": "123667"
+    },
+    {
+      "name": "MagellanTV Wildest",
+      "id": "magellantv-wildest-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "MGWILD/3d9c81e7-7124-4de1-a978-a013a4d40947",
+      "tvc_guide_stationid": "119209"
+    },
+    {
+      "name": "Military Heroes",
+      "id": "military-heroes-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "MILITRY/07e6d416-6d4c-4a0f-8848-e49bb6f8e25f",
+      "tvc_guide_stationid": "126439"
+    },
+    {
+      "name": "History & Warfare",
+      "id": "history-and-warfare-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "HSTWRF/6ba0f00a-e4f9-4ad7-8bc0-58c1b1be2d5c",
+      "tvc_guide_stationid": "135379"
+    },
+    {
+      "name": "How To",
+      "id": "how-to-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "WBDHOWTO/605b59bf-b596-44f8-9cc6-ce69d80657e3",
+      "tvc_guide_stationid": "138031"
+    },
+    {
+      "name": "Alien Nation by DUST",
+      "id": "alien-nation-by-dust-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "DUST/35c1d4c8-f63e-4943-83fe-cfcae3f93772",
+      "tvc_guide_stationid": "112881"
+    },
+    {
+      "name": "UnXplained Zone",
+      "id": "unxplained-zone-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "UNXPLND/ce445d73-10fd-4bdd-a147-18571f90a0bf",
+      "tvc_guide_stationid": "123431"
+    },
+    {
+      "name": "Ghosts are Real",
+      "id": "ghosts-are-real-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "WBDGHO/fb00926e-50d3-48f0-825f-92d0be19713e",
+      "tvc_guide_stationid": "138030"
+    },
+    {
+      "name": "Mysterious Worlds",
+      "id": "mysterious-worlds-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "WBDMYS/86e6ea74-3167-4294-82b2-681b7ee90502",
+      "tvc_guide_stationid": "138032"
+    },
+    {
+      "name": "MovieSphere",
+      "id": "moviesphere-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "MOVSPH/0fa300f0-8f01-48ea-96fd-3009ce524321",
+      "tvc_guide_stationid": "158131"
+    },
+    {
+      "name": "Movie Favorites by Lifetime",
+      "id": "movie-favorites-by-lifetime-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "LFTMOV/009ae0d4-8a1e-4f96-8abd-56afe53f9c30",
+      "tvc_guide_stationid": "121308"
+    },
+    {
+      "name": "At the Movies",
+      "id": "at-the-movies-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "WBDATMOV/924cbc16-9a84-4ca6-9dcb-b72e9cb13e47",
+      "tvc_guide_stationid": "138029"
+    },
+    {
+      "name": "Classic Cinema",
+      "id": "classic-cinema-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "WBDCLC/926c618c-7266-4936-929f-0c9c1cf58f7e",
+      "tvc_guide_stationid": "180081"
+    },
+    {
+      "name": "Tribeca Festival+",
+      "id": "tribeca-festival+-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "TRIFDTV/e1cff18d-72d2-4ed5-af15-edfc04661523",
+      "tvc_guide_stationid": "183204"
+    },
+    {
+      "name": "Documentary+",
+      "id": "documentary+-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "DOCPLUS/d2d0ba03-cbf0-40ec-a604-010a95390a9e",
+      "tvc_guide_stationid": "129672"
+    },
+    {
+      "name": "INSP Western Bound",
+      "id": "insp-western-bound-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "WSTBND/b475c9ac-c6cc-4e9e-833d-d64ae67bc28a",
+      "tvc_guide_stationid": "127279"
+    },
+    {
+      "name": "Somos Novelas",
+      "id": "somos-novelas-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SOMOSN/63ba40e0-454c-4cbf-a485-cd7412cda1d5",
+      "tvc_guide_stationid": "158862"
+    },
+    {
+      "name": "The Pet Collective",
+      "id": "the-pet-collective-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "PETCOLL/1a3d9bbb-6fa6-4db0-9e48-00c80d1fd8c6",
+      "tvc_guide_stationid": "121165"
+    }
+]
