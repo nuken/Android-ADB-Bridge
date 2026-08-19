@@ -5,6 +5,8 @@
       "name": "DirecTV Ultimate",
       "package_name": "com.att.tv",
       "component": "com.clientapp.MainActivity",
+      "fire_package_name": "com.att.tv",
+      "fire_component": "com.clientapp.MainActivity",
       "url_template": "dtvnow://deeplink.directvnow.com/play/channel/{id}",
       "splash_delay_ms": 3000
     }
