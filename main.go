@@ -67,6 +67,9 @@ type Channel struct {
 	DeepLinkContentID string `json:"deep_link_content_id,omitempty"`
 	TvcGuideStationID string `json:"tvc_guide_stationid,omitempty"`
 	TuningMacro       string `json:"tuning_macro,omitempty"`
+	TvgShift          string `json:"tvg_shift,omitempty"`
+	TvgLogo           string `json:"tvg_logo,omitempty"` 
+	GroupTitle        string `json:"group_title,omitempty"` 
 }
 
 type AppConfig struct {
@@ -93,7 +96,7 @@ type ProbeResult struct {
 }
 
 var Config AppConfig
-var AppVersion = "5.1.1-WIN"
+var AppVersion = "5.1.2-WIN"
 var tunerLock sync.Mutex
 
 var keycodeMap = map[string]string{
@@ -410,7 +413,7 @@ func parseAndExecuteMacro(ctx context.Context, deviceIP string, macroStr string,
 			log.Printf("[%s Macro] Warning: Unknown macro action '%s'\n", deviceIP, action)
 		}
 	}
-  }
+}
 
 func lockTuner() *Tuner {
 	tunerLock.Lock()
@@ -1081,13 +1084,19 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 			afArg += fmt.Sprintf("adelay=%d|%d", tuner.AudioDelayMs, tuner.AudioDelayMs)
 		}
 
+		// EDITED: Appended aresample=async=1 filter to eliminate clock drift
 		if afArg != "" {
-			args = append(args, "-af", afArg)
+			afArg += ",aresample=async=1"
+		} else {
+			afArg = "aresample=async=1"
 		}
 
+		args = append(args, "-af", afArg)
+
+		// EDITED: Inserted -muxrate 10M to pad the output transport stream to a strict CBR
 		args = append(args,
 			"-c:a", "aac", "-b:a", "192k", "-ar", "48000",
-			"-f", "mpegts",
+			"-f", "mpegts", "-muxrate", "10M",
 			"pipe:1",
 		)
 
@@ -1108,7 +1117,7 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		streamChan := make(chan []byte, 500)
-		flusher, canFlush := w.(http.Flusher)
+		
 
 		go func() {
 			defer close(streamChan)
@@ -1137,11 +1146,9 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 					// FFmpeg channel closed
 					break streamLoop
 				}
+				// EDITED: Removed flusher.Flush() from here
 				if _, err := w.Write(chunk); err != nil {
 					break streamLoop
-				}
-				if canFlush {
-					flusher.Flush()
 				}
 			}
 		}
@@ -1165,7 +1172,7 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 	defer resp.Body.Close()
 
 	buf := make([]byte, 128*1024)
-	flusher, canFlush := w.(http.Flusher)
+	
 
 	for {
 		// Instantly break if the client disconnects
@@ -1175,12 +1182,10 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 		
 		n, err := resp.Body.Read(buf)
 		if n > 0 {
+			// EDITED: Removed flusher.Flush() from here
 			if _, wErr := w.Write(buf[:n]); wErr != nil {
 				log.Printf("Stream write error: %v\n", wErr)
 				break
-			}
-			if canFlush {
-				flusher.Flush()
 			}
 		}
 		if err != nil {
@@ -1195,15 +1200,31 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 func generateM3U(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "audio/x-mpegurl")
 	fmt.Fprintf(w, "#EXTM3U x-tvh-max-streams=%d\n", len(Config.Tuners))
-
 	localIP := getLocalIP()
+	
+	// Grab the "group" parameter from the URL query (convert to lowercase for safe comparison)
+	targetGroup := strings.ToLower(r.URL.Query().Get("group"))
 
 	for _, ch := range Config.Channels {
-		stationData := ""
-		if ch.TvcGuideStationID != "" {
-			stationData = fmt.Sprintf(` tvc-guide-stationid="%s"`, ch.TvcGuideStationID)
+		// If a specific group was requested, skip channels that do not match
+		if targetGroup != "" && strings.ToLower(ch.GroupTitle) != targetGroup {
+			continue
 		}
 
+		stationData := ""
+		if ch.TvcGuideStationID != "" {
+			stationData += fmt.Sprintf(` tvc-guide-stationid="%s"`, ch.TvcGuideStationID)
+		}
+		if ch.TvgShift != "" {
+			stationData += fmt.Sprintf(` tvg-shift="%s"`, ch.TvgShift)
+		}
+		if ch.TvgLogo != "" {
+			stationData += fmt.Sprintf(` tvg-logo="%s"`, ch.TvgLogo)
+		}
+		if ch.GroupTitle != "" {
+			stationData += fmt.Sprintf(` group-title="%s"`, ch.GroupTitle)
+		}
+		
 		fmt.Fprintf(w, "#EXTINF:-1 channel-id=\"%s\"%s,%s\n", ch.ID, stationData, ch.Name)
 		fmt.Fprintf(w, "http://%s:%d/stream/%s\n", localIP, Config.Port, ch.ID)
 	}

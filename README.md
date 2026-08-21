@@ -1,4 +1,4 @@
-# Android ADB Bridge v5.1.1 Win-Go
+# Android ADB Bridge v5.1.2 Win-Go
 
 A lightweight background tool for Windows that connects your PC to your streaming sticks (like Chromecast, Nvidia Shield, or Onn 4K boxes). It automatically changes channels on your streaming apps and sends the live video straight to your DVR software.
 
@@ -75,7 +75,7 @@ Before this tool can control your streaming stick, you need to turn on a built-i
 
 ## 2. Installation and Launch
 
-1. Double-click the `AndroidBridge_Setup_v5.1.1.exe` file to run the installer.
+1. Double-click the `AndroidBridge_Setup_v5.1.2.exe` file to run the installer.
 2. The installer automatically handles safety settings (like Windows Firewall) and sets the app to start up quietly in the background whenever you turn on your PC.
 3. Once installed, double-click the **Android ADB Bridge** shortcut on your Desktop or Start Menu.
 4. This will automatically open your web browser to the app's control panel (usually `http://192.168.1.X:8888/status`).
@@ -205,7 +205,7 @@ When a tune is requested, the bridge automatically checks the hardware OS and se
 
 *:link:[Channel Packs Guide](docs/packs.md)*
 
-Setting up hundreds of channels manually can be tedious. Version 5.1.1 introduces a dual-import system to let you download entire channel lineups in seconds.
+Setting up hundreds of channels manually can be tedious. Version 5.1.2 introduces a dual-import system to let you download entire channel lineups in seconds.
 
 * **Import Channel Pack (Blue Button):** Loads packs designed for standard **Deep Link** URL tuning.
 * **Import Macro Pack (Pink Button):** Loads packs specifically mapped out for **Simulated Keypress** tuning sequences.

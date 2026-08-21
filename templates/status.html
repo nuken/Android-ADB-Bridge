@@ -8,7 +8,7 @@
     <style>
         :root { --bg-color: #2c2c2c; --surface-color: #3a3a3a; --primary-color: #7dd3fc; --text-color: #e0e0e0; --border-color: #4a4a4a; --success-color: #28a745; --error-color: #dc3545; --button-color: #007bff; --button-hover-color: #0056b3; }
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 20px 20px 80px 20px; }
-        .container { max-width: 900px; margin: 0 auto; background-color: var(--surface-color); border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+        .container { max-width: 1200px; margin: 0 auto; background-color: var(--surface-color); border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
         h1, h2 { color: var(--primary-color); border-bottom: 2px solid var(--border-color); padding-bottom: 10px; }
         .top-actions { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
         .table-wrapper { overflow-x: auto; border-radius: 8px; margin-top: 20px; }
@@ -84,7 +84,15 @@
             <button class="button" onclick="fetchStatus()"><i class="fa-solid fa-sync"></i> Refresh</button>
             <a href="/remote" class="button">Open Remote</a>
             <button id="copy-m3u-btn" class="button" onclick="copyM3uLink()"><i class="fa-solid fa-copy"></i> Copy M3U</button>
-            
+        <div style="display: flex; align-items: center; gap: 10px; background: #474747; padding: 4px 4px 4px 12px; border-radius: 8px; border: 1px solid #555;">
+    <i class="fa-solid fa-layer-group" style="color: #ccc;"></i>
+    <select id="m3u-group-select" style="background: #474747; color: white; border: none; padding: 6px 0; outline: none; cursor: pointer; flex-grow: 1;">
+        <option value="" style="background: #474747;">All Channels</option>
+    </select>
+    <button id="copy-group-m3u-btn" class="button cloud" style="flex-shrink: 0;" onclick="copyGroupM3uLink()">
+        <i class="fa-solid fa-link"></i> Copy Group Link
+    </button>
+</div>
             <button class="button backup" onclick="exportConfig()"><i class="fa-solid fa-download"></i> Backup Config</button>
             <button class="button restore" onclick="document.getElementById('import-file').click()"><i class="fa-solid fa-upload"></i> Restore Backup</button>
             <input type="file" id="import-file" style="display:none" accept=".json" onchange="importConfig(event)">
@@ -130,7 +138,7 @@
 
         <div class="table-wrapper channels-scroll-box" id="channels-container">
             <table id="channels-table">
-                <thead><tr><th>Name</th><th>Channel ID</th><th>Provider</th><th>Deep Link ID</th><th>Actions</th></tr></thead>
+                <thead><tr><th>Name</th><th>Channel ID</th><th>Provider</th><th>Group</th><th>Deep Link ID</th><th>Actions</th></tr></thead>
                 <tbody id="channels-table-body"></tbody>
             </table>
         </div>
@@ -462,6 +470,9 @@
                 </div>
 
                 <div class="form-group"><label>Guide Station ID (Optional)</label><input type="text" id="ch-stationid"></div>
+				<div class="form-group"><label>TVG Shift (e.g. -3 or +2)</label><input type="text" id="ch-shift" placeholder="Optional"></div>
+				<div style="display: flex; gap: 15px; margin-bottom: 15px;"><div class="form-group" style="flex: 1; margin-bottom: 0;"><label>Group Title (Category)</label><input type="text" id="ch-group" placeholder="e.g. Sports, News, Movies"></div>
+                <div class="form-group" style="flex: 1; margin-bottom: 0;"><label>TVG Logo URL</label><input type="text" id="ch-logo" placeholder="https://..."></div>
                 <button type="submit" class="button">Apply</button>
                 <button type="button" class="button" style="background:#666" onclick="closeModal('channel-modal')">Cancel</button>
             </form>
@@ -730,7 +741,8 @@
                     <td style="cursor: ${dragCursor};" title="${isAll ? 'Drag to reorder' : 'Reordering disabled in filtered view'}"><i class="fa-solid fa-grip-vertical" style="color: ${dragIconColor}; margin-right: 10px;"></i>${escapeHTML(c.name)}</td>
                     <td>${escapeHTML(c.id)}</td>
                     <td>${escapeHTML(c.provider_id)}</td>
-                    <td>${tuningDisplay}</td>
+                    <td>${c.group_title ? escapeHTML(c.group_title) : '<span style="color:#777;">None</span>'}</td>
+					<td>${tuningDisplay}</td>
                     <td>
                         <div style="display: flex; align-items: center; gap: 4px;">
                             <button class="action-button" style="background-color: #4b5563;" onclick="moveChannel(${i}, -1)" ${disableArrows || (i === 0 ? 'disabled style="opacity: 0.5;"' : '')}><i class="fa-solid fa-arrow-up"></i></button>
@@ -743,7 +755,43 @@
                 </tr>`}).join('');
 
             loadTunerStatuses(); 
+			updateGroupDropdown();
         }
+		
+		async function copyGroupM3uLink() {
+    const group = document.getElementById('m3u-group-select').value;
+    let m3uUrl = window.location.origin + '/channels.m3u';
+    
+    // Append the query parameter if a specific group is selected
+    if (group) {
+        m3uUrl += '?group=' + encodeURIComponent(group);
+    }
+    
+    try {
+        if (navigator.clipboard && window.isSecureContext) { 
+            await navigator.clipboard.writeText(m3uUrl); 
+        } else {
+            const textArea = document.createElement("textarea");
+            textArea.value = m3uUrl;
+            textArea.style.position = "fixed"; textArea.style.left = "-999999px"; textArea.style.top = "-999999px";
+            document.body.appendChild(textArea);
+            textArea.focus(); textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+        }
+        
+        const btn = document.getElementById('copy-group-m3u-btn');
+        const originalHtml = btn.innerHTML;
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+        btn.style.backgroundColor = 'var(--success-color)';
+        setTimeout(() => { 
+            btn.innerHTML = originalHtml; 
+            btn.style.backgroundColor = '#8b5cf6'; // Restore the original purple cloud class color
+        }, 2000);
+    } catch (err) { 
+        alert("Failed to copy link. Your browser is strictly blocking clipboard access."); 
+    }
+}
 
         async function exportConfig() {
             try {
@@ -860,6 +908,25 @@
                 alert("Failed to read the file. Ensure it is a valid JSON format.");
             }
         }
+		
+		function updateGroupDropdown() {
+    const select = document.getElementById('m3u-group-select');
+    if (!select) return;
+
+    // Get unique group names, filter out empty ones, and sort alphabetically
+    const uniqueGroups = [...new Set(config.channels.map(c => c.group_title).filter(g => g))].sort();
+    
+    // Remember what the user currently has selected so it doesn't jump
+    const currentVal = select.value;
+    
+    select.innerHTML = '<option value="">All Channels</option>' + 
+        uniqueGroups.map(g => `<option value="${escapeHTML(g)}">${escapeHTML(g)}</option>`).join('');
+        
+    // Restore selection if it still exists
+    if (uniqueGroups.includes(currentVal)) {
+        select.value = currentVal;
+    }
+}
 
         function executePackMerge(packData, mode) {
             if (mode === 'replace') {
@@ -1176,6 +1243,9 @@
             document.getElementById('ch-deeplink').value = c.deep_link_content_id || '';
             document.getElementById('ch-macro').value = c.tuning_macro || '';
             document.getElementById('ch-stationid').value = c.tvc_guide_stationid || '';
+			document.getElementById('ch-shift').value = c.tvg_shift || '';
+			document.getElementById('ch-group').value = c.group_title || '';
+			document.getElementById('ch-logo').value = c.tvg_logo || '';
             populateProviderDropdown(c.provider_id);
             document.getElementById('channel-index').value = i;
             
@@ -1205,7 +1275,10 @@
                 provider_id: document.getElementById('ch-provider').value, 
                 deep_link_content_id: dlValue, 
                 tuning_macro: macroValue,
-                tvc_guide_stationid: document.getElementById('ch-stationid').value 
+                tvc_guide_stationid: document.getElementById('ch-stationid').value,
+                tvg_shift: document.getElementById('ch-shift').value,
+				group_title: document.getElementById('ch-group').value,
+				tvg_logo: document.getElementById('ch-logo').value
             };
             
             if(i === -1) config.channels.push(data); else config.channels[i] = data;
