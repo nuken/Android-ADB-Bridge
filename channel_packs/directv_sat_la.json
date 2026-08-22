@@ -13,130 +13,536 @@
   ],
   "channels": [
     {
-      "name": "CW-KWGN",
-      "id": "cw-kwgn-dtv",
+      "name": "WINS",
+      "id": "wins-dtv",
       "provider_id": "directv",
-      "deep_link_content_id": "KWGN/6d8950b7-cdb0-8ce8-7b86-1fb8a938cbbe",
-      "tvc_guide_stationid": "20370"
+      "deep_link_content_id": "WINS/518012ba-c9b7-4f8a-943b-801aa7356210",
+      "tvc_guide_stationid": "91035"
     },
     {
-      "name": "CBS-KCNC",
-      "id": "cbs-kcnc-dtv",
+      "name": "Los Angeles 2 KCBS (CBS) HD",
+      "id": "los-angeles-2-kcbs-cbs-hd-dtv",
       "provider_id": "directv",
-      "deep_link_content_id": "KCNC/e8790c92-6a3c-bd4d-c140-a457641ce103",
-      "tvc_guide_stationid": "21297"
+      "deep_link_content_id": "KCBS/a6a20961-b5a2-44eb-a1b8-511721db7599",
+      "tvc_guide_stationid": "19567"
     },
     {
-      "name": "PBS-KRMA",
-      "id": "pbs-krma-dtv",
+      "name": "Los Angeles 2 KCBS (CBS)",
+      "id": "los-angeles-2-kcbs-cbs-dtv",
       "provider_id": "directv",
-      "deep_link_content_id": "KRMA/59e1aa84-649b-6b49-ae82-543632831e8a",
-      "tvc_guide_stationid": "21723"
+      "deep_link_content_id": "KCBS/dae12adc-b69e-4d1f-a1f2-97e852e394fc",
+      "tvc_guide_stationid": "10367"
     },
     {
-      "name": "ABC-KMGH",
-      "id": "abc-kmgh-dtv",
+      "name": "Los Angeles 4 KNBC (NBC) HD",
+      "id": "los-angeles-4-knbc-nbc-hd-dtv",
       "provider_id": "directv",
-      "deep_link_content_id": "KMGH/1a79724a-3bc7-31d3-1c07-cb785d8d5fa3",
-      "tvc_guide_stationid": "20293"
+      "deep_link_content_id": "KNBC/834955b1-15b8-4374-9ddb-681ace20fd99",
+      "tvc_guide_stationid": "19568"
     },
     {
-      "name": "NBC-KUSA",
-      "id": "nbc-kusa-dtv",
+      "name": "Los Angeles 4 KNBC (NBC)",
+      "id": "los-angeles-4-knbc-nbc-dtv",
       "provider_id": "directv",
-      "deep_link_content_id": "KUSA/67ace820-74a7-f2ee-6312-f82b0405b0cd",
-      "tvc_guide_stationid": "21298"
+      "deep_link_content_id": "KNBC/c82c23f3-e04e-42e3-8256-83fa635f2b9f",
+      "tvc_guide_stationid": "10590"
     },
     {
-      "name": "PBS-KBDI",
-      "id": "pbs-kbdi-dtv",
+      "name": "Los Angeles, CA KTLA CW 5 SD",
+      "id": "los-angeles-ca-ktla-cw-5-sd-dtv",
       "provider_id": "directv",
-      "deep_link_content_id": "KBDI/d7637136-6966-b71b-d269-9bd65a036874",
-      "tvc_guide_stationid": "35856"
+      "deep_link_content_id": "KTLA/9f4a03fd-178a-4c49-86c9-d402cf586a02",
+      "tvc_guide_stationid": "10724"
     },
     {
-      "name": "MNT-KTVD",
-      "id": "mnt-ktvd-dtv",
+      "name": "Los Angeles, CA KTLA CW 5 A3 HD",
+      "id": "los-angeles-ca-ktla-cw-5-a3-hd-dtv",
       "provider_id": "directv",
-      "deep_link_content_id": "KTVD/905be2ed-0e42-4457-9520-20409a6371aa",
-      "tvc_guide_stationid": "37087"
+      "deep_link_content_id": "KTLA/a944aaef-c8f0-458d-8a6b-bc2a662e53cb",
+      "tvc_guide_stationid": "19515"
     },
     {
-      "name": "TMO-KDEN",
-      "id": "tmo-kden-dtv",
+      "name": "Los Angeles 7 KABC (ABC) HD",
+      "id": "los-angeles-7-kabc-abc-hd-dtv",
       "provider_id": "directv",
-      "deep_link_content_id": "KDEN/ac9d5e58-edf8-adc3-7b23-9f2fed59cade",
-      "tvc_guide_stationid": "54424"
+      "deep_link_content_id": "KABC/779bc6f0-75da-46c9-92f6-b35ed0be4dcb",
+      "tvc_guide_stationid": "19570"
     },
     {
-      "name": "FOX-KDVR",
-      "id": "fox-kdvr-dtv",
+      "name": "Los Angeles 7 KABC (ABC)",
+      "id": "los-angeles-7-kabc-abc-dtv",
       "provider_id": "directv",
-      "deep_link_content_id": "KDVR/f685686e-f384-a5a0-a4eb-68fb7732e1ec",
-      "tvc_guide_stationid": "21319"
+      "deep_link_content_id": "KABC/e7537ca6-dfbe-4b17-85e7-5ebf0d9b8410",
+      "tvc_guide_stationid": "10309"
+    },
+    {
+      "name": "Los Angeles, CA KCAL IND 9 A3 HD",
+      "id": "los-angeles-ca-kcal-ind-9-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KCAL/f3c092d3-cc7d-4376-b1da-e52ce02bd712",
+      "tvc_guide_stationid": "20364"
+    },
+    {
+      "name": "Los Angeles, CA KCAL IND 9 SD",
+      "id": "los-angeles-ca-kcal-ind-9-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KCAL/57073a2d-e5b8-477f-b663-529322de25da",
+      "tvc_guide_stationid": "10362"
+    },
+    {
+      "name": "Los Angeles 11 KTTV (FOX)",
+      "id": "los-angeles-11-kttv-fox-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KTTV/48f754ce-5427-426b-b5ac-c5e4931fce3b",
+      "tvc_guide_stationid": "10741"
+    },
+    {
+      "name": "Los Angeles 11 KTTV (FOX) HD",
+      "id": "los-angeles-11-kttv-fox-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KTTV/a8dff9f4-49a2-48c2-8310-a9126fc72b66",
+      "tvc_guide_stationid": "20450"
+    },
+    {
+      "name": "Los Angeles, CA KCOP MNT 13 A3 HD",
+      "id": "los-angeles-ca-kcop-mnt-13-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KCOP/db0a51f4-4a64-4627-865a-4665e3eebb60",
+      "tvc_guide_stationid": "19653"
+    },
+    {
+      "name": "Los Angeles, CA KCOP MNT 13 SD",
+      "id": "los-angeles-ca-kcop-mnt-13-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KCOP/f4e794ff-d957-43df-b9f1-e9129cd5cf64",
+      "tvc_guide_stationid": "10383"
+    },
+    {
+      "name": "Los Angeles, CA KSCI IND 18 A3 HD",
+      "id": "los-angeles-ca-ksci-ind-18-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KSCI/6e8fc37a-bead-4546-9697-775327a74759",
+      "tvc_guide_stationid": "115828"
+    },
+    {
+      "name": "Los Angeles, CA KSCI IND 18 SD",
+      "id": "los-angeles-ca-ksci-ind-18-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KSCI/e0a0a544-4f4b-4aba-bbba-6aeffd209767",
+      "tvc_guide_stationid": "10684"
+    },
+    {
+      "name": "Los Angeles, CA KVME IND 20 A3 HD",
+      "id": "los-angeles-ca-kvme-ind-20-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KVME/8570cb1a-4375-48af-ad35-a9d7c9030fe6",
+      "tvc_guide_stationid": "106924"
+    },
+    {
+      "name": "Los Angeles, CA KVME IND 20 SD",
+      "id": "los-angeles-ca-kvme-ind-20-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KVME/26fd1996-84ee-4d8c-8c68-72dbdd8020bf",
+      "tvc_guide_stationid": "106924"
+    },
+    {
+      "name": "Los Angeles, CA KSCN IND 22 A3 HD",
+      "id": "los-angeles-ca-kscn-ind-22-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KSCN/f7e3c2cd-0609-4c71-b621-f8bdc4ad45aa",
+      "tvc_guide_stationid": "24023"
+    },
+    {
+      "name": "Los Angeles, CA KSCN IND 22 SD",
+      "id": "los-angeles-ca-kscn-ind-22-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KSCN/5176a388-c510-43f4-9d16-4c23205dfd35",
+      "tvc_guide_stationid": "24023"
+    },
+    {
+      "name": "Los Angeles, CA KVCR PBS 24 A3 HD",
+      "id": "los-angeles-ca-kvcr-pbs-24-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KVCR/3e6418ce-c70c-4509-a954-f6ded643269c",
+      "tvc_guide_stationid": "44023"
+    },
+    {
+      "name": "Los Angeles, CA KVCR PBS 24 SD",
+      "id": "los-angeles-ca-kvcr-pbs-24-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KVCR/3cb6f1d6-aee1-41a2-b2a1-242088046fa9",
+      "tvc_guide_stationid": "10793"
+    },
+    {
+      "name": "Los Angeles, CA KCET PBS 28 A3 HD",
+      "id": "los-angeles-ca-kcet-pbs-28-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KCET/9559935a-f249-438e-9f8a-eb9bc4365899",
+      "tvc_guide_stationid": "24020"
+    },
+    {
+      "name": "Los Angeles, CA KCET PBS 28 SD",
+      "id": "los-angeles-ca-kcet-pbs-28-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KCET/fc011e65-9577-4c88-95e5-3395f6736e22",
+      "tvc_guide_stationid": "10373"
+    },
+    {
+      "name": "Los Angeles, CA KPXN ION 30 A3 HD",
+      "id": "los-angeles-ca-kpxn-ion-30-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KPXN/55d362a3-7dc5-451f-b88b-194a1da28133",
+      "tvc_guide_stationid": "49814"
+    },
+    {
+      "name": "Los Angeles, CA KVMD IND 31 SD",
+      "id": "los-angeles-ca-kvmd-ind-31-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KVMD/132478b0-192b-48a1-bc88-981677f854d5",
+      "tvc_guide_stationid": "34758"
+    },
+    {
+      "name": "Los Angeles, CA KVMD IND 31 A3 HD",
+      "id": "los-angeles-ca-kvmd-ind-31-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KVMD/6c3c0c2f-44f0-467c-bc05-c3938a04f12b",
+      "tvc_guide_stationid": "34758"
+    },
+    {
+      "name": "Los Angeles, CA KMEX UNI 34 SD",
+      "id": "los-angeles-ca-kmex-uni-34-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KMEX/ec3245a2-15fb-4c1a-ae07-a068193a8e1b",
+      "tvc_guide_stationid": "10566"
+    },
+    {
+      "name": "Los Angeles, CA KMEX UNI 34 A3 HD",
+      "id": "los-angeles-ca-kmex-uni-34-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KMEX/67ce260b-8cdd-4b95-9948-f6b2bd86aa8c",
+      "tvc_guide_stationid": "43048"
+    },
+    {
+      "name": "Los Angeles, CA KXLA IND 44 SD",
+      "id": "los-angeles-ca-kxla-ind-44-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KXLA/3cd8c1d1-bd18-43c2-b370-86950e39efba",
+      "tvc_guide_stationid": "29568"
+    },
+    {
+      "name": "Los Angeles, CA KXLA IND 44 A3 HD",
+      "id": "los-angeles-ca-kxla-ind-44-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KXLA/4daf0047-0c35-499b-8f35-9633b312d110",
+      "tvc_guide_stationid": "42829"
+    },
+    {
+      "name": "Los Angeles, CA KFTR UMas 46 A3 HD",
+      "id": "los-angeles-ca-kftr-umas-46-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KFTR/f59e0165-0f67-4ad6-af09-314cb898189d",
+      "tvc_guide_stationid": "53123"
+    },
+    {
+      "name": "Los Angeles, CA KFTR UMas 46 SD",
+      "id": "los-angeles-ca-kftr-umas-46-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KFTR/3eef349a-dbd0-482e-8dda-25df8a704e7d",
+      "tvc_guide_stationid": "10500"
+    },
+    {
+      "name": "Los Angeles, CA KOCE PBS 50 A3 HD",
+      "id": "los-angeles-ca-koce-pbs-50-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KOCE/3143f4fd-7101-4137-926b-a757096313e1",
+      "tvc_guide_stationid": "34544"
+    },
+    {
+      "name": "Los Angeles, CA KOCE PBS 50 SD",
+      "id": "los-angeles-ca-koce-pbs-50-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KOCE/a2af1faa-d0d5-4617-a4c9-3267d19ce845",
+      "tvc_guide_stationid": "10613"
+    },
+    {
+      "name": "Los Angeles, CA KVEA TMO 52 A3 HD",
+      "id": "los-angeles-ca-kvea-tmo-52-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KVEA/4cbb5529-52b3-4035-aeb3-5ee868af69f6",
+      "tvc_guide_stationid": "42678"
+    },
+    {
+      "name": "Los Angeles, CA KVEA TMO 52 SD",
+      "id": "los-angeles-ca-kvea-tmo-52-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KVEA/a9dc84fa-2b88-4bb0-a320-e76b21a5f795",
+      "tvc_guide_stationid": "10795"
+    },
+    {
+      "name": "Los Angeles, CA KAZA METV 54 SD",
+      "id": "los-angeles-ca-kaza-metv-54-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KAZA/6137b504-9f76-4ad4-96ee-ae97d42d86ed",
+      "tvc_guide_stationid": "26843"
+    },
+    {
+      "name": "Los Angeles, CA KAZA METV 54 A3 HD",
+      "id": "los-angeles-ca-kaza-metv-54-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KAZA/e0829f1d-52b6-497a-baf5-144227c60774",
+      "tvc_guide_stationid": "43286"
+    },
+    {
+      "name": "Los Angeles, CA KJLA IND 57 SD",
+      "id": "los-angeles-ca-kjla-ind-57-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KJLA/499db886-e685-4782-8d97-0192d009c36a",
+      "tvc_guide_stationid": "12476"
+    },
+    {
+      "name": "Los Angeles, CA KJLA IND 57 A3 HD",
+      "id": "los-angeles-ca-kjla-ind-57-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KJLA/a8ac9594-f856-429a-bc8d-3562160b70cb",
+      "tvc_guide_stationid": "50395"
+    },
+    {
+      "name": "Los Angeles, CA KLCS PBS 58 A3 HD",
+      "id": "los-angeles-ca-klcs-pbs-58-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KLCS/63aca059-0494-4967-8e8b-fc3a71534904",
+      "tvc_guide_stationid": "43777"
+    },
+    {
+      "name": "Los Angeles, CA KLCS PBS 58 SD",
+      "id": "los-angeles-ca-klcs-pbs-58-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KLCS/d96ead08-dd8c-49b4-b107-c76ebd57706c",
+      "tvc_guide_stationid": "10538"
+    },
+    {
+      "name": "Los Angeles, CA KRCA IND 62 A3 HD",
+      "id": "los-angeles-ca-krca-ind-62-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KRCA/e2b722a1-8268-41ec-b59e-66a423e774b9",
+      "tvc_guide_stationid": "35352"
+    },
+    {
+      "name": "Los Angeles, CA KRCA IND 62 SD",
+      "id": "los-angeles-ca-krca-ind-62-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KRCA/4f486c06-affb-4842-ab95-5df4e92e9e9b",
+      "tvc_guide_stationid": "12398"
+    },
+    {
+      "name": "Los Angeles, CA KWHY IND 63 SD",
+      "id": "los-angeles-ca-kwhy-ind-63-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KWHY/5976b7e9-7cfd-4328-b666-ac8f918e606d",
+      "tvc_guide_stationid": "10314"
+    },
+    {
+      "name": "Los Angeles, CA KWHY IND 63 A3 HD",
+      "id": "los-angeles-ca-kwhy-ind-63-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KWHY/a38e05a0-6cfe-40a8-9c65-d480cd35c3c9",
+      "tvc_guide_stationid": "44019"
+    },
+    {
+      "name": "Los Angeles, CA KILM IND 64 A3 HD",
+      "id": "los-angeles-ca-kilm-ind-64-a3-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KILM/abb7c0ed-5b51-4fe6-98aa-fc1b6c5ec7f5",
+      "tvc_guide_stationid": "54495"
+    },
+    {
+      "name": "Los Angeles, CA KILM IND 64 SD",
+      "id": "los-angeles-ca-kilm-ind-64-sd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "KILM/7ff4f154-382a-43bd-a044-f686cba02a6d",
+      "tvc_guide_stationid": "12421"
+    },
+    {
+      "name": "Home Shopping Network 70-1",
+      "id": "home-shopping-network-70-1-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "HSN/fcc9de26-d9bf-4dfc-8e8b-36bf341d6231",
+      "tvc_guide_stationid": "10269"
+    },
+    {
+      "name": "QVC HD (70)",
+      "id": "qvc-hd-70-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "QVCHD/b57ae0e3-b95d-4583-9d9a-41b78bd4f49a",
+      "tvc_guide_stationid": "60222"
+    },
+    {
+      "name": "QVC (70)",
+      "id": "qvc-70-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "QVC/433f0e4a-18f5-4b11-be5a-696bafca7bcd",
+      "tvc_guide_stationid": "11069"
+    },
+    {
+      "name": "Home Shopping Network 70-1 (HD)",
+      "id": "home-shopping-network-70-1-hd-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "HSNHD/f7351b75-b3bb-4932-8e80-340afa957c41",
+      "tvc_guide_stationid": "62077"
+    },
+    {
+      "name": "SALE Network.",
+      "id": "sale-network-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SALE/3c37755d-5b85-4ed1-adff-e940fe564876",
+      "tvc_guide_stationid": "66110"
+    },
+    {
+      "name": "Shop LC HD 75",
+      "id": "shop-lc-hd-75-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SHOPLC/f8e95634-bf63-429f-99fe-b4c229b03ce2",
+      "tvc_guide_stationid": "56032"
     },
     {
       "name": "MeTV",
       "id": "metv-dtv",
       "provider_id": "directv",
-      "deep_link_content_id": "METV/83321f4e-2ac2-9dc4-a1fd-7b0a0f8c1e5f",
-      "tvc_guide_stationid": "122696"
+      "deep_link_content_id": "METV/038e34a5-d895-44cb-81da-f5d0b860fd06",
+      "tvc_guide_stationid": "108972"
     },
     {
-      "name": "Cozi TV",
+      "name": "NEW TV (77)",
+      "id": "new-tv-77-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "NEW/bc3ead9b-b1ac-4612-bc33-f7dcf1a97935",
+      "tvc_guide_stationid": "61313"
+    },
+    {
+      "name": "COOL Network 78",
+      "id": "cool-network-78-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "COOL/2f5860df-d97c-499e-838f-027471ebb3bf",
+      "tvc_guide_stationid": "114483"
+    },
+    {
+      "name": "COZI TV",
       "id": "cozi-tv-dtv",
       "provider_id": "directv",
-      "deep_link_content_id": "COZI/9fd00aad-1cc7-cf23-ba3e-bae853bd6165",
-      "tvc_guide_stationid": "89994"
+      "deep_link_content_id": "COZI/c725c691-7980-4353-8580-c261fb6900b8",
+      "tvc_guide_stationid": "78851"
     },
     {
       "name": "GRIT",
       "id": "grit-dtv",
       "provider_id": "directv",
-      "deep_link_content_id": "GRIT/3097b4cc-3b54-14e3-c801-796f2316040f",
+      "deep_link_content_id": "GRIT/e70487a5-cc3f-479e-9271-882db3d66ae9",
       "tvc_guide_stationid": "89922"
     },
     {
       "name": "BounceTV",
       "id": "bouncetv-dtv",
       "provider_id": "directv",
-      "deep_link_content_id": "Bounce/19a0169f-323e-b251-99e0-56b7209b4dca",
+      "deep_link_content_id": "Bounce/82539a74-53de-49ba-bcb4-1a43775803f9",
       "tvc_guide_stationid": "73067"
     },
     {
       "name": "GREAT",
       "id": "great-dtv",
       "provider_id": "directv",
-      "deep_link_content_id": "GREAT/23f0fc84-d285-c4a1-a4c9-dfb383ed77db",
-      "tvc_guide_stationid": "82563"
+      "deep_link_content_id": "GREAT/f2826647-aa15-443d-9242-a05526e580aa",
+      "tvc_guide_stationid": "135626"
     },
     {
       "name": "Start TV",
       "id": "start-tv-dtv",
       "provider_id": "directv",
-      "deep_link_content_id": "START/cf747516-29fa-41b9-9aa9-2dec5b7774cb",
+      "deep_link_content_id": "START/d833c43a-5f3c-45a1-9c4d-2861c71da177",
       "tvc_guide_stationid": "109454"
     },
     {
       "name": "True CRMZ",
       "id": "true-crmz-dtv",
       "provider_id": "directv",
-      "deep_link_content_id": "CRMES/acd62fd6-146a-4f45-baa7-f1a44ef64ba9",
+      "deep_link_content_id": "CRMES/9ee1bd46-2998-4f53-861d-9314a7584ff5",
       "tvc_guide_stationid": "114278"
     },
     {
       "name": "MovieSphere Gold",
       "id": "moviesphere-gold-dtv",
       "provider_id": "directv",
-      "deep_link_content_id": "MVSGLD/6b272ceb-e01c-4c9a-b464-9e169f766fdb",
+      "deep_link_content_id": "MVSGLD/76cdc7a8-0db8-45e5-956b-e6bc0032a912",
       "tvc_guide_stationid": "185303"
     },
     {
       "name": "ION Mystery",
       "id": "ion-mystery-dtv",
       "provider_id": "directv",
-      "deep_link_content_id": "IMYSHD/70b93944-4112-44fe-91c6-c7dc682e6d74",
+      "deep_link_content_id": "IMYS/d5efbdcb-868b-46e5-8f50-8903ea3e9d43",
       "tvc_guide_stationid": "112568"
+    },
+    {
+      "name": "VISION TV Channel 89",
+      "id": "vision-tv-channel-89-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "VISION/834ce34a-0768-441c-b804-23f850db8dfb",
+      "tvc_guide_stationid": "86448"
+    },
+    {
+      "name": "VALU (91)",
+      "id": "valu-91-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "VALU/834b72c5-22ec-4cb6-b3af-3ecd9c6ccacc",
+      "tvc_guide_stationid": "75761"
+    },
+    {
+      "name": "CRAVE (92)",
+      "id": "crave-92-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CRAVE/42e2134f-53c3-41fa-9f6c-049de7e7cb76",
+      "tvc_guide_stationid": "113720"
+    },
+    {
+      "name": "Celebrity Shopping TV 95",
+      "id": "celebrity-shopping-tv-95-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "CSHP/f531a84b-8e53-4f3e-8ccc-fa5d459cb3a4",
+      "tvc_guide_stationid": "70460"
+    },
+    {
+      "name": "SEEK (97)",
+      "id": "seek-97-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "SEEK/ebd281b2-2cbb-4d59-9ad5-1292289932e1",
+      "tvc_guide_stationid": "96368"
+    },
+    {
+      "name": "DEALS",
+      "id": "deals-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "DEALS/0f3f4392-e832-4653-b202-e72ecec89995",
+      "tvc_guide_stationid": "62894"
+    },
+    {
+      "name": "BEST Channel 98-7",
+      "id": "best-channel-98-7-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "BEST/17c6d420-7a71-4d3b-a9df-25fa0032b7b5",
+      "tvc_guide_stationid": "57806"
+    },
+    {
+      "name": "Get IT Infomercial (98-5)",
+      "id": "get-it-infomercial-98-5-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "GETIT/52077ba9-daeb-433d-95f2-a64c5754734a",
+      "tvc_guide_stationid": "101697"
+    },
+    {
+      "name": "WOW TV 98-1",
+      "id": "wow-tv-98-1-dtv",
+      "provider_id": "directv",
+      "deep_link_content_id": "WOW/a38b3bf1-3e07-4157-86aa-f9709eb3b592",
+      "tvc_guide_stationid": "62955"
     },
     {
       "name": "CNN",
