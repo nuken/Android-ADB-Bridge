@@ -25,9 +25,9 @@
     "url": "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/channel_packs/directv_la.json"
   },
   {
-    "name": "DirecTV SAT (Los Angeles)",
+    "name": "DirecTV SAT (Denver)",
     "channel_count": 299,
-    "url": "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/channel_packs/directv_sat_la.json"
+    "url": "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/channel_packs/directv_sat_dv.json"
   },
    {
     "name": "DirecTV Just Right (S. Central Lousianna)",
