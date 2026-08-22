@@ -29,6 +29,11 @@
     "channel_count": 299,
     "url": "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/channel_packs/directv_sat_la.json"
   },
+   {
+    "name": "DirecTV Just Right (S. Central Lousianna)",
+    "channel_count": 281,
+    "url": "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/channel_packs/directv_lousianna.json"
+  },
   {
     "name": "DirecTV (West)",
     "channel_count": 138,
