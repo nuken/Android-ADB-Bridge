@@ -26,7 +26,7 @@
   },
    {
     "name": "DirecTV SAT (Los Angeles)",
-    "channel_count": 153,
+    "channel_count": 173,
     "url": "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/channel_packs/directv_sat_la.json"
   },
   {
