@@ -1,0 +1,76 @@
+{
+  "providers": [
+{
+"id": "spectrum",
+"name": "spectrum",
+"package_name": "com.spectrum.stva.androidtv",
+"component": "com.spectrum.stva.androidtv.ui.HostedMainActivity",
+"splash_delay_ms": 1000
+}
+],
+"channels": [
+{
+"name": "Wapa America",
+"id": "wapa",
+"provider_id": "spectrum",
+"tvc_guide_stationid": "44322",
+"tuning_macro": "9, 1, 8, ENTER"
+},
+{
+"name": "TELEMUNDO ORLANDO",
+"id": "telemundo-orlando",
+"provider_id": "spectrum",
+"tvc_guide_stationid": "88569",
+"tuning_macro": "1, 0, 1, 1, ENTER"
+},
+{
+"name": "Spectrum News 13",
+"id": "spectrum-news-13",
+"provider_id": "spectrum",
+"tvc_guide_stationid": "70273",
+"tuning_macro": "1, 0, 1, 3, ENTER"
+},
+{
+"name": "CNN",
+"id": "cnn",
+"provider_id": "spectrum",
+"tvc_guide_stationid": "58646",
+"tuning_macro": "1, 2, 1, 5, ENTER"
+},
+{
+"name": "ESPN",
+"id": "espn",
+"provider_id": "spectrum",
+"tvc_guide_stationid": "45507",
+"tuning_macro": "1, 1, 2, 7, ENTER"
+},
+{
+"name": "ESPN2",
+"id": "espn2",
+"provider_id": "spectrum",
+"tvc_guide_stationid": "45507",
+"tuning_macro": "1, 1, 2, 8, ENTER"
+},
+{
+"name": "FX",
+"id": "fx",
+"provider_id": "spectrum",
+"tvc_guide_stationid": "58574",
+"tuning_macro": "1, 2, 8, 3, ENTER"
+},
+{
+"name": "RAYS",
+"id": "rays",
+"provider_id": "spectrum",
+"tvc_guide_stationid": "136335",
+"tuning_macro": "1, 0, 3, ENTER"
+},
+{
+"name": "HALLMARK",
+"id": "hallmark",
+"provider_id": "spectrum",
+"tvc_guide_stationid": "66268",
+"tuning_macro": "1, 1, 2, 2, ENTER"
+}
+  ]
+}
