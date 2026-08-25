@@ -2,7 +2,7 @@
   "providers": [
 {
 "id": "spectrum",
-"name": "spectrum",
+"name": "Spectrum",
 "package_name": "com.spectrum.stva.androidtv",
 "component": "com.spectrum.stva.androidtv.ui.HostedMainActivity",
 "splash_delay_ms": 1000
