@@ -20,6 +20,11 @@
         "name":  "FOXONE Lineup"
     },
     {
+        "channel_count":  9,
+        "url":  "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/macro_packs/spectrum_fl.json",
+        "name":  "Spectrum (Florida)"
+    },
+    {
         "channel_count":  2,
         "url":  "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/macro_packs/app_pbs_pack.json",
         "name":  "PBS Lineup"
