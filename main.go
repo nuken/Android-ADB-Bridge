@@ -19,6 +19,7 @@ import (
 	"sync"
 	"syscall"
 	"time"
+	"golang.org/x/mod/semver"
 )
 
 //go:embed templates
@@ -58,6 +59,7 @@ type Provider struct {
 	SplashDelayMs   int    `json:"splash_delay_ms,omitempty"`
 	PreTuneMacro    string `json:"pre_tune_macro,omitempty"`
 	PostTuneMacro   string `json:"post_tune_macro,omitempty"`
+	KeepWarm        bool   `json:"keep_warm"`
 }
 
 type Channel struct {
@@ -95,8 +97,13 @@ type ProbeResult struct {
 	FPS    string `json:"fps"`
 }
 
+type GitHubRelease struct {
+	TagName string `json:"tag_name"`
+	HtmlUrl string `json:"html_url"`
+}
+
 var Config AppConfig
-var AppVersion = "5.1.2-WIN"
+var AppVersion = "5.1.5-WIN"
 var tunerLock sync.Mutex
 
 var keycodeMap = map[string]string{
@@ -226,6 +233,113 @@ func saveConfig() {
 	os.WriteFile(getConfigPath(), fileData, 0644)
 }
 
+func apiCheckUpdate(w http.ResponseWriter, r *http.Request) {
+	client := &http.Client{Timeout: 5 * time.Second}
+	req, _ := http.NewRequest("GET", "https://api.github.com/repos/nuken/Android-ADB-Bridge/releases/latest", nil)
+	req.Header.Set("User-Agent", "Android-ADB-Bridge-Updater")
+
+	resp, err := client.Do(req)
+	if err != nil {
+		http.Error(w, `{"available": false}`, http.StatusOK)
+		return
+	}
+	defer resp.Body.Close()
+
+	var release GitHubRelease
+	if err := json.NewDecoder(resp.Body).Decode(&release); err != nil {
+		http.Error(w, `{"available": false}`, http.StatusOK)
+		return
+	}
+
+	// Normalize tags for golang.org/x/mod/semver (must start with 'v')
+	remoteVer := release.TagName
+	if !strings.HasPrefix(remoteVer, "v") {
+		remoteVer = "v" + remoteVer
+	}
+	
+	// Strip "-WIN" from your local AppVersion for comparison
+	localVer := "v" + strings.Split(AppVersion, "-")[0]
+
+	// semver.Compare returns 1 if remoteVer > localVer
+	updateAvailable := semver.Compare(remoteVer, localVer) > 0
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(map[string]interface{}{
+		"available": updateAvailable,
+		"version":   release.TagName,
+		"url":       release.HtmlUrl,
+	})
+}
+
+func apiApplyUpdate(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	// 1. Fetch release info
+	client := &http.Client{Timeout: 5 * time.Second}
+	req, _ := http.NewRequest("GET", "https://api.github.com/repos/nuken/Android-ADB-Bridge/releases/latest", nil)
+	req.Header.Set("User-Agent", "Android-ADB-Bridge-Updater")
+	
+	resp, err := client.Do(req)
+	if err != nil {
+		http.Error(w, "Failed to reach GitHub", http.StatusInternalServerError)
+		return
+	}
+	defer resp.Body.Close()
+
+	var release GitHubRelease
+	if err := json.NewDecoder(resp.Body).Decode(&release); err != nil {
+		http.Error(w, "Failed to parse release", http.StatusInternalServerError)
+		return
+	}
+	
+	// 2. Download the installer
+	downloadUrl := fmt.Sprintf("https://github.com/nuken/Android-ADB-Bridge/releases/download/%s/AndroidBridge_Setup_%s.exe", release.TagName, release.TagName)
+	
+	exeResp, err := http.Get(downloadUrl)
+	if err != nil || exeResp.StatusCode != 200 {
+		http.Error(w, "Failed to download update", http.StatusInternalServerError)
+		return
+	}
+	defer exeResp.Body.Close()
+
+	tempExePath := filepath.Join(os.TempDir(), "AndroidADBBridge_Update.exe")
+	out, err := os.Create(tempExePath)
+	if err != nil {
+		http.Error(w, "Failed to create temp file", http.StatusInternalServerError)
+		return
+	}
+	if _, err := io.Copy(out, exeResp.Body); err != nil {
+		out.Close()
+		http.Error(w, "Failed to save installer", http.StatusInternalServerError)
+		return
+	}
+	out.Close()
+
+	// 3. Launch via PowerShell/CMD wrapper so it waits for setup to finish, then relaunches the app
+	installedExe := filepath.Join(getExeDir(), filepath.Base(os.Args[0]))
+	launchScript := fmt.Sprintf(`Start-Process -FilePath "%s" -ArgumentList "/VERYSILENT /SUPPRESSMSGBOXES /FORCECLOSEAPPLICATIONS" -Wait; Start-Process -FilePath "%s"`, tempExePath, installedExe)
+
+	cmd := exec.Command("powershell", "-NoProfile", "-WindowStyle", "Hidden", "-Command", launchScript)
+	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+
+	if err := cmd.Start(); err != nil {
+		http.Error(w, "Failed to spawn installer wrapper", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write([]byte(`{"status": "success"}`))
+	
+	// 4. Terminate the running server to allow Inno Setup to overwrite files
+	go func() {
+		time.Sleep(1 * time.Second)
+		os.Exit(0)
+	}()
+}
+
 // ==========================================
 // 3. Executable Path Helpers
 // ==========================================
@@ -290,6 +404,27 @@ func adbCommand(deviceIP string, args ...string) (string, error) {
 
 	out, err := cmd.CombinedOutput()
 	outStr := strings.TrimSpace(string(out))
+	
+	// Detect common ADB dropouts
+	droppedOut := err != nil || strings.Contains(outStr, "offline") || strings.Contains(outStr, "device not found")
+	
+	if !isUSB && droppedOut {
+		log.Printf("[%s] ADB connection lost or offline. Auto-reconnecting...\n", deviceIP)
+		
+		disconnectCmd := exec.Command(adb, "disconnect", deviceIP)
+		disconnectCmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+		disconnectCmd.Run()
+		
+		connectCmd := exec.Command(adb, "connect", deviceIP)
+		connectCmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+		connectCmd.Run()
+		
+		// Retry the original command once
+		retryCmd := exec.Command(adb, fullArgs...)
+		retryCmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+		out, err = retryCmd.CombinedOutput()
+		outStr = strings.TrimSpace(string(out))
+	}
 	
 	if err != nil {
 		log.Printf("[%s ADB Error] %v | Output: %s\n", deviceIP, err, outStr)
@@ -458,52 +593,86 @@ func releaseTuner(deviceIP string) {
 
 	// 2. Run cleanup in the background so it doesn't block the HTTP response
 	go func() {
-		if activeProvID != "" {
-			var provider *Provider
-			for _, p := range Config.Providers {
-				if p.ID == activeProvID {
-					provider = &p
-					break
-				}
-			}
-
-			if provider != nil && provider.PostTuneMacro != "" {
-				log.Printf("[%s] Executing Cleanup (Post-Tune) Macro\n", deviceIP)
-				
-				// Look up the specific Tuner's OS for cleanup
-				var tunerOS string
-				tunerLock.Lock()
-				for _, t := range Config.Tuners {
-					if t.DeviceIP == deviceIP {
-						tunerOS = t.DeviceOS
+			if activeProvID != "" {
+				var provider *Provider
+				for _, p := range Config.Providers {
+					if p.ID == activeProvID {
+						provider = &p
 						break
 					}
 				}
-				tunerLock.Unlock()
 
-				pkg := provider.PackageName
-				if tunerOS == "fire_tv" && provider.FirePackageName != "" {
-					pkg = provider.FirePackageName
+				if provider != nil && provider.PostTuneMacro != "" {
+					log.Printf("[%s] Executing Cleanup (Post-Tune) Macro\n", deviceIP)
+					var tunerOS string
+					tunerLock.Lock()
+					for _, t := range Config.Tuners {
+						if t.DeviceIP == deviceIP {
+							tunerOS = t.DeviceOS
+							break
+						}
+					}
+					tunerLock.Unlock()
+
+					pkg := provider.PackageName
+					if tunerOS == "fire_tv" && provider.FirePackageName != "" {
+						pkg = provider.FirePackageName
+					}
+					parseAndExecuteMacro(context.Background(), deviceIP, provider.PostTuneMacro, pkg)
 				}
-				
-				parseAndExecuteMacro(context.Background(), deviceIP, provider.PostTuneMacro, pkg)
 			}
-		}
 
-		// ALWAYS send the Home command afterwards to exit the app
-		log.Printf("Released tuner %s. Sending default Home command.\n", deviceIP)
-		adbCommand(deviceIP, "shell", "input", "keyevent", "3")
+			// 1. ALWAYS send the default Home command to clear the screen
+			log.Printf("Released tuner %s. Sending default Home command.\n", deviceIP)
+			adbCommand(deviceIP, "shell", "input", "keyevent", "3")
+			time.Sleep(1 * time.Second)
 
-		// 3. NOW WE RELEASE THE TUNER (Only after all cleanup ADB commands are done)
-		tunerLock.Lock()
-		for i := range Config.Tuners {
-			if Config.Tuners[i].DeviceIP == deviceIP {
-				Config.Tuners[i].InUse = false
-				break
+			// 2. NEW: Check if any provider is set to Keep Warm, and open it
+			for _, prov := range Config.Providers {
+				if prov.KeepWarm {
+					log.Printf("[%s] Opening default app '%s' to keep it warm...\n", deviceIP, prov.Name)
+					
+					targetPkg := prov.PackageName
+					
+					var tunerOS string
+					tunerLock.Lock()
+					for _, t := range Config.Tuners {
+						if t.DeviceIP == deviceIP {
+							tunerOS = t.DeviceOS
+							break
+						}
+					}
+					tunerLock.Unlock()
+
+					if tunerOS == "fire_tv" && prov.FirePackageName != "" {
+						targetPkg = prov.FirePackageName
+					}
+					
+					// Launch the app into the foreground
+					adbCommand(deviceIP, "shell", "monkey", "-p", targetPkg, "-c", "android.intent.category.LAUNCHER", "1")
+					
+					// Hold the tuner lock until the app has finished cold-booting
+					sleepMs := prov.SplashDelayMs
+					if sleepMs < 4000 {
+						sleepMs = 4000 // Guarantee at least a 4-second buffer for cold boots
+					}
+					log.Printf("[%s] Waiting %dms for the app to initialize before unlocking...\n", deviceIP, sleepMs)
+					time.Sleep(time.Duration(sleepMs) * time.Millisecond)
+
+					break 
+				}
 			}
-		}
-		tunerLock.Unlock()
-	}()
+
+			// 3. Release the tuner lock
+			tunerLock.Lock()
+			for i := range Config.Tuners {
+				if Config.Tuners[i].DeviceIP == deviceIP {
+					Config.Tuners[i].InUse = false
+					break
+				}
+			}
+			tunerLock.Unlock()
+		}()
 }
 
 func executeTuning(ctx context.Context, deviceIP string, ch Channel) {
@@ -946,6 +1115,48 @@ func apiImportConfig(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(`{"status": "success"}`))
 }
 
+func estimateTuningDuration(provider Provider, channel Channel) int {
+	ms := 500 // Initial 500ms wake-up delay
+
+	// Helper function to calculate macro time
+	calcMacro := func(macroStr string) int {
+		macroMs := 0
+		if strings.TrimSpace(macroStr) == "" {
+			return 0
+		}
+		tokens := strings.Split(macroStr, ",")
+		for _, token := range tokens {
+			parts := strings.SplitN(token, ":", 2)
+			action := strings.ToUpper(strings.TrimSpace(parts[0]))
+			
+			if action == "WAIT" || action == "SLEEP" {
+				if len(parts) > 1 {
+					var waitTime int
+					fmt.Sscanf(strings.TrimSpace(parts[1]), "%d", &waitTime)
+					macroMs += waitTime
+				}
+			} else {
+				count := 1
+				if len(parts) > 1 {
+					fmt.Sscanf(strings.TrimSpace(parts[1]), "%d", &count)
+					if count < 1 {
+						count = 1
+					}
+				}
+				macroMs += count * 400 // 400ms per simulated keypress
+			}
+		}
+		return macroMs
+	}
+
+	ms += calcMacro(provider.PreTuneMacro)
+	ms += provider.SplashDelayMs
+	ms += calcMacro(channel.TuningMacro)
+
+	// Add a 1.5-second buffer at the end to ensure the UI is fully hidden before un-muting
+	return ms + 1500
+}
+
 func streamHandler(w http.ResponseWriter, r *http.Request) {
 	channelID := strings.TrimPrefix(r.URL.Path, "/stream/")
 
@@ -969,33 +1180,33 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer releaseTuner(tuner.DeviceIP)
 
-	// 1. Launch tuning asynchronously so FFmpeg starts instantly
-	// This covers both macros and deep-link launches in the background
+	// Launch tuning asynchronously so the device starts waking and tuning immediately
 	go func() {
 		executeTuning(r.Context(), tuner.DeviceIP, *channel)
 	}()
+
+	var provider *Provider
+	for _, p := range Config.Providers {
+		if p.ID == channel.ProviderID {
+			provider = &p
+			break
+		}
+	}
+
+	blackoutMs := 0
+	if provider != nil {
+		blackoutMs = estimateTuningDuration(*provider, *channel)
+	}
 
 	w.Header().Set("Content-Type", "video/mp2t")
 	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
 	w.Header().Set("Connection", "keep-alive")
 	w.Header().Set("Transfer-Encoding", "chunked")
 
+	// ==========================================
+	// 1. LOCAL CAPTURE CARD ROUTE (FFmpeg)
+	// ==========================================
 	if tuner.Type == "local" {
-		// 2. Removed time.Sleep(2 * time.Second) here
-
-		var provider *Provider
-		for _, p := range Config.Providers {
-			if p.ID == channel.ProviderID {
-				provider = &p
-				break
-			}
-		}
-		
-		splashDelayMs := 0
-		if provider != nil {
-			splashDelayMs = provider.SplashDelayMs
-		}
-
 		ffmpeg := getFFmpegPath()
 
 		captureFormat := tuner.CaptureFormat
@@ -1016,17 +1227,16 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 			formatFlag = "-pixel_format"
 		}
 
-		vfArg := "format=nv12"
+		vfArg := "setpts=PTS-STARTPTS,format=nv12"
 		if tuner.DeinterlaceMode == "tff" {
-			vfArg = "bwdif=mode=1:parity=0,format=nv12"
+			vfArg = "setpts=PTS-STARTPTS,bwdif=mode=1:parity=0,format=nv12"
 		} else if tuner.DeinterlaceMode == "bff" {
-			vfArg = "bwdif=mode=1:parity=1,format=nv12"
+			vfArg = "setpts=PTS-STARTPTS,bwdif=mode=1:parity=1,format=nv12"
 		}
 
-		// 3. Apply the pure black drawbox overlay based on SplashDelayMs
-		if splashDelayMs > 0 {
-			splashSecs := float64(splashDelayMs) / 1000.0
-			vfArg += fmt.Sprintf(",drawbox=x=0:y=0:w=iw:h=ih:color=black:t=fill:enable='between(t,0,%.2f)'", splashSecs)
+		if blackoutMs > 0 {
+			splashSecs := float64(blackoutMs) / 1000.0
+			vfArg += fmt.Sprintf(",drawbox=x=0:y=0:w=iw:h=ih:color=black:t=fill:enable='lte(t,%.2f)'", splashSecs)
 		}
 
 		args := []string{
@@ -1071,29 +1281,19 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 			"-color_range", "tv",
 		)
 
-		afArg := ""
-		if splashDelayMs > 0 {
-			splashSecs := float64(splashDelayMs) / 1000.0
-			afArg = fmt.Sprintf("volume=enable='between(t,0,%.2f)':volume=0", splashSecs)
+		afArg := "asetpts=PTS-STARTPTS"
+		if blackoutMs > 0 {
+			splashSecs := float64(blackoutMs) / 1000.0
+			afArg += fmt.Sprintf(",volume=enable='lte(t,%.2f)':volume=0", splashSecs)
 		}
 
 		if tuner.AudioDelayMs > 0 {
-			if afArg != "" {
-				afArg += ","
-			}
-			afArg += fmt.Sprintf("adelay=%d|%d", tuner.AudioDelayMs, tuner.AudioDelayMs)
+			afArg += fmt.Sprintf(",adelay=%d|%d", tuner.AudioDelayMs, tuner.AudioDelayMs)
 		}
 
-		// EDITED: Appended aresample=async=1 filter to eliminate clock drift
-		if afArg != "" {
-			afArg += ",aresample=async=1"
-		} else {
-			afArg = "aresample=async=1"
-		}
-
+		afArg += ",aresample=async=1"
 		args = append(args, "-af", afArg)
 
-		// EDITED: Inserted -muxrate 10M to pad the output transport stream to a strict CBR
 		args = append(args,
 			"-c:a", "aac", "-b:a", "192k", "-ar", "48000",
 			"-f", "mpegts", "-muxrate", "10M",
@@ -1117,7 +1317,6 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		streamChan := make(chan []byte, 500)
-		
 
 		go func() {
 			defer close(streamChan)
@@ -1139,14 +1338,11 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 		for {
 			select {
 			case <-r.Context().Done():
-				// Instantly break if the client disconnects
 				break streamLoop
 			case chunk, ok := <-streamChan:
 				if !ok {
-					// FFmpeg channel closed
 					break streamLoop
 				}
-				// EDITED: Removed flusher.Flush() from here
 				if _, err := w.Write(chunk); err != nil {
 					break streamLoop
 				}
@@ -1155,6 +1351,18 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 		cmd.Process.Kill()
 		cmd.Wait()
 		return
+	}
+
+	// ==========================================
+	// 2. NETWORK ENCODER ROUTE (HTTP Proxy)
+	// ==========================================
+	// Hold off on connecting/streaming until tuning macros finish
+	if blackoutMs > 0 {
+		select {
+		case <-r.Context().Done():
+			return
+		case <-time.After(time.Duration(blackoutMs) * time.Millisecond):
+		}
 	}
 
 	req, err := http.NewRequestWithContext(r.Context(), "GET", tuner.EncoderURL, nil)
@@ -1172,17 +1380,14 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 	defer resp.Body.Close()
 
 	buf := make([]byte, 128*1024)
-	
 
 	for {
-		// Instantly break if the client disconnects
 		if r.Context().Err() != nil {
 			break
 		}
 		
 		n, err := resp.Body.Read(buf)
 		if n > 0 {
-			// EDITED: Removed flusher.Flush() from here
 			if _, wErr := w.Write(buf[:n]); wErr != nil {
 				log.Printf("Stream write error: %v\n", wErr)
 				break
@@ -1349,6 +1554,29 @@ func checkTuners(w http.ResponseWriter, r *http.Request) {
 // ==========================================
 // 7. Main Initialization
 // ==========================================
+func apiRestartADB(w http.ResponseWriter, r *http.Request) {
+	adb := getAdbPath()
+	log.Println("Manually restarting ADB server via dashboard...")
+	
+	// Kill the server
+	killCmd := exec.Command(adb, "kill-server")
+	killCmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+	killCmd.Run()
+	
+	// Start it back up
+	ensureADBReady()
+	
+	// Reconnect all network tuners
+	for _, t := range Config.Tuners {
+		if t.AdbRoute != "usb" {
+			exec.Command(adb, "connect", t.DeviceIP).Run()
+		}
+	}
+	
+	w.Header().Set("Content-Type", "application/json")
+	w.Write([]byte(`{"status": "success"}`))
+}
+
 func main() {
 	uiFlag := flag.Bool("ui", false, "Open the web dashboard in the default browser")
 	portFlag := flag.Int("port", 0, "Override the port the server listens on (e.g., 8888)")
@@ -1391,6 +1619,9 @@ func main() {
 	http.HandleFunc("/api/check_tuners", checkTuners)
 	http.HandleFunc("/api/release/", apiReleaseTuner)
 	http.HandleFunc("/api/usb_devices", apiUsbDevices)
+	http.HandleFunc("/api/restart_adb", apiRestartADB)
+	http.HandleFunc("/api/check_update", apiCheckUpdate)
+	http.HandleFunc("/api/apply_update", apiApplyUpdate)
 
 	portString := fmt.Sprintf(":%d", Config.Port)
 

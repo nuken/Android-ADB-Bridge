@@ -44,7 +44,7 @@
         }
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; margin-bottom: 5px; }
-        .form-group input, .form-group select { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #555; background-color: #222; color: white; box-sizing: border-box; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #555; background-color: #222; color: white; box-sizing: border-box; }
         
         .save-banner {
             display: none;
@@ -79,9 +79,22 @@
 <body>
     <div class="container">
         <h1><i class="fa-brands fa-android"></i> Android ADB Bridge <span style="font-size:0.5em; color:#888;">v{{ .global_settings.app_version }}</span></h1>
-        
+        <!-- UPDATE BANNER -->
+<div id="update-banner" style="display: none; background-color: #1A73E8; border-radius: 12px; padding: 15px 20px; margin-bottom: 20px; align-items: center; justify-content: space-between;">
+    <div style="display: flex; align-items: center; gap: 10px;">
+        <span style="font-size: 20px;">🚀</span>
+        <span id="update-message" style="color: white; font-weight: bold; font-size: 16px;">A new update is available!</span>
+    </div>
+    <div style="display: flex; gap: 10px;">
+        <button id="btn-download-update" class="button" style="background-color: white; color: black; font-weight: bold;" onclick="applyUpdate()">Download</button>
+        <button class="button" style="background-color: rgba(255,255,255,0.2); color: white;" onclick="document.getElementById('update-banner').style.display='none'">Ignore</button>
+    </div>
+</div>
         <div class="top-actions">
             <button class="button" onclick="fetchStatus()"><i class="fa-solid fa-sync"></i> Refresh</button>
+			<button class="button" style="background-color: #dc3545;" onclick="fetch('/api/restart_adb').then(() => { alert('ADB Server Restarted!'); fetchStatus(); })">
+    <i class="fa-solid fa-power-off"></i> Restart ADB
+</button>
             <a href="/remote" class="button">Open Remote</a>
             <button id="copy-m3u-btn" class="button" onclick="copyM3uLink()"><i class="fa-solid fa-copy"></i> Copy M3U</button>
         <div style="display: flex; align-items: center; gap: 10px; background: #474747; padding: 4px 4px 4px 12px; border-radius: 8px; border: 1px solid #555;">
@@ -395,6 +408,11 @@
                     <input type="number" id="prov-splash-delay" value="3000" min="0" step="100" placeholder="e.g. 3000">
                     <span style="font-size: 0.75em; color: #aaa;">Blacks out video and mutes audio while the app loads.</span>
                 </div>
+				
+				<div class="form-group" style="background: #2a2a2a; padding: 15px; border-radius: 8px; margin-top: 15px; border: 1px solid #444;">
+                    <label style="display: flex; align-items: center; gap: 10px; color: var(--primary-color); cursor: pointer; margin-bottom: 0;">
+                    <input type="checkbox" id="prov-keep-warm" style="width: 20px; height: 20px; cursor: pointer;">Set as Default (Keep app warm in foreground on release)</label>
+                </div>
 
                 <button type="submit" class="button">Apply</button>
                 <button type="button" class="button" style="background:#666" onclick="closeModal('provider-modal')">Cancel</button>
@@ -466,7 +484,7 @@
                             <i class="fa-solid fa-calculator"></i> Numpad
                         </button>
                     </div>
-                    <input type="text" id="ch-macro" placeholder="e.g. DOWN:3, ENTER or 1, 0, 4, ENTER">
+                    <textarea id="ch-macro" rows="3" style="resize: vertical; font-family: monospace;" placeholder="e.g. DOWN:3, ENTER or 1, 0, 4, ENTER"></textarea>
                 </div>
 
                 <div class="form-group"><label>Guide Station ID (Optional)</label><input type="text" id="ch-stationid"></div>
@@ -536,6 +554,21 @@
             currentProviderFilter = providerId;
             renderTables();
         }
+		
+		async function checkForUpdates() {
+    try {
+        const res = await fetch('/api/check_update');
+        const update = await res.json();
+        
+        if (update.available) {
+            document.getElementById('update-message').innerText = `Android ADB Bridge ${update.version} is available!`;
+            // Use flex to match the layout structure
+            document.getElementById('update-banner').style.display = 'flex'; 
+        }
+    } catch (err) {
+        console.error("Update check failed", err);
+    }
+}
 
         function toggleChannelsExpand() {
             const container = document.getElementById('channels-container');
@@ -649,6 +682,7 @@
         }
 
         async function loadConfig() {
+		checkForUpdates();
             const res = await fetch('/api/config');
             config = await res.json();
             config.tuners = config.tuners || [];
@@ -665,6 +699,43 @@
                 pollActiveTuners();
             }
         }
+		
+		async function applyUpdate() {
+    const btn = document.getElementById('btn-download-update');
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Downloading & Installing...';
+    btn.disabled = true;
+
+    try {
+        const res = await fetch('/api/apply_update', { method: 'POST' });
+        
+        if (!res.ok) throw new Error("Server returned an error: " + res.status);
+        
+        btn.innerHTML = '<i class="fa-solid fa-arrows-rotate fa-spin"></i> Restarting...';
+        
+        // Wait 5 seconds to let the Go server die and the installer start
+        setTimeout(() => {
+            // Ping the health endpoint every 2 seconds
+            const checkReady = setInterval(async () => {
+                try {
+                    const healthRes = await fetch('/health');
+                    if (healthRes.ok) {
+                        // The server is back online! Clear the interval and reload.
+                        clearInterval(checkReady);
+                        window.location.reload();
+                    }
+                } catch (e) {
+                    // Fetch failed, meaning the server is still offline. 
+                    // Do nothing, loop will try again in 2 seconds.
+                }
+            }, 2000);
+        }, 5000); 
+
+    } catch(err) {
+        console.error(err);
+        btn.innerHTML = 'Download Error';
+        btn.disabled = false;
+    }
+}
         
         async function forceRelease(deviceIp) {
             if (!confirm(`Are you sure you want to force release tuner ${deviceIp}? This will interrupt any active stream.`)) return;
@@ -1180,6 +1251,7 @@
             document.getElementById('prov-url').value = p.url_template || '';
             document.getElementById('prov-pretune').value = p.pre_tune_macro || '';
             document.getElementById('prov-posttune').value = p.post_tune_macro || '';
+			document.getElementById('prov-keep-warm').checked = p.keep_warm || false;
             document.getElementById('prov-splash-delay').value = p.splash_delay_ms !== undefined ? p.splash_delay_ms : 3000;
             document.getElementById('provider-index').value = i;
             document.getElementById('provider-modal').style.display='block';
@@ -1198,6 +1270,7 @@
                 url_template: document.getElementById('prov-url').value,
                 pre_tune_macro: document.getElementById('prov-pretune').value,
                 post_tune_macro: document.getElementById('prov-posttune').value,
+                keep_warm: document.getElementById('prov-keep-warm').checked,
                 splash_delay_ms: parseInt(document.getElementById('prov-splash-delay').value) || 0
             };
             if(i === -1) config.providers.push(data); else config.providers[i] = data;
