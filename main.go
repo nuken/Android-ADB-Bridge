@@ -60,6 +60,7 @@ type Provider struct {
 	PreTuneMacro    string `json:"pre_tune_macro,omitempty"`
 	PostTuneMacro   string `json:"post_tune_macro,omitempty"`
 	KeepWarm        bool   `json:"keep_warm"`
+	WarmupMacro     string `json:"warmup_macro,omitempty"`
 }
 
 type Channel struct {
@@ -103,7 +104,7 @@ type GitHubRelease struct {
 }
 
 var Config AppConfig
-var AppVersion = "5.1.5-WIN"
+var AppVersion = "5.1.6-WIN"
 var tunerLock sync.Mutex
 
 var keycodeMap = map[string]string{
@@ -366,14 +367,20 @@ func ensureADBReady() {
 	adb := getAdbPath()
 	log.Println("Verifying ADB daemon availability...")
 
-	for i := 1; i <= 10; i++ {
+	// Clean up any stale ADB daemon left locked by a forced Windows Update reboot
+	killCmd := exec.Command("taskkill", "/F", "/IM", "adb.exe", "/T")
+	killCmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+	killCmd.Run()
+	time.Sleep(500 * time.Millisecond)
+
+	for i := 1; i <= 15; i++ {
 		cmd := exec.Command(adb, "start-server")
 		cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 		if err := cmd.Run(); err == nil {
 			log.Println("ADB server initialized successfully.")
 			return
 		}
-		log.Printf("Waiting for ADB daemon to start (attempt %d/10)...\n", i)
+		log.Printf("Waiting for ADB daemon to start (attempt %d/15)...\n", i)
 		time.Sleep(2 * time.Second)
 	}
 	log.Println("Warning: ADB server did not respond during startup. Will attempt auto-connects on request.")
@@ -658,6 +665,12 @@ func releaseTuner(deviceIP string) {
 					}
 					log.Printf("[%s] Waiting %dms for the app to initialize before unlocking...\n", deviceIP, sleepMs)
 					time.Sleep(time.Duration(sleepMs) * time.Millisecond)
+
+					// NEW: Execute Warmup Macro if one is defined
+					if prov.WarmupMacro != "" {
+						log.Printf("[%s] Executing Warmup (Idle) Macro\n", deviceIP)
+						parseAndExecuteMacro(context.Background(), deviceIP, prov.WarmupMacro, targetPkg)
+					}
 
 					break 
 				}
@@ -1624,9 +1637,27 @@ func main() {
 	http.HandleFunc("/api/apply_update", apiApplyUpdate)
 
 	portString := fmt.Sprintf(":%d", Config.Port)
+	log.Printf("ADB Bridge server preparing to listen on %s\n", portString)
 
-	log.Printf("ADB Bridge server listening on %s\n", portString)
-	if err := http.ListenAndServe(portString, nil); err != nil {
-		log.Fatalf("Server startup failed: %v\n", err)
+	var listener net.Listener
+	var listenErr error
+
+	// Retry binding for up to 60 seconds to survive post-update boot delays
+	for attempt := 1; attempt <= 20; attempt++ {
+		listener, listenErr = net.Listen("tcp", portString)
+		if listenErr == nil {
+			break
+		}
+		log.Printf("Port %s not ready yet (attempt %d/20): %v. Retrying in 3s...\n", portString, attempt, listenErr)
+		time.Sleep(3 * time.Second)
+	}
+
+	if listenErr != nil {
+		log.Fatalf("Server startup failed: could not bind port %s after 20 attempts: %v\n", portString, listenErr)
+	}
+
+	log.Printf("ADB Bridge server successfully listening on %s\n", portString)
+	if err := http.Serve(listener, nil); err != nil {
+		log.Fatalf("Server terminated: %v\n", err)
 	}
 }
