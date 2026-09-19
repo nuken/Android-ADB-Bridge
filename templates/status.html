@@ -31,7 +31,7 @@
         .macro-btn { background: #444; color: #fff; border: 1px solid #666; padding: 4px 10px; border-radius: 4px; font-size: 0.9em; cursor: pointer; font-weight: bold; transition: all 0.2s ease; }
         .macro-btn:hover { background: var(--button-color); border-color: var(--primary-color); }
         
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); }
         .modal-content {
             background-color: #1e1e1e;
             margin: 5% auto;
@@ -110,7 +110,11 @@
             <button class="button restore" onclick="document.getElementById('import-file').click()"><i class="fa-solid fa-upload"></i> Restore Backup</button>
             <input type="file" id="import-file" style="display:none" accept=".json" onchange="importConfig(event)">
             
-            <button class="button cloud" onclick="openPackModal('channel')"><i class="fa-solid fa-link"></i> Import Channel Pack</button>
+            <button class="button backup" style="background-color: #0d9488;" onclick="exportAdbKeyVault()"><i class="fa-solid fa-key"></i> Backup ADB Keys</button>
+            <button class="button restore" style="background-color: #0284c7;" onclick="document.getElementById('import-key-file').click()"><i class="fa-solid fa-file-shield"></i> Restore ADB Keys</button>
+            <input type="file" id="import-key-file" style="display:none" accept=".zip" onchange="importAdbKeyVault(event)">
+			
+			<button class="button cloud" onclick="openPackModal('channel')"><i class="fa-solid fa-link"></i> Import Channel Pack</button>
             <button class="button cloud" style="background-color: #ec4899;" onclick="openPackModal('macro')"><i class="fa-solid fa-keyboard"></i> Import Macro Pack</button>
         </div>
 
@@ -317,7 +321,7 @@
     </div>
 
     <!-- Edit Provider Modal -->
-    <div id="provider-modal" class="modal">
+    <div id="provider-modal" class="modal" style="z-index: 1000;">
         <div class="modal-content">
             <h3>Edit Provider</h3>
             <form id="provider-form">
@@ -326,7 +330,12 @@
                 <div class="form-group"><label>Internal ID (e.g. yt_tv)</label><input type="text" id="prov-id" required></div>
                 
                 <div class="form-group">
-                    <label>Package Name</label>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                        <label style="margin-bottom: 0;">Package Name</label>
+                        <button type="button" class="action-button" style="background-color: var(--button-color);" onclick="openInspectorModal('standard')">
+                            <i class="fa-solid fa-mobile-screen-button"></i> Detect from Device
+                        </button>
+                    </div>
                     <input type="text" id="prov-package" placeholder="e.g. com.google.android.youtube.tvunplugged" required>
                 </div>
                 <div class="form-group">
@@ -334,9 +343,14 @@
                     <input type="text" id="prov-component" placeholder="e.g. com.google.android.apps.youtube.tvunplugged.activity.MainActivity">
                 </div>
                 <div class="form-group" style="background: #2a2a2a; padding: 12px; border-radius: 8px; border: 1px solid #444;">
-                    <label style="color: #fcd34d; font-size: 0.9em; cursor: pointer;" onclick="document.getElementById('fire-os-overrides').style.display = document.getElementById('fire-os-overrides').style.display === 'none' ? 'block' : 'none';">
-                        <i class="fa-brands fa-amazon"></i> Fire TV Overrides (Click to expand)
-                    </label>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <label style="color: #fcd34d; font-size: 0.9em; cursor: pointer; margin-bottom: 0;" onclick="document.getElementById('fire-os-overrides').style.display = document.getElementById('fire-os-overrides').style.display === 'none' ? 'block' : 'none';">
+                            <i class="fa-brands fa-amazon"></i> Fire TV Overrides (Click to expand)
+                        </label>
+                        <button type="button" class="action-button" style="background-color: #d97706;" onclick="document.getElementById('fire-os-overrides').style.display = 'block'; openInspectorModal('firetv')">
+                            <i class="fa-solid fa-mobile-screen-button"></i> Detect Fire TV
+                        </button>
+                    </div>
                     <div id="fire-os-overrides" style="display: none; margin-top: 10px;">
                         <input type="text" id="prov-fire-package" placeholder="Fire OS Package Name" style="margin-bottom: 10px;">
                         <input type="text" id="prov-fire-component" placeholder="Fire OS Activity Component">
@@ -413,6 +427,26 @@
                     <label style="display: flex; align-items: center; gap: 10px; color: var(--primary-color); cursor: pointer; margin-bottom: 0;">
                     <input type="checkbox" id="prov-keep-warm" style="width: 20px; height: 20px; cursor: pointer;">Set as Default (Keep app warm in foreground on release)</label>
                 </div>
+				
+				<div class="form-group" style="background: #2a2a2a; padding: 15px; border-radius: 8px; margin-top: 15px; border: 1px solid #444;">
+    <label style="color: var(--primary-color);">Warmup Macro (Executed after the default app loads)</label>
+    <div class="macro-toolbar" style="margin-bottom: 10px;">
+        <button type="button" class="macro-btn" title="Up" onclick="insertMacroToken('prov-warmup', 'UP', true)"><i class="fa-solid fa-chevron-up"></i></button>
+        <button type="button" class="macro-btn" title="Down" onclick="insertMacroToken('prov-warmup', 'DOWN', true)"><i class="fa-solid fa-chevron-down"></i></button>
+        <button type="button" class="macro-btn" title="Left" onclick="insertMacroToken('prov-warmup', 'LEFT', true)"><i class="fa-solid fa-chevron-left"></i></button>
+        <button type="button" class="macro-btn" title="Right" onclick="insertMacroToken('prov-warmup', 'RIGHT', true)"><i class="fa-solid fa-chevron-right"></i></button>
+        <span style="border-right: 1px solid #666; margin: 0 4px; height: 20px;"></span>
+        <label style="font-size: 0.85em; display: inline-flex; align-items: center; gap: 4px; color: var(--primary-color);">
+            Repeat: <input type="number" id="prov-warmup-mult" value="1" min="1" max="99" style="width: 45px; padding: 4px; border-radius: 4px; border: 1px solid #666; background: #222; color: white;">
+        </label>
+        <span style="border-right: 1px solid #666; margin: 0 4px; height: 20px;"></span>
+        <button type="button" class="macro-btn" title="Enter / Select" onclick="insertMacroToken('prov-warmup', 'ENTER')"><i class="fa-solid fa-check"></i> OK</button>
+        <button type="button" class="macro-btn" title="Back" onclick="insertMacroToken('prov-warmup', 'BACK')"><i class="fa-solid fa-arrow-rotate-left"></i></button>
+        <span style="border-right: 1px solid #666; margin: 0 4px; height: 20px;"></span>
+        <button type="button" class="macro-btn" title="Wait 1 Second" onclick="insertMacroToken('prov-warmup', 'WAIT:1000')"><i class="fa-solid fa-clock"></i> 1s</button>
+    </div>
+    <input type="text" id="prov-warmup" placeholder="e.g. LEFT, DOWN, ENTER">
+</div>
 
                 <button type="submit" class="button">Apply</button>
                 <button type="button" class="button" style="background:#666" onclick="closeModal('provider-modal')">Cancel</button>
@@ -489,8 +523,16 @@
 
                 <div class="form-group"><label>Guide Station ID (Optional)</label><input type="text" id="ch-stationid"></div>
 				<div class="form-group"><label>TVG Shift (e.g. -3 or +2)</label><input type="text" id="ch-shift" placeholder="Optional"></div>
-				<div style="display: flex; gap: 15px; margin-bottom: 15px;"><div class="form-group" style="flex: 1; margin-bottom: 0;"><label>Group Title (Category)</label><input type="text" id="ch-group" placeholder="e.g. Sports, News, Movies"></div>
-                <div class="form-group" style="flex: 1; margin-bottom: 0;"><label>TVG Logo URL</label><input type="text" id="ch-logo" placeholder="https://..."></div>
+				<div style="display: flex; gap: 15px; margin-bottom: 15px;">
+                    <div class="form-group" style="flex: 1; margin-bottom: 0;">
+                        <label>Group Title (Category)</label>
+                        <input type="text" id="ch-group" placeholder="e.g. Sports, News, Movies">
+                    </div>
+                    <div class="form-group" style="flex: 1; margin-bottom: 0;">
+                        <label>TVG Logo URL</label>
+                        <input type="text" id="ch-logo" placeholder="https://...">
+                    </div>
+                </div>
                 <button type="submit" class="button">Apply</button>
                 <button type="button" class="button" style="background:#666" onclick="closeModal('channel-modal')">Cancel</button>
             </form>
@@ -523,6 +565,89 @@
             <button type="button" class="button" style="background:#666; width: 100%; justify-content: center;" onclick="closeModal('numpad-modal')">Done</button>
         </div>
     </div>	
+	
+	<!-- App Inspector Modal -->
+	<!-- ADB Tools Modal -->
+    <div id="adb-tools-modal" class="modal" style="z-index: 1000;">
+        <div class="modal-content" style="width: 500px;">
+            <h3 style="color: var(--primary-color); margin-top: 0;"><i class="fa-solid fa-wrench"></i> ADB Tools</h3>
+            <div id="tools-target-label" style="background: #222; padding: 10px; border-radius: 8px; border: 1px solid #555; margin-bottom: 20px; font-weight: bold; color: #ccc;">
+                Target: None
+            </div>
+            <input type="hidden" id="tools-target-ip">
+
+            <div style="background: #2a2a2a; padding: 15px; border-radius: 8px; border: 1px solid #444; margin-bottom: 15px;">
+                <h4 style="margin-top: 0; color: #fcd34d;"><i class="fa-solid fa-bolt"></i> Power & System</h4>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button class="button" style="background: var(--error-color); flex: 1; justify-content: center;" onclick="runAdbTool('reboot')">
+                        <i class="fa-solid fa-rotate-right"></i> Reboot Device
+                    </button>
+                    <button class="button" style="background: #059669; flex: 1; justify-content: center;" onclick="runAdbTool('stay_awake')">
+                        <i class="fa-solid fa-eye"></i> Prevent Sleep
+                    </button>
+                    <button class="button" style="background: #8b5cf6; flex: 1; justify-content: center;" onclick="runAdbTool('trim_caches')">
+                        <i class="fa-solid fa-broom"></i> Trim Caches
+                    </button>
+                </div>
+                <div style="font-size: 0.75em; color: #aaa; margin-top: 8px; text-align: center;">Trim Caches safely frees up storage without deleting app logins.</div>
+            </div>
+			
+			<div style="background: #2a2a2a; padding: 15px; border-radius: 8px; border: 1px solid #444; margin-bottom: 15px;">
+            <h4 style="margin-top: 0; color: #fcd34d;"><i class="fa-solid fa-desktop"></i> Display Overrides</h4>
+            <div style="display: flex; gap: 10px;">
+                <button class="button" style="background: #3b82f6; flex: 1; justify-content: center;" onclick="runAdbTool('lock_1080p')">
+                    <i class="fa-solid fa-lock"></i> Lock 1080p
+                </button>
+                <button class="button" style="background: #6b7280; flex: 1; justify-content: center;" onclick="runAdbTool('reset_display')">
+                    <i class="fa-solid fa-unlock"></i> Auto-Detect (EDID)
+                </button>
+            </div>
+            <div style="font-size: 0.75em; color: #aaa; margin-top: 8px; text-align: center;">Forces stable 1080p rendering. Use if your capture card shows a black screen or unsupported format.</div>
+        </div>
+
+            <div style="background: #2a2a2a; padding: 15px; border-radius: 8px; border: 1px solid #444; margin-bottom: 15px;">
+                <h4 style="margin-top: 0; color: #fcd34d;"><i class="fa-solid fa-keyboard"></i> Text Injector</h4>
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" id="tools-text-input" placeholder="Type Wi-Fi password, email, or URL..." style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #555; background-color: #222; color: white;">
+                    <button class="button" onclick="runAdbTool('input_text')"><i class="fa-solid fa-paper-plane"></i> Send</button>
+                </div>
+            </div>
+
+            <button class="button" style="background:#666; width: 100%; justify-content: center; margin-top: 10px;" onclick="closeModal('adb-tools-modal')">Close</button>
+        </div>
+    </div>
+    <div id="inspector-modal" class="modal" style="z-index: 1200;">
+        <div class="modal-content" style="width: 600px;">
+            <h3 style="color: var(--primary-color); margin-top: 0;"><i class="fa-solid fa-mobile-screen-button"></i> App Inspector</h3>
+            
+            <div class="form-group">
+                <label>Select Tuner</label>
+                <select id="inspector-tuner-select"></select>
+            </div>
+            
+            <button type="button" class="button" style="width: 100%; justify-content: center; margin-bottom: 15px;" onclick="runInspector()">
+                <i class="fa-solid fa-camera"></i> Capture Screen & Intent
+            </button>
+
+            <div id="inspector-results" style="display: none;">
+                <img id="inspector-image" style="width: 100%; border-radius: 8px; border: 2px solid #555; background: #000; min-height: 200px; margin-bottom: 15px;" alt="Screen Capture">
+                
+                <div style="background: #2a2a2a; padding: 15px; border-radius: 8px; border: 1px solid #444; margin-bottom: 15px;">
+                    <div style="color: var(--primary-color); font-size: 0.85em; margin-bottom: 4px;">Detected Package</div>
+                    <div id="inspector-pkg" style="font-family: monospace; color: white; word-break: break-all; margin-bottom: 10px;"></div>
+                    
+                    <div style="color: var(--primary-color); font-size: 0.85em; margin-bottom: 4px;">Detected Component</div>
+                    <div id="inspector-comp" style="font-family: monospace; color: white; word-break: break-all;"></div>
+                </div>
+
+                <button type="button" class="button" style="width: 100%; background-color: var(--success-color); justify-content: center;" onclick="applyInspectorResults()">
+                    <i class="fa-solid fa-check"></i> Apply to Provider
+                </button>
+            </div>
+
+            <button type="button" class="button" style="background:#666; width: 100%; justify-content: center; margin-top: 15px;" onclick="closeModal('inspector-modal')">Cancel</button>
+        </div>
+    </div>
 
     <script>
         // XSS Sanitizer Function
@@ -570,6 +695,42 @@
     }
 }
 
+        function exportAdbKeyVault() {
+            window.location.href = '/api/export_adb_keys';
+        }
+
+        async function importAdbKeyVault(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            if (!confirm("Overwrite the current ADB Key Vault?\n\nThis will restart the ADB server. Any active streams will experience a brief interruption.")) {
+                event.target.value = '';
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('keyVaultFile', file);
+
+            try {
+                const res = await fetch('/api/import_adb_keys', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (res.ok) {
+                    alert("ADB Key Vault restored successfully! Daemon restarted.");
+                    loadConfig();
+                } else {
+                    const errText = await res.text();
+                    alert("Failed to restore ADB keys: " + errText);
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Network error while uploading ADB key vault.");
+            }
+            event.target.value = '';
+        }
+
         function toggleChannelsExpand() {
             const container = document.getElementById('channels-container');
             const btn = document.getElementById('expand-channels-btn');
@@ -602,6 +763,118 @@
                 macGroup.style.display = 'none';
                 toggleLink.innerHTML = '<i class="fa-solid fa-keyboard"></i> Switch to Keypress Tuning';
             }
+        }
+		
+		let inspectorTarget = 'standard'; // 'standard' or 'firetv'
+
+        function openInspectorModal(target = 'standard') {
+            inspectorTarget = target;
+            const select = document.getElementById('inspector-tuner-select');
+            
+            if (!config.tuners || config.tuners.length === 0) {
+                alert("No tuners configured to inspect.");
+                return;
+            }
+
+            select.innerHTML = config.tuners.map(t => {
+                const isSelected = (target === 'firetv' && t.device_os === 'fire_tv') || (target === 'standard' && t.device_os !== 'fire_tv');
+                return `<option value="${escapeHTML(t.device_ip)}" ${isSelected ? 'selected' : ''}>${escapeHTML(t.name)} (${escapeHTML(t.device_ip)}) [${escapeHTML(t.device_os || 'android_tv')}]</option>`;
+            }).join('');
+
+            document.getElementById('inspector-results').style.display = 'none';
+            document.getElementById('inspector-modal').style.display = 'block';
+        }
+
+        async function runInspector() {
+            const ip = document.getElementById('inspector-tuner-select').value;
+            if (!ip) return;
+            
+            const btn = document.querySelector('#inspector-modal .fa-camera').parentElement;
+            const originalHtml = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Capturing...';
+            btn.disabled = true;
+
+            const img = document.getElementById('inspector-image');
+            const pkgDiv = document.getElementById('inspector-pkg');
+            const compDiv = document.getElementById('inspector-comp');
+            
+            try {
+                // Append timestamp to bust the browser cache for live updates
+                img.src = `/api/screencap/${ip}?t=${new Date().getTime()}`;
+                
+                const res = await fetch(`/api/inspect_app/${ip}`);
+                const data = await res.json();
+                
+                pkgDiv.innerText = data.package || 'Not Found';
+                compDiv.innerText = data.component || 'Not Found';
+                
+                document.getElementById('inspector-results').style.display = 'block';
+            } catch(e) {
+                alert("Failed to inspect device. Is the device online?");
+            } finally {
+                btn.innerHTML = originalHtml;
+                btn.disabled = false;
+            }
+        }
+		
+		function openToolsModal(ip, name) {
+            document.getElementById('tools-target-ip').value = ip;
+            document.getElementById('tools-target-label').innerHTML = `<i class="fa-solid fa-bullseye" style="color: var(--primary-color);"></i> Target: ${escapeHTML(name)} <span style="color:#888;">(${escapeHTML(ip)})</span>`;
+            document.getElementById('adb-tools-modal').style.display = 'block';
+        }
+
+        async function runAdbTool(action) {
+            const ip = document.getElementById('tools-target-ip').value;
+            let param = '';
+            
+            if (action === 'reboot' && !confirm("Are you sure you want to restart this device? Any active streams will be interrupted.")) return;
+            
+            if (action === 'input_text') {
+                param = document.getElementById('tools-text-input').value;
+                if (!param) return;
+            }
+
+            try {
+                const res = await fetch('/api/tools', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ device_ip: ip, action: action, param: param })
+                });
+                
+                const data = await res.json();
+                if (data.status === 'success') {
+                    if (action === 'input_text') {
+                        document.getElementById('tools-text-input').value = '';
+                    } else if (action !== 'reboot') {
+                        alert("Command sent successfully.");
+                    }
+                }
+            } catch(e) {
+                alert("Failed to communicate with the server.");
+            }
+        }
+
+        function applyInspectorResults() {
+            const pkg = document.getElementById('inspector-pkg').innerText.trim();
+            const comp = document.getElementById('inspector-comp').innerText.trim();
+            
+            if (pkg !== 'Not Found' && pkg !== '') {
+                if (inspectorTarget === 'firetv') {
+                    document.getElementById('prov-fire-package').value = pkg;
+                } else {
+                    document.getElementById('prov-package').value = pkg;
+                }
+            }
+            
+            if (comp !== 'Not Found' && comp !== '') {
+                if (inspectorTarget === 'firetv') {
+                    document.getElementById('prov-fire-component').value = comp;
+                } else {
+                    document.getElementById('prov-component').value = comp;
+                }
+            }
+            
+            closeModal('inspector-modal');
         }
 
         function insertMacroToken(fieldId, token, canMultiply = false) {
@@ -771,6 +1044,7 @@
                     <td><span id="enc-icon-${escapeHTML(safeIp)}"><i class="fa-solid fa-spinner fa-spin" style="color:#888"></i></span> ${sourceDisplay}</td>
                     <td>
                         <button class="action-button" onclick="editTuner(${i})"><i class="fa-solid fa-pencil"></i></button>
+                        <button class="action-button" style="background-color: #059669;" onclick="openToolsModal('${escapeHTML(t.device_ip)}', '${escapeHTML(t.name)}')" title="ADB Tools"><i class="fa-solid fa-wrench"></i></button>
                         <button class="action-button" style="background-color: #d97706;" onclick="forceRelease('${escapeHTML(t.device_ip)}')" title="Force Release"><i class="fa-solid fa-unlock"></i></button>
                         <button class="action-button delete" onclick="delTuner(${i})"><i class="fa-solid fa-trash"></i></button>
                     </td>
@@ -1252,6 +1526,7 @@
             document.getElementById('prov-pretune').value = p.pre_tune_macro || '';
             document.getElementById('prov-posttune').value = p.post_tune_macro || '';
 			document.getElementById('prov-keep-warm').checked = p.keep_warm || false;
+			document.getElementById('prov-warmup').value = p.warmup_macro || '';
             document.getElementById('prov-splash-delay').value = p.splash_delay_ms !== undefined ? p.splash_delay_ms : 3000;
             document.getElementById('provider-index').value = i;
             document.getElementById('provider-modal').style.display='block';
@@ -1271,6 +1546,7 @@
                 pre_tune_macro: document.getElementById('prov-pretune').value,
                 post_tune_macro: document.getElementById('prov-posttune').value,
                 keep_warm: document.getElementById('prov-keep-warm').checked,
+                warmup_macro: document.getElementById('prov-warmup').value,
                 splash_delay_ms: parseInt(document.getElementById('prov-splash-delay').value) || 0
             };
             if(i === -1) config.providers.push(data); else config.providers[i] = data;

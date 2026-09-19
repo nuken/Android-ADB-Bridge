@@ -1,4 +1,4 @@
-# Android ADB Bridge v5.1.6 Win-Go
+# Android ADB Bridge v5.1.7 Win-Go
 
 A lightweight background tool for Windows that connects your PC to your streaming sticks (like Chromecast, Nvidia Shield, or Onn 4K boxes). It automatically changes channels on your streaming apps and sends the live video straight to your DVR software.
 
@@ -42,6 +42,7 @@ During installation, the setup wizard will silently run a script to add the appl
 - [9. Fire OS / Fire TV Support](#9-fire-os--fire-tv-support)
 - [10. Cloud & Local Channel Packs](#10-cloud--local-channel-packs)
 - [11. Direct USB ADB Connections (Wired Mode)](#11-direct-usb-adb-connections-wired-mode)
+- [12. Device Tools & App Inspector (New!)](#12-device-tools--app-inspector-new)
 
 ---
 
@@ -75,7 +76,7 @@ Before this tool can control your streaming stick, you need to turn on a built-i
 
 ## 2. Installation and Launch
 
-1. Double-click the `AndroidBridge_Setup_v5.1.6.exe` file to run the installer.
+1. Double-click the `AndroidBridge_Setup_v5.1.7.exe` file to run the installer.
 2. The installer automatically handles safety settings (like Windows Firewall) and sets the app to start up quietly in the background whenever you turn on your PC.
 3. Once installed, double-click the **Android ADB Bridge** shortcut on your Desktop or Start Menu.
 4. This will automatically open your web browser to the app's control panel (usually `http://192.168.1.X:8888/status`).
@@ -234,3 +235,15 @@ If your streaming stick frequently drops its Wireless ADB connection or resets i
 6. Select your device's hardware serial number from the newly populated dropdown list and click **Save / Apply**.
 
 The bridge will now bypass IP-based connection commands and route all tuning macros directly over the physical USB cable, making the setup completely immune to network drops, router restarts, or wireless ADB port resets.
+
+---
+
+## 12. Device Tools & App Inspector (New!)
+
+*:link:[ADB Tools & Key Vault Guide](docs/adb_tools.md)*
+
+Version 5.1.7 introduces built-in diagnostic and management utilities to keep your streaming sticks running reliably without requiring extra third-party software:
+
+* **App Inspector:** Automatically detect and copy the exact `Package Name` and `Activity Component` from any running app directly into your Provider settings with a live visual screen confirmation.
+* **Tuner ADB Tools:** Click the green wrench icon next to any tuner to reboot the stick, force-trim app caches to free up storage, lock display output to 1080p, prevent idle sleep, or inject text/passwords into on-screen input boxes.
+* **ADB Key Vault:** Backup and restore your cryptographic ADB authorization keys (`adbkey` / `adbkey.pub`). When migrating your DVR setup to a new computer, simply import your key vault backup so your devices connect instantly without triggering the on-screen "Allow USB debugging" prompt again.

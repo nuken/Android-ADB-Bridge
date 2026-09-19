@@ -11,6 +11,7 @@ import (
 	"context"
 	"net"
 	"net/http"
+	"archive/zip"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -104,7 +105,7 @@ type GitHubRelease struct {
 }
 
 var Config AppConfig
-var AppVersion = "5.1.6-WIN"
+var AppVersion = "5.1.7-WIN"
 var tunerLock sync.Mutex
 
 var keycodeMap = map[string]string{
@@ -158,6 +159,30 @@ func init() {
 
 	sharedAdbPath := filepath.Join(programData, "AndroidADBBridge")
 	os.MkdirAll(sharedAdbPath, os.ModePerm)
+
+	// Automated ADB Key Migration
+	userProfile := os.Getenv("USERPROFILE")
+	if userProfile != "" {
+		oldAdbDir := filepath.Join(userProfile, ".android")
+		filesToCopy := []string{"adbkey", "adbkey.pub"}
+
+		for _, file := range filesToCopy {
+			oldPath := filepath.Join(oldAdbDir, file)
+			newPath := filepath.Join(sharedAdbPath, file)
+
+			// If the key exists in the old path but not the new path, copy it
+			if _, err := os.Stat(oldPath); err == nil {
+				if _, err := os.Stat(newPath); os.IsNotExist(err) {
+					data, err := os.ReadFile(oldPath)
+					if err == nil {
+						// 0600 permissions match standard RSA key security requirements
+						os.WriteFile(newPath, data, 0600)
+						log.Printf("Successfully migrated %s to shared vault.\n", file)
+					}
+				}
+			}
+		}
+	}
 
 	os.Setenv("ANDROID_USER_HOME", sharedAdbPath)
 	os.Setenv("ANDROID_SDK_HOME", sharedAdbPath)
@@ -655,8 +680,30 @@ func releaseTuner(deviceIP string) {
 						targetPkg = prov.FirePackageName
 					}
 					
-					// Launch the app into the foreground
-					adbCommand(deviceIP, "shell", "monkey", "-p", targetPkg, "-c", "android.intent.category.LAUNCHER", "1")
+					// Grab the appropriate component based on the OS
+targetCmp := prov.Component
+if tunerOS == "fire_tv" && prov.FireComponent != "" {
+	targetCmp = prov.FireComponent
+}
+
+launched := false
+
+// Attempt explicit component launch first (Fixes Leanback / Fire TV issues)
+if targetCmp != "" {
+	intentStr := fmt.Sprintf("%s/%s", targetPkg, targetCmp)
+	out, err := adbCommand(deviceIP, "shell", "am", "start", "-a", "android.intent.action.MAIN", "-c", "android.intent.category.LEANBACK_LAUNCHER", "-n", intentStr)
+	
+	if err == nil && !strings.Contains(strings.ToLower(out), "error") {
+		launched = true
+	} else {
+		log.Printf("[%s] Explicit Keep Warm start blocked/failed for %s. Falling back to monkey...\n", deviceIP, targetCmp)
+	}
+}
+
+// Fallback to standard launcher if explicit component wasn't provided or failed
+if !launched {
+	adbCommand(deviceIP, "shell", "monkey", "-p", targetPkg, "-c", "android.intent.category.LAUNCHER", "1")
+}
 					
 					// Hold the tuner lock until the app has finished cold-booting
 					sleepMs := prov.SplashDelayMs
@@ -1590,6 +1637,246 @@ func apiRestartADB(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(`{"status": "success"}`))
 }
 
+func apiScreencap(w http.ResponseWriter, r *http.Request) {
+	deviceIP := strings.TrimPrefix(r.URL.Path, "/api/screencap/")
+	if deviceIP == "" {
+		http.Error(w, "Invalid IP", http.StatusBadRequest)
+		return
+	}
+
+	adb := getAdbPath()
+	cmd := exec.Command(adb, "-s", deviceIP, "exec-out", "screencap", "-p")
+	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+
+	out, err := cmd.Output()
+	if err != nil {
+		http.Error(w, "Screencap failed", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "image/png")
+	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+	w.Write(out)
+}
+
+func apiInspectApp(w http.ResponseWriter, r *http.Request) {
+	deviceIP := strings.TrimPrefix(r.URL.Path, "/api/inspect_app/")
+	if deviceIP == "" {
+		http.Error(w, "Invalid IP", http.StatusBadRequest)
+		return
+	}
+
+	// 1. Check the modern Android 11+ displays output
+	out, err := adbCommand(deviceIP, "shell", "dumpsys", "window", "displays")
+	if err != nil {
+		http.Error(w, "Inspect failed", http.StatusInternalServerError)
+		return
+	}
+
+	var pkg, comp string
+	re := regexp.MustCompile(`([a-zA-Z0-9_.]+)/([a-zA-Z0-9_.]+)`)
+	
+	lines := strings.Split(out, "\n")
+	for _, line := range lines {
+		if strings.Contains(line, "mCurrentFocus") || strings.Contains(line, "mFocusedApp") {
+			matches := re.FindStringSubmatch(line)
+			if len(matches) == 3 && matches[1] != "null" {
+				pkg = matches[1]
+				comp = matches[2]
+				break
+			}
+		}
+	}
+
+	// 2. Fallback to the Activity Manager if the Window Manager didn't return anything (Common on Fire OS)
+	if pkg == "" {
+		outAct, errAct := adbCommand(deviceIP, "shell", "dumpsys", "activity", "activities")
+		if errAct == nil {
+			linesAct := strings.Split(outAct, "\n")
+			for _, line := range linesAct {
+				if strings.Contains(line, "mResumedActivity") || strings.Contains(line, "topResumedActivity") {
+					matches := re.FindStringSubmatch(line)
+					if len(matches) == 3 && matches[1] != "null" {
+						pkg = matches[1]
+						comp = matches[2]
+						break
+					}
+				}
+			}
+		}
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(map[string]string{
+		"package":   pkg,
+		"component": comp,
+	})
+}
+
+type ToolRequest struct {
+	DeviceIP string `json:"device_ip"`
+	Action   string `json:"action"`
+	Param    string `json:"param"`
+}
+
+func apiAdbTools(w http.ResponseWriter, r *http.Request) {
+if r.Method != "POST" {
+http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+return
+}
+
+var req ToolRequest
+if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+http.Error(w, "Invalid request", http.StatusBadRequest)
+return
+}
+
+switch req.Action {
+case "reboot":
+go adbCommand(req.DeviceIP, "reboot")
+case "stay_awake":
+adbCommand(req.DeviceIP, "shell", "settings", "put", "global", "stay_on_while_plugged_in", "7")
+adbCommand(req.DeviceIP, "shell", "settings", "put", "system", "screen_off_timeout", "2147483647")
+case "trim_caches":
+adbCommand(req.DeviceIP, "shell", "pm", "trim-caches", "9999999999")
+case "input_text":
+if req.Param != "" {
+escapedText := strings.ReplaceAll(req.Param, " ", "%s")
+adbCommand(req.DeviceIP, "shell", "input", "text", escapedText)
+}
+case "lock_1080p":
+adbCommand(req.DeviceIP, "shell", "wm", "size", "1920x1080")
+adbCommand(req.DeviceIP, "shell", "wm", "density", "320")
+case "reset_display":
+adbCommand(req.DeviceIP, "shell", "wm", "size", "reset")
+adbCommand(req.DeviceIP, "shell", "wm", "density", "reset")
+}
+
+w.Header().Set("Content-Type", "application/json")
+w.Write([]byte(`{"status": "success"}`))
+}
+
+func getAdbKeyDir() string {
+	programData := os.Getenv("ProgramData")
+	if programData == "" {
+		programData = `C:\ProgramData`
+	}
+	return filepath.Join(programData, "AndroidADBBridge")
+}
+
+func apiExportAdbKeys(w http.ResponseWriter, r *http.Request) {
+	keyDir := getAdbKeyDir()
+	privKey := filepath.Join(keyDir, "adbkey")
+	pubKey := filepath.Join(keyDir, "adbkey.pub")
+
+	if _, err := os.Stat(privKey); os.IsNotExist(err) {
+		http.Error(w, "No ADB keys found to export", http.StatusNotFound)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/zip")
+	w.Header().Set("Content-Disposition", `attachment; filename="adb_key_vault.zip"`)
+
+	zipWriter := zip.NewWriter(w)
+	defer zipWriter.Close()
+
+	files := []string{privKey, pubKey}
+	for _, filePath := range files {
+		if _, err := os.Stat(filePath); os.IsNotExist(err) {
+			continue
+		}
+
+		fileData, err := os.ReadFile(filePath)
+		if err != nil {
+			continue
+		}
+
+		entryWriter, err := zipWriter.Create(filepath.Base(filePath))
+		if err != nil {
+			continue
+		}
+		entryWriter.Write(fileData)
+	}
+}
+
+func apiImportAdbKeys(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	err := r.ParseMultipartForm(10 << 20)
+	if err != nil {
+		http.Error(w, "Error parsing form", http.StatusBadRequest)
+		return
+	}
+
+	file, _, err := r.FormFile("keyVaultFile")
+	if err != nil {
+		http.Error(w, "Error retrieving file", http.StatusBadRequest)
+		return
+	}
+	defer file.Close()
+
+	tempZip, err := os.CreateTemp("", "adb_keys_*.zip")
+	if err != nil {
+		http.Error(w, "Failed to create temp file", http.StatusInternalServerError)
+		return
+	}
+	defer os.Remove(tempZip.Name())
+	defer tempZip.Close()
+
+	if _, err := io.Copy(tempZip, file); err != nil {
+		http.Error(w, "Failed to read upload", http.StatusInternalServerError)
+		return
+	}
+
+	zipReader, err := zip.OpenReader(tempZip.Name())
+	if err != nil {
+		http.Error(w, "Uploaded file is not a valid zip archive", http.StatusBadRequest)
+		return
+	}
+	defer zipReader.Close()
+
+	keyDir := getAdbKeyDir()
+	os.MkdirAll(keyDir, os.ModePerm)
+
+	foundKeys := 0
+	for _, zf := range zipReader.File {
+		baseName := filepath.Base(zf.Name)
+		if baseName != "adbkey" && baseName != "adbkey.pub" {
+			continue
+		}
+
+		rc, err := zf.Open()
+		if err != nil {
+			continue
+		}
+
+		destPath := filepath.Join(keyDir, baseName)
+		outFile, err := os.OpenFile(destPath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0600)
+		if err == nil {
+			io.Copy(outFile, rc)
+			outFile.Close()
+			foundKeys++
+		}
+		rc.Close()
+	}
+
+	if foundKeys == 0 {
+		http.Error(w, "Archive did not contain valid adbkey or adbkey.pub files", http.StatusBadRequest)
+		return
+	}
+
+	// Restart the ADB daemon so it immediately drops stale memory keys and loads the imported pair
+	adb := getAdbPath()
+	exec.Command(adb, "kill-server").Run()
+	ensureADBReady()
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write([]byte(`{"status": "success"}`))
+}
+
 func main() {
 	uiFlag := flag.Bool("ui", false, "Open the web dashboard in the default browser")
 	portFlag := flag.Int("port", 0, "Override the port the server listens on (e.g., 8888)")
@@ -1635,7 +1922,12 @@ func main() {
 	http.HandleFunc("/api/restart_adb", apiRestartADB)
 	http.HandleFunc("/api/check_update", apiCheckUpdate)
 	http.HandleFunc("/api/apply_update", apiApplyUpdate)
-
+    http.HandleFunc("/api/screencap/", apiScreencap)
+	http.HandleFunc("/api/inspect_app/", apiInspectApp)
+	http.HandleFunc("/api/tools", apiAdbTools)
+	http.HandleFunc("/api/export_adb_keys", apiExportAdbKeys)
+	http.HandleFunc("/api/import_adb_keys", apiImportAdbKeys)
+	
 	portString := fmt.Sprintf(":%d", Config.Port)
 	log.Printf("ADB Bridge server preparing to listen on %s\n", portString)
 
