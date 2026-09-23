@@ -1,7 +1,7 @@
 [Setup]
 ; Basic App Info
 AppName=Android ADB Bridge
-AppVersion=5.1.6
+AppVersion=5.1.8
 AppPublisher=nuken
 DefaultDirName={autopf}\AndroidBridge
 DisableProgramGroupPage=yes
@@ -9,11 +9,14 @@ DisableProgramGroupPage=yes
 SetupIconFile=icon.ico
 ; Where the final setup.exe will be saved
 OutputDir=Output
-OutputBaseFilename=AndroidBridge_Setup_v5.1.6
+OutputBaseFilename=AndroidBridge_Setup_v5.1.8
 Compression=lzma
 SolidCompression=yes
 ; Require admin rights to add firewall rules
 PrivilegesRequired=admin
+
+[Tasks]
+Name: "reserveport"; Description: "Reserve application port in Windows NAT (Prevents conflicts with virtualization services)"; Flags: unchecked
 
 [Files]
 ; Grab the compiled Go app
@@ -45,6 +48,9 @@ Filename: "{app}\AndroidBridge.exe"; Description: "Start Background Service"; Fl
 
 ; 3. Open the Dashboard in the user's browser
 Filename: "{app}\AndroidBridge.exe"; Parameters: "-ui"; Description: "Open Dashboard"; Flags: nowait postinstall skipifsilent
+
+; 4. Dynamically read port from JSON and reserve it in WinNAT (Triggered by Task)
+Filename: "powershell.exe"; Parameters: "-ExecutionPolicy Bypass -WindowStyle Hidden -Command ""$file = $env:LOCALAPPDATA + '\AndroidADBBridge\android_channels.json'; $p = 8888; if(Test-Path $file){{ try {{ $p = (Get-Content $file -Raw | ConvertFrom-Json).port; if(!$p){{ $p = 8888 } } catch{{} }; Stop-Service winnat -Force -ErrorAction SilentlyContinue; netsh int ipv4 add excludedportrange protocol=tcp startport=$p numberofports=1 store=persistent 2>&1 | Out-Null; Start-Service winnat -ErrorAction SilentlyContinue"""; Tasks: reserveport; Description: "Reserving Application Port..."; Flags: runhidden
 
 [UninstallRun]
 ; Clean up the firewall rule if the user uninstalls the app

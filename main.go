@@ -105,7 +105,7 @@ type GitHubRelease struct {
 }
 
 var Config AppConfig
-var AppVersion = "5.1.7-WIN"
+var AppVersion = "5.1.8-WIN"
 var tunerLock sync.Mutex
 
 var keycodeMap = map[string]string{
