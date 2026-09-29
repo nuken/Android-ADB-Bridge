@@ -15,6 +15,11 @@
     "url": "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/channel_packs/youtubetv_charlotte.json"
   },
   {
+    "name": "Sling (Freestream)",
+    "channel_count": 565,
+    "url": "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/channel_packs/sling_freestream.json"
+  },
+  {
     "name": "DirecTV Ultimate (NYC)",
     "channel_count": 339,
     "url": "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/channel_packs/directv_nyc.json"
