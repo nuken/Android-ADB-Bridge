@@ -50,6 +50,11 @@
     "url": "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/channel_packs/directv_west.json"
   },
   {
+    "name": "HGTV Go (East)",
+    "channel_count": 15,
+    "url": "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/channel_packs/hgtv_go.json"
+  },
+  {
     "name": "Philo (East Coast)",
     "channel_count": 164,
     "url": "https://raw.githubusercontent.com/nuken/Android-ADB-Bridge/main/channel_packs/philo_east.json"
