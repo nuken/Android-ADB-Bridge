@@ -1,0 +1,134 @@
+{
+  "providers": [
+    {
+      "id": "hgtv_go",
+      "name": "HGTV GO",
+      "package_name": "com.hgtv.watcher",
+      "component": "",
+      "url_template": "https://watch.hgtv.com/channel/{id}",
+      "splash_delay_ms": 1000
+    }
+  ],
+  "channels": [
+    {
+      "name": "HGTV",
+      "id": "hgtv",
+      "provider_id": "hgtv_go",
+      "deep_link_content_id": "hgtv",
+      "tvc_guide_stationid": "49788",
+      "group_title": "Lifestyle"
+    },
+    {
+      "name": "Magnolia Network",
+      "id": "magnolia-network",
+      "provider_id": "hgtv_go",
+      "deep_link_content_id": "magnolia-network",
+      "tvc_guide_stationid": "67375",
+      "group_title": "Lifestyle"
+    },
+    {
+      "name": "Food Network",
+      "id": "food-network",
+      "provider_id": "hgtv_go",
+      "deep_link_content_id": "food-network",
+      "tvc_guide_stationid": "50747",
+      "group_title": "Lifestyle"
+    },
+    {
+      "name": "TLC",
+      "id": "tlc",
+      "provider_id": "hgtv_go",
+      "deep_link_content_id": "tlc",
+      "tvc_guide_stationid": "57391",
+      "group_title": "Entertainment"
+    },
+    {
+      "name": "Discovery Channel",
+      "id": "discovery",
+      "provider_id": "hgtv_go",
+      "deep_link_content_id": "discovery",
+      "tvc_guide_stationid": "56905",
+      "group_title": "Entertainment"
+    },
+    {
+      "name": "Travel Channel",
+      "id": "travel-channel",
+      "provider_id": "hgtv_go",
+      "deep_link_content_id": "travel-channel",
+      "tvc_guide_stationid": "59303",
+      "group_title": "Lifestyle"
+    },
+    {
+      "name": "Investigation Discovery",
+      "id": "investigation-discovery",
+      "provider_id": "hgtv_go",
+      "deep_link_content_id": "investigation-discovery",
+      "tvc_guide_stationid": "65342",
+      "group_title": "Entertainment"
+    },
+    {
+      "name": "Cooking Channel",
+      "id": "cooking-channel",
+      "provider_id": "hgtv_go",
+      "deep_link_content_id": "cooking-channel",
+      "tvc_guide_stationid": "68065",
+      "group_title": "Lifestyle"
+    },
+    {
+      "name": "Animal Planet",
+      "id": "animal-planet",
+      "provider_id": "hgtv_go",
+      "deep_link_content_id": "animal-planet",
+      "tvc_guide_stationid": "57394",
+      "group_title": "Entertainment"
+    },
+    {
+      "name": "OWN",
+      "id": "own",
+      "provider_id": "hgtv_go",
+      "deep_link_content_id": "own",
+      "tvc_guide_stationid": "70388",
+      "group_title": "Entertainment"
+    },
+    {
+      "name": "Science Channel",
+      "id": "science",
+      "provider_id": "hgtv_go",
+      "deep_link_content_id": "science",
+      "tvc_guide_stationid": "57390",
+      "group_title": "Entertainment"
+    },
+    {
+      "name": "Discovery Life",
+      "id": "discovery-life",
+      "provider_id": "hgtv_go",
+      "deep_link_content_id": "discovery-life",
+      "tvc_guide_stationid": "92204",
+      "group_title": "Entertainment"
+    },
+    {
+      "name": "Destination America",
+      "id": "destination-america",
+      "provider_id": "hgtv_go",
+      "deep_link_content_id": "destination-america",
+      "tvc_guide_stationid": "60468",
+      "group_title": "Entertainment"
+    },
+    {
+      "name": "American Heroes Channel",
+      "id": "ahc",
+      "provider_id": "hgtv_go",
+      "deep_link_content_id": "ahc",
+      "tvc_guide_stationid": "78808",
+      "group_title": "Entertainment"
+    },
+    {
+      "name": "Discovery Turbo",
+      "id": "discovery-turbo",
+      "provider_id": "hgtv_go",
+      "deep_link_content_id": "discovery-turbo",
+      "tvc_guide_stationid": "31046",
+      "group_title": "Entertainment"
+    }
+  ]
+}
