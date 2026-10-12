@@ -77,11 +77,14 @@ type Channel struct {
 }
 
 type AppConfig struct {
-	Port      int        `json:"port"`
-	Tuners    []Tuner    `json:"tuners"`
-	Providers []Provider `json:"providers"`
-	Channels  []Channel  `json:"channels"`
+	Port          int        `json:"port"`
+	EnableLogging bool       `json:"enable_logging"`
+	Tuners        []Tuner    `json:"tuners"`
+	Providers     []Provider `json:"providers"`
+	Channels      []Channel  `json:"channels"`
 }
+
+var activeLogFile *os.File
 
 type DShowDevice struct {
 	Name string `json:"name"`
@@ -105,7 +108,7 @@ type GitHubRelease struct {
 }
 
 var Config AppConfig
-var AppVersion = "5.1.8-WIN"
+var AppVersion = "5.2.1-WIN"
 var tunerLock sync.Mutex
 
 var keycodeMap = map[string]string{
@@ -160,6 +163,9 @@ func init() {
 	sharedAdbPath := filepath.Join(programData, "AndroidADBBridge")
 	os.MkdirAll(sharedAdbPath, os.ModePerm)
 
+	// Default to completely silent background operation
+	log.SetOutput(io.Discard)
+
 	// Automated ADB Key Migration
 	userProfile := os.Getenv("USERPROFILE")
 	if userProfile != "" {
@@ -186,6 +192,35 @@ func init() {
 
 	os.Setenv("ANDROID_USER_HOME", sharedAdbPath)
 	os.Setenv("ANDROID_SDK_HOME", sharedAdbPath)
+}
+
+func setupLogging() {
+	if Config.EnableLogging {
+		programData := os.Getenv("ProgramData")
+		if programData == "" {
+			programData = `C:\ProgramData`
+		}
+		logFilePath := filepath.Join(programData, "AndroidADBBridge", "tuner_proxy.log")
+
+		// Close any existing handle to release Windows locks
+		if activeLogFile != nil {
+			activeLogFile.Close()
+		}
+
+		// Open with O_TRUNC to wipe previous troubleshooting sessions and keep the file tiny
+		file, err := os.OpenFile(logFilePath, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0666)
+		if err == nil {
+			activeLogFile = file
+			log.SetOutput(activeLogFile)
+			log.Println("Debug logging enabled via dashboard.")
+		}
+	} else {
+		log.SetOutput(io.Discard)
+		if activeLogFile != nil {
+			activeLogFile.Close()
+			activeLogFile = nil
+		}
+	}
 }
 
 // ==========================================
@@ -690,14 +725,16 @@ launched := false
 
 // Attempt explicit component launch first (Fixes Leanback / Fire TV issues)
 if targetCmp != "" {
-	intentStr := fmt.Sprintf("%s/%s", targetPkg, targetCmp)
-	out, err := adbCommand(deviceIP, "shell", "am", "start", "-a", "android.intent.action.MAIN", "-c", "android.intent.category.LEANBACK_LAUNCHER", "-n", intentStr)
-	
-	if err == nil && !strings.Contains(strings.ToLower(out), "error") {
-		launched = true
-	} else {
-		log.Printf("[%s] Explicit Keep Warm start blocked/failed for %s. Falling back to monkey...\n", deviceIP, targetCmp)
-	}
+    intentStr := fmt.Sprintf("%s/%s", targetPkg, targetCmp)
+    
+    // REMOVED: "-a", "android.intent.action.MAIN", "-c", "android.intent.category.LEANBACK_LAUNCHER"
+    out, err := adbCommand(deviceIP, "shell", "am", "start", "-n", intentStr)
+    
+    if err == nil && !strings.Contains(strings.ToLower(out), "error") {
+        launched = true
+    } else {
+        log.Printf("[%s] Explicit Keep Warm start blocked/failed for %s. Falling back to monkey...\n", deviceIP, targetCmp)
+    }
 }
 
 // Fallback to standard launcher if explicit component wasn't provided or failed
@@ -814,19 +851,21 @@ func executeTuning(ctx context.Context, deviceIP string, ch Channel) {
 		}
 
 	} else if pkg != "" {
-		launched := false
+        launched := false
 
-		if cmp != "" {
-			intentStr := fmt.Sprintf("%s/%s", pkg, cmp)
-			out, err := adbCommand(deviceIP, "shell", "am", "start", "-a", "android.intent.action.MAIN", "-c", "android.intent.category.LEANBACK_LAUNCHER", "-n", intentStr)
-			
-			// Check if the explicit launch succeeded without an error output
-			if err == nil && !strings.Contains(strings.ToLower(out), "error") {
-				launched = true
-			} else {
-				log.Printf("[%s] Explicit component start blocked/failed for %s. Using fallback launcher...\n", deviceIP, cmp)
-			}
-		}
+        if cmp != "" {
+            intentStr := fmt.Sprintf("%s/%s", pkg, cmp)
+            
+            // REMOVED: "-a", "android.intent.action.MAIN", "-c", "android.intent.category.LEANBACK_LAUNCHER"
+            out, err := adbCommand(deviceIP, "shell", "am", "start", "-n", intentStr)
+            
+            // Check if the explicit launch succeeded without an error output
+            if err == nil && !strings.Contains(strings.ToLower(out), "error") {
+                launched = true
+            } else {
+                log.Printf("[%s] Explicit component start blocked/failed for %s. Using fallback launcher...\n", deviceIP, cmp)
+            }
+        }
 
 		if !launched {
 			log.Printf("[%s] Launching package %s via safe launcher fallback...\n", deviceIP, pkg)
@@ -1040,30 +1079,50 @@ func apiReleaseTuner(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	deviceIP := strings.TrimPrefix(r.URL.Path, "/api/release/")
-	if deviceIP == "" {
-		http.Error(w, "Invalid device IP", http.StatusBadRequest)
-		return
-	}
+	rawPath := strings.TrimPrefix(r.URL.Path, "/api/release/")
+	linkParam := r.URL.Query().Get("link")
 
-	tunerLock.Lock()
-	found := false
-	for i := range Config.Tuners {
-		if Config.Tuners[i].DeviceIP == deviceIP {
-			Config.Tuners[i].InUse = false
-			found = true
-			log.Printf("Manually force-released tuner %s via web dashboard.\n", deviceIP)
-			break
+	vodKilled := false
+
+	// 1. Release VOD session either by explicit link, by matching tuner IP, or general "/api/release/vod"
+	vodSessionsMu.Lock()
+	for key, session := range vodSessions {
+		shouldKill := false
+		if rawPath == "vod" || rawPath == "" {
+			shouldKill = true
+		} else if rawPath == session.Tuner.DeviceIP {
+			shouldKill = true
+		} else if linkParam != "" && strings.Contains(key, linkParam) {
+			shouldKill = true
+		}
+
+		if shouldKill {
+			log.Printf("[VOD] Releasing active session '%s' on Tuner %s (%s)\n", key, session.Tuner.Name, session.Tuner.DeviceIP)
+			session.Cancel() // Kills FFmpeg / encoder proxy and triggers deferred tuner unlock
+			vodKilled = true
 		}
 	}
-	tunerLock.Unlock()
+	vodSessionsMu.Unlock()
 
-	if !found {
-		http.Error(w, "Tuner not found", http.StatusNotFound)
-		return
+	// 2. If a specific device IP was requested for Live TV, release it normally
+	if !vodKilled && rawPath != "" && rawPath != "vod" {
+		deviceIP := rawPath
+		tunerLock.Lock()
+		found := false
+		for i := range Config.Tuners {
+			if Config.Tuners[i].DeviceIP == deviceIP {
+				Config.Tuners[i].InUse = false
+				found = true
+				log.Printf("Manually force-released tuner %s via API.\n", deviceIP)
+				break
+			}
+		}
+		tunerLock.Unlock()
+
+		if found {
+			go adbCommand(deviceIP, "shell", "input", "keyevent", "3")
+		}
 	}
-
-	go adbCommand(deviceIP, "shell", "input", "keyevent", "3")
 
 	w.Header().Set("Content-Type", "application/json")
 	w.Write([]byte(`{"status": "success"}`))
@@ -1124,9 +1183,27 @@ func apiConfig(w http.ResponseWriter, r *http.Request) {
 		body, _ := io.ReadAll(r.Body)
 		json.Unmarshal(body, &Config)
 		saveConfig()
+		setupLogging() // Instantly attach or detach the file logger based on the new setting
 		w.Header().Set("Content-Type", "application/json")
 		w.Write([]byte(`{"status": "success"}`))
 	}
+}
+
+func apiDownloadLog(w http.ResponseWriter, r *http.Request) {
+	programData := os.Getenv("ProgramData")
+	if programData == "" {
+		programData = `C:\ProgramData`
+	}
+	logPath := filepath.Join(programData, "AndroidADBBridge", "tuner_proxy.log")
+
+	if _, err := os.Stat(logPath); os.IsNotExist(err) {
+		http.Error(w, "Log file not found or logging is disabled.", http.StatusNotFound)
+		return
+	}
+
+	w.Header().Set("Content-Disposition", `attachment; filename="tuner_proxy.log"`)
+	w.Header().Set("Content-Type", "application/octet-stream")
+	http.ServeFile(w, r, logPath)
 }
 
 func apiExportConfig(w http.ResponseWriter, r *http.Request) {
@@ -1215,6 +1292,94 @@ func estimateTuningDuration(provider Provider, channel Channel) int {
 
 	// Add a 1.5-second buffer at the end to ensure the UI is fully hidden before un-muting
 	return ms + 1500
+}
+
+func executeVODTuning(ctx context.Context, deviceIP string, providerID string, deepLink string) {
+	var provider *Provider
+	for _, p := range Config.Providers {
+		if p.ID == providerID {
+			provider = &p
+			break
+		}
+	}
+
+	// Look up tuner OS
+	var tunerOS string
+	tunerLock.Lock()
+	for _, t := range Config.Tuners {
+		if t.DeviceIP == deviceIP {
+			tunerOS = t.DeviceOS
+			break
+		}
+	}
+	tunerLock.Unlock()
+
+	pkg := "tv.pluto.android"
+	cmp := "com.paramount.android.pplus.features.splash.tv.SplashMediatorActivity"
+
+	if provider != nil {
+		if provider.PackageName != "" {
+			pkg = provider.PackageName
+		}
+		// Only override component if it is NOT the default HomeActivity that triggers SecurityException
+		if provider.Component != "" && !strings.Contains(provider.Component, "HomeActivity") {
+			cmp = provider.Component
+		}
+		if tunerOS == "fire_tv" {
+			if provider.FirePackageName != "" {
+				pkg = provider.FirePackageName
+			}
+			if provider.FireComponent != "" {
+				cmp = provider.FireComponent
+			}
+		}
+	}
+
+	// Hard enforce SplashMediatorActivity for Pluto on Android TV
+	if pkg == "tv.pluto.android" && tunerOS != "fire_tv" {
+		cmp = "com.paramount.android.pplus.features.splash.tv.SplashMediatorActivity"
+	}
+
+	tunerLock.Lock()
+	for i := range Config.Tuners {
+		if Config.Tuners[i].DeviceIP == deviceIP {
+			Config.Tuners[i].ActiveProvider = providerID
+			break
+		}
+	}
+	tunerLock.Unlock()
+
+	log.Printf("[VOD] Tuning %s via %s (OS: %s | Pkg: %s | Cmp: %s)\n", deviceIP, providerID, tunerOS, pkg, cmp)
+
+	// 1. Wake the device
+	wakeOut, _ := adbCommand(deviceIP, "shell", "input", "keyevent", "224")
+	log.Printf("[VOD] Wake output: %s\n", wakeOut)
+	time.Sleep(500 * time.Millisecond)
+
+	// 2. Force-stop the app to guarantee a clean cold boot for deep link routing
+	log.Printf("[VOD] Force-stopping %s for clean boot...\n", pkg)
+	stopOut, _ := adbCommand(deviceIP, "shell", "am", "force-stop", pkg)
+	log.Printf("[VOD] Force-stop output: %s\n", stopOut)
+	
+	select {
+	case <-ctx.Done():
+		return
+	case <-time.After(1000 * time.Millisecond):
+	}
+
+	// 3. Format the deep link to match Pluto TV's exact internal requirements
+	// Input:  https://pluto.tv/en/ondemand/movies/hot-fuzz-2007-1-1/details
+	// Output: https://pluto.tv/on-demand/movies/hot-fuzz-2007-1-1
+	fixedLink := strings.Replace(deepLink, "/ondemand/", "/on-demand/", 1)
+	fixedLink = strings.Replace(fixedLink, "/en/", "/", 1)
+	fixedLink = strings.TrimSuffix(fixedLink, "/details")
+
+	log.Printf("[VOD] Firing formatted deep link: %s\n", fixedLink)
+	
+	// 4. Fire using the explicit component and log the exact result
+	intentStr := fmt.Sprintf("%s/%s", pkg, cmp)
+	startOut, err := adbCommand(deviceIP, "shell", "am", "start", "-n", intentStr, "-a", "android.intent.action.VIEW", "-d", fixedLink)
+	log.Printf("[VOD] am start output: %s | err: %v\n", startOut, err)
 }
 
 func streamHandler(w http.ResponseWriter, r *http.Request) {
@@ -1355,8 +1520,18 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 		args = append(args, "-af", afArg)
 
 		args = append(args,
+			// Video Keyframe Settings (Force 1-second GOP for fast tuning)
+			"-g", captureFPS,
+			"-keyint_min", captureFPS,
+			"-sc_threshold", "0",
+			
+			// Audio Settings
 			"-c:a", "aac", "-b:a", "192k", "-ar", "48000",
-			"-f", "mpegts", "-muxrate", "10M",
+			
+			// Muxer Settings optimized for Channels DVR fast-start
+			"-f", "mpegts",
+			"-mpegts_flags", "+resend_headers",
+			"-pat_period", "0.1",
 			"pipe:1",
 		)
 
@@ -1376,47 +1551,46 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		streamChan := make(chan []byte, 500)
+		// Enable chunk flushing for immediate playback delivery
+		flusher, canFlush := w.(http.Flusher)
 
-		go func() {
-			defer close(streamChan)
-			for {
-				buf := make([]byte, 32*1024)
-				n, err := stdout.Read(buf)
-				if n > 0 {
-					chunk := make([]byte, n)
-					copy(chunk, buf[:n])
-					streamChan <- chunk
+		// Direct stream loop (eliminates goroutine leaks and excess memory allocations)
+		buf := make([]byte, 32*1024)
+		for {
+			// Stop reading if Channels DVR disconnects
+			if r.Context().Err() != nil {
+				break
+			}
+
+			n, err := stdout.Read(buf)
+			if n > 0 {
+				if _, wErr := w.Write(buf[:n]); wErr != nil {
+					break // Client disconnected during write
 				}
-				if err != nil {
-					break
+				if canFlush {
+					flusher.Flush()
 				}
 			}
-		}()
-
-		streamLoop:
-		for {
-			select {
-			case <-r.Context().Done():
-				break streamLoop
-			case chunk, ok := <-streamChan:
-				if !ok {
-					break streamLoop
-				}
-				if _, err := w.Write(chunk); err != nil {
-					break streamLoop
-				}
+			
+			if err != nil {
+				break // FFmpeg closed stdout (EOF or crash)
 			}
 		}
-		cmd.Process.Kill()
-		cmd.Wait()
+
+		// Ensure the process is cleanly killed upon exit
+		if cmd.Process != nil {
+			cmd.Process.Kill()
+			cmd.Wait()
+		}
 		return
 	}
 
 	// ==========================================
 	// 2. NETWORK ENCODER ROUTE (HTTP Proxy)
 	// ==========================================
-	// Hold off on connecting/streaming until tuning macros finish
+	
+	// Hold off on connecting/streaming until tuning macros finish.
+	// This intentionally stalls Channels DVR on the "Tuning..." screen to hide the app boot UI.
 	if blackoutMs > 0 {
 		select {
 		case <-r.Context().Done():
@@ -1424,6 +1598,9 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 		case <-time.After(time.Duration(blackoutMs) * time.Millisecond):
 		}
 	}
+
+	// Enable chunk flushing for immediate, smooth playback delivery once the stream starts
+	flusher, canFlush := w.(http.Flusher)
 
 	req, err := http.NewRequestWithContext(r.Context(), "GET", tuner.EncoderURL, nil)
 	if err != nil {
@@ -1440,24 +1617,356 @@ func streamHandler(w http.ResponseWriter, r *http.Request) {
 	defer resp.Body.Close()
 
 	buf := make([]byte, 128*1024)
-
 	for {
 		if r.Context().Err() != nil {
 			break
 		}
-		
+
 		n, err := resp.Body.Read(buf)
 		if n > 0 {
 			if _, wErr := w.Write(buf[:n]); wErr != nil {
 				log.Printf("Stream write error: %v\n", wErr)
 				break
 			}
+			// Instantly push the video packet to Channels DVR
+			if canFlush {
+				flusher.Flush()
+			}
 		}
+
 		if err != nil {
 			if err != io.EOF {
 				log.Printf("Stream read error: %v\n", err)
 			}
 			break
+		}
+	}
+}
+
+// ==========================================
+// VOD Session Multiplexer
+// ==========================================
+type VODSession struct {
+	Key         string
+	Tuner       *Tuner
+	Cancel      context.CancelFunc
+	Subscribers map[chan []byte]struct{}
+	SubMu       sync.Mutex
+	IdleTimer   *time.Timer
+	Done        chan struct{}
+}
+
+var (
+	vodSessions   = make(map[string]*VODSession)
+	vodSessionsMu sync.Mutex
+)
+
+func (s *VODSession) addSubscriber() chan []byte {
+	s.SubMu.Lock()
+	defer s.SubMu.Unlock()
+
+	// If an idle teardown timer is running, cancel it immediately
+	if s.IdleTimer != nil {
+		s.IdleTimer.Stop()
+		s.IdleTimer = nil
+		log.Printf("[VOD %s] Client reconnected. Canceled idle teardown timer.\n", s.Key)
+	}
+
+	ch := make(chan []byte, 300)
+	s.Subscribers[ch] = struct{}{}
+	return ch
+}
+
+func (s *VODSession) removeSubscriber(ch chan []byte) {
+	s.SubMu.Lock()
+	defer s.SubMu.Unlock()
+
+	delete(s.Subscribers, ch)
+	close(ch)
+
+	// If no viewers remain, start a 15-second grace countdown before teardown
+	if len(s.Subscribers) == 0 && s.IdleTimer == nil {
+		log.Printf("[VOD %s] 0 active viewers. Starting 15s idle timer before releasing tuner...\n", s.Key)
+		s.IdleTimer = time.AfterFunc(15*time.Second, func() {
+			s.SubMu.Lock()
+			count := len(s.Subscribers)
+			s.SubMu.Unlock()
+
+			if count == 0 {
+				log.Printf("[VOD %s] Idle timer expired. Tearing down session.\n", s.Key)
+				s.Cancel()
+			}
+		})
+	}
+}
+
+func (s *VODSession) broadcast(data []byte) {
+	s.SubMu.Lock()
+	defer s.SubMu.Unlock()
+
+	for ch := range s.Subscribers {
+		select {
+		case ch <- data:
+		default:
+			// Drop chunk for this subscriber if channel buffer is full to prevent blocking the capture pipe
+		}
+	}
+}
+
+func vodStreamHandler(w http.ResponseWriter, r *http.Request) {
+	providerID := r.URL.Query().Get("provider")
+	rawLink := r.URL.Query().Get("link")
+	durationStr := r.URL.Query().Get("duration")
+
+	if providerID == "" || rawLink == "" {
+		http.Error(w, "Missing provider or link", http.StatusBadRequest)
+		return
+	}
+
+	sessionKey := fmt.Sprintf("%s:%s", providerID, rawLink)
+
+	vodSessionsMu.Lock()
+	session, exists := vodSessions[sessionKey]
+
+	if !exists {
+		// No session exists; allocate a tuner
+		tuner := lockTuner()
+		if tuner == nil {
+			vodSessionsMu.Unlock()
+			http.Error(w, "All tuners are currently in use", http.StatusServiceUnavailable)
+			return
+		}
+
+		// Calculate total timeout duration
+		sessionDuration := 4 * time.Hour // Default fallback
+		if durationStr != "" {
+			var durationMinutes int
+			if _, err := fmt.Sscanf(durationStr, "%d", &durationMinutes); err == nil && durationMinutes > 0 {
+				totalMinutes := int(float64(durationMinutes)*1.30) + 5
+				sessionDuration = time.Duration(totalMinutes) * time.Minute
+			}
+		}
+
+		ctx, cancel := context.WithTimeout(context.Background(), sessionDuration)
+
+		session = &VODSession{
+			Key:         sessionKey,
+			Tuner:       tuner,
+			Cancel:      cancel,
+			Subscribers: make(map[chan []byte]struct{}),
+			Done:        make(chan struct{}),
+		}
+		vodSessions[sessionKey] = session
+		vodSessionsMu.Unlock()
+
+		log.Printf("[VOD %s] Created new session on Tuner %s\n", sessionKey, tuner.DeviceIP)
+
+		// Start tuning and capture pipeline in background
+		go func() {
+			defer func() {
+				vodSessionsMu.Lock()
+				delete(vodSessions, sessionKey)
+				vodSessionsMu.Unlock()
+
+				releaseTuner(tuner.DeviceIP)
+				close(session.Done)
+				log.Printf("[VOD %s] Capture pipeline terminated and tuner released.\n", sessionKey)
+			}()
+
+			// 1. RUN TUNING ASYNCHRONOUSLY 
+			// This allows FFmpeg to start immediately below.
+			go executeVODTuning(ctx, tuner.DeviceIP, providerID, rawLink)
+
+			// 2. HARDCODE BLACKOUT TO MATCH ADB WARMUP (500ms wake + 3500ms sleep = 4000ms)
+			blackoutMs := 4000 
+
+			// Start capture pipeline
+			if tuner.Type == "local" {
+				ffmpeg := getFFmpegPath()
+				captureFormat := tuner.CaptureFormat
+				if captureFormat == "" {
+					captureFormat = "mjpeg"
+				}
+				captureSize := tuner.CaptureSize
+				if captureSize == "" {
+					captureSize = "1920x1080"
+				}
+				captureFPS := tuner.CaptureFPS
+				if captureFPS == "" {
+					captureFPS = "60"
+				}
+
+				formatFlag := "-vcodec"
+				if captureFormat == "nv12" || captureFormat == "yuyv422" || captureFormat == "yuy2" {
+					formatFlag = "-pixel_format"
+				}
+
+				vfArg := "setpts=PTS-STARTPTS,format=nv12"
+				if tuner.DeinterlaceMode == "tff" {
+					vfArg = "setpts=PTS-STARTPTS,bwdif=mode=1:parity=0,format=nv12"
+				} else if tuner.DeinterlaceMode == "bff" {
+					vfArg = "setpts=PTS-STARTPTS,bwdif=mode=1:parity=1,format=nv12"
+				}
+
+				// ADD THE BLACKOUT DRAWBOX FILTER
+				if blackoutMs > 0 {
+					splashSecs := float64(blackoutMs) / 1000.0
+					vfArg += fmt.Sprintf(",drawbox=x=0:y=0:w=iw:h=ih:color=black:t=fill:enable='lte(t,%.2f)'", splashSecs)
+				}
+
+				args := []string{"-hide_banner", "-loglevel", "error"}
+				dshowInput := fmt.Sprintf("video=%s", tuner.VideoDeviceID)
+				if tuner.AudioDeviceID != "" {
+					dshowInput += fmt.Sprintf(":audio=%s", tuner.AudioDeviceID)
+				}
+
+				encoderArgs := getEncoderArgs()
+				isQSV := false
+				for _, a := range encoderArgs {
+					if a == "h264_qsv" {
+						isQSV = true
+						break
+					}
+				}
+				if isQSV {
+					args = append(args, "-init_hw_device", "qsv=hw", "-filter_hw_device", "hw")
+				}
+
+				args = append(args,
+					"-rtbufsize", "256M",
+					"-thread_queue_size", "1024",
+					"-f", "dshow",
+					"-video_size", captureSize,
+					"-framerate", captureFPS,
+					formatFlag, captureFormat,
+					"-i", dshowInput,
+					"-vf", vfArg,
+				)
+				args = append(args, encoderArgs...)
+				args = append(args,
+					"-color_primaries", "bt709",
+					"-color_trc", "bt709",
+					"-colorspace", "bt709",
+					"-color_range", "tv",
+				)
+
+				afArg := "asetpts=PTS-STARTPTS"
+				if tuner.AudioDelayMs > 0 {
+					afArg += fmt.Sprintf(",adelay=%d|%d", tuner.AudioDelayMs, tuner.AudioDelayMs)
+				}
+				
+				// ADD THE BLACKOUT VOLUME FILTER
+				if blackoutMs > 0 {
+					splashSecs := float64(blackoutMs) / 1000.0
+					afArg += fmt.Sprintf(",volume=enable='lte(t,%.2f)':volume=0", splashSecs)
+				}
+				afArg += ",aresample=async=1"
+				args = append(args, "-af", afArg)
+				args = append(args,
+					"-c:a", "aac", "-b:a", "192k", "-ar", "48000",
+					"-f", "mpegts", "-muxrate", "10M",
+					"pipe:1",
+				)
+
+				cmd := exec.CommandContext(ctx, ffmpeg, args...)
+				cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+
+				stdout, err := cmd.StdoutPipe()
+				if err != nil {
+					log.Println("FFmpeg stdout pipe error:", err)
+					return
+				}
+				if err := cmd.Start(); err != nil {
+					log.Println("FFmpeg start error:", err)
+					return
+				}
+
+				buf := make([]byte, 32*1024)
+				for {
+					n, err := stdout.Read(buf)
+					if n > 0 {
+						chunk := make([]byte, n)
+						copy(chunk, buf[:n])
+						session.broadcast(chunk)
+					}
+					if err != nil {
+						break
+					}
+				}
+				cmd.Process.Kill()
+				cmd.Wait()
+			} else {
+				// Network Encoder route - Delay connection until ADB is done
+				if blackoutMs > 0 {
+					select {
+					case <-ctx.Done():
+						return
+					case <-time.After(time.Duration(blackoutMs) * time.Millisecond):
+					}
+				}
+				
+				req, err := http.NewRequestWithContext(ctx, "GET", tuner.EncoderURL, nil)
+				if err != nil {
+					return
+				}
+				resp, err := streamClient.Do(req)
+				if err != nil {
+					return
+				}
+				defer resp.Body.Close()
+
+				buf := make([]byte, 64*1024)
+				for {
+					n, err := resp.Body.Read(buf)
+					if n > 0 {
+						chunk := make([]byte, n)
+						copy(chunk, buf[:n])
+						session.broadcast(chunk)
+					}
+					if err != nil {
+						break
+					}
+				}
+			}
+		}()
+	} else {
+		vodSessionsMu.Unlock()
+		log.Printf("[VOD %s] Attaching incoming request to existing session on Tuner %s\n", sessionKey, session.Tuner.DeviceIP)
+	}
+
+	// Subscribe this HTTP request to the session stream
+	subChan := session.addSubscriber()
+	defer session.removeSubscriber(subChan)
+
+	w.Header().Set("Content-Type", "video/mp2t")
+	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+	w.Header().Set("Connection", "keep-alive")
+	w.Header().Set("X-Tuner-Device-IP", session.Tuner.DeviceIP)
+	w.Header().Set("X-Tuner-Name", session.Tuner.Name)
+	w.WriteHeader(http.StatusOK)
+	if flusher, ok := w.(http.Flusher); ok {
+		flusher.Flush()
+	}
+
+	clientCtx := r.Context()
+	for {
+		select {
+		case <-clientCtx.Done():
+			// Client probe or playback socket closed
+			return
+		case <-session.Done:
+			// Session was killed (timeout or idle expiry)
+			return
+		case chunk, ok := <-subChan:
+			if !ok {
+				return
+			}
+			if _, err := w.Write(chunk); err != nil {
+				return
+			}
+			if flusher, ok := w.(http.Flusher); ok {
+				flusher.Flush()
+			}
 		}
 	}
 }
@@ -1883,6 +2392,7 @@ func main() {
 	flag.Parse()
 
 	loadConfig()
+	setupLogging()
 
 	if *portFlag > 0 {
 		Config.Port = *portFlag
@@ -1909,9 +2419,11 @@ func main() {
 	http.HandleFunc("/api/export_config", apiExportConfig)
 	http.HandleFunc("/api/import_config", apiImportConfig)
 	http.HandleFunc("/api/devices", apiDevices)
+	http.HandleFunc("/api/download_log", apiDownloadLog)
 	http.HandleFunc("/api/probe_device", apiProbeDevice)
 	http.HandleFunc("/api/active_tuners", apiActiveTuners)
 	http.HandleFunc("/stream/", streamHandler)
+	http.HandleFunc("/vod", vodStreamHandler)
 	http.HandleFunc("/channels.m3u", generateM3U)
 	http.HandleFunc("/remote", remotePage)
 	http.HandleFunc("/remote/keypress/", remoteKeypress)
